@@ -4,7 +4,7 @@ namespace Tests
 {
     public class ChessBoardTests
     {
-        private ChessBoard chessBoard = new ChessBoard();
+        private ChessBoard chessBoard = new();
 
         [SetUp]
         public void Setup()
