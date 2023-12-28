@@ -82,5 +82,21 @@ namespace Tests
             Assert.That(boardPosition.FirstIndex, Is.EqualTo(firstIndex));
             Assert.That(boardPosition.SecondIndex, Is.EqualTo(secondIndex));
         }
+
+
+        [TestCase("X2")]
+        [TestCase("")]
+        [TestCase("__")]
+        [TestCase("99")]
+        [TestCase("AA")]
+        [TestCase("11")]
+        [TestCase("1A")]
+        [TestCase("A")]
+        [TestCase("1")]
+        public void Test_GetBoardPositionExceptionThrown(string position)
+        {
+            Assert.Throws<Exception>(() => chessBoard.GetBoardPosition(position));
+        }
+
     }
 }

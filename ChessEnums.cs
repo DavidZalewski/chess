@@ -8,7 +8,7 @@ namespace Chess
 {
     internal class ChessEnums
     {
-        enum Piece
+        public enum Piece
         {
             PAWN = 1,
             KNIGHT = 2,
@@ -18,7 +18,7 @@ namespace Chess
             KING = 6
         }
 
-        enum Color
+        public enum Color
         {
             WHITE = 10,
             BLACK = 20
