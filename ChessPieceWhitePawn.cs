@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace Chess
 {
-    public class ChessPieceWhitePawn : ChessPiece
+    public class ChessPieceWhitePawn : ChessPiecePawn
     {
-        public ChessPieceWhitePawn(int id, BoardPosition startingPosition) : base(Piece.PAWN, Color.WHITE, id, startingPosition)
+        public ChessPieceWhitePawn(int id, BoardPosition startingPosition) : base(Color.WHITE, id, startingPosition)
         {
             _realValue = 11; // could also calculate this in base class by adding the two enums together
         }
@@ -20,6 +20,7 @@ namespace Chess
             int verticalDistance = _currentPosition.VerticalValueAsInt - position.VerticalValueAsInt;
 
             // TODO: embessen move check
+            // TODO: handle promotions
 
             if (verticalDistance == 1)
             {

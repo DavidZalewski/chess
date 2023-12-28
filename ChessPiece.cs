@@ -68,6 +68,12 @@ namespace Chess
             board.SetBoardValue(previousPosition, 0); // empty the previous square
         }
 
+        public ChessPiece PromotePawn<T>(ChessPiecePawn pawn, T type)
+        {
+            //return new T
+            throw new NotImplementedException("Needs to be implemented still");
+        }
+
         public Piece GetPiece() { return _piece; }
         public Color GetColor() { return _color; }
         public int GetId() { return _id; }
