@@ -24,14 +24,55 @@ namespace Chess
     // ChessBoard. Both need to be in sync with each other at all times.
 
     // I think I should sketch this out on paper to see which approach is simplest.
-    internal abstract class ChessPiece
+    public abstract class ChessPiece
     {
-        private ChessEnums.Piece _piece;
-        private ChessEnums.Color _color;
-        private BoardPosition _position;
-        private BoardPosition _startingPosition;
+        public enum Piece
+        {
+            PAWN = 1,
+            KNIGHT = 2,
+            BISHOP = 3,
+            ROOK = 4,
+            QUEEN = 5,
+            KING = 6
+        }
 
-        public abstract bool IsValidMove(ref ChessBoard board, String position);
-        public abstract void Move(ref ChessBoard board, String position);
+        public enum Color
+        {
+            WHITE = 10,
+            BLACK = 20
+        }
+
+        protected Piece _piece;
+        protected Color _color;
+        protected int _id;
+        protected int _realValue;
+        protected BoardPosition _startingPosition;
+        protected BoardPosition _currentPosition;
+
+        public ChessPiece(Piece piece, Color color, int id, BoardPosition startingPosition)
+        {
+            _piece = piece;
+            _color = color;
+            _id = id;
+            _startingPosition = startingPosition;
+            _currentPosition = _startingPosition;
+        }
+
+        public abstract bool IsValidMove(ChessBoard board, BoardPosition position);
+        protected abstract void ImplementMove(ChessBoard board, BoardPosition position);
+        public void Move(ChessBoard board, BoardPosition position)
+        {
+            ImplementMove(board, position);
+            BoardPosition previousPosition = _currentPosition;
+            board.SetBoardValue(position, _realValue);
+            board.SetBoardValue(previousPosition, 0); // empty the previous square
+        }
+
+        public Piece GetPiece() { return _piece; }
+        public Color GetColor() { return _color; }
+        public int GetId() { return _id; }
+        public int GetRealValue() {  return _realValue; }
+        public BoardPosition GetStartingPosition() {  return _startingPosition; }
+        public BoardPosition GetCurrentPosition() { return _currentPosition; }
     }
 }

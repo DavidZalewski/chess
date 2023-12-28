@@ -26,9 +26,41 @@ namespace Chess
             { 0 /*A1*/, 0, 0, 0, 0, 0, 0, 0 /*H1*/},
         };
 
+        private int _turn = 1;
+
         public ChessBoard() { }
 
         public int[,] GetBoard() { return _board; }
+        public int GetCurrentTurn() { return _turn; }
+        public void IncrementTurn() { _turn++; }
+        public bool PopulateBoard(List<ChessPiece> chessPieces)
+        {
+            foreach (ChessPiece piece in chessPieces)
+            {
+                piece.Move(this, piece.GetStartingPosition());
+            }
+
+            return false;
+        }
+        public bool SetBoardValue(BoardPosition position, int value)
+        {
+            _board[position.VerticalValueAsInt, position.HorizontalValueAsInt] = value;
+            return true;
+        }
+
+        public bool IsPieceAtPosition(BoardPosition position)
+        {
+            return _board[position.VerticalValueAsInt, position.HorizontalValueAsInt] > 0;
+        }
+
+        public bool IsPieceAtPosition(BoardPosition position, ChessPiece.Color color)
+        {
+            int value = _board[position.VerticalValueAsInt, position.HorizontalValueAsInt];
+            if (color == ChessPiece.Color.WHITE)
+                return value > 0 && value < 20;
+            else
+                return value > 20 && value < 30;
+        }
 
         public BoardPosition GetBoardPosition(String pos)
         {
@@ -52,6 +84,7 @@ namespace Chess
         }
 
         // not sure yet if this method needs to exist here, or be moved into another class, but for now keep it here
+        // for now keep this method, but the arguments may change later
         public BoardPosition GetBoardPosition(char alpha, int num) {
             int firstIndex = -1;
             switch (alpha)
@@ -69,7 +102,7 @@ namespace Chess
 
             if (num >= 1 && num <= 8)
             {
-                return new BoardPosition(firstIndex, num - 1);
+                return new BoardPosition((BoardPosition.VERTICAL)firstIndex, (BoardPosition.HORIZONTAL)num - 1, new string(alpha + num.ToString()));
             }
             else
             {

@@ -79,8 +79,8 @@ namespace Tests
             int firstIndex = SplitIntegerGetFirstValue(expectedIndexValues);
             int secondIndex = SplitIntegerGetSecondValue(expectedIndexValues);
 
-            Assert.That(boardPosition.FirstIndex, Is.EqualTo(firstIndex));
-            Assert.That(boardPosition.SecondIndex, Is.EqualTo(secondIndex));
+            Assert.That(boardPosition.VerticalValue, Is.EqualTo((BoardPosition.VERTICAL)firstIndex));
+            Assert.That(boardPosition.HorizontalValue, Is.EqualTo((BoardPosition.HORIZONTAL)secondIndex));
         }
 
 
@@ -96,6 +96,35 @@ namespace Tests
         public void Test_GetBoardPositionExceptionThrown(string position)
         {
             Assert.Throws<Exception>(() => chessBoard.GetBoardPosition(position));
+        }
+
+        [Test]
+        public void Test_IsPieceAtPosition_Success()
+        {
+            BoardPosition boardPosition = new BoardPosition(BoardPosition.VERTICAL.F, BoardPosition.HORIZONTAL.THREE);
+            Assert.That(chessBoard.IsPieceAtPosition(boardPosition), Is.False);
+            chessBoard.SetBoardValue(boardPosition, 11);
+            Assert.That(chessBoard.IsPieceAtPosition(boardPosition), Is.True);
+        }
+
+        [Test]
+        public void Test_IsPieceAtPosition_SpecificColor_Success1()
+        {
+            BoardPosition boardPosition = new BoardPosition(BoardPosition.VERTICAL.F, BoardPosition.HORIZONTAL.THREE);
+            Assert.That(chessBoard.IsPieceAtPosition(boardPosition), Is.False);
+            chessBoard.SetBoardValue(boardPosition, 11);
+            Assert.That(chessBoard.IsPieceAtPosition(boardPosition, ChessPiece.Color.WHITE), Is.True);
+            Assert.That(chessBoard.IsPieceAtPosition(boardPosition, ChessPiece.Color.BLACK), Is.False);
+        }
+
+        [Test]
+        public void Test_IsPieceAtPosition_SpecificColor_Success2()
+        {
+            BoardPosition boardPosition = new BoardPosition(BoardPosition.VERTICAL.G, BoardPosition.HORIZONTAL.SIX);
+            Assert.That(chessBoard.IsPieceAtPosition(boardPosition), Is.False);
+            chessBoard.SetBoardValue(boardPosition, 21);
+            Assert.That(chessBoard.IsPieceAtPosition(boardPosition, ChessPiece.Color.WHITE), Is.False);
+            Assert.That(chessBoard.IsPieceAtPosition(boardPosition, ChessPiece.Color.BLACK), Is.True);
         }
 
     }
