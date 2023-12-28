@@ -4,7 +4,7 @@ namespace Tests
 {
     public class Tests
     {
-        private ChessBoard chessBoard;
+        private ChessBoard chessBoard = new ChessBoard();
 
         [SetUp]
         public void Setup()
@@ -36,7 +36,7 @@ namespace Tests
         [TestCase(73, 3)]
         [TestCase(85, 5)]
         [TestCase(66, 6)]
-        [TestCase(59, 5)]
+        [TestCase(59, 9)]
         [TestCase(11, 1)]
         [TestCase(8, 8)]
         public void Test_SplitIntegerGetSecondValue(int value, int expected)
@@ -52,10 +52,35 @@ namespace Tests
         [TestCase("A6", 75)]
         [TestCase("A7", 76)]
         [TestCase("A8", 77)]
-        public void Test1(string position, int expectedIndexValues)
+        [TestCase("B1", 60)]
+        [TestCase("B2", 61)]
+        [TestCase("B3", 62)]
+        [TestCase("B4", 63)]
+        [TestCase("B5", 64)]
+        [TestCase("B6", 65)]
+        [TestCase("B7", 66)]
+        [TestCase("B8", 67)]
+        [TestCase("C1", 50)]
+        [TestCase("C2", 51)]
+        [TestCase("C3", 52)]
+        [TestCase("C4", 53)]
+        [TestCase("C5", 54)]
+        [TestCase("C6", 55)]
+        [TestCase("C7", 56)]
+        [TestCase("C8", 57)]
+        [TestCase("D4", 43)]
+        [TestCase("E3", 32)]
+        [TestCase("F6", 25)]
+        [TestCase("G7", 16)]
+        [TestCase("H5", 04)]
+        public void Test_GetBoardPositionSuccess(string position, int expectedIndexValues)
         {
-            chessBoard.GetBoardPosition()
-            Assert.Pass();
+            BoardPosition boardPosition = chessBoard.GetBoardPosition(position);
+            int firstIndex = SplitIntegerGetFirstValue(expectedIndexValues);
+            int secondIndex = SplitIntegerGetSecondValue(expectedIndexValues);
+
+            Assert.That(boardPosition.FirstIndex, Is.EqualTo(firstIndex));
+            Assert.That(boardPosition.SecondIndex, Is.EqualTo(secondIndex));
         }
     }
 }

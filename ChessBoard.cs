@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -29,8 +30,29 @@ namespace Chess
 
         public int[,] GetBoard() { return _board; }
 
+        public BoardPosition GetBoardPosition(String pos)
+        {
+            if (pos != null && pos.Length == 2)
+            {
+                char alpha = pos[0];
+                try
+                {
+                    int num = (int)char.GetNumericValue(pos[1]);
+                    return GetBoardPosition(alpha, num);
+                }
+                catch (Exception ex)
+                {
+                    throw new Exception("Invalid argument provided for pos: " + pos, ex);
+                }
+            }
+            else
+            {
+                throw new Exception("Invalid argument provided for pos (value is null or length != 2: " + pos);
+            }
+        }
+
         // not sure yet if this method needs to exist here, or be moved into another class, but for now keep it here
-        public KeyValuePair<int, int> GetBoardPosition(char alpha, int num) {
+        public BoardPosition GetBoardPosition(char alpha, int num) {
             int firstIndex = -1;
             switch (alpha)
             {
@@ -47,7 +69,7 @@ namespace Chess
 
             if (num >= 1 && num <= 8)
             {
-                return new KeyValuePair<int, int>(firstIndex, num - 1);
+                return new BoardPosition(firstIndex, num - 1);
             }
             else
             {
