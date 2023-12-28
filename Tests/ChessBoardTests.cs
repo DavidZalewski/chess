@@ -2,7 +2,7 @@ using Chess;
 
 namespace Tests
 {
-    public class Tests
+    public class ChessBoardTests
     {
         private ChessBoard chessBoard = new ChessBoard();
 
