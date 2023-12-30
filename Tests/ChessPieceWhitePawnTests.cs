@@ -15,15 +15,18 @@ namespace Tests
         [Test]
         public void Test_ConstructWhitePawn_Success()
         {
-            BoardPosition boardPosition = new BoardPosition(BoardPosition.VERTICAL.A, BoardPosition.HORIZONTAL.ONE);
+            BoardPosition boardPosition = new(BoardPosition.VERTICAL.A, BoardPosition.HORIZONTAL.ONE);
             ChessPiece piece = new ChessPieceWhitePawn(1, boardPosition);
 
             Assert.That(piece, Is.Not.Null);
-            Assert.That(piece.GetCurrentPosition(), Is.EqualTo(boardPosition));
-            Assert.That(piece.GetRealValue(), Is.EqualTo(11));
-            Assert.That(piece.GetId(), Is.EqualTo(1));
-            Assert.That(piece.GetColor(), Is.EqualTo(ChessPiece.Color.WHITE));
-            Assert.That(piece.GetPiece(), Is.EqualTo(ChessPiece.Piece.PAWN));
+            Assert.Multiple(() =>
+            {
+                Assert.That(piece.GetCurrentPosition(), Is.EqualTo(boardPosition));
+                Assert.That(piece.GetRealValue(), Is.EqualTo(11));
+                Assert.That(piece.GetId(), Is.EqualTo(1));
+                Assert.That(piece.GetColor(), Is.EqualTo(ChessPiece.Color.WHITE));
+                Assert.That(piece.GetPiece(), Is.EqualTo(ChessPiece.Piece.PAWN));
+            });
         }
 
         [Test(Description = "Tests whether the white pawn can move a single square up on its first move")]
