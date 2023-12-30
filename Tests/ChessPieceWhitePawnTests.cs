@@ -195,5 +195,37 @@ namespace Tests
             Assert.That(piece.PromotePawn<ChessPiece>((ChessPieceWhitePawn)piece, piece), Is.False);
         }
 
+        [Test(Description = "Tests that the white pawn cannot move forward if there is a white piece in front of it")]
+        public void Test_WhitePawn_IsValidMove_BlockedByWhite()
+        {
+            // Create White Pawn at D4
+            BoardPosition boardPosition = new(BoardPosition.VERTICAL.E, BoardPosition.HORIZONTAL.FOUR);
+            ChessPiece piece = new ChessPieceWhitePawn(1, boardPosition);
+            BoardPosition F4 = new(BoardPosition.VERTICAL.F, BoardPosition.HORIZONTAL.FOUR);
+            // set white bishop at F4, directly in front of white pawn at E4
+            board.SetBoardValue(F4, 13);
+            Assert.That(piece.IsValidMove(board, F4), Is.False);
+        }
+
+        [Test(Description = "Tests that the white pawn cannot move forward if there is a black piece in front of it")]
+        public void Test_WhitePawn_IsValidMove_BlockedByBlack()
+        {
+            // Create White Pawn at D4
+            BoardPosition boardPosition = new(BoardPosition.VERTICAL.E, BoardPosition.HORIZONTAL.FOUR);
+            ChessPiece piece = new ChessPieceWhitePawn(1, boardPosition);
+            BoardPosition F4 = new(BoardPosition.VERTICAL.F, BoardPosition.HORIZONTAL.FOUR);
+            // set black bishop at F4, directly in front of white pawn at E4
+            board.SetBoardValue(F4, 23);
+            Assert.That(piece.IsValidMove(board, F4), Is.False);
+        }
+
+        [Test(Description = "Tests that the white pawn cannot move to the same position it is already at")]
+        public void Test_WhitePawn_IsValidMove_SamePosition()
+        {
+            // Create White Pawn at D4
+            BoardPosition boardPosition = new(BoardPosition.VERTICAL.E, BoardPosition.HORIZONTAL.FOUR);
+            ChessPiece piece = new ChessPieceWhitePawn(1, boardPosition);
+            Assert.That(piece.IsValidMove(board, boardPosition), Is.False);
+        }
     }
 }
