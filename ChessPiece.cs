@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -60,6 +61,7 @@ namespace Chess
 
         public abstract bool IsValidMove(ChessBoard board, BoardPosition position);
         protected abstract void ImplementMove(ChessBoard board, BoardPosition position);
+
         public void Move(ChessBoard board, BoardPosition position)
         {
             ImplementMove(board, position);
@@ -80,5 +82,10 @@ namespace Chess
         public int GetRealValue() {  return _realValue; }
         public BoardPosition GetStartingPosition() {  return _startingPosition; }
         public BoardPosition GetCurrentPosition() { return _currentPosition; }
+        // used by ghost pieces
+        public void SetCurrentPosition(BoardPosition boardPosition)
+        {
+            _currentPosition = boardPosition;
+        }
     }
 }

@@ -6,7 +6,7 @@ namespace Tests
     public class ChessPieceRookTests
     {
         private ChessBoard board;
-        private BoardPosition whiteRook1StartPosition;
+        private BoardPosition a1;
         private BoardPosition whiteRook2StartPosition;
         private BoardPosition blackRook1StartPosition;
         private BoardPosition blackRook2StartPosition;
@@ -15,7 +15,7 @@ namespace Tests
         public void Setup()
         {
             board = new ChessBoard();
-            whiteRook1StartPosition = new(BoardPosition.VERTICAL.A, BoardPosition.HORIZONTAL.ONE);
+            a1 = new(BoardPosition.VERTICAL.A, BoardPosition.HORIZONTAL.ONE);
             whiteRook2StartPosition = new(BoardPosition.VERTICAL.A, BoardPosition.HORIZONTAL.EIGHT);
             blackRook1StartPosition = new(BoardPosition.VERTICAL.H, BoardPosition.HORIZONTAL.ONE);
             blackRook2StartPosition = new(BoardPosition.VERTICAL.H, BoardPosition.HORIZONTAL.EIGHT);
@@ -24,12 +24,12 @@ namespace Tests
         [Test]
         public void Test_ConstructWhiteRook_Success()
         {
-            ChessPiece piece = new ChessPieceRook(Color.WHITE, 1, whiteRook1StartPosition);
+            ChessPiece piece = new ChessPieceRook(Color.WHITE, 1, a1);
 
             Assert.That(piece, Is.Not.Null);
             Assert.Multiple(() =>
             {
-                Assert.That(piece.GetCurrentPosition(), Is.EqualTo(whiteRook1StartPosition));
+                Assert.That(piece.GetCurrentPosition(), Is.EqualTo(a1));
                 Assert.That(piece.GetRealValue(), Is.EqualTo(14)); // 14 is rook
                 Assert.That(piece.GetId(), Is.EqualTo(1));
                 Assert.That(piece.GetColor(), Is.EqualTo(ChessPiece.Color.WHITE));
@@ -40,7 +40,7 @@ namespace Tests
         [Test(Description = "Test that white rook 1 on A1 can move horizontally across all A squares")]
         public void Test_Rook_IsValidMove_HorizontalFromA1()
         {
-            ChessPiece piece = new ChessPieceRook(Color.WHITE, 1, whiteRook1StartPosition); // A1
+            ChessPiece piece = new ChessPieceRook(Color.WHITE, 1, a1); // A1
 
             List<BoardPosition> positions = new()
             {
