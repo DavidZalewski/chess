@@ -15,7 +15,7 @@ namespace Chess
             List<ChessPiece> whitePawns = new();
             for (int i = 0; i < 8; i++)
             {
-                whitePawns.Add(new ChessPieceWhitePawn(i + 1, new BoardPosition(BoardPosition.VERTICAL.B, (BoardPosition.HORIZONTAL)i)));
+                whitePawns.Add(new ChessPieceWhitePawn(i + 1, new BoardPosition(BoardPosition.VERTICAL.TWO, (BoardPosition.HORIZONTAL)i)));
             }
 
             return whitePawns;
@@ -26,7 +26,7 @@ namespace Chess
             List<ChessPiece> blackPawns = new();
             for (int i = 0; i < 8; i++)
             {
-                blackPawns.Add(new ChessPieceBlackPawn(i + 1, new BoardPosition(BoardPosition.VERTICAL.G, (BoardPosition.HORIZONTAL)i)));
+                blackPawns.Add(new ChessPieceBlackPawn(i + 1, new BoardPosition(BoardPosition.VERTICAL.SEVEN, (BoardPosition.HORIZONTAL)i)));
             }
 
             return blackPawns;

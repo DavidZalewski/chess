@@ -11,14 +11,23 @@ namespace Tests
         private BoardPosition blackRook1StartPosition;
         private BoardPosition blackRook2StartPosition;
 
+        public ChessPieceRookTests()
+        {
+            board = new ChessBoard();
+            a1 = new(BoardPosition.VERTICAL.ONE, BoardPosition.HORIZONTAL.A);
+            whiteRook2StartPosition = new(BoardPosition.VERTICAL.EIGHT, BoardPosition.HORIZONTAL.A);
+            blackRook1StartPosition = new(BoardPosition.VERTICAL.ONE, BoardPosition.HORIZONTAL.H);
+            blackRook2StartPosition = new(BoardPosition.VERTICAL.EIGHT, BoardPosition.HORIZONTAL.H);
+        }
+
         [SetUp]
         public void Setup()
         {
             board = new ChessBoard();
-            a1 = new(BoardPosition.VERTICAL.A, BoardPosition.HORIZONTAL.ONE);
-            whiteRook2StartPosition = new(BoardPosition.VERTICAL.A, BoardPosition.HORIZONTAL.EIGHT);
-            blackRook1StartPosition = new(BoardPosition.VERTICAL.H, BoardPosition.HORIZONTAL.ONE);
-            blackRook2StartPosition = new(BoardPosition.VERTICAL.H, BoardPosition.HORIZONTAL.EIGHT);
+            a1 = new(BoardPosition.VERTICAL.ONE, BoardPosition.HORIZONTAL.A);
+            whiteRook2StartPosition = new(BoardPosition.VERTICAL.EIGHT, BoardPosition.HORIZONTAL.A);
+            blackRook1StartPosition = new(BoardPosition.VERTICAL.ONE, BoardPosition.HORIZONTAL.H);
+            blackRook2StartPosition = new(BoardPosition.VERTICAL.EIGHT, BoardPosition.HORIZONTAL.H);
         }
 
         [Test]
@@ -44,13 +53,13 @@ namespace Tests
 
             List<BoardPosition> positions = new()
             {
-                new(BoardPosition.VERTICAL.A, BoardPosition.HORIZONTAL.TWO),
-                new(BoardPosition.VERTICAL.A, BoardPosition.HORIZONTAL.THREE),
-                new(BoardPosition.VERTICAL.A, BoardPosition.HORIZONTAL.FOUR),
-                new(BoardPosition.VERTICAL.A, BoardPosition.HORIZONTAL.FIVE),
-                new(BoardPosition.VERTICAL.A, BoardPosition.HORIZONTAL.SIX),
-                new(BoardPosition.VERTICAL.A, BoardPosition.HORIZONTAL.SEVEN),
-                new(BoardPosition.VERTICAL.A, BoardPosition.HORIZONTAL.EIGHT),
+                new(BoardPosition.VERTICAL.TWO, BoardPosition.HORIZONTAL.A),
+                new(BoardPosition.VERTICAL.THREE, BoardPosition.HORIZONTAL.A),
+                new(BoardPosition.VERTICAL.FOUR, BoardPosition.HORIZONTAL.A),
+                new(BoardPosition.VERTICAL.FIVE, BoardPosition.HORIZONTAL.A),
+                new(BoardPosition.VERTICAL.SIX, BoardPosition.HORIZONTAL.A),
+                new(BoardPosition.VERTICAL.SEVEN, BoardPosition.HORIZONTAL.A),
+                new(BoardPosition.VERTICAL.EIGHT, BoardPosition.HORIZONTAL.A),
             };
 
             Assert.Multiple(() =>
@@ -65,17 +74,17 @@ namespace Tests
         [Test(Description = "Test that black rook 2 on D4 can move horizontally across all D squares")]
         public void Test_Rook_IsValidMove_HorizontalFromD4()
         {
-            ChessPiece piece = new ChessPieceRook(Color.BLACK, 2, new BoardPosition(BoardPosition.VERTICAL.D, BoardPosition.HORIZONTAL.FOUR)); // D4
+            ChessPiece piece = new ChessPieceRook(Color.BLACK, 2, new BoardPosition(BoardPosition.VERTICAL.FOUR, BoardPosition.HORIZONTAL.D)); // D4
 
             List<BoardPosition> positions = new()
             {
-                new(BoardPosition.VERTICAL.D, BoardPosition.HORIZONTAL.ONE),
-                new(BoardPosition.VERTICAL.D, BoardPosition.HORIZONTAL.TWO),
-                new(BoardPosition.VERTICAL.D, BoardPosition.HORIZONTAL.THREE),      
-                new(BoardPosition.VERTICAL.D, BoardPosition.HORIZONTAL.FIVE),
-                new(BoardPosition.VERTICAL.D, BoardPosition.HORIZONTAL.SIX),
-                new(BoardPosition.VERTICAL.D, BoardPosition.HORIZONTAL.SEVEN),
-                new(BoardPosition.VERTICAL.D, BoardPosition.HORIZONTAL.EIGHT),
+                new(BoardPosition.VERTICAL.ONE, BoardPosition.HORIZONTAL.D),
+                new(BoardPosition.VERTICAL.TWO, BoardPosition.HORIZONTAL.D),
+                new(BoardPosition.VERTICAL.THREE, BoardPosition.HORIZONTAL.D),      
+                new(BoardPosition.VERTICAL.FIVE, BoardPosition.HORIZONTAL.D),
+                new(BoardPosition.VERTICAL.SIX, BoardPosition.HORIZONTAL.D),
+                new(BoardPosition.VERTICAL.SEVEN, BoardPosition.HORIZONTAL.D),
+                new(BoardPosition.VERTICAL.EIGHT, BoardPosition.HORIZONTAL.D),
             };
 
             Assert.Multiple(() =>
@@ -90,17 +99,17 @@ namespace Tests
         [Test(Description = "Test that black rook 1 on F4 can move vertically across all 4 squares (E4, D4, C4, B4, A4, G4, H4)")]
         public void Test_Rook_IsValidMove_VerticalFromF4()
         {
-            ChessPiece piece = new ChessPieceRook(Color.BLACK, 1, new BoardPosition(BoardPosition.VERTICAL.F, BoardPosition.HORIZONTAL.FOUR)); // F4
+            ChessPiece piece = new ChessPieceRook(Color.BLACK, 1, new BoardPosition(BoardPosition.VERTICAL.FOUR, BoardPosition.HORIZONTAL.F)); // F4
 
             List<BoardPosition> positions = new()
             {
-                new(BoardPosition.VERTICAL.A, BoardPosition.HORIZONTAL.FOUR),
-                new(BoardPosition.VERTICAL.B, BoardPosition.HORIZONTAL.FOUR),
-                new(BoardPosition.VERTICAL.C, BoardPosition.HORIZONTAL.FOUR),
-                new(BoardPosition.VERTICAL.D, BoardPosition.HORIZONTAL.FOUR),
-                new(BoardPosition.VERTICAL.E, BoardPosition.HORIZONTAL.FOUR),
-                new(BoardPosition.VERTICAL.G, BoardPosition.HORIZONTAL.FOUR),
-                new(BoardPosition.VERTICAL.H, BoardPosition.HORIZONTAL.FOUR),
+                new(BoardPosition.VERTICAL.FOUR, BoardPosition.HORIZONTAL.A),
+                new(BoardPosition.VERTICAL.FOUR, BoardPosition.HORIZONTAL.B),
+                new(BoardPosition.VERTICAL.FOUR, BoardPosition.HORIZONTAL.C),
+                new(BoardPosition.VERTICAL.FOUR, BoardPosition.HORIZONTAL.D),
+                new(BoardPosition.VERTICAL.FOUR, BoardPosition.HORIZONTAL.E),
+                new(BoardPosition.VERTICAL.FOUR, BoardPosition.HORIZONTAL.G),
+                new(BoardPosition.VERTICAL.FOUR, BoardPosition.HORIZONTAL.H),
             };
 
             Assert.Multiple(() =>
@@ -115,17 +124,17 @@ namespace Tests
         [Test(Description = "Test that white rook 2 on A8 can move vertically across all 8 squares (E8, D8, C8, B8, A8, G8, H8)")]
         public void Test_Rook_IsValidMove_VerticalFromA8()
         {
-            ChessPiece piece = new ChessPieceRook(Color.WHITE, 2, new BoardPosition(BoardPosition.VERTICAL.A, BoardPosition.HORIZONTAL.EIGHT));
+            ChessPiece piece = new ChessPieceRook(Color.WHITE, 2, new BoardPosition(BoardPosition.VERTICAL.EIGHT, BoardPosition.HORIZONTAL.A));
 
             List<BoardPosition> positions = new()
             {
-                new(BoardPosition.VERTICAL.B, BoardPosition.HORIZONTAL.EIGHT),
-                new(BoardPosition.VERTICAL.C, BoardPosition.HORIZONTAL.EIGHT),
-                new(BoardPosition.VERTICAL.D, BoardPosition.HORIZONTAL.EIGHT),
-                new(BoardPosition.VERTICAL.E, BoardPosition.HORIZONTAL.EIGHT),
-                new(BoardPosition.VERTICAL.F, BoardPosition.HORIZONTAL.EIGHT),
-                new(BoardPosition.VERTICAL.G, BoardPosition.HORIZONTAL.EIGHT),
-                new(BoardPosition.VERTICAL.H, BoardPosition.HORIZONTAL.EIGHT),
+                new(BoardPosition.VERTICAL.EIGHT, BoardPosition.HORIZONTAL.B),
+                new(BoardPosition.VERTICAL.EIGHT, BoardPosition.HORIZONTAL.C),
+                new(BoardPosition.VERTICAL.EIGHT, BoardPosition.HORIZONTAL.D),
+                new(BoardPosition.VERTICAL.EIGHT, BoardPosition.HORIZONTAL.E),
+                new(BoardPosition.VERTICAL.EIGHT, BoardPosition.HORIZONTAL.F),
+                new(BoardPosition.VERTICAL.EIGHT, BoardPosition.HORIZONTAL.G),
+                new(BoardPosition.VERTICAL.EIGHT, BoardPosition.HORIZONTAL.H),
             };
 
             Assert.Multiple(() =>
@@ -141,15 +150,15 @@ namespace Tests
         public void Test_WhiteRook1_IsValidMove_CannotMoveBlockedByFriendly()
         {
             ChessPiece piece = new ChessPieceRook(ChessPiece.Color.WHITE, 1, 
-                new BoardPosition(BoardPosition.VERTICAL.C, BoardPosition.HORIZONTAL.TWO));
+                new BoardPosition(BoardPosition.VERTICAL.TWO, BoardPosition.HORIZONTAL.C));
             List<BoardPosition> positions = new()
             {
-                new(BoardPosition.VERTICAL.C, BoardPosition.HORIZONTAL.FIVE),
-                new(BoardPosition.VERTICAL.C, BoardPosition.HORIZONTAL.SIX)
+                new(BoardPosition.VERTICAL.FIVE, BoardPosition.HORIZONTAL.C),
+                new(BoardPosition.VERTICAL.SIX, BoardPosition.HORIZONTAL.C)
             };
 
             // Set White Pawn on c4
-            board.SetBoardValue(new(BoardPosition.VERTICAL.C, BoardPosition.HORIZONTAL.FOUR), 11);
+            board.SetBoardValue(new(BoardPosition.VERTICAL.FOUR, BoardPosition.HORIZONTAL.C), 11);
 
             Assert.Multiple(() =>
             {
@@ -164,15 +173,15 @@ namespace Tests
         public void Test_WhiteRook1_IsValidMove_CannotMoveBlockedByEnemy()
         {
             ChessPiece piece = new ChessPieceRook(ChessPiece.Color.WHITE, 1,
-                new BoardPosition(BoardPosition.VERTICAL.C, BoardPosition.HORIZONTAL.TWO));
+                new BoardPosition(BoardPosition.VERTICAL.TWO, BoardPosition.HORIZONTAL.C));
             List<BoardPosition> positions = new()
             {
-                new(BoardPosition.VERTICAL.G, BoardPosition.HORIZONTAL.TWO),
-                new(BoardPosition.VERTICAL.H, BoardPosition.HORIZONTAL.TWO)
+                new(BoardPosition.VERTICAL.TWO, BoardPosition.HORIZONTAL.G),
+                new(BoardPosition.VERTICAL.TWO, BoardPosition.HORIZONTAL.H)
             };
 
             // Set White Pawn on c4
-            board.SetBoardValue(new(BoardPosition.VERTICAL.F, BoardPosition.HORIZONTAL.TWO), 21);
+            board.SetBoardValue(new(BoardPosition.VERTICAL.TWO, BoardPosition.HORIZONTAL.F), 21);
 
             Assert.Multiple(() =>
             {
@@ -187,17 +196,17 @@ namespace Tests
         public void Test_WhiteRook1_IsValidMove_InvalidMoves()
         {
             ChessPiece piece = new ChessPieceRook(ChessPiece.Color.WHITE, 1,
-                new BoardPosition(BoardPosition.VERTICAL.C, BoardPosition.HORIZONTAL.TWO));
+                new BoardPosition(BoardPosition.VERTICAL.TWO, BoardPosition.HORIZONTAL.C));
             List<BoardPosition> positions = new()
             {
-                new(BoardPosition.VERTICAL.G, BoardPosition.HORIZONTAL.THREE),
-                new(BoardPosition.VERTICAL.H, BoardPosition.HORIZONTAL.ONE),
-                new(BoardPosition.VERTICAL.A, BoardPosition.HORIZONTAL.ONE),
-                new(BoardPosition.VERTICAL.B, BoardPosition.HORIZONTAL.THREE),
-                new(BoardPosition.VERTICAL.E, BoardPosition.HORIZONTAL.FOUR),
-                new(BoardPosition.VERTICAL.F, BoardPosition.HORIZONTAL.FIVE),
-                new(BoardPosition.VERTICAL.G, BoardPosition.HORIZONTAL.SIX),
-                new(BoardPosition.VERTICAL.H, BoardPosition.HORIZONTAL.SEVEN),
+                new(BoardPosition.VERTICAL.THREE, BoardPosition.HORIZONTAL.G),
+                new(BoardPosition.VERTICAL.ONE, BoardPosition.HORIZONTAL.H),
+                new(BoardPosition.VERTICAL.ONE, BoardPosition.HORIZONTAL.A),
+                new(BoardPosition.VERTICAL.THREE, BoardPosition.HORIZONTAL.B),
+                new(BoardPosition.VERTICAL.FOUR, BoardPosition.HORIZONTAL.E),
+                new(BoardPosition.VERTICAL.FIVE, BoardPosition.HORIZONTAL.F),
+                new(BoardPosition.VERTICAL.SIX, BoardPosition.HORIZONTAL.G),
+                new(BoardPosition.VERTICAL.SEVEN, BoardPosition.HORIZONTAL.H),
             };
 
             Assert.Multiple(() =>
@@ -213,8 +222,8 @@ namespace Tests
         public void Test_WhiteRook1_IsValidMove_CanCapture()
         {
             ChessPiece piece = new ChessPieceRook(ChessPiece.Color.WHITE, 1,
-                new BoardPosition(BoardPosition.VERTICAL.B, BoardPosition.HORIZONTAL.FOUR));
-            BoardPosition b8 = new(BoardPosition.VERTICAL.B, BoardPosition.HORIZONTAL.EIGHT);
+                new BoardPosition(BoardPosition.VERTICAL.FOUR, BoardPosition.HORIZONTAL.B));
+            BoardPosition b8 = new(BoardPosition.VERTICAL.EIGHT, BoardPosition.HORIZONTAL.B);
             board.SetBoardValue(b8, 22); // black knight on B8
             Assert.That(piece.IsValidMove(board, b8), Is.True);
         }
@@ -223,8 +232,8 @@ namespace Tests
         public void Test_WhiteRook1_IsValidMove_CannotCapture()
         {
             ChessPiece piece = new ChessPieceRook(ChessPiece.Color.WHITE, 1,
-                new BoardPosition(BoardPosition.VERTICAL.B, BoardPosition.HORIZONTAL.FOUR));
-            BoardPosition b8 = new(BoardPosition.VERTICAL.B, BoardPosition.HORIZONTAL.EIGHT);
+                new BoardPosition(BoardPosition.VERTICAL.FOUR, BoardPosition.HORIZONTAL.B));
+            BoardPosition b8 = new(BoardPosition.VERTICAL.EIGHT, BoardPosition.HORIZONTAL.B);
             board.SetBoardValue(b8, 12); // white knight on B8
             Assert.That(piece.IsValidMove(board, b8), Is.False);
         }
@@ -233,8 +242,8 @@ namespace Tests
         public void Test_BlackRook2_IsValidMove_CanCapture()
         {
             ChessPiece piece = new ChessPieceRook(ChessPiece.Color.BLACK, 2,
-                new BoardPosition(BoardPosition.VERTICAL.B, BoardPosition.HORIZONTAL.FOUR));
-            BoardPosition b8 = new(BoardPosition.VERTICAL.B, BoardPosition.HORIZONTAL.EIGHT);
+                new BoardPosition(BoardPosition.VERTICAL.FOUR, BoardPosition.HORIZONTAL.B));
+            BoardPosition b8 = new(BoardPosition.VERTICAL.EIGHT, BoardPosition.HORIZONTAL.B);
             board.SetBoardValue(b8, 12); // white knight on B8
             Assert.That(piece.IsValidMove(board, b8), Is.True);
         }
@@ -243,8 +252,8 @@ namespace Tests
         public void Test_BlackRook2_IsValidMove_CannotCapture()
         {
             ChessPiece piece = new ChessPieceRook(ChessPiece.Color.BLACK, 2,
-                new BoardPosition(BoardPosition.VERTICAL.B, BoardPosition.HORIZONTAL.FOUR));
-            BoardPosition b8 = new(BoardPosition.VERTICAL.B, BoardPosition.HORIZONTAL.EIGHT);
+                new BoardPosition(BoardPosition.VERTICAL.FOUR, BoardPosition.HORIZONTAL.B));
+            BoardPosition b8 = new(BoardPosition.VERTICAL.EIGHT, BoardPosition.HORIZONTAL.B);
             board.SetBoardValue(b8, 22); // black knight on B8
             Assert.That(piece.IsValidMove(board, b8), Is.False);
         }

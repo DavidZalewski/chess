@@ -5,23 +5,21 @@ namespace Tests
 {
     public class ChessPieceQueenTests
     {
-        private ChessBoard board;
-        private BoardPosition a3;
-        private BoardPosition a6;
-        private BoardPosition h3;
-        private BoardPosition h6;
-        private BoardPosition a1;
+        private ChessBoard board = new ChessBoard();
+        private BoardPosition a3 = new(BoardPosition.VERTICAL.THREE, BoardPosition.HORIZONTAL.A);
+        private BoardPosition a6 = new(BoardPosition.VERTICAL.SIX, BoardPosition.HORIZONTAL.A);
+        private BoardPosition h3 = new(BoardPosition.VERTICAL.THREE, BoardPosition.HORIZONTAL.H);
+        private BoardPosition h6 = new(BoardPosition.VERTICAL.SIX, BoardPosition.HORIZONTAL.H);
+        private BoardPosition a1 = new(BoardPosition.VERTICAL.ONE, BoardPosition.HORIZONTAL.A);
+
+        public ChessPieceQueenTests()
+        {
+            Setup();
+        }
 
         [SetUp]
         public void Setup()
         {
-            a3 = new(BoardPosition.VERTICAL.A, BoardPosition.HORIZONTAL.THREE);
-            a6 = new(BoardPosition.VERTICAL.A, BoardPosition.HORIZONTAL.SIX);
-            h3 = new(BoardPosition.VERTICAL.H, BoardPosition.HORIZONTAL.THREE);
-            h6 = new(BoardPosition.VERTICAL.H, BoardPosition.HORIZONTAL.SIX);
-            a1 = new(BoardPosition.VERTICAL.A, BoardPosition.HORIZONTAL.ONE);
-
-
             board = new ChessBoard();
         }
 
@@ -63,7 +61,7 @@ namespace Tests
         public void Test_WhiteQueen1_IsValidMove_StartingMove1()
         {
             ChessPiece piece = new ChessPieceQueen(ChessPiece.Color.WHITE, 1, a3);
-            BoardPosition newPosition = new(BoardPosition.VERTICAL.C, BoardPosition.HORIZONTAL.ONE);
+            BoardPosition newPosition = new(BoardPosition.VERTICAL.ONE, BoardPosition.HORIZONTAL.C);
 
             Assert.That(piece.IsValidMove(board, newPosition), Is.True);
         }
@@ -72,7 +70,7 @@ namespace Tests
         public void Test_BlackQueen1_IsValidMove_StartingMove2()
         {
             ChessPiece piece = new ChessPieceQueen(ChessPiece.Color.BLACK, 1, a3);
-            BoardPosition newPosition = new(BoardPosition.VERTICAL.B, BoardPosition.HORIZONTAL.FOUR);
+            BoardPosition newPosition = new(BoardPosition.VERTICAL.FOUR, BoardPosition.HORIZONTAL.B);
 
             Assert.That(piece.IsValidMove(board, newPosition), Is.True);
         }
@@ -83,17 +81,17 @@ namespace Tests
             ChessPiece piece = new ChessPieceQueen(ChessPiece.Color.BLACK, 1, a3);
             List<BoardPosition> positions = new()
             {
-                new(BoardPosition.VERTICAL.B, BoardPosition.HORIZONTAL.TWO),
-                new(BoardPosition.VERTICAL.C, BoardPosition.HORIZONTAL.ONE),
-                new(BoardPosition.VERTICAL.C, BoardPosition.HORIZONTAL.FIVE),
-                new(BoardPosition.VERTICAL.D, BoardPosition.HORIZONTAL.SIX),
-                new(BoardPosition.VERTICAL.E, BoardPosition.HORIZONTAL.SEVEN),
-                new(BoardPosition.VERTICAL.F, BoardPosition.HORIZONTAL.EIGHT),
+                new(BoardPosition.VERTICAL.TWO, BoardPosition.HORIZONTAL.B),
+                new(BoardPosition.VERTICAL.ONE, BoardPosition.HORIZONTAL.C),
+                new(BoardPosition.VERTICAL.FIVE, BoardPosition.HORIZONTAL.C),
+                new(BoardPosition.VERTICAL.SIX, BoardPosition.HORIZONTAL.D),
+                new(BoardPosition.VERTICAL.SEVEN, BoardPosition.HORIZONTAL.E),
+                new(BoardPosition.VERTICAL.EIGHT, BoardPosition.HORIZONTAL.F),
             };
 
             // Set Black Pawns on B2 and B4 which block Bishop from moving
-            board.SetBoardValue(new(BoardPosition.VERTICAL.B, BoardPosition.HORIZONTAL.TWO), 21);
-            board.SetBoardValue(new(BoardPosition.VERTICAL.B, BoardPosition.HORIZONTAL.FOUR), 11);
+            board.SetBoardValue(new(BoardPosition.VERTICAL.TWO, BoardPosition.HORIZONTAL.B), 21);
+            board.SetBoardValue(new(BoardPosition.VERTICAL.FOUR, BoardPosition.HORIZONTAL.B), 11);
 
             Assert.Multiple(() =>
             {
@@ -110,14 +108,14 @@ namespace Tests
             ChessPiece piece = new ChessPieceQueen(ChessPiece.Color.BLACK, 1, a3);
             List<BoardPosition> positions = new()
             {
-                new(BoardPosition.VERTICAL.C, BoardPosition.HORIZONTAL.FIVE),
-                new(BoardPosition.VERTICAL.D, BoardPosition.HORIZONTAL.SIX),
-                new(BoardPosition.VERTICAL.E, BoardPosition.HORIZONTAL.SEVEN),
-                new(BoardPosition.VERTICAL.F, BoardPosition.HORIZONTAL.EIGHT),
+                new(BoardPosition.VERTICAL.FIVE, BoardPosition.HORIZONTAL.C),
+                new(BoardPosition.VERTICAL.SIX, BoardPosition.HORIZONTAL.D),
+                new(BoardPosition.VERTICAL.SEVEN, BoardPosition.HORIZONTAL.E),
+                new(BoardPosition.VERTICAL.EIGHT, BoardPosition.HORIZONTAL.F),
             };
 
             // Set Black Pawn on B4 which block Queen
-            board.SetBoardValue(new(BoardPosition.VERTICAL.B, BoardPosition.HORIZONTAL.FOUR), 21);
+            board.SetBoardValue(new(BoardPosition.VERTICAL.FOUR, BoardPosition.HORIZONTAL.B), 21);
 
             Assert.Multiple(() =>
             {
@@ -132,7 +130,7 @@ namespace Tests
         public void Test_WhiteQueen1_IsValidMove_CanCapture()
         {
             ChessPiece piece = new ChessPieceQueen(ChessPiece.Color.BLACK, 1, a3);
-            BoardPosition d6 = new(BoardPosition.VERTICAL.D, BoardPosition.HORIZONTAL.SIX);
+            BoardPosition d6 = new(BoardPosition.VERTICAL.SIX, BoardPosition.HORIZONTAL.D);
 
             // Set White Pawn on D6
             board.SetBoardValue(d6, 11);
@@ -144,25 +142,25 @@ namespace Tests
         [Test(Description = "Tests that white queen can move to all of these valid locations if starting from D4")]
         public void Test_WhiteQueen1_IsValidMove_FromD4()
         {
-            ChessPiece piece = new ChessPieceQueen(ChessPiece.Color.WHITE, 1, new BoardPosition(BoardPosition.VERTICAL.D, BoardPosition.HORIZONTAL.FOUR));
+            ChessPiece piece = new ChessPieceQueen(ChessPiece.Color.WHITE, 1, new BoardPosition(BoardPosition.VERTICAL.FOUR, BoardPosition.HORIZONTAL.D));
 
             // valid positions if bishop on D4
             // C3, B2, A1, C5, B6, A7, E3, F2, G1, E5, F6, G7, H8 
             List<BoardPosition> validPositions = new()
             {
-                new(BoardPosition.VERTICAL.C, BoardPosition.HORIZONTAL.THREE),
-                new(BoardPosition.VERTICAL.B, BoardPosition.HORIZONTAL.TWO),
-                new(BoardPosition.VERTICAL.A, BoardPosition.HORIZONTAL.ONE),
-                new(BoardPosition.VERTICAL.C, BoardPosition.HORIZONTAL.FIVE),
-                new(BoardPosition.VERTICAL.B, BoardPosition.HORIZONTAL.SIX),
-                new(BoardPosition.VERTICAL.A, BoardPosition.HORIZONTAL.SEVEN),
-                new(BoardPosition.VERTICAL.E, BoardPosition.HORIZONTAL.THREE),
-                new(BoardPosition.VERTICAL.F, BoardPosition.HORIZONTAL.TWO),
-                new(BoardPosition.VERTICAL.G, BoardPosition.HORIZONTAL.ONE),
-                new(BoardPosition.VERTICAL.E, BoardPosition.HORIZONTAL.FIVE),
-                new(BoardPosition.VERTICAL.F, BoardPosition.HORIZONTAL.SIX),
-                new(BoardPosition.VERTICAL.G, BoardPosition.HORIZONTAL.SEVEN),
-                new(BoardPosition.VERTICAL.H, BoardPosition.HORIZONTAL.EIGHT)
+                new(BoardPosition.VERTICAL.THREE, BoardPosition.HORIZONTAL.C),
+                new(BoardPosition.VERTICAL.TWO, BoardPosition.HORIZONTAL.B),
+                new(BoardPosition.VERTICAL.ONE, BoardPosition.HORIZONTAL.A),
+                new(BoardPosition.VERTICAL.FIVE, BoardPosition.HORIZONTAL.C),
+                new(BoardPosition.VERTICAL.SIX, BoardPosition.HORIZONTAL.B),
+                new(BoardPosition.VERTICAL.SEVEN, BoardPosition.HORIZONTAL.A),
+                new(BoardPosition.VERTICAL.THREE, BoardPosition.HORIZONTAL.E),
+                new(BoardPosition.VERTICAL.TWO, BoardPosition.HORIZONTAL.F),
+                new(BoardPosition.VERTICAL.ONE, BoardPosition.HORIZONTAL.G),
+                new(BoardPosition.VERTICAL.FIVE, BoardPosition.HORIZONTAL.E),
+                new(BoardPosition.VERTICAL.SIX, BoardPosition.HORIZONTAL.F),
+                new(BoardPosition.VERTICAL.SEVEN, BoardPosition.HORIZONTAL.G),
+                new(BoardPosition.VERTICAL.EIGHT, BoardPosition.HORIZONTAL.H)
             };
 
             Assert.Multiple(() =>
@@ -181,13 +179,13 @@ namespace Tests
 
             List<BoardPosition> positions = new()
             {
-                new(BoardPosition.VERTICAL.A, BoardPosition.HORIZONTAL.TWO),
-                new(BoardPosition.VERTICAL.A, BoardPosition.HORIZONTAL.THREE),
-                new(BoardPosition.VERTICAL.A, BoardPosition.HORIZONTAL.FOUR),
-                new(BoardPosition.VERTICAL.A, BoardPosition.HORIZONTAL.FIVE),
-                new(BoardPosition.VERTICAL.A, BoardPosition.HORIZONTAL.SIX),
-                new(BoardPosition.VERTICAL.A, BoardPosition.HORIZONTAL.SEVEN),
-                new(BoardPosition.VERTICAL.A, BoardPosition.HORIZONTAL.EIGHT),
+                new(BoardPosition.VERTICAL.TWO, BoardPosition.HORIZONTAL.A),
+                new(BoardPosition.VERTICAL.THREE, BoardPosition.HORIZONTAL.A),
+                new(BoardPosition.VERTICAL.FOUR, BoardPosition.HORIZONTAL.A),
+                new(BoardPosition.VERTICAL.FIVE, BoardPosition.HORIZONTAL.A),
+                new(BoardPosition.VERTICAL.SIX, BoardPosition.HORIZONTAL.A),
+                new(BoardPosition.VERTICAL.SEVEN, BoardPosition.HORIZONTAL.A),
+                new(BoardPosition.VERTICAL.EIGHT, BoardPosition.HORIZONTAL.A),
             };
 
             Assert.Multiple(() =>
@@ -202,17 +200,17 @@ namespace Tests
         [Test(Description = "Test that black queen 2 on D4 can move horizontally across all D squares")]
         public void Test_Rook_IsValidMove_HorizontalFromD4()
         {
-            ChessPiece piece = new ChessPieceQueen(Color.BLACK, 2, new BoardPosition(BoardPosition.VERTICAL.D, BoardPosition.HORIZONTAL.FOUR)); // D4
+            ChessPiece piece = new ChessPieceQueen(Color.BLACK, 2, new BoardPosition(BoardPosition.VERTICAL.FOUR, BoardPosition.HORIZONTAL.D)); // D4
 
             List<BoardPosition> positions = new()
             {
-                new(BoardPosition.VERTICAL.D, BoardPosition.HORIZONTAL.ONE),
-                new(BoardPosition.VERTICAL.D, BoardPosition.HORIZONTAL.TWO),
-                new(BoardPosition.VERTICAL.D, BoardPosition.HORIZONTAL.THREE),
-                new(BoardPosition.VERTICAL.D, BoardPosition.HORIZONTAL.FIVE),
-                new(BoardPosition.VERTICAL.D, BoardPosition.HORIZONTAL.SIX),
-                new(BoardPosition.VERTICAL.D, BoardPosition.HORIZONTAL.SEVEN),
-                new(BoardPosition.VERTICAL.D, BoardPosition.HORIZONTAL.EIGHT),
+                new(BoardPosition.VERTICAL.ONE, BoardPosition.HORIZONTAL.D),
+                new(BoardPosition.VERTICAL.TWO, BoardPosition.HORIZONTAL.D),
+                new(BoardPosition.VERTICAL.THREE, BoardPosition.HORIZONTAL.D),
+                new(BoardPosition.VERTICAL.FIVE, BoardPosition.HORIZONTAL.D),
+                new(BoardPosition.VERTICAL.SIX, BoardPosition.HORIZONTAL.D),
+                new(BoardPosition.VERTICAL.SEVEN, BoardPosition.HORIZONTAL.D),
+                new(BoardPosition.VERTICAL.EIGHT, BoardPosition.HORIZONTAL.D),
             };
 
             Assert.Multiple(() =>
@@ -227,17 +225,17 @@ namespace Tests
         [Test(Description = "Test that black queen 1 on F4 can move vertically across all 4 squares (E4, D4, C4, B4, A4, G4, H4)")]
         public void Test_BlackQueen_IsValidMove_VerticalFromF4()
         {
-            ChessPiece piece = new ChessPieceQueen(Color.BLACK, 1, new BoardPosition(BoardPosition.VERTICAL.F, BoardPosition.HORIZONTAL.FOUR)); // F4
+            ChessPiece piece = new ChessPieceQueen(Color.BLACK, 1, new BoardPosition(BoardPosition.VERTICAL.FOUR, BoardPosition.HORIZONTAL.F)); // F4
 
             List<BoardPosition> positions = new()
             {
-                new(BoardPosition.VERTICAL.A, BoardPosition.HORIZONTAL.FOUR),
-                new(BoardPosition.VERTICAL.B, BoardPosition.HORIZONTAL.FOUR),
-                new(BoardPosition.VERTICAL.C, BoardPosition.HORIZONTAL.FOUR),
-                new(BoardPosition.VERTICAL.D, BoardPosition.HORIZONTAL.FOUR),
-                new(BoardPosition.VERTICAL.E, BoardPosition.HORIZONTAL.FOUR),
-                new(BoardPosition.VERTICAL.G, BoardPosition.HORIZONTAL.FOUR),
-                new(BoardPosition.VERTICAL.H, BoardPosition.HORIZONTAL.FOUR),
+                new(BoardPosition.VERTICAL.FOUR, BoardPosition.HORIZONTAL.A),
+                new(BoardPosition.VERTICAL.FOUR, BoardPosition.HORIZONTAL.B),
+                new(BoardPosition.VERTICAL.FOUR, BoardPosition.HORIZONTAL.C),
+                new(BoardPosition.VERTICAL.FOUR, BoardPosition.HORIZONTAL.D),
+                new(BoardPosition.VERTICAL.FOUR, BoardPosition.HORIZONTAL.E),
+                new(BoardPosition.VERTICAL.FOUR, BoardPosition.HORIZONTAL.G),
+                new(BoardPosition.VERTICAL.FOUR, BoardPosition.HORIZONTAL.H),
             };
 
             Assert.Multiple(() =>
@@ -252,17 +250,17 @@ namespace Tests
         [Test(Description = "Test that black queen 2 on A8 can move vertically across all 8 squares (E8, D8, C8, B8, A8, G8, H8)")]
         public void Test_BlackQueen_IsValidMove_VerticalFromA8()
         {
-            ChessPiece piece = new ChessPieceQueen(Color.BLACK, 2, new BoardPosition(BoardPosition.VERTICAL.A, BoardPosition.HORIZONTAL.EIGHT));
+            ChessPiece piece = new ChessPieceQueen(Color.BLACK, 2, new BoardPosition(BoardPosition.VERTICAL.EIGHT, BoardPosition.HORIZONTAL.A));
 
             List<BoardPosition> positions = new()
             {
-                new(BoardPosition.VERTICAL.B, BoardPosition.HORIZONTAL.EIGHT),
-                new(BoardPosition.VERTICAL.C, BoardPosition.HORIZONTAL.EIGHT),
-                new(BoardPosition.VERTICAL.D, BoardPosition.HORIZONTAL.EIGHT),
-                new(BoardPosition.VERTICAL.E, BoardPosition.HORIZONTAL.EIGHT),
-                new(BoardPosition.VERTICAL.F, BoardPosition.HORIZONTAL.EIGHT),
-                new(BoardPosition.VERTICAL.G, BoardPosition.HORIZONTAL.EIGHT),
-                new(BoardPosition.VERTICAL.H, BoardPosition.HORIZONTAL.EIGHT),
+                new(BoardPosition.VERTICAL.EIGHT, BoardPosition.HORIZONTAL.B),
+                new(BoardPosition.VERTICAL.EIGHT, BoardPosition.HORIZONTAL.C),
+                new(BoardPosition.VERTICAL.EIGHT, BoardPosition.HORIZONTAL.D),
+                new(BoardPosition.VERTICAL.EIGHT, BoardPosition.HORIZONTAL.E),
+                new(BoardPosition.VERTICAL.EIGHT, BoardPosition.HORIZONTAL.F),
+                new(BoardPosition.VERTICAL.EIGHT, BoardPosition.HORIZONTAL.G),
+                new(BoardPosition.VERTICAL.EIGHT, BoardPosition.HORIZONTAL.H),
             };
 
             Assert.Multiple(() =>
@@ -278,15 +276,15 @@ namespace Tests
         public void Test_BlackQueen1_IsValidMove_CannotMoveBlockedByFriendly()
         {
             ChessPiece piece = new ChessPieceQueen(ChessPiece.Color.BLACK, 1,
-                new BoardPosition(BoardPosition.VERTICAL.C, BoardPosition.HORIZONTAL.TWO));
+                new BoardPosition(BoardPosition.VERTICAL.TWO, BoardPosition.HORIZONTAL.C));
             List<BoardPosition> positions = new()
             {
-                new(BoardPosition.VERTICAL.C, BoardPosition.HORIZONTAL.FIVE),
-                new(BoardPosition.VERTICAL.C, BoardPosition.HORIZONTAL.SIX)
+                new(BoardPosition.VERTICAL.FIVE, BoardPosition.HORIZONTAL.C),
+                new(BoardPosition.VERTICAL.SIX, BoardPosition.HORIZONTAL.C)
             };
 
             // Set White Pawn on c4
-            board.SetBoardValue(new(BoardPosition.VERTICAL.C, BoardPosition.HORIZONTAL.FOUR), 11);
+            board.SetBoardValue(new(BoardPosition.VERTICAL.FOUR, BoardPosition.HORIZONTAL.C), 11);
 
             Assert.Multiple(() =>
             {
@@ -301,15 +299,15 @@ namespace Tests
         public void Test_BlackQueen1_IsValidMove_CannotMoveBlockedByEnemy()
         {
             ChessPiece piece = new ChessPieceRook(ChessPiece.Color.BLACK, 1,
-                new BoardPosition(BoardPosition.VERTICAL.C, BoardPosition.HORIZONTAL.TWO));
+                new BoardPosition(BoardPosition.VERTICAL.TWO, BoardPosition.HORIZONTAL.C));
             List<BoardPosition> positions = new()
             {
-                new(BoardPosition.VERTICAL.G, BoardPosition.HORIZONTAL.TWO),
-                new(BoardPosition.VERTICAL.H, BoardPosition.HORIZONTAL.TWO)
+                new(BoardPosition.VERTICAL.TWO, BoardPosition.HORIZONTAL.G),
+                new(BoardPosition.VERTICAL.TWO, BoardPosition.HORIZONTAL.H)
             };
 
             // Set White Pawn on c4
-            board.SetBoardValue(new(BoardPosition.VERTICAL.F, BoardPosition.HORIZONTAL.TWO), 11);
+            board.SetBoardValue(new(BoardPosition.VERTICAL.TWO, BoardPosition.HORIZONTAL.F), 11);
 
             Assert.Multiple(() =>
             {
@@ -324,17 +322,17 @@ namespace Tests
         public void Test_WhiteQueen1_IsValidMove_InvalidMoves()
         {
             ChessPiece piece = new ChessPieceQueen(ChessPiece.Color.WHITE, 1,
-                new BoardPosition(BoardPosition.VERTICAL.C, BoardPosition.HORIZONTAL.TWO));
+                new BoardPosition(BoardPosition.VERTICAL.TWO, BoardPosition.HORIZONTAL.C));
             List<BoardPosition> positions = new()
             {
-                new(BoardPosition.VERTICAL.G, BoardPosition.HORIZONTAL.THREE),
-                new(BoardPosition.VERTICAL.H, BoardPosition.HORIZONTAL.ONE),
-                new(BoardPosition.VERTICAL.A, BoardPosition.HORIZONTAL.ONE),
-                new(BoardPosition.VERTICAL.B, BoardPosition.HORIZONTAL.THREE),
-                new(BoardPosition.VERTICAL.E, BoardPosition.HORIZONTAL.FOUR),
-                new(BoardPosition.VERTICAL.F, BoardPosition.HORIZONTAL.FIVE),
-                new(BoardPosition.VERTICAL.G, BoardPosition.HORIZONTAL.SIX),
-                new(BoardPosition.VERTICAL.H, BoardPosition.HORIZONTAL.SEVEN),
+                new(BoardPosition.VERTICAL.THREE, BoardPosition.HORIZONTAL.G),
+                new(BoardPosition.VERTICAL.ONE, BoardPosition.HORIZONTAL.H),
+                new(BoardPosition.VERTICAL.ONE, BoardPosition.HORIZONTAL.A),
+                new(BoardPosition.VERTICAL.FOUR, BoardPosition.HORIZONTAL.B),
+                new(BoardPosition.VERTICAL.SEVEN, BoardPosition.HORIZONTAL.E),
+                new(BoardPosition.VERTICAL.FOUR, BoardPosition.HORIZONTAL.F),
+                new(BoardPosition.VERTICAL.FIVE, BoardPosition.HORIZONTAL.G),
+                new(BoardPosition.VERTICAL.EIGHT, BoardPosition.HORIZONTAL.H),
             };
 
             Assert.Multiple(() =>
@@ -350,8 +348,8 @@ namespace Tests
         public void Test_BlackQueen1_IsValidMove_CanCapture()
         {
             ChessPiece piece = new ChessPieceQueen(ChessPiece.Color.BLACK, 1,
-                new BoardPosition(BoardPosition.VERTICAL.B, BoardPosition.HORIZONTAL.FOUR));
-            BoardPosition b8 = new(BoardPosition.VERTICAL.B, BoardPosition.HORIZONTAL.EIGHT);
+                new BoardPosition(BoardPosition.VERTICAL.FOUR, BoardPosition.HORIZONTAL.B));
+            BoardPosition b8 = new(BoardPosition.VERTICAL.EIGHT, BoardPosition.HORIZONTAL.B);
             board.SetBoardValue(b8, 12); // white knight on B8
             Assert.That(piece.IsValidMove(board, b8), Is.True);
         }
@@ -360,8 +358,8 @@ namespace Tests
         public void Test_BlackQueen1_IsValidMove_CannotCapture()
         {
             ChessPiece piece = new ChessPieceQueen(ChessPiece.Color.BLACK, 1,
-                new BoardPosition(BoardPosition.VERTICAL.B, BoardPosition.HORIZONTAL.FOUR));
-            BoardPosition b8 = new(BoardPosition.VERTICAL.B, BoardPosition.HORIZONTAL.EIGHT);
+                new BoardPosition(BoardPosition.VERTICAL.FOUR, BoardPosition.HORIZONTAL.B));
+            BoardPosition b8 = new(BoardPosition.VERTICAL.EIGHT, BoardPosition.HORIZONTAL.B);
             board.SetBoardValue(b8, 22); // black knight on B8
             Assert.That(piece.IsValidMove(board, b8), Is.False);
         }
@@ -370,8 +368,8 @@ namespace Tests
         public void Test_BlackQueen2_IsValidMove_CanCapture()
         {
             ChessPiece piece = new ChessPieceQueen(ChessPiece.Color.BLACK, 2,
-                new BoardPosition(BoardPosition.VERTICAL.B, BoardPosition.HORIZONTAL.FOUR));
-            BoardPosition b8 = new(BoardPosition.VERTICAL.B, BoardPosition.HORIZONTAL.EIGHT);
+                new BoardPosition(BoardPosition.VERTICAL.FOUR, BoardPosition.HORIZONTAL.B));
+            BoardPosition b8 = new(BoardPosition.VERTICAL.EIGHT, BoardPosition.HORIZONTAL.B);
             board.SetBoardValue(b8, 12); // white knight on B8
             Assert.That(piece.IsValidMove(board, b8), Is.True);
         }
@@ -380,8 +378,8 @@ namespace Tests
         public void Test_BlackQueen2_IsValidMove_CannotCapture()
         {
             ChessPiece piece = new ChessPieceQueen(ChessPiece.Color.BLACK, 2,
-                new BoardPosition(BoardPosition.VERTICAL.B, BoardPosition.HORIZONTAL.FOUR));
-            BoardPosition b8 = new(BoardPosition.VERTICAL.B, BoardPosition.HORIZONTAL.EIGHT);
+                new BoardPosition(BoardPosition.VERTICAL.FOUR, BoardPosition.HORIZONTAL.B));
+            BoardPosition b8 = new(BoardPosition.VERTICAL.EIGHT, BoardPosition.HORIZONTAL.B);
             board.SetBoardValue(b8, 22); // black knight on B8
             Assert.That(piece.IsValidMove(board, b8), Is.False);
         }

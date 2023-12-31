@@ -12,26 +12,29 @@ namespace Chess
         private HORIZONTAL h_value;
         private string s_value;
 
-        public enum VERTICAL { A = 7, B = 6, C = 5, D = 4, E = 3, F = 2, G = 1, H = 0 }
-        public enum HORIZONTAL { ONE = 0, TWO = 1, THREE = 2, FOUR = 3, FIVE = 4, SIX = 5, SEVEN = 6, EIGHT = 7 }
+        // the values for VERTICAL enum are flipped - index 0 should be row 8 on chessboard, but that complicates the enum
+        // calculations too much, and its an internal implementation issue at this point
+        // if there needs to be yet another translation done, can be done in another class
+        public enum VERTICAL { ONE = 0, TWO = 1, THREE = 2, FOUR = 3, FIVE = 4, SIX = 5, SEVEN = 6, EIGHT = 7 } 
+        public enum HORIZONTAL { A = 0, B = 1, C = 2, D = 3, E = 4, F = 5, G = 6, H = 7 }
 
         public BoardPosition(VERTICAL firstIndex, HORIZONTAL secondIndex)
         {
             v_value = firstIndex;
             h_value = secondIndex;
 
-            switch (v_value)
+            switch (h_value)
             {
-                case VERTICAL.A: s_value = "A"; break;
-                case VERTICAL.B: s_value = "B"; break;
-                case VERTICAL.C: s_value = "C"; break;
-                case VERTICAL.D: s_value = "D"; break;
-                case VERTICAL.E: s_value = "E"; break;
-                case VERTICAL.F: s_value = "F"; break;
-                case VERTICAL.G: s_value = "G"; break;
-                case VERTICAL.H: s_value = "H"; break;
+                case HORIZONTAL.A: s_value = "A"; break;
+                case HORIZONTAL.B: s_value = "B"; break;
+                case HORIZONTAL.C: s_value = "C"; break;
+                case HORIZONTAL.D: s_value = "D"; break;
+                case HORIZONTAL.E: s_value = "E"; break;
+                case HORIZONTAL.F: s_value = "F"; break;
+                case HORIZONTAL.G: s_value = "G"; break;
+                case HORIZONTAL.H: s_value = "H"; break;
             }
-            s_value = s_value + ((int)secondIndex + 1).ToString();
+            s_value = s_value + ((int)firstIndex + 1).ToString();
         }
         public BoardPosition(VERTICAL firstIndex, HORIZONTAL secondIndex, string stringValue)
         {

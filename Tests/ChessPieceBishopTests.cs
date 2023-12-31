@@ -4,20 +4,20 @@ namespace Tests
 {
     public class ChessPieceBishopTests
     {
-        private ChessBoard board;
-        private BoardPosition whiteBishop1StartPosition;
-        private BoardPosition whiteBishop2StartPosition;
-        private BoardPosition blackBishop1StartPosition;
-        private BoardPosition blackBishop2StartPosition;
+        private ChessBoard board = new ChessBoard();
+        private BoardPosition whiteBishop1StartPosition = new(BoardPosition.VERTICAL.THREE, BoardPosition.HORIZONTAL.A);
+        private BoardPosition whiteBishop2StartPosition = new(BoardPosition.VERTICAL.SIX, BoardPosition.HORIZONTAL.A);
+        private BoardPosition blackBishop1StartPosition = new(BoardPosition.VERTICAL.THREE, BoardPosition.HORIZONTAL.H);
+        private BoardPosition blackBishop2StartPosition = new(BoardPosition.VERTICAL.SIX, BoardPosition.HORIZONTAL.H);
+
+        public ChessPieceBishopTests()
+        {
+            Setup();
+        }
 
         [SetUp]
         public void Setup()
         {
-            whiteBishop1StartPosition = new(BoardPosition.VERTICAL.A, BoardPosition.HORIZONTAL.THREE);
-            whiteBishop2StartPosition = new(BoardPosition.VERTICAL.A, BoardPosition.HORIZONTAL.SIX);
-            blackBishop1StartPosition = new(BoardPosition.VERTICAL.H, BoardPosition.HORIZONTAL.THREE);
-            blackBishop2StartPosition = new(BoardPosition.VERTICAL.H, BoardPosition.HORIZONTAL.SIX);
-
             board = new ChessBoard();
         }
 
@@ -59,7 +59,7 @@ namespace Tests
         public void Test_WhiteBishop1_IsValidMove_StartingMove1()
         {
             ChessPiece piece = new ChessPieceBishop(ChessPiece.Color.WHITE, 1, whiteBishop1StartPosition);
-            BoardPosition newPosition = new(BoardPosition.VERTICAL.C, BoardPosition.HORIZONTAL.ONE);
+            BoardPosition newPosition = new(BoardPosition.VERTICAL.ONE, BoardPosition.HORIZONTAL.C);
 
             Assert.That(piece.IsValidMove(board, newPosition), Is.True);
         }
@@ -68,7 +68,7 @@ namespace Tests
         public void Test_WhiteBishop1_IsValidMove_StartingMove2()
         {
             ChessPiece piece = new ChessPieceBishop(ChessPiece.Color.WHITE, 1, whiteBishop1StartPosition);
-            BoardPosition newPosition = new(BoardPosition.VERTICAL.B, BoardPosition.HORIZONTAL.FOUR);
+            BoardPosition newPosition = new(BoardPosition.VERTICAL.FOUR, BoardPosition.HORIZONTAL.B);
 
             Assert.That(piece.IsValidMove(board, newPosition), Is.True);
         }
@@ -79,18 +79,18 @@ namespace Tests
             ChessPiece piece = new ChessPieceBishop(ChessPiece.Color.WHITE, 1, whiteBishop1StartPosition);
             List<BoardPosition> positions = new()
             {
-                new(BoardPosition.VERTICAL.B, BoardPosition.HORIZONTAL.TWO),
-                new(BoardPosition.VERTICAL.C, BoardPosition.HORIZONTAL.ONE),
-                new(BoardPosition.VERTICAL.B, BoardPosition.HORIZONTAL.FOUR),
-                new(BoardPosition.VERTICAL.C, BoardPosition.HORIZONTAL.FIVE),
-                new(BoardPosition.VERTICAL.D, BoardPosition.HORIZONTAL.SIX),
-                new(BoardPosition.VERTICAL.E, BoardPosition.HORIZONTAL.SEVEN),
-                new(BoardPosition.VERTICAL.F, BoardPosition.HORIZONTAL.EIGHT),
+                new(BoardPosition.VERTICAL.TWO, BoardPosition.HORIZONTAL.B),
+                new(BoardPosition.VERTICAL.ONE, BoardPosition.HORIZONTAL.C),
+                new(BoardPosition.VERTICAL.FOUR, BoardPosition.HORIZONTAL.B),
+                new(BoardPosition.VERTICAL.FIVE, BoardPosition.HORIZONTAL.C),
+                new(BoardPosition.VERTICAL.SIX, BoardPosition.HORIZONTAL.D),
+                new(BoardPosition.VERTICAL.SEVEN, BoardPosition.HORIZONTAL.E),
+                new(BoardPosition.VERTICAL.EIGHT, BoardPosition.HORIZONTAL.F),
             };
 
             // Set White Pawns on B2 and B4 which block Bishop from moving
-            board.SetBoardValue(new(BoardPosition.VERTICAL.B, BoardPosition.HORIZONTAL.TWO), 11);
-            board.SetBoardValue(new(BoardPosition.VERTICAL.B, BoardPosition.HORIZONTAL.FOUR), 11);
+            board.SetBoardValue(new(BoardPosition.VERTICAL.TWO, BoardPosition.HORIZONTAL.B), 11);
+            board.SetBoardValue(new(BoardPosition.VERTICAL.FOUR, BoardPosition.HORIZONTAL.B), 11);
 
             Assert.Multiple(() =>
             {
@@ -107,14 +107,14 @@ namespace Tests
             ChessPiece piece = new ChessPieceBishop(ChessPiece.Color.WHITE, 1, whiteBishop1StartPosition);
             List<BoardPosition> positions = new()
             {
-                new(BoardPosition.VERTICAL.C, BoardPosition.HORIZONTAL.FIVE),
-                new(BoardPosition.VERTICAL.D, BoardPosition.HORIZONTAL.SIX),
-                new(BoardPosition.VERTICAL.E, BoardPosition.HORIZONTAL.SEVEN),
-                new(BoardPosition.VERTICAL.F, BoardPosition.HORIZONTAL.EIGHT),
+                new(BoardPosition.VERTICAL.FIVE, BoardPosition.HORIZONTAL.C),
+                new(BoardPosition.VERTICAL.SIX, BoardPosition.HORIZONTAL.D),
+                new(BoardPosition.VERTICAL.SEVEN, BoardPosition.HORIZONTAL.E),
+                new(BoardPosition.VERTICAL.EIGHT, BoardPosition.HORIZONTAL.F),
             };
 
             // Set Black Pawn on B4 which block Bishop
-            board.SetBoardValue(new(BoardPosition.VERTICAL.B, BoardPosition.HORIZONTAL.FOUR), 21);
+            board.SetBoardValue(new(BoardPosition.VERTICAL.FOUR, BoardPosition.HORIZONTAL.B), 21);
 
             Assert.Multiple(() =>
             {
@@ -129,7 +129,7 @@ namespace Tests
         public void Test_WhiteBishop1_IsValidMove_CanCapture()
         {
             ChessPiece piece = new ChessPieceBishop(ChessPiece.Color.WHITE, 1, whiteBishop1StartPosition);
-            BoardPosition d6 = new(BoardPosition.VERTICAL.D, BoardPosition.HORIZONTAL.SIX);
+            BoardPosition d6 = new(BoardPosition.VERTICAL.SIX, BoardPosition.HORIZONTAL.D);
 
             // Set Black Pawn on D6
             board.SetBoardValue(d6, 21);
@@ -141,25 +141,25 @@ namespace Tests
         [Test(Description = "Tests that white bishop can move to all of these valid locations if starting from D4")]
         public void Test_WhiteBishop1_IsValidMove_FromD4()
         {
-            ChessPiece piece = new ChessPieceBishop(ChessPiece.Color.WHITE, 1, new BoardPosition(BoardPosition.VERTICAL.D, BoardPosition.HORIZONTAL.FOUR));
+            ChessPiece piece = new ChessPieceBishop(ChessPiece.Color.WHITE, 1, new BoardPosition(BoardPosition.VERTICAL.FOUR, BoardPosition.HORIZONTAL.D));
 
             // valid positions if bishop on D4
             // C3, B2, A1, C5, B6, A7, E3, F2, G1, E5, F6, G7, H8 
             List<BoardPosition> validPositions = new()
             {
-                new(BoardPosition.VERTICAL.C, BoardPosition.HORIZONTAL.THREE),
-                new(BoardPosition.VERTICAL.B, BoardPosition.HORIZONTAL.TWO),
-                new(BoardPosition.VERTICAL.A, BoardPosition.HORIZONTAL.ONE),
-                new(BoardPosition.VERTICAL.C, BoardPosition.HORIZONTAL.FIVE),
-                new(BoardPosition.VERTICAL.B, BoardPosition.HORIZONTAL.SIX),
-                new(BoardPosition.VERTICAL.A, BoardPosition.HORIZONTAL.SEVEN),
-                new(BoardPosition.VERTICAL.E, BoardPosition.HORIZONTAL.THREE),
-                new(BoardPosition.VERTICAL.F, BoardPosition.HORIZONTAL.TWO),
-                new(BoardPosition.VERTICAL.G, BoardPosition.HORIZONTAL.ONE),
-                new(BoardPosition.VERTICAL.E, BoardPosition.HORIZONTAL.FIVE),
-                new(BoardPosition.VERTICAL.F, BoardPosition.HORIZONTAL.SIX),
-                new(BoardPosition.VERTICAL.G, BoardPosition.HORIZONTAL.SEVEN),
-                new(BoardPosition.VERTICAL.H, BoardPosition.HORIZONTAL.EIGHT)
+                new(BoardPosition.VERTICAL.THREE, BoardPosition.HORIZONTAL.C),
+                new(BoardPosition.VERTICAL.TWO, BoardPosition.HORIZONTAL.B),
+                new(BoardPosition.VERTICAL.ONE, BoardPosition.HORIZONTAL.A),
+                new(BoardPosition.VERTICAL.FIVE, BoardPosition.HORIZONTAL.C),
+                new(BoardPosition.VERTICAL.SIX, BoardPosition.HORIZONTAL.B),
+                new(BoardPosition.VERTICAL.SEVEN, BoardPosition.HORIZONTAL.A),
+                new(BoardPosition.VERTICAL.THREE, BoardPosition.HORIZONTAL.E),
+                new(BoardPosition.VERTICAL.TWO, BoardPosition.HORIZONTAL.F),
+                new(BoardPosition.VERTICAL.ONE, BoardPosition.HORIZONTAL.G),
+                new(BoardPosition.VERTICAL.FIVE, BoardPosition.HORIZONTAL.E),
+                new(BoardPosition.VERTICAL.SIX, BoardPosition.HORIZONTAL.F),
+                new(BoardPosition.VERTICAL.SEVEN, BoardPosition.HORIZONTAL.G),
+                new(BoardPosition.VERTICAL.EIGHT, BoardPosition.HORIZONTAL.H)
             };
 
             Assert.Multiple(() =>
