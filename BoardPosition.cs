@@ -10,12 +10,9 @@ namespace Chess
     {
         private VERTICAL v_value;
         private HORIZONTAL h_value;
-        private string s_value;
+        private string s_value = "";
 
-        // the values for VERTICAL enum are flipped - index 0 should be row 8 on chessboard, but that complicates the enum
-        // calculations too much, and its an internal implementation issue at this point
-        // if there needs to be yet another translation done, can be done in another class
-        public enum VERTICAL { ONE = 0, TWO = 1, THREE = 2, FOUR = 3, FIVE = 4, SIX = 5, SEVEN = 6, EIGHT = 7 } 
+        public enum VERTICAL { ONE = 7, TWO = 6, THREE = 5, FOUR = 4, FIVE = 3, SIX = 2, SEVEN = 1, EIGHT = 0 } 
         public enum HORIZONTAL { A = 0, B = 1, C = 2, D = 3, E = 4, F = 5, G = 6, H = 7 }
 
         public BoardPosition(VERTICAL firstIndex, HORIZONTAL secondIndex)
@@ -34,7 +31,17 @@ namespace Chess
                 case HORIZONTAL.G: s_value = "G"; break;
                 case HORIZONTAL.H: s_value = "H"; break;
             }
-            s_value = s_value + ((int)firstIndex + 1).ToString();
+            switch (v_value)
+            {
+                case VERTICAL.EIGHT: s_value += "8"; break;
+                case VERTICAL.SEVEN: s_value += "7"; break;
+                case VERTICAL.SIX: s_value += "6"; break;
+                case VERTICAL.FIVE: s_value += "5"; break;
+                case VERTICAL.FOUR: s_value += "4"; break;
+                case VERTICAL.THREE: s_value += "3"; break;
+                case VERTICAL.TWO: s_value += "2"; break;
+                case VERTICAL.ONE: s_value += "1"; break;
+            }
         }
         public BoardPosition(VERTICAL firstIndex, HORIZONTAL secondIndex, string stringValue)
         {

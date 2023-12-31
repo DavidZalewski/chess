@@ -22,7 +22,7 @@ namespace Chess
             // TODO: embessen move check
             // TODO: handle promotions
 
-            if (verticalDistance == -1)
+            if (verticalDistance == 1)
             {
                 if (_currentPosition.HorizontalValue == position.HorizontalValue) 
                 {
@@ -46,7 +46,7 @@ namespace Chess
                 }
             }
             // if the pawn hasn't moved yet, it can jump 2 squares instead of 1
-            else if (verticalDistance == -2 && (_currentPosition.Equals(_startingPosition)))
+            else if (verticalDistance == 2 && (_currentPosition.Equals(_startingPosition)))
             {
                 if (_currentPosition.HorizontalValue == position.HorizontalValue)
                     return true;
