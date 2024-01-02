@@ -189,16 +189,5 @@ namespace Tests
             BoardPosition badPosition = new BoardPosition(BoardPosition.VERTICAL.EIGHT, BoardPosition.HORIZONTAL.E);
             Assert.That(piece.IsValidMove(board, badPosition), Is.False);
         }
-
-        [Test(Description = "Tests that the black pawn can be successfully promoted into a black queen piece")]
-        public void Test_BlackPawn_PromotePawn_Success()
-        {
-            // Create White Pawn at D4
-            BoardPosition boardPosition = new BoardPosition(BoardPosition.VERTICAL.FOUR, BoardPosition.HORIZONTAL.H);
-            ChessPiece piece = new ChessPieceBlackPawn(1, boardPosition);
-            Assert.That(false, Is.True); // not implemented test, requires creation of additional piece sub classes
-            Assert.That(piece.PromotePawn<ChessPiece>((ChessPieceBlackPawn)piece, piece), Is.False);
-        }
-
     }
 }
