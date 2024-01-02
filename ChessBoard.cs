@@ -109,5 +109,10 @@ namespace Chess
                 throw new Exception("Invalid Number Position provided");
             }
         }
+
+        internal void InternalTestOnly_SetBoard(int[,] boardValue)
+        {
+            _board = boardValue;
+        }
     }
 }

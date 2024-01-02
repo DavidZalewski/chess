@@ -97,8 +97,8 @@ namespace Chess
             List<ChessPiece> chessPieces = new();
             BoardPosition d1 = new(BoardPosition.VERTICAL.ONE, BoardPosition.HORIZONTAL.D);
             BoardPosition e1 = new(BoardPosition.VERTICAL.ONE, BoardPosition.HORIZONTAL.E);
-            chessPieces.Add(new ChessPieceQueen(ChessPiece.Color.WHITE, 1, d1));
-            chessPieces.Add(new ChessPieceKing(ChessPiece.Color.WHITE, 1, e1));
+            chessPieces.Add(new ChessPieceQueen(ChessPiece.Color.WHITE, 1, d1)); // queen needs id exposed in case of pawn promotion
+            chessPieces.Add(new ChessPieceKing(ChessPiece.Color.WHITE, e1));
             return chessPieces;
         }
 
@@ -107,8 +107,8 @@ namespace Chess
             List<ChessPiece> chessPieces = new();
             BoardPosition d8 = new(BoardPosition.VERTICAL.EIGHT, BoardPosition.HORIZONTAL.D);
             BoardPosition e8 = new(BoardPosition.VERTICAL.EIGHT, BoardPosition.HORIZONTAL.E);
-            chessPieces.Add(new ChessPieceQueen(ChessPiece.Color.BLACK, 1, d8));
-            chessPieces.Add(new ChessPieceKing(ChessPiece.Color.BLACK, 1, e8));
+            chessPieces.Add(new ChessPieceQueen(ChessPiece.Color.BLACK, 1, d8)); // queen needs id exposed in case of pawn promotion
+            chessPieces.Add(new ChessPieceKing(ChessPiece.Color.BLACK, e8));
             return chessPieces;
         }
 
