@@ -4,6 +4,38 @@ namespace Tests
 {
     public class BoardPositionTests
     {
+        public int SplitIntegerGetFirstValue(int value)
+        {
+            return value / 10;
+        }
+
+        public int SplitIntegerGetSecondValue(int value)
+        {
+            return value % 10;
+        }
+
+        [TestCase(73, 7)]
+        [TestCase(85, 8)]
+        [TestCase(66, 6)]
+        [TestCase(59, 5)]
+        [TestCase(11, 1)]
+        [TestCase(8, 0)]
+        public void Test_SplitIntegerGetFirstValue(int value, int expected)
+        {
+            Assert.That(SplitIntegerGetFirstValue(value), Is.EqualTo(expected));
+        }
+
+        [TestCase(73, 3)]
+        [TestCase(85, 5)]
+        [TestCase(66, 6)]
+        [TestCase(59, 9)]
+        [TestCase(11, 1)]
+        [TestCase(8, 8)]
+        public void Test_SplitIntegerGetSecondValue(int value, int expected)
+        {
+            Assert.That(SplitIntegerGetSecondValue(value), Is.EqualTo(expected));
+        }
+
         [Test]
         public void Test_ConstructBoardPosition_Success()
         {
@@ -34,6 +66,64 @@ namespace Tests
             Assert.That(boardPosition, Is.Not.Null);
             Assert.That(boardPosition.StringValue, Is.EqualTo("A1"));
         }
+
+        [TestCase("A1", 70)]
+        [TestCase("A2", 60)]
+        [TestCase("A3", 50)]
+        [TestCase("A4", 40)]
+        [TestCase("A5", 30)]
+        [TestCase("A6", 20)]
+        [TestCase("A7", 10)]
+        [TestCase("A8", 00)]
+        [TestCase("B1", 71)]
+        [TestCase("B2", 61)]
+        [TestCase("B3", 51)]
+        [TestCase("B4", 41)]
+        [TestCase("B5", 31)]
+        [TestCase("B6", 21)]
+        [TestCase("B7", 11)]
+        [TestCase("B8", 01)]
+        [TestCase("C1", 72)]
+        [TestCase("C2", 62)]
+        [TestCase("C3", 52)]
+        [TestCase("C4", 42)]
+        [TestCase("C5", 32)]
+        [TestCase("C6", 22)]
+        [TestCase("C7", 12)]
+        [TestCase("C8", 02)]
+        [TestCase("D4", 43)]
+        [TestCase("E3", 54)]
+        [TestCase("F6", 25)]
+        [TestCase("G7", 16)]
+        [TestCase("H5", 37)]
+        public void Test_ConstructBoardPositionFromString_Success(string position, int expectedIndexValues)
+        {
+            BoardPosition boardPosition = new(position);
+            int firstIndex = SplitIntegerGetFirstValue(expectedIndexValues);
+            int secondIndex = SplitIntegerGetSecondValue(expectedIndexValues);
+
+            Assert.Multiple(() =>
+            {
+                Assert.That(boardPosition.VerticalValue, Is.EqualTo((BoardPosition.VERTICAL)firstIndex));
+                Assert.That(boardPosition.HorizontalValue, Is.EqualTo((BoardPosition.HORIZONTAL)secondIndex));
+            });
+        }
+
+
+        [TestCase("X2")]
+        [TestCase("")]
+        [TestCase("__")]
+        [TestCase("99")]
+        [TestCase("AA")]
+        [TestCase("11")]
+        [TestCase("1A")]
+        [TestCase("A")]
+        [TestCase("1")]
+        public void Test_GetBoardPositionExceptionThrown(string position)
+        {
+            Assert.Throws<Exception>(() => new BoardPosition(position));
+        }
+
 
         [Test]
         public void Test_CopyConstructBoardPosition_Success()

@@ -1,0 +1,75 @@
+There are several ways in which a King can be put into check
+
+1. The opponent has moved a piece which on the next turn could capture the king (Opponent piece IsValidMove(king.currentposition)
+2. The king could be moved somewhere that would put it in check (King moves to new position; there an opponent piece where IsValidMove(king.newposition)
+3. The player has a king that is pinned, and when they try to move the piece that blocks the check, they are in check (Opponent piece IsValidMove(king.currentposition))
+
+There almost needs to be an event that is called each time a move is being made (just before the move is committed)
+Where a callback function IsKingInCheck is called, which looks at two scenarios:
+	-- Is the King moving to a new position? 
+			-- if yes -> is there any black piece that IsValidMove(newposition) can capture the King?
+			-- if no;
+	-- Was a different piece moved?
+			-- if yes -> is there any black piece that IsValidMove(king.currentposition) can capture the King?
+			
+This technically can be done inside the ChessPieceKing class, it would just mean that the ChessPieceKing has information about other ChessPiece classes inside it 
+It's a bit strange having a ChessPiece hold a list of other chesspieces inside itself, but I could pass these as arguments to the function instead
+
+Or this can be done as a separate stand alone service (KingCheckService) that is solely responsible for handling this logic and fed into the GameController
+
+Approximate flow would be:
+
+GameController.new(ChessBoard, ChessPieceFactory.CreatePieces())
+GameController.StartGame() // initializes board
+// Console output:
+// Game Started. White to move. (ie. WP8 H4)
+// User inputs: WP4 D4
+GameController.HandleInput("WP4 D4")
+	-> split string into two 
+		-> "WP4" deciphered to refer to WhitePawn with index 4.
+			--> If piece exists in list (hasn't been captured) and the piece color matches the turn players color (odd turns == WHITE, even turns == BLACK)
+				--> Create BoardPosition object out of "D4"
+				--> call WhitePawn4.IsValidMove(D4BoardPosition)
+				--> if true, the move is valid
+					--> WhiteKing.InCheck()?
+						--> If the White King is in check
+							--> Write to console: "This is not a valid move. The King would be in check. Please try again."
+							--> Back to GameController.HandleInput()
+					--> BlackKing.InCheck()?
+						--> If the Black King is in check 
+							--> Write to console: Black King is in check by {ChessPiece} at {Position}
+					--> call WhitePawn4.Move(D4BoardPosition)
+					--> create Turn object and store in list of turns
+					--> Increment the TurnNumber
+					--> Write to console the chessboard with its new state
+						--> ie: |*A*|*B*|*C*|*D*|*E*|*F*|*G*|*H*|
+						       ----------------------------------
+						       8|BR1|BK1|BB1|BQ1|BKG|BB2|BK2|BR2|
+							   7|BP1|BP2|BP3|BP4|BP5|BP6|BP7|BP8|
+							   6|*A6|*B6|*C6|*D6|*E6|*F6|*G6|*H6|
+							   5|*A5|*B5|*C5|*D5|*E5|*F5|*G5|*H5|
+							   4|*A4|*B4|*C4|WP4|*E4|*F4|*G4|*H4|
+							   3|*A3|*B3|*C3|*D3|*E3|*F3|*G3|*H3|
+							   2|WP1|WP2|WP3|*D2|WP5|WP6|WP7|WP8|
+							   1|WR1|WK1|WB1|WQ1|WKG|WB2|WK2|WR2|
+							   // can I change console color, to make it easier to read the board?
+				--> if false, the move is invalid
+					--> Write message to console: "This is not a valid move. Please try again."
+					--> Back to GameController.HandleInput() // wait for input from user
+			
+
+IsCheckMate function
+
+This is going to be the most challenging to implement. It requires not only looking at whether the King can make any valid moves itself to escape a check, but whether 
+there exists any move that any other friendly piece can make, which would block the check from the piece that is checking the king 
+
+Logic may roughly be as follows:
+- Determine how many pieces are currently putting the king in check (Is it one, or many?)
+- Based on what piece(s) have put the king in check, we need to look at all the possible squares these pieces can move (such as like a bishop, or rook ,or knight)
+- and see if another friendly piece can be moved to one of these positions, which would block the check 
+
+Ie. A Black King is in check by both A White Rook and a White Bishop
+- Find these two pieces which have put the king in check from the list of pieces 
+- Find out all the possible squares leading to the King that these pieces can move (ie. A bishop may be 5 squares away from the King, we need to find all these positions)
+- Iterate over all these positions, and iterate over all friendly pieces, if there is a IsValidMove(position) that can be made 
+- If there is, the king is not in CheckMate; another piece can be used to block 

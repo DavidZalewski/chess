@@ -57,6 +57,64 @@ namespace Chess
             this.s_value = other.s_value;
         }
 
+        public BoardPosition(String pos)
+        {
+            if (pos != null && pos.Length == 2)
+            {
+                char alpha = pos[0];
+                try
+                {
+                    int num = (int)char.GetNumericValue(pos[1]);
+                    BoardPosition bp = GetBoardPosition(alpha, num);
+                    v_value = bp.v_value;
+                    h_value = bp.h_value;
+                    s_value = bp.s_value;
+                }
+                catch (Exception ex)
+                {
+                    throw new Exception("Invalid argument provided for pos: " + pos, ex);
+                }
+            }
+            else
+            {
+                throw new Exception("Invalid argument provided for pos (value is null or length != 2: " + pos);
+            }
+        }
+
+        private BoardPosition GetBoardPosition(char alpha, int num)
+        {
+            int firstIndex = -1;
+            int secondIndex = -1;
+            switch (alpha)
+            {
+                case 'A': secondIndex = 0; break;
+                case 'B': secondIndex = 1; break;
+                case 'C': secondIndex = 2; break;
+                case 'D': secondIndex = 3; break;
+                case 'E': secondIndex = 4; break;
+                case 'F': secondIndex = 5; break;
+                case 'G': secondIndex = 6; break;
+                case 'H': secondIndex = 7; break;
+                default: throw new Exception("Invalid Alpha Position provided");
+            }
+
+            switch (num)
+            {
+                case 1: firstIndex = 7; break;
+                case 2: firstIndex = 6; break;
+                case 3: firstIndex = 5; break;
+                case 4: firstIndex = 4; break;
+                case 5: firstIndex = 3; break;
+                case 6: firstIndex = 2; break;
+                case 7: firstIndex = 1; break;
+                case 8: firstIndex = 0; break;
+                default: throw new Exception("Invalid Num Position provided");
+            }
+
+            return new BoardPosition((BoardPosition.VERTICAL)firstIndex, (BoardPosition.HORIZONTAL)secondIndex, new string(alpha + num.ToString()));
+        }
+
+
         public VERTICAL VerticalValue { get { return v_value; } }
         public int VerticalValueAsInt { get { return (int)v_value;} }
         public HORIZONTAL HorizontalValue { get { return h_value;} }

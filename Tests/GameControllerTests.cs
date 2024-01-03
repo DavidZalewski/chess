@@ -7,7 +7,7 @@ namespace Tests
         [Test]
         public void Test_ConstructGameController_Success()
         {
-
+            Assert.Fail("Not implemented yet");
         }
     }
 }

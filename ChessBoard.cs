@@ -64,54 +64,6 @@ namespace Chess
                 return value > 20 && value < 30;
         }
 
-        public BoardPosition GetBoardPosition(String pos)
-        {
-            if (pos != null && pos.Length == 2)
-            {
-                char alpha = pos[0];
-                try
-                {
-                    int num = (int)char.GetNumericValue(pos[1]);
-                    return GetBoardPosition(alpha, num);
-                }
-                catch (Exception ex)
-                {
-                    throw new Exception("Invalid argument provided for pos: " + pos, ex);
-                }
-            }
-            else
-            {
-                throw new Exception("Invalid argument provided for pos (value is null or length != 2: " + pos);
-            }
-        }
-
-        // not sure yet if this method needs to exist here, or be moved into another class, but for now keep it here
-        // for now keep this method, but the arguments may change later
-        public BoardPosition GetBoardPosition(char alpha, int num) {
-            int firstIndex = -1;
-            switch (alpha)
-            {
-                case 'A': firstIndex = 7; break;
-                case 'B': firstIndex = 6; break;
-                case 'C': firstIndex = 5; break;
-                case 'D': firstIndex = 4; break;
-                case 'E': firstIndex = 3; break;
-                case 'F': firstIndex = 2; break;
-                case 'G': firstIndex = 1; break;
-                case 'H': firstIndex = 0; break;
-                default: throw new Exception("Invalid Alpha Position provided");
-            }
-
-            if (num >= 1 && num <= 8)
-            {
-                return new BoardPosition((BoardPosition.VERTICAL)firstIndex, (BoardPosition.HORIZONTAL)num - 1, new string(alpha + num.ToString()));
-            }
-            else
-            {
-                throw new Exception("Invalid Number Position provided");
-            }
-        }
-
         internal void InternalTestOnly_SetBoard(int[,] boardValue)
         {
             _board = boardValue;
