@@ -1,7 +1,6 @@
 using Chess.Board;
 using Chess.Pieces;
 using Chess.Services;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Tests.Board
 {
@@ -26,6 +25,8 @@ namespace Tests.Board
                 Assert.That(board1, Is.Not.Null);
                 Assert.That(board2, Is.Not.Null);
                 Assert.That(board1, Is.Not.EqualTo(board2));
+                Assert.That(board1.GetBoard(), Is.EqualTo(board2.GetBoard()));
+                Assert.That(Object.ReferenceEquals(board1.GetBoard(),board2.GetBoard()), Is.False);
             });
         }
 

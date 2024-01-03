@@ -67,65 +67,82 @@ namespace Tests.Services
             });
         }
 
-        [Test(Description = "Tests that both white king and black king on their starting squares with no other pieces on board can move until a point where both would be in check from each other")]
-        public void Test_IsKingInCheck_UntilKingsWouldCheckEachOther()
+        [Test(Description = "Test where White Bishop on C1 has Pinned black king on G5 with black knight on F4; Moving Knight to any other position would put King in check from Bishop")]
+        public void Test_IsKingInCheck_WhiteBishopPinsBlackKingAndKnight()
         {
-            ChessPiece whiteKingPiece = new ChessPieceKing(ChessPiece.Color.WHITE, new(BoardPosition.VERTICAL.ONE, BoardPosition.HORIZONTAL.E));
-            ChessPiece blackKingPiece = new ChessPieceKing(ChessPiece.Color.BLACK, new(BoardPosition.VERTICAL.EIGHT, BoardPosition.HORIZONTAL.E));
+            ChessPiece whiteKingPiece = new ChessPieceKing(ChessPiece.Color.WHITE, new("A1"));
+            ChessPiece whiteBishopPiece = new ChessPieceBishop(ChessPiece.Color.WHITE, 2, new("C1"));
+            ChessPiece blackKingPiece = new ChessPieceKing(ChessPiece.Color.BLACK, new("G5"));
+            ChessPiece blackKnightPiece = new ChessPieceKnight(ChessPiece.Color.BLACK, 1, new("F4"));
+
+            List<ChessPiece> chessPieces = new() 
+            { 
+                whiteBishopPiece, whiteKingPiece, blackKnightPiece, blackKingPiece 
+            };
 
             ChessBoard chessBoard = new();
-            chessBoard.SetBoardValue(new BoardPosition(BoardPosition.VERTICAL.EIGHT, BoardPosition.HORIZONTAL.E), 26);
-            chessBoard.SetBoardValue(new BoardPosition(BoardPosition.VERTICAL.ONE, BoardPosition.HORIZONTAL.E), 16);
+            chessBoard.PopulateBoard(chessPieces);
 
-            BoardPosition e2 = new(BoardPosition.VERTICAL.TWO, BoardPosition.HORIZONTAL.E);
-            BoardPosition e3 = new(BoardPosition.VERTICAL.THREE, BoardPosition.HORIZONTAL.E);
-            BoardPosition e4 = new(BoardPosition.VERTICAL.FOUR, BoardPosition.HORIZONTAL.E);
+            List<BoardPosition> validKnightPositions = new()
+            {
+                new("D5"), new("E6"), new("D3"), new("E2"), 
+                new("G2"), new("H3"), new("H5"), new("G6")
+            };
+            List<Turn> possibleKnightTurns = new();
 
-            BoardPosition e7 = new(BoardPosition.VERTICAL.SEVEN, BoardPosition.HORIZONTAL.E);
-            BoardPosition d6 = new(BoardPosition.VERTICAL.SIX, BoardPosition.HORIZONTAL.D);
-            BoardPosition d5 = new(BoardPosition.VERTICAL.FIVE, BoardPosition.HORIZONTAL.D);
+            // ideally we shouldn't be testing the knight in this test suite, but since we cant be 100% confident these values
+            // are what we expect them to be, might as well make sure this part of the test is not broken
+            Assert.Multiple(() =>
+            {
+                foreach (BoardPosition position in validKnightPositions)
+                {
+                    Assert.That(blackKnightPiece.IsValidMove(chessBoard, position), Is.True);
+                    possibleKnightTurns.Add(new(2, blackKnightPiece, position, chessBoard));
+                }
+            });
+
+            // Construct kingCheckService
+            KingCheckService kingCheckService = new(chessBoard, chessPieces);
 
             Assert.Multiple(() =>
             {
-                // White King moves from E1 to E2
-                Assert.That(whiteKingPiece.IsValidMove(chessBoard, e2), Is.True);
-                whiteKingPiece.Move(chessBoard, e2);
-                // Black King moves from E8 to E7
-                Assert.That(blackKingPiece.IsValidMove(chessBoard, e7), Is.True);
-                blackKingPiece.Move(chessBoard, e7);
-                // White King moves from E2 to E3
-                Assert.That(whiteKingPiece.IsValidMove(chessBoard, e3), Is.True);
-                whiteKingPiece.Move(chessBoard, e3);
-                // Black King moves from E7 to D6
-                Assert.That(blackKingPiece.IsValidMove(chessBoard, d6), Is.True); // black king moves diagonally in this test case
-                blackKingPiece.Move(chessBoard, d6);
-                // White King moves from E3 to E4
-                Assert.That(whiteKingPiece.IsValidMove(chessBoard, e4), Is.True);
-                whiteKingPiece.Move(chessBoard, e4);
-
-                // Black King Cannot move to D4 as it would be in check from the White King at E4
-                Assert.That(blackKingPiece.IsValidMove(chessBoard, d5), Is.False);
+                foreach (Turn turn in possibleKnightTurns)
+                {
+                    Assert.That(kingCheckService.IsKingInCheck(turn), Is.True, turn.NewPosition.StringValue);
+                }
             });
         }
 
-        // for this test to pass, it requires that the king piece can iterate over all other pieces on the board and check 
-        // if those pieces put it in check
-        // because the king is a ChessPiece object itself, does it make sense for it to hold a collection of other ChessPiece
-        // objects to test for this?
-        // or should this be handled in another class, such as the GameController class, which would keep track of pieces on
-        // the board and can perform this kind of logic check?
-        [Test(Description = "Tests that a white king on E1 cannot move to D1 as there is a black rook on D8 that would put it in check")]
+        [Test(Description = "Tests that a white king on E1 cannot move to D1 or D2 as there is a black rook on D8 that would put it in check")]
         public void Test_IsKingInCheck_WouldBeCheckedByBlackRookOnD8()
         {
-            ChessPiece whiteKingPiece = new ChessPieceKing(ChessPiece.Color.WHITE, new(BoardPosition.VERTICAL.ONE, BoardPosition.HORIZONTAL.E));
+            ChessPiece whiteKingPiece = new ChessPieceKing(ChessPiece.Color.WHITE, new("E1"));
+            ChessPiece blackKingPiece = new ChessPieceKing(ChessPiece.Color.BLACK, new("H8"));
+            ChessPiece blackRookPiece = new ChessPieceRook(ChessPiece.Color.BLACK, 1, new("D8"));
+            List<ChessPiece> chessPieces = new()
+            {
+                whiteKingPiece, blackRookPiece, blackKingPiece
+            };
 
             ChessBoard chessBoard = new();
-            // Black Rook on D8
-            chessBoard.SetBoardValue(new BoardPosition(BoardPosition.VERTICAL.EIGHT, BoardPosition.HORIZONTAL.D), 24);
-            // White King on E1
-            chessBoard.SetBoardValue(new BoardPosition(BoardPosition.VERTICAL.ONE, BoardPosition.HORIZONTAL.E), 16);
+            chessBoard.PopulateBoard(chessPieces);
 
-            Assert.That(whiteKingPiece.IsValidMove(chessBoard, new(BoardPosition.VERTICAL.ONE, BoardPosition.HORIZONTAL.D)), Is.False);
+            // Construct kingCheckService
+            KingCheckService kingCheckService = new(chessBoard, chessPieces);
+
+            Turn moveKingToD1 = new(5, whiteKingPiece, new("D1"), chessBoard);
+            Turn moveKingToD2 = new(5, whiteKingPiece, new("D2"), chessBoard);
+
+            Assert.Multiple(() =>
+            {
+                // technically the move is valid, because IsValidMove does not check if kings are in check
+                Assert.That(whiteKingPiece.IsValidMove(chessBoard, new("D1")), Is.True);
+                Assert.That(whiteKingPiece.IsValidMove(chessBoard, new("D2")), Is.True);
+
+                // check that this puts the king in check from the rook
+                Assert.That(kingCheckService.IsKingInCheck(moveKingToD1), Is.True);
+                Assert.That(kingCheckService.IsKingInCheck(moveKingToD2), Is.True);
+            });
         }
 
 

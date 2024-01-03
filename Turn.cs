@@ -30,6 +30,7 @@ namespace Chess
             _previousPosition = previousPosition;
             _newPosition = newPosition;
             _chessBoard = new ChessBoard(chessBoard); // copy state of board
+            piece.Move(_chessBoard, _newPosition); // update the board to reflect latest state
             if (turnNumber % 2 == 0)
             {
                 _playerTurn = Color.BLACK;
@@ -37,7 +38,25 @@ namespace Chess
             else
             {
                 _playerTurn = Color.WHITE;
+            }  
+        }
+
+        public Turn(int turnNumber, ChessPiece piece, BoardPosition newPosition, ChessBoard chessBoard)
+        {
+            _turnNumber = turnNumber;
+            _piece = piece; // copy constructor here, what if piece is captured later? this reference becomes null
+            _previousPosition = piece.GetCurrentPosition();
+            _newPosition = newPosition;
+            _chessBoard = new ChessBoard(chessBoard); // copy state of board
+            piece.Move(_chessBoard, _newPosition); // update the board to reflect current state
+            if (turnNumber % 2 == 0)
+            {
+                _playerTurn = Color.BLACK;
             }
+            else
+            {
+                _playerTurn = Color.WHITE;
+            }      
         }
 
         public int TurnNumber { get { return _turnNumber; } }

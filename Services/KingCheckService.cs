@@ -62,7 +62,7 @@ namespace Chess.Services
             // then the king would be put in check if it moved to this position
             foreach (ChessPiece piece in opponentPieces)
             {
-                if (piece.IsValidMove(_chessBoard, positionToCheck))
+                if (piece.IsValidMove(turnToBeMade.ChessBoard, positionToCheck))
                     return true; // The King is in check from something
             }
 

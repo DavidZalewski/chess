@@ -172,5 +172,14 @@ namespace Tests.Pieces
             });
         }
 
+        [Test(Description = "Tests that white bishop can move from C1 to G5 with pieces on board not in its path")]
+        public void Test_WhiteBishop1_IsValidMove_FromC1ToG5()
+        {
+            ChessPiece piece = new ChessPieceBishop(ChessPiece.Color.WHITE, 1, new("C1"));
+            board.SetBoardValue(new("D3"), 22);
+            board.SetBoardValue(new("E2"), 23);
+            Assert.That(piece.IsValidMove(board, new("G5")), Is.True);
+        }
+
     }
 }

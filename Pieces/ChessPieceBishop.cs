@@ -74,56 +74,43 @@ namespace Chess.Pieces
 
             if (operation == "--")
             {
-                for (int i = v1; i > v2; i--)
+                for (int i = v1, j = h1; i > v2; i--, j--)
                 {
-                    for (int j = h1; j > h2; j--)
+                    if (!isCurrentPositionIfSoSkip(i, j) && isPieceBlockingPath(i, j))
                     {
-                        if (!isCurrentPositionIfSoSkip(i, j) && isPieceBlockingPath(i, j))
-                        {
-                            return false;
-                        }
+                        return false;
                     }
                 }
             }
             else if (operation == "-+")
             {
-                for (int i = v1; i > v2; i--)
+                for (int i = v1, j = h1; i > v2; i--, j++)
                 {
-                    for (int j = h1; j < h2; j++)
+                    if (!isCurrentPositionIfSoSkip(i, j) && isPieceBlockingPath(i, j))
                     {
-                        if (!isCurrentPositionIfSoSkip(i, j) && isPieceBlockingPath(i, j))
-                        {
-                            return false;
-                        }
+                        return false;
                     }
                 }
             }
             else if (operation == "++")
             {
-                for (int i = v1; i < v2; i++)
+                for (int i = v1, j = h1; i < v2; i++, j++)
                 {
-                    for (int j = h1; j < h2; j++)
+                    if (!isCurrentPositionIfSoSkip(i, j) && isPieceBlockingPath(i, j))
                     {
-                        if (!isCurrentPositionIfSoSkip(i, j) && isPieceBlockingPath(i, j))
-                        {
-                            return false;
-                        }
+                        return false;
                     }
                 }
             }
             else if (operation == "+-")
             {
-                for (int i = v1; i < v2; i++)
+                for (int i = v1, j = h1; i < v2; i++, j--)
                 {
-                    for (int j = h1; j > h2; j--)
+                    if (!isCurrentPositionIfSoSkip(i, j) && isPieceBlockingPath(i, j))
                     {
-                        if (!isCurrentPositionIfSoSkip(i, j) && isPieceBlockingPath(i, j))
-                        {
-                            return false;
-                        }
+                        return false;
                     }
                 }
-
             }
 
             // if we didnt return false on any of the branches, then there are no pieces blocking our path

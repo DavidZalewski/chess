@@ -119,7 +119,7 @@ namespace Tests.Board
         [TestCase("1A")]
         [TestCase("A")]
         [TestCase("1")]
-        public void Test_GetBoardPositionExceptionThrown(string position)
+        public void Test_ConstructBoardPosition_ExceptionThrown(string position)
         {
             Assert.Throws<Exception>(() => new BoardPosition(position));
         }
@@ -143,8 +143,8 @@ namespace Tests.Board
         [Test]
         public void Test_BoardPositions_Are_Equal()
         {
-            BoardPosition boardPosition1 = new BoardPosition(BoardPosition.VERTICAL.ONE, BoardPosition.HORIZONTAL.A);
-            BoardPosition boardPosition2 = new BoardPosition(BoardPosition.VERTICAL.ONE, BoardPosition.HORIZONTAL.A);
+            BoardPosition boardPosition1 = new(BoardPosition.VERTICAL.ONE, BoardPosition.HORIZONTAL.A);
+            BoardPosition boardPosition2 = new(BoardPosition.VERTICAL.ONE, BoardPosition.HORIZONTAL.A);
             Assert.That(boardPosition1.EqualTo(boardPosition2));
         }
 

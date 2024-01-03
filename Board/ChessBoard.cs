@@ -31,7 +31,7 @@ namespace Chess.Board
 
         public ChessBoard(ChessBoard other)
         {
-            _board = other._board;
+            _board = other._board.Clone() as int[,];
         }
 
         public int[,] GetBoard() { return _board; }
