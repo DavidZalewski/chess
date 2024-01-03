@@ -1,6 +1,9 @@
 ﻿using Chess;
+using Chess.Board;
+using Chess.Pieces;
+using Chess.Services;
 
-namespace Tests
+namespace Tests.Services
 {
     public class KingCheckServiceTests
     {
@@ -27,7 +30,7 @@ namespace Tests
             // Construct Turn objects - this doesnt seem right - the board state doesnt match the turn description
             Turn whiteKingTurnD4 = new(9, whiteKingPiece, new BoardPosition("E3"), new BoardPosition("D4"), chessBoard);
             Turn whiteKingTurnE4 = new(9, whiteKingPiece, new BoardPosition("E3"), new BoardPosition("E4"), chessBoard);
-            
+
             // Construct kingCheckService
             KingCheckService kingCheckService = new(chessBoard, new List<ChessPiece>() { whiteKingPiece, blackKingPiece });
 

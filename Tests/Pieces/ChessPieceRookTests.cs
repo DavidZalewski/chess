@@ -1,7 +1,8 @@
-﻿using Chess;
-using static Chess.ChessPiece;
+﻿using Chess.Board;
+using Chess.Pieces;
+using static Chess.Pieces.ChessPiece;
 
-namespace Tests
+namespace Tests.Pieces
 {
     public class ChessPieceRookTests
     {
@@ -41,8 +42,8 @@ namespace Tests
                 Assert.That(piece.GetCurrentPosition(), Is.EqualTo(a1));
                 Assert.That(piece.GetRealValue(), Is.EqualTo(14)); // 14 is rook
                 Assert.That(piece.GetId(), Is.EqualTo(1));
-                Assert.That(piece.GetColor(), Is.EqualTo(ChessPiece.Color.WHITE));
-                Assert.That(piece.GetPiece(), Is.EqualTo(ChessPiece.Piece.ROOK));
+                Assert.That(piece.GetColor(), Is.EqualTo(Color.WHITE));
+                Assert.That(piece.GetPiece(), Is.EqualTo(Piece.ROOK));
             });
         }
 
@@ -80,7 +81,7 @@ namespace Tests
             {
                 new(BoardPosition.VERTICAL.ONE, BoardPosition.HORIZONTAL.D),
                 new(BoardPosition.VERTICAL.TWO, BoardPosition.HORIZONTAL.D),
-                new(BoardPosition.VERTICAL.THREE, BoardPosition.HORIZONTAL.D),      
+                new(BoardPosition.VERTICAL.THREE, BoardPosition.HORIZONTAL.D),
                 new(BoardPosition.VERTICAL.FIVE, BoardPosition.HORIZONTAL.D),
                 new(BoardPosition.VERTICAL.SIX, BoardPosition.HORIZONTAL.D),
                 new(BoardPosition.VERTICAL.SEVEN, BoardPosition.HORIZONTAL.D),
@@ -149,7 +150,7 @@ namespace Tests
         [Test(Description = "Tests that white rook 1 on C2 cannot move to C6, or C5 because there is a white piece on C4 blocking its path")]
         public void Test_WhiteRook1_IsValidMove_CannotMoveBlockedByFriendly()
         {
-            ChessPiece piece = new ChessPieceRook(ChessPiece.Color.WHITE, 1, 
+            ChessPiece piece = new ChessPieceRook(Color.WHITE, 1,
                 new BoardPosition(BoardPosition.VERTICAL.TWO, BoardPosition.HORIZONTAL.C));
             List<BoardPosition> positions = new()
             {
@@ -172,7 +173,7 @@ namespace Tests
         [Test(Description = "Tests that white rook 1 on C2 cannot move to G2, or H2 because there is a black piece on F2 blocking its path")]
         public void Test_WhiteRook1_IsValidMove_CannotMoveBlockedByEnemy()
         {
-            ChessPiece piece = new ChessPieceRook(ChessPiece.Color.WHITE, 1,
+            ChessPiece piece = new ChessPieceRook(Color.WHITE, 1,
                 new BoardPosition(BoardPosition.VERTICAL.TWO, BoardPosition.HORIZONTAL.C));
             List<BoardPosition> positions = new()
             {
@@ -195,7 +196,7 @@ namespace Tests
         [Test(Description = "Tests that rook on C2 cannot move to these squares as they are invalid")]
         public void Test_WhiteRook1_IsValidMove_InvalidMoves()
         {
-            ChessPiece piece = new ChessPieceRook(ChessPiece.Color.WHITE, 1,
+            ChessPiece piece = new ChessPieceRook(Color.WHITE, 1,
                 new BoardPosition(BoardPosition.VERTICAL.TWO, BoardPosition.HORIZONTAL.C));
             List<BoardPosition> positions = new()
             {
@@ -221,7 +222,7 @@ namespace Tests
         [Test(Description = "Tests that white rook 1 on B4 can capture a piece on B8")]
         public void Test_WhiteRook1_IsValidMove_CanCapture()
         {
-            ChessPiece piece = new ChessPieceRook(ChessPiece.Color.WHITE, 1,
+            ChessPiece piece = new ChessPieceRook(Color.WHITE, 1,
                 new BoardPosition(BoardPosition.VERTICAL.FOUR, BoardPosition.HORIZONTAL.B));
             BoardPosition b8 = new(BoardPosition.VERTICAL.EIGHT, BoardPosition.HORIZONTAL.B);
             board.SetBoardValue(b8, 22); // black knight on B8
@@ -231,7 +232,7 @@ namespace Tests
         [Test(Description = "Tests that white rook 1 on B4 canotn capture a piece on B8")]
         public void Test_WhiteRook1_IsValidMove_CannotCapture()
         {
-            ChessPiece piece = new ChessPieceRook(ChessPiece.Color.WHITE, 1,
+            ChessPiece piece = new ChessPieceRook(Color.WHITE, 1,
                 new BoardPosition(BoardPosition.VERTICAL.FOUR, BoardPosition.HORIZONTAL.B));
             BoardPosition b8 = new(BoardPosition.VERTICAL.EIGHT, BoardPosition.HORIZONTAL.B);
             board.SetBoardValue(b8, 12); // white knight on B8
@@ -241,7 +242,7 @@ namespace Tests
         [Test(Description = "Tests that blak rook 2 on B4 can capture a piece on B8")]
         public void Test_BlackRook2_IsValidMove_CanCapture()
         {
-            ChessPiece piece = new ChessPieceRook(ChessPiece.Color.BLACK, 2,
+            ChessPiece piece = new ChessPieceRook(Color.BLACK, 2,
                 new BoardPosition(BoardPosition.VERTICAL.FOUR, BoardPosition.HORIZONTAL.B));
             BoardPosition b8 = new(BoardPosition.VERTICAL.EIGHT, BoardPosition.HORIZONTAL.B);
             board.SetBoardValue(b8, 12); // white knight on B8
@@ -251,7 +252,7 @@ namespace Tests
         [Test(Description = "Tests that black rook 2 on B4 cannot capture a piece on B8")]
         public void Test_BlackRook2_IsValidMove_CannotCapture()
         {
-            ChessPiece piece = new ChessPieceRook(ChessPiece.Color.BLACK, 2,
+            ChessPiece piece = new ChessPieceRook(Color.BLACK, 2,
                 new BoardPosition(BoardPosition.VERTICAL.FOUR, BoardPosition.HORIZONTAL.B));
             BoardPosition b8 = new(BoardPosition.VERTICAL.EIGHT, BoardPosition.HORIZONTAL.B);
             board.SetBoardValue(b8, 22); // black knight on B8

@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Chess.Board;
+using Chess.Pieces;
 
-namespace Chess
+namespace Chess.Services
 {
     public class ChessPieceFactory
     {
@@ -138,7 +140,7 @@ namespace Chess
             return chessPieces;
         }
 
-        public static List<ChessPiece> CreateChessPieces() 
+        public static List<ChessPiece> CreateChessPieces()
         {
             List<ChessPiece> chessPieces = new();
             chessPieces.AddRange(CreateWhiteChessPieces());

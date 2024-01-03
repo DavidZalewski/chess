@@ -1,6 +1,8 @@
-﻿using Chess;
+﻿using Chess.Board;
+using Chess.Pieces;
+using Chess.Services;
 
-namespace Tests
+namespace Tests.Services
 {
     public class PieceConverterServiceTests
     {
@@ -9,7 +11,7 @@ namespace Tests
         {
             BoardPosition h2 = new(BoardPosition.VERTICAL.TWO, BoardPosition.HORIZONTAL.H);
             ChessPiece piece = new ChessPieceWhitePawn(1, h2);
-            ChessPiece? queen = PieceConverter.PromotePawn(piece, typeof(ChessPieceQueen));
+            ChessPiece? queen = PieceConverterService.PromotePawn(piece, typeof(ChessPieceQueen));
             Assert.That(queen, Is.Not.Null);
             Assert.Multiple(() =>
             {
@@ -27,7 +29,7 @@ namespace Tests
         {
             BoardPosition a4 = new(BoardPosition.VERTICAL.FOUR, BoardPosition.HORIZONTAL.A);
             ChessPiece piece = new ChessPieceBlackPawn(5, a4); // pawn 5
-            ChessPiece? rook = PieceConverter.PromotePawn(piece, typeof(ChessPieceRook));
+            ChessPiece? rook = PieceConverterService.PromotePawn(piece, typeof(ChessPieceRook));
             Assert.That(rook, Is.Not.Null);
             Assert.Multiple(() =>
             {
@@ -45,7 +47,7 @@ namespace Tests
         {
             BoardPosition a4 = new(BoardPosition.VERTICAL.FOUR, BoardPosition.HORIZONTAL.A);
             ChessPiece piece = new ChessPieceBlackPawn(7, a4);
-            ChessPiece? knight = PieceConverter.PromotePawn(piece, typeof(ChessPieceKnight));
+            ChessPiece? knight = PieceConverterService.PromotePawn(piece, typeof(ChessPieceKnight));
             Assert.That(knight, Is.Not.Null);
             Assert.Multiple(() =>
             {
@@ -63,7 +65,7 @@ namespace Tests
         {
             BoardPosition h4 = new(BoardPosition.VERTICAL.FOUR, BoardPosition.HORIZONTAL.H);
             ChessPiece piece = new ChessPieceWhitePawn(6, h4);
-            ChessPiece? bishop = PieceConverter.PromotePawn(piece, typeof(ChessPieceBishop));
+            ChessPiece? bishop = PieceConverterService.PromotePawn(piece, typeof(ChessPieceBishop));
             Assert.That(bishop, Is.Not.Null);
             Assert.Multiple(() =>
             {
@@ -81,8 +83,8 @@ namespace Tests
         {
             BoardPosition h4 = new(BoardPosition.VERTICAL.FOUR, BoardPosition.HORIZONTAL.H);
             ChessPiece piece = new ChessPieceWhitePawn(6, h4);
-            ChessPiece? unknown = PieceConverter.PromotePawn(piece, typeof(double));
-            Assert.That(unknown, Is.Null); 
+            ChessPiece? unknown = PieceConverterService.PromotePawn(piece, typeof(double));
+            Assert.That(unknown, Is.Null);
         }
     }
 }

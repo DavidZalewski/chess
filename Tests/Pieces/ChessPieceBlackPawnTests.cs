@@ -1,6 +1,7 @@
-using Chess;
+using Chess.Board;
+using Chess.Pieces;
 
-namespace Tests
+namespace Tests.Pieces
 {
     public class ChessPieceBlackPawnTests
     {

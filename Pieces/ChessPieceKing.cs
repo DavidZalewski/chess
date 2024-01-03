@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Chess.Board;
 
-namespace Chess
+namespace Chess.Pieces
 {
     public class ChessPieceKing : ChessPiece
     {
@@ -27,19 +28,19 @@ namespace Chess
             int hdistance = h1 - h2;
 
             // TODO: Simplify these
-            if ((vdistance == 0 && hdistance == 1) || (vdistance == 0 && hdistance == -1)) // moving side to side
+            if (vdistance == 0 && hdistance == 1 || vdistance == 0 && hdistance == -1) // moving side to side
             {
                 return true;
             }
-            else if ((vdistance == 1 && hdistance == 0) || (vdistance == -1 && hdistance == 0)) // moving up / down
+            else if (vdistance == 1 && hdistance == 0 || vdistance == -1 && hdistance == 0) // moving up / down
             {
                 return true;
             }
-            else if ((vdistance == 1 && hdistance == -1) || (vdistance == -1 && hdistance == -1)) // moving diagonal
+            else if (vdistance == 1 && hdistance == -1 || vdistance == -1 && hdistance == -1) // moving diagonal
             {
                 return true;
             }
-            else if ((vdistance == -1 && hdistance == 1) || (vdistance == -1 && hdistance == 1)) // moving diagonal
+            else if (vdistance == -1 && hdistance == 1 || vdistance == -1 && hdistance == 1) // moving diagonal
             {
                 return true;
             }

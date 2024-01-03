@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Chess
+namespace Chess.Board
 {
     public class BoardPosition
     {
@@ -12,7 +12,7 @@ namespace Chess
         private HORIZONTAL h_value;
         private string s_value = "";
 
-        public enum VERTICAL { ONE = 7, TWO = 6, THREE = 5, FOUR = 4, FIVE = 3, SIX = 2, SEVEN = 1, EIGHT = 0 } 
+        public enum VERTICAL { ONE = 7, TWO = 6, THREE = 5, FOUR = 4, FIVE = 3, SIX = 2, SEVEN = 1, EIGHT = 0 }
         public enum HORIZONTAL { A = 0, B = 1, C = 2, D = 3, E = 4, F = 5, G = 6, H = 7 }
 
         public BoardPosition(VERTICAL firstIndex, HORIZONTAL secondIndex)
@@ -52,12 +52,12 @@ namespace Chess
 
         public BoardPosition(BoardPosition other)
         {
-            this.v_value = other.v_value;
-            this.h_value = other.h_value;
-            this.s_value = other.s_value;
+            v_value = other.v_value;
+            h_value = other.h_value;
+            s_value = other.s_value;
         }
 
-        public BoardPosition(String pos)
+        public BoardPosition(string pos)
         {
             if (pos != null && pos.Length == 2)
             {
@@ -111,14 +111,14 @@ namespace Chess
                 default: throw new Exception("Invalid Num Position provided");
             }
 
-            return new BoardPosition((BoardPosition.VERTICAL)firstIndex, (BoardPosition.HORIZONTAL)secondIndex, new string(alpha + num.ToString()));
+            return new BoardPosition((VERTICAL)firstIndex, (HORIZONTAL)secondIndex, new string(alpha + num.ToString()));
         }
 
 
         public VERTICAL VerticalValue { get { return v_value; } }
-        public int VerticalValueAsInt { get { return (int)v_value;} }
-        public HORIZONTAL HorizontalValue { get { return h_value;} }
-        public int HorizontalValueAsInt { get { return (int)h_value;} }
+        public int VerticalValueAsInt { get { return (int)v_value; } }
+        public HORIZONTAL HorizontalValue { get { return h_value; } }
+        public int HorizontalValueAsInt { get { return (int)h_value; } }
         public string StringValue { get { return s_value; } }
 
         public bool EqualTo(BoardPosition other)

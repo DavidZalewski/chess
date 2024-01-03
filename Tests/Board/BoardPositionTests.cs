@@ -1,6 +1,6 @@
-using Chess;
+using Chess.Board;
 
-namespace Tests
+namespace Tests.Board
 {
     public class BoardPositionTests
     {
@@ -130,7 +130,7 @@ namespace Tests
         {
             BoardPosition boardPosition = new(BoardPosition.VERTICAL.ONE, BoardPosition.HORIZONTAL.A);
             Assert.That(boardPosition, Is.Not.Null);
-            
+
             BoardPosition boardPosition2 = new(boardPosition);
             Assert.Multiple(() =>
             {

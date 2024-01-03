@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Chess.Board;
 
-namespace Chess
+namespace Chess.Pieces
 {
     public class ChessPieceQueen : ChessPiece
     {
@@ -34,7 +35,7 @@ namespace Chess
         protected override void ImplementMove(ChessBoard board, BoardPosition position)
         {
             // does this need to exist?
-            
+
         }
     }
 }

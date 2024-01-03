@@ -1,4 +1,7 @@
 ﻿using Chess;
+using Chess.Board;
+using Chess.Pieces;
+using Chess.Services;
 
 namespace Tests
 {

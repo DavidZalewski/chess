@@ -3,12 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Chess.Pieces;
 
-namespace Chess
+namespace Chess.Services
 {
-    public class PieceConverter
+    public class PieceConverterService
     {
-        public static ChessPiece? PromotePawn(ChessPiece pawn, Type type) 
+        public static ChessPiece? PromotePawn(ChessPiece pawn, Type type)
         {
             // Promoted pieces will have a unique id of current-id + color
             ChessPiece? piece = null;

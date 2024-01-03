@@ -5,8 +5,9 @@ using System.Linq.Expressions;
 using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
+using Chess.Pieces;
 
-namespace Chess
+namespace Chess.Board
 {
     public class ChessBoard
     {
@@ -14,7 +15,7 @@ namespace Chess
         // looking at diagrams where the board is labelled, white is always on the bottom
         // therefore first value in array [0,0] is A8
         // A1 is found at [7,0]
-        private int[,] _board = new int[8, 8] 
+        private int[,] _board = new int[8, 8]
         {
             { 0 /*A8*/, 0, 0, 0, 0, 0, 0, 0 /*H8*/},
             { 0, 0, 0, 0, 0, 0, 0, 0 },

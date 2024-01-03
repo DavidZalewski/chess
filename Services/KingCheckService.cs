@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Chess.Board;
+using Chess.Pieces;
 
-namespace Chess
+namespace Chess.Services
 {
     public class KingCheckService
     {
@@ -13,8 +15,8 @@ namespace Chess
 
         public KingCheckService(ChessBoard chessBoard, List<ChessPiece> chessPieces)
         {
-            this._chessBoard = chessBoard;
-            this._chessPieces = chessPieces;
+            _chessBoard = chessBoard;
+            _chessPieces = chessPieces;
         }
 
         public bool IsKingInCheck(Turn turnToBeMade)

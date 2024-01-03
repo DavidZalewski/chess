@@ -4,8 +4,9 @@ using System.Linq;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
+using Chess.Board;
 
-namespace Chess
+namespace Chess.Pieces
 {
     // How do I want to do this? An abstract ChessPiece class and I create subclasses for
     // each type of piece and then use factory to create multiple instances?
@@ -76,8 +77,8 @@ namespace Chess
         public Piece GetPiece() { return _piece; }
         public Color GetColor() { return _color; }
         public int GetId() { return _id; }
-        public int GetRealValue() {  return _realValue; }
-        public BoardPosition GetStartingPosition() {  return _startingPosition; }
+        public int GetRealValue() { return _realValue; }
+        public BoardPosition GetStartingPosition() { return _startingPosition; }
         public BoardPosition GetCurrentPosition() { return _currentPosition; }
         // used by ghost pieces
         public void SetCurrentPosition(BoardPosition boardPosition)

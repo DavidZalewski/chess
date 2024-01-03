@@ -1,7 +1,9 @@
-using Chess;
+using Chess.Board;
+using Chess.Pieces;
+using Chess.Services;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 
-namespace Tests
+namespace Tests.Board
 {
     public class ChessBoardTests
     {

@@ -1,7 +1,9 @@
-using Chess;
-using static Chess.ChessPiece;
+using Chess.Board;
+using Chess.Pieces;
+using Chess.Services;
+using static Chess.Pieces.ChessPiece;
 
-namespace Tests
+namespace Tests.Services
 {
     public class ChessPieceFactoryTests
     {
@@ -15,8 +17,8 @@ namespace Tests
             {
                 Assert.Multiple(() =>
                 {
-                    Assert.That(piece.GetColor(), Is.EqualTo(ChessPiece.Color.WHITE));
-                    Assert.That(piece.GetPiece(), Is.EqualTo(ChessPiece.Piece.PAWN));
+                    Assert.That(piece.GetColor(), Is.EqualTo(Color.WHITE));
+                    Assert.That(piece.GetPiece(), Is.EqualTo(Piece.PAWN));
                     Assert.That(piece.GetStartingPosition().VerticalValue, Is.EqualTo(BoardPosition.VERTICAL.TWO));
                     Assert.That(piece.GetStartingPosition().HorizontalValueAsInt, Is.EqualTo(i - 1));
                     Assert.That(piece.GetCurrentPosition().VerticalValue, Is.EqualTo(piece.GetStartingPosition().VerticalValue));
@@ -38,8 +40,8 @@ namespace Tests
             {
                 Assert.Multiple(() =>
                 {
-                    Assert.That(piece.GetColor(), Is.EqualTo(ChessPiece.Color.BLACK));
-                    Assert.That(piece.GetPiece(), Is.EqualTo(ChessPiece.Piece.PAWN));
+                    Assert.That(piece.GetColor(), Is.EqualTo(Color.BLACK));
+                    Assert.That(piece.GetPiece(), Is.EqualTo(Piece.PAWN));
                     Assert.That(piece.GetStartingPosition().VerticalValue, Is.EqualTo(BoardPosition.VERTICAL.SEVEN));
                     Assert.That(piece.GetStartingPosition().HorizontalValueAsInt, Is.EqualTo(i - 1));
                     Assert.That(piece.GetCurrentPosition().VerticalValue, Is.EqualTo(piece.GetStartingPosition().VerticalValue));
@@ -62,8 +64,8 @@ namespace Tests
             {
                 Assert.Multiple(() =>
                 {
-                    Assert.That(piece.GetColor(), Is.EqualTo(ChessPiece.Color.WHITE));
-                    Assert.That(piece.GetPiece(), Is.EqualTo(ChessPiece.Piece.KNIGHT));
+                    Assert.That(piece.GetColor(), Is.EqualTo(Color.WHITE));
+                    Assert.That(piece.GetPiece(), Is.EqualTo(Piece.KNIGHT));
                     Assert.That(piece.GetStartingPosition().VerticalValue, Is.EqualTo(BoardPosition.VERTICAL.ONE));
                     Assert.That(piece.GetCurrentPosition().VerticalValue, Is.EqualTo(piece.GetStartingPosition().VerticalValue));
                     Assert.That(piece.GetCurrentPosition().HorizontalValue, Is.EqualTo(piece.GetStartingPosition().HorizontalValue));
@@ -92,8 +94,8 @@ namespace Tests
             {
                 Assert.Multiple(() =>
                 {
-                    Assert.That(piece.GetColor(), Is.EqualTo(ChessPiece.Color.BLACK));
-                    Assert.That(piece.GetPiece(), Is.EqualTo(ChessPiece.Piece.KNIGHT));
+                    Assert.That(piece.GetColor(), Is.EqualTo(Color.BLACK));
+                    Assert.That(piece.GetPiece(), Is.EqualTo(Piece.KNIGHT));
                     Assert.That(piece.GetStartingPosition().VerticalValue, Is.EqualTo(BoardPosition.VERTICAL.EIGHT));
                     Assert.That(piece.GetCurrentPosition().VerticalValue, Is.EqualTo(piece.GetStartingPosition().VerticalValue));
                     Assert.That(piece.GetCurrentPosition().HorizontalValue, Is.EqualTo(piece.GetStartingPosition().HorizontalValue));
@@ -122,8 +124,8 @@ namespace Tests
             {
                 Assert.Multiple(() =>
                 {
-                    Assert.That(piece.GetColor(), Is.EqualTo(ChessPiece.Color.WHITE));
-                    Assert.That(piece.GetPiece(), Is.EqualTo(ChessPiece.Piece.BISHOP));
+                    Assert.That(piece.GetColor(), Is.EqualTo(Color.WHITE));
+                    Assert.That(piece.GetPiece(), Is.EqualTo(Piece.BISHOP));
                     Assert.That(piece.GetStartingPosition().VerticalValue, Is.EqualTo(BoardPosition.VERTICAL.ONE));
                     Assert.That(piece.GetCurrentPosition().VerticalValue, Is.EqualTo(piece.GetStartingPosition().VerticalValue));
                     Assert.That(piece.GetCurrentPosition().HorizontalValue, Is.EqualTo(piece.GetStartingPosition().HorizontalValue));
@@ -151,8 +153,8 @@ namespace Tests
             {
                 Assert.Multiple(() =>
                 {
-                    Assert.That(piece.GetColor(), Is.EqualTo(ChessPiece.Color.BLACK));
-                    Assert.That(piece.GetPiece(), Is.EqualTo(ChessPiece.Piece.BISHOP));
+                    Assert.That(piece.GetColor(), Is.EqualTo(Color.BLACK));
+                    Assert.That(piece.GetPiece(), Is.EqualTo(Piece.BISHOP));
                     Assert.That(piece.GetStartingPosition().VerticalValue, Is.EqualTo(BoardPosition.VERTICAL.EIGHT));
                     Assert.That(piece.GetCurrentPosition().VerticalValue, Is.EqualTo(piece.GetStartingPosition().VerticalValue));
                     Assert.That(piece.GetCurrentPosition().HorizontalValue, Is.EqualTo(piece.GetStartingPosition().HorizontalValue));
@@ -180,8 +182,8 @@ namespace Tests
             {
                 Assert.Multiple(() =>
                 {
-                    Assert.That(piece.GetColor(), Is.EqualTo(ChessPiece.Color.WHITE));
-                    Assert.That(piece.GetPiece(), Is.EqualTo(ChessPiece.Piece.ROOK));
+                    Assert.That(piece.GetColor(), Is.EqualTo(Color.WHITE));
+                    Assert.That(piece.GetPiece(), Is.EqualTo(Piece.ROOK));
                     Assert.That(piece.GetStartingPosition().VerticalValue, Is.EqualTo(BoardPosition.VERTICAL.ONE));
                     Assert.That(piece.GetCurrentPosition().VerticalValue, Is.EqualTo(piece.GetStartingPosition().VerticalValue));
                     Assert.That(piece.GetCurrentPosition().HorizontalValue, Is.EqualTo(piece.GetStartingPosition().HorizontalValue));
@@ -209,8 +211,8 @@ namespace Tests
             {
                 Assert.Multiple(() =>
                 {
-                    Assert.That(piece.GetColor(), Is.EqualTo(ChessPiece.Color.BLACK));
-                    Assert.That(piece.GetPiece(), Is.EqualTo(ChessPiece.Piece.ROOK));
+                    Assert.That(piece.GetColor(), Is.EqualTo(Color.BLACK));
+                    Assert.That(piece.GetPiece(), Is.EqualTo(Piece.ROOK));
                     Assert.That(piece.GetStartingPosition().VerticalValue, Is.EqualTo(BoardPosition.VERTICAL.EIGHT));
                     Assert.That(piece.GetCurrentPosition().VerticalValue, Is.EqualTo(piece.GetStartingPosition().VerticalValue));
                     Assert.That(piece.GetCurrentPosition().HorizontalValue, Is.EqualTo(piece.GetStartingPosition().HorizontalValue));
@@ -238,7 +240,7 @@ namespace Tests
             {
                 Assert.Multiple(() =>
                 {
-                    Assert.That(piece.GetColor(), Is.EqualTo(ChessPiece.Color.WHITE));
+                    Assert.That(piece.GetColor(), Is.EqualTo(Color.WHITE));
                     Assert.That(piece.GetStartingPosition().VerticalValue, Is.EqualTo(BoardPosition.VERTICAL.ONE));
                     Assert.That(piece.GetCurrentPosition().VerticalValue, Is.EqualTo(piece.GetStartingPosition().VerticalValue));
                     Assert.That(piece.GetCurrentPosition().HorizontalValue, Is.EqualTo(piece.GetStartingPosition().HorizontalValue));
@@ -249,10 +251,10 @@ namespace Tests
             Assert.Multiple(() =>
             {
                 Assert.That(pieces[0].GetStartingPosition().HorizontalValue, Is.EqualTo(BoardPosition.HORIZONTAL.D));
-                Assert.That(pieces[0].GetPiece(), Is.EqualTo(ChessPiece.Piece.QUEEN));
+                Assert.That(pieces[0].GetPiece(), Is.EqualTo(Piece.QUEEN));
                 Assert.That(pieces[0].GetRealValue(), Is.EqualTo(15));
                 Assert.That(pieces[1].GetStartingPosition().HorizontalValue, Is.EqualTo(BoardPosition.HORIZONTAL.E));
-                Assert.That(pieces[1].GetPiece(), Is.EqualTo(ChessPiece.Piece.KING));
+                Assert.That(pieces[1].GetPiece(), Is.EqualTo(Piece.KING));
                 Assert.That(pieces[1].GetRealValue(), Is.EqualTo(16));
             });
         }
@@ -268,7 +270,7 @@ namespace Tests
             {
                 Assert.Multiple(() =>
                 {
-                    Assert.That(piece.GetColor(), Is.EqualTo(ChessPiece.Color.BLACK));
+                    Assert.That(piece.GetColor(), Is.EqualTo(Color.BLACK));
                     Assert.That(piece.GetStartingPosition().VerticalValue, Is.EqualTo(BoardPosition.VERTICAL.EIGHT));
                     Assert.That(piece.GetCurrentPosition().VerticalValue, Is.EqualTo(piece.GetStartingPosition().VerticalValue));
                     Assert.That(piece.GetCurrentPosition().HorizontalValue, Is.EqualTo(piece.GetStartingPosition().HorizontalValue));
@@ -279,10 +281,10 @@ namespace Tests
             Assert.Multiple(() =>
             {
                 Assert.That(pieces[0].GetStartingPosition().HorizontalValue, Is.EqualTo(BoardPosition.HORIZONTAL.D));
-                Assert.That(pieces[0].GetPiece(), Is.EqualTo(ChessPiece.Piece.QUEEN));
+                Assert.That(pieces[0].GetPiece(), Is.EqualTo(Piece.QUEEN));
                 Assert.That(pieces[0].GetRealValue(), Is.EqualTo(25));
                 Assert.That(pieces[1].GetStartingPosition().HorizontalValue, Is.EqualTo(BoardPosition.HORIZONTAL.E));
-                Assert.That(pieces[1].GetPiece(), Is.EqualTo(ChessPiece.Piece.KING));
+                Assert.That(pieces[1].GetPiece(), Is.EqualTo(Piece.KING));
                 Assert.That(pieces[1].GetRealValue(), Is.EqualTo(26));
             });
         }
@@ -298,7 +300,7 @@ namespace Tests
             {
                 Assert.Multiple(() =>
                 {
-                    Assert.That(piece.GetColor(), Is.EqualTo(ChessPiece.Color.WHITE));
+                    Assert.That(piece.GetColor(), Is.EqualTo(Color.WHITE));
                     Assert.That(piece.GetCurrentPosition().VerticalValue, Is.EqualTo(piece.GetStartingPosition().VerticalValue));
                     Assert.That(piece.GetCurrentPosition().HorizontalValue, Is.EqualTo(piece.GetStartingPosition().HorizontalValue));
                 });
@@ -306,37 +308,37 @@ namespace Tests
 
             Assert.Multiple(() =>
             {
-                Assert.That(pieces[0].GetPiece(), Is.EqualTo(ChessPiece.Piece.PAWN));
+                Assert.That(pieces[0].GetPiece(), Is.EqualTo(Piece.PAWN));
                 Assert.That(pieces[0].GetRealValue(), Is.EqualTo(11));
-                Assert.That(pieces[1].GetPiece(), Is.EqualTo(ChessPiece.Piece.PAWN));
+                Assert.That(pieces[1].GetPiece(), Is.EqualTo(Piece.PAWN));
                 Assert.That(pieces[1].GetRealValue(), Is.EqualTo(11));
-                Assert.That(pieces[2].GetPiece(), Is.EqualTo(ChessPiece.Piece.PAWN));
+                Assert.That(pieces[2].GetPiece(), Is.EqualTo(Piece.PAWN));
                 Assert.That(pieces[2].GetRealValue(), Is.EqualTo(11));
-                Assert.That(pieces[3].GetPiece(), Is.EqualTo(ChessPiece.Piece.PAWN));
+                Assert.That(pieces[3].GetPiece(), Is.EqualTo(Piece.PAWN));
                 Assert.That(pieces[3].GetRealValue(), Is.EqualTo(11));
-                Assert.That(pieces[4].GetPiece(), Is.EqualTo(ChessPiece.Piece.PAWN));
+                Assert.That(pieces[4].GetPiece(), Is.EqualTo(Piece.PAWN));
                 Assert.That(pieces[4].GetRealValue(), Is.EqualTo(11));
-                Assert.That(pieces[5].GetPiece(), Is.EqualTo(ChessPiece.Piece.PAWN));
+                Assert.That(pieces[5].GetPiece(), Is.EqualTo(Piece.PAWN));
                 Assert.That(pieces[5].GetRealValue(), Is.EqualTo(11));
-                Assert.That(pieces[6].GetPiece(), Is.EqualTo(ChessPiece.Piece.PAWN));
+                Assert.That(pieces[6].GetPiece(), Is.EqualTo(Piece.PAWN));
                 Assert.That(pieces[6].GetRealValue(), Is.EqualTo(11));
-                Assert.That(pieces[7].GetPiece(), Is.EqualTo(ChessPiece.Piece.PAWN));
+                Assert.That(pieces[7].GetPiece(), Is.EqualTo(Piece.PAWN));
                 Assert.That(pieces[7].GetRealValue(), Is.EqualTo(11));
-                Assert.That(pieces[8].GetPiece(), Is.EqualTo(ChessPiece.Piece.KNIGHT));
+                Assert.That(pieces[8].GetPiece(), Is.EqualTo(Piece.KNIGHT));
                 Assert.That(pieces[8].GetRealValue(), Is.EqualTo(12));
-                Assert.That(pieces[9].GetPiece(), Is.EqualTo(ChessPiece.Piece.KNIGHT));
+                Assert.That(pieces[9].GetPiece(), Is.EqualTo(Piece.KNIGHT));
                 Assert.That(pieces[9].GetRealValue(), Is.EqualTo(12));
-                Assert.That(pieces[10].GetPiece(), Is.EqualTo(ChessPiece.Piece.BISHOP));
+                Assert.That(pieces[10].GetPiece(), Is.EqualTo(Piece.BISHOP));
                 Assert.That(pieces[10].GetRealValue(), Is.EqualTo(13));
-                Assert.That(pieces[11].GetPiece(), Is.EqualTo(ChessPiece.Piece.BISHOP));
+                Assert.That(pieces[11].GetPiece(), Is.EqualTo(Piece.BISHOP));
                 Assert.That(pieces[11].GetRealValue(), Is.EqualTo(13));
-                Assert.That(pieces[12].GetPiece(), Is.EqualTo(ChessPiece.Piece.ROOK));
+                Assert.That(pieces[12].GetPiece(), Is.EqualTo(Piece.ROOK));
                 Assert.That(pieces[12].GetRealValue(), Is.EqualTo(14));
-                Assert.That(pieces[13].GetPiece(), Is.EqualTo(ChessPiece.Piece.ROOK));
+                Assert.That(pieces[13].GetPiece(), Is.EqualTo(Piece.ROOK));
                 Assert.That(pieces[13].GetRealValue(), Is.EqualTo(14));
-                Assert.That(pieces[14].GetPiece(), Is.EqualTo(ChessPiece.Piece.QUEEN));
+                Assert.That(pieces[14].GetPiece(), Is.EqualTo(Piece.QUEEN));
                 Assert.That(pieces[14].GetRealValue(), Is.EqualTo(15));
-                Assert.That(pieces[15].GetPiece(), Is.EqualTo(ChessPiece.Piece.KING));
+                Assert.That(pieces[15].GetPiece(), Is.EqualTo(Piece.KING));
                 Assert.That(pieces[15].GetRealValue(), Is.EqualTo(16));
             });
         }
@@ -352,7 +354,7 @@ namespace Tests
             {
                 Assert.Multiple(() =>
                 {
-                    Assert.That(piece.GetColor(), Is.EqualTo(ChessPiece.Color.BLACK));
+                    Assert.That(piece.GetColor(), Is.EqualTo(Color.BLACK));
                     Assert.That(piece.GetCurrentPosition().VerticalValue, Is.EqualTo(piece.GetStartingPosition().VerticalValue));
                     Assert.That(piece.GetCurrentPosition().HorizontalValue, Is.EqualTo(piece.GetStartingPosition().HorizontalValue));
                 });
@@ -360,37 +362,37 @@ namespace Tests
 
             Assert.Multiple(() =>
             {
-                Assert.That(pieces[0].GetPiece(), Is.EqualTo(ChessPiece.Piece.PAWN));
+                Assert.That(pieces[0].GetPiece(), Is.EqualTo(Piece.PAWN));
                 Assert.That(pieces[0].GetRealValue(), Is.EqualTo(21));
-                Assert.That(pieces[1].GetPiece(), Is.EqualTo(ChessPiece.Piece.PAWN));
+                Assert.That(pieces[1].GetPiece(), Is.EqualTo(Piece.PAWN));
                 Assert.That(pieces[1].GetRealValue(), Is.EqualTo(21));
-                Assert.That(pieces[2].GetPiece(), Is.EqualTo(ChessPiece.Piece.PAWN));
+                Assert.That(pieces[2].GetPiece(), Is.EqualTo(Piece.PAWN));
                 Assert.That(pieces[2].GetRealValue(), Is.EqualTo(21));
-                Assert.That(pieces[3].GetPiece(), Is.EqualTo(ChessPiece.Piece.PAWN));
+                Assert.That(pieces[3].GetPiece(), Is.EqualTo(Piece.PAWN));
                 Assert.That(pieces[3].GetRealValue(), Is.EqualTo(21));
-                Assert.That(pieces[4].GetPiece(), Is.EqualTo(ChessPiece.Piece.PAWN));
+                Assert.That(pieces[4].GetPiece(), Is.EqualTo(Piece.PAWN));
                 Assert.That(pieces[4].GetRealValue(), Is.EqualTo(21));
-                Assert.That(pieces[5].GetPiece(), Is.EqualTo(ChessPiece.Piece.PAWN));
+                Assert.That(pieces[5].GetPiece(), Is.EqualTo(Piece.PAWN));
                 Assert.That(pieces[5].GetRealValue(), Is.EqualTo(21));
-                Assert.That(pieces[6].GetPiece(), Is.EqualTo(ChessPiece.Piece.PAWN));
+                Assert.That(pieces[6].GetPiece(), Is.EqualTo(Piece.PAWN));
                 Assert.That(pieces[6].GetRealValue(), Is.EqualTo(21));
-                Assert.That(pieces[7].GetPiece(), Is.EqualTo(ChessPiece.Piece.PAWN));
+                Assert.That(pieces[7].GetPiece(), Is.EqualTo(Piece.PAWN));
                 Assert.That(pieces[7].GetRealValue(), Is.EqualTo(21));
-                Assert.That(pieces[8].GetPiece(), Is.EqualTo(ChessPiece.Piece.KNIGHT));
+                Assert.That(pieces[8].GetPiece(), Is.EqualTo(Piece.KNIGHT));
                 Assert.That(pieces[8].GetRealValue(), Is.EqualTo(22));
-                Assert.That(pieces[9].GetPiece(), Is.EqualTo(ChessPiece.Piece.KNIGHT));
+                Assert.That(pieces[9].GetPiece(), Is.EqualTo(Piece.KNIGHT));
                 Assert.That(pieces[9].GetRealValue(), Is.EqualTo(22));
-                Assert.That(pieces[10].GetPiece(), Is.EqualTo(ChessPiece.Piece.BISHOP));
+                Assert.That(pieces[10].GetPiece(), Is.EqualTo(Piece.BISHOP));
                 Assert.That(pieces[10].GetRealValue(), Is.EqualTo(23));
-                Assert.That(pieces[11].GetPiece(), Is.EqualTo(ChessPiece.Piece.BISHOP));
+                Assert.That(pieces[11].GetPiece(), Is.EqualTo(Piece.BISHOP));
                 Assert.That(pieces[11].GetRealValue(), Is.EqualTo(23));
-                Assert.That(pieces[12].GetPiece(), Is.EqualTo(ChessPiece.Piece.ROOK));
+                Assert.That(pieces[12].GetPiece(), Is.EqualTo(Piece.ROOK));
                 Assert.That(pieces[12].GetRealValue(), Is.EqualTo(24));
-                Assert.That(pieces[13].GetPiece(), Is.EqualTo(ChessPiece.Piece.ROOK));
+                Assert.That(pieces[13].GetPiece(), Is.EqualTo(Piece.ROOK));
                 Assert.That(pieces[13].GetRealValue(), Is.EqualTo(24));
-                Assert.That(pieces[14].GetPiece(), Is.EqualTo(ChessPiece.Piece.QUEEN));
+                Assert.That(pieces[14].GetPiece(), Is.EqualTo(Piece.QUEEN));
                 Assert.That(pieces[14].GetRealValue(), Is.EqualTo(25));
-                Assert.That(pieces[15].GetPiece(), Is.EqualTo(ChessPiece.Piece.KING));
+                Assert.That(pieces[15].GetPiece(), Is.EqualTo(Piece.KING));
                 Assert.That(pieces[15].GetRealValue(), Is.EqualTo(26));
             });
         }
@@ -408,9 +410,9 @@ namespace Tests
                 Assert.Multiple(() =>
                 {
                     if (i < 16)
-                        Assert.That(piece.GetColor(), Is.EqualTo(ChessPiece.Color.WHITE));
+                        Assert.That(piece.GetColor(), Is.EqualTo(Color.WHITE));
                     else
-                        Assert.That(piece.GetColor(), Is.EqualTo(ChessPiece.Color.BLACK));
+                        Assert.That(piece.GetColor(), Is.EqualTo(Color.BLACK));
                     Assert.That(piece.GetCurrentPosition().VerticalValue, Is.EqualTo(piece.GetStartingPosition().VerticalValue));
                     Assert.That(piece.GetCurrentPosition().HorizontalValue, Is.EqualTo(piece.GetStartingPosition().HorizontalValue));
                 });

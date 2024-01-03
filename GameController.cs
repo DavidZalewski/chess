@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Chess.Pieces;
+using Chess.Services;
+using Chess.Board;
 
 namespace Chess
 {
