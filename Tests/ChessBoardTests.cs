@@ -1,4 +1,5 @@
 using Chess;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Tests
 {
@@ -20,6 +21,20 @@ namespace Tests
         public int SplitIntegerGetSecondValue(int value)
         {
             return value % 10;
+        }
+
+        [Test]
+        public void Test_CopyConstructChessBoard_Success()
+        {
+            ChessBoard board1 = new();
+            ChessBoard board2 = new(board1);
+
+            Assert.Multiple(() =>
+            {
+                Assert.That(board1, Is.Not.Null);
+                Assert.That(board2, Is.Not.Null);
+                Assert.That(board1, Is.Not.EqualTo(board2));
+            });
         }
 
         [TestCase(73, 7)]
@@ -125,6 +140,32 @@ namespace Tests
             chessBoard.SetBoardValue(boardPosition, 21);
             Assert.That(chessBoard.IsPieceAtPosition(boardPosition, ChessPiece.Color.WHITE), Is.False);
             Assert.That(chessBoard.IsPieceAtPosition(boardPosition, ChessPiece.Color.BLACK), Is.True);
+        }
+
+        [Test]
+        public void Test_PopulateBoard_Success()
+        {
+            chessBoard.PopulateBoard(ChessPieceFactory.CreateChessPieces());
+            int[,] innerBoard = chessBoard.GetBoard();
+            int[,] expectedBoard = new int[8, 8]
+                {
+                    { 24, 22, 23, 25, 26, 23, 22, 24 },
+                    { 21, 21, 21, 21, 21, 21, 21, 21 },
+                    { 0, 0, 0, 0, 0, 0, 0, 0 },
+                    { 0, 0, 0, 0, 0, 0, 0, 0 },
+                    { 0, 0, 0, 0, 0, 0, 0, 0 },
+                    { 0, 0, 0, 0, 0, 0, 0, 0 },
+                    { 11, 11, 11, 11, 11, 11, 11, 11 },
+                    { 14, 12, 13, 15, 16, 13, 12, 14 }
+                };
+
+            // LINQ to test for 2d array equality
+            bool equal = innerBoard.Rank == expectedBoard.Rank &&
+                        Enumerable.Range(0, innerBoard.Rank)
+                        .All(dimension => innerBoard.GetLength(dimension) == expectedBoard.GetLength(dimension)) &&
+                        innerBoard.Cast<int>().SequenceEqual(expectedBoard.Cast<int>());
+
+            Assert.That(equal, Is.True);
         }
 
     }

@@ -55,7 +55,6 @@ namespace Chess
 
         protected override void ImplementMove(ChessBoard board, BoardPosition position)
         {
-            throw new NotImplementedException();
         }
     }
 }

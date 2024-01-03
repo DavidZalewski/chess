@@ -67,13 +67,10 @@ namespace Chess
             ImplementMove(board, position);
             BoardPosition previousPosition = _currentPosition;
             board.SetBoardValue(position, _realValue);
-            board.SetBoardValue(previousPosition, 0); // empty the previous square
-        }
-
-        public ChessPiece PromotePawn<T>(ChessPiecePawn pawn, T type)
-        {
-            //return new T
-            throw new NotImplementedException("Needs to be implemented still");
+            if (!previousPosition.Equals(position))
+            {
+                board.SetBoardValue(previousPosition, 0); // empty the previous square
+            }
         }
 
         public Piece GetPiece() { return _piece; }

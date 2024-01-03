@@ -26,13 +26,15 @@ namespace Chess
             { 0 /*A1*/, 0, 0, 0, 0, 0, 0, 0 /*H1*/},
         };
 
-        private int _turn = 1;
-
         public ChessBoard() { }
 
+        public ChessBoard(ChessBoard other)
+        {
+            _board = other._board;
+        }
+
         public int[,] GetBoard() { return _board; }
-        public int GetCurrentTurn() { return _turn; }
-        public void IncrementTurn() { _turn++; }
+
         public bool PopulateBoard(List<ChessPiece> chessPieces)
         {
             foreach (ChessPiece piece in chessPieces)
@@ -40,7 +42,7 @@ namespace Chess
                 piece.Move(this, piece.GetStartingPosition());
             }
 
-            return false;
+            return true;
         }
         public bool SetBoardValue(BoardPosition position, int value)
         {

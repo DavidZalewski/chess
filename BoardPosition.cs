@@ -50,6 +50,13 @@ namespace Chess
             s_value = stringValue;
         }
 
+        public BoardPosition(BoardPosition other)
+        {
+            this.v_value = other.v_value;
+            this.h_value = other.h_value;
+            this.s_value = other.s_value;
+        }
+
         public VERTICAL VerticalValue { get { return v_value; } }
         public int VerticalValueAsInt { get { return (int)v_value;} }
         public HORIZONTAL HorizontalValue { get { return h_value;} }

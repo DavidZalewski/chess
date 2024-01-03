@@ -2,7 +2,7 @@
 
 namespace Tests
 {
-    public class PieceConverterService
+    public class PieceConverterServiceTests
     {
         [Test]
         public void Test_PromoteWhitePawnIntoWhiteQueen_Success()
