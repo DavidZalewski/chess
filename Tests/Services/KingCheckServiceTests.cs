@@ -333,5 +333,21 @@ namespace Tests.Services
             Assert.That(kingCheckService.IsCheckMate(turn), Is.True);
         }
 
+        [Test(Description = "Test Check Mate is false on a full board")]
+        public void Test_IsCheckMate_NoCheckMate_FullBoard()
+        {
+            List<ChessPiece> chessPieces = ChessPieceFactory.CreateChessPieces();
+            ChessBoard chessBoard = new();
+            chessBoard.PopulateBoard(chessPieces);
+
+            // last turn made was white pawn moving from A2 to A4
+            Turn turn = new(1, chessPieces.First(), new("A2"), new("A4"), chessBoard);
+
+            // Construct kingCheckService
+            KingCheckService kingCheckService = new(chessPieces);
+
+            Assert.That(kingCheckService.IsCheckMate(turn), Is.False);
+        }
+
     }
 }
