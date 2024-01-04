@@ -85,5 +85,38 @@ namespace Tests.Board
             Assert.That(equal, Is.True);
         }
 
+        [Test]
+        public void Test_PruneCapturedPieces_Success()
+        {
+            ChessPiece whiteQueenPiece = new ChessPieceQueen(ChessPiece.Color.WHITE, 1, new("D1"));
+            ChessPiece whiteKingPiece = new ChessPieceKing(ChessPiece.Color.WHITE, new("E1"));
+            ChessPiece whiteBishopPiece = new ChessPieceBishop(ChessPiece.Color.WHITE, 2, new("F1"));
+            ChessPiece whitePawn4Piece = new ChessPieceWhitePawn(4, new("D2"));
+            ChessPiece whitePawn5Piece = new ChessPieceWhitePawn(4, new("E2"));
+            ChessPiece whitePawn6Piece = new ChessPieceWhitePawn(4, new("F2"));
+            ChessPiece blackBishopPiece = new ChessPieceBishop(ChessPiece.Color.BLACK, 1, new("A5"));
+            ChessPiece blackRookPiece = new ChessPieceRook(ChessPiece.Color.BLACK, 1, new("A1"));
+            ChessPiece blackKnightPiece = new ChessPieceKnight(ChessPiece.Color.BLACK, 1, new("F3"));
+            ChessPiece blackPawn1Piece = new ChessPieceBlackPawn(1, new("F5"));
+
+            List<ChessPiece> chessPiecesOnBoard = new()
+            {
+                whiteQueenPiece, whiteKingPiece, whiteBishopPiece, whitePawn4Piece,
+                whitePawn5Piece, whitePawn6Piece, blackBishopPiece, blackRookPiece
+            };
+
+            chessBoard.PopulateBoard(chessPiecesOnBoard);
+
+            List<ChessPiece> allChessPieces = new()
+            {
+                whiteQueenPiece, whiteKingPiece, whiteBishopPiece, whitePawn4Piece,
+                whitePawn5Piece, whitePawn6Piece, blackBishopPiece, blackRookPiece, blackKnightPiece, blackPawn1Piece
+            };
+
+            List<ChessPiece> prunedPieces = chessBoard.PruneCapturedPieces(allChessPieces);
+
+            Assert.That(prunedPieces.SequenceEqual(chessPiecesOnBoard), Is.True);
+        }
+
     }
 }

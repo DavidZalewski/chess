@@ -68,7 +68,7 @@ namespace Chess.Pieces
             ImplementMove(board, position);
             BoardPosition previousPosition = _currentPosition;
             board.SetBoardValue(position, _realValue);
-            if (!previousPosition.Equals(position))
+            if (!previousPosition.EqualTo(position))
             {
                 board.SetBoardValue(previousPosition, 0); // empty the previous square
             }

@@ -45,6 +45,23 @@ namespace Chess.Board
 
             return true;
         }
+
+        public List<ChessPiece> PruneCapturedPieces(List<ChessPiece> chessPieces)
+        {
+            List<ChessPiece> piecesToRemove = new();
+            foreach (ChessPiece piece in chessPieces)
+            {
+                BoardPosition piecePos = piece.GetCurrentPosition();
+                if (_board[piecePos.VerticalValueAsInt, piecePos.HorizontalValueAsInt] != piece.GetRealValue())
+                    piecesToRemove.Add(piece);
+            }
+
+            foreach (ChessPiece piece in piecesToRemove)
+                chessPieces.Remove(piece);
+
+            return chessPieces;
+        }
+
         public bool SetBoardValue(BoardPosition position, int value)
         {
             _board[position.VerticalValueAsInt, position.HorizontalValueAsInt] = value;
@@ -63,6 +80,13 @@ namespace Chess.Board
                 return value > 0 && value < 20;
             else
                 return value > 20 && value < 30;
+        }
+
+        public bool IsPieceAtPosition(ChessPiece chessPiece)
+        {
+            BoardPosition position = chessPiece.GetCurrentPosition();
+            int val = _board[position.VerticalValueAsInt, position.HorizontalValueAsInt];
+            return val == chessPiece.GetRealValue();
         }
 
         internal void InternalTestOnly_SetBoard(int[,] boardValue)

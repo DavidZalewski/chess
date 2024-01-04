@@ -50,7 +50,14 @@ namespace Chess.Pieces
             else if (verticalDistance == -2 && _currentPosition.Equals(_startingPosition))
             {
                 if (_currentPosition.HorizontalValue == position.HorizontalValue)
-                    return true;
+                {
+                    BoardPosition previousSquare = new BoardPosition((BoardPosition.VERTICAL)position.VerticalValueAsInt - 1, position.HorizontalValue);
+                    // is there a piece in front of it that it is trying to jump over?
+                    if (board.IsPieceAtPosition(previousSquare))
+                        return false;
+                    else
+                        return true;
+                }  
                 else
                     return false;
             }

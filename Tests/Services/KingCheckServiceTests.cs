@@ -10,7 +10,7 @@ namespace Tests.Services
         [Test]
         public void Test_ConstructKingCheckService_Success()
         {
-            KingCheckService kingCheckService = new(new ChessBoard(), ChessPieceFactory.CreateChessPieces());
+            KingCheckService kingCheckService = new(ChessPieceFactory.CreateChessPieces());
 
             Assert.That(kingCheckService, Is.Not.Null);
         }
@@ -32,7 +32,7 @@ namespace Tests.Services
             Turn whiteKingTurnE4 = new(9, whiteKingPiece, new BoardPosition("E3"), new BoardPosition("E4"), chessBoard);
 
             // Construct kingCheckService
-            KingCheckService kingCheckService = new(chessBoard, new List<ChessPiece>() { whiteKingPiece, blackKingPiece });
+            KingCheckService kingCheckService = new(new List<ChessPiece>() { whiteKingPiece, blackKingPiece });
 
             Assert.Multiple(() =>
             {
@@ -58,7 +58,7 @@ namespace Tests.Services
             Turn blackKingTurnE4 = new(10, blackKingPiece, new BoardPosition("D5"), new BoardPosition("E4"), chessBoard);
 
             // Construct kingCheckService
-            KingCheckService kingCheckService = new(chessBoard, new List<ChessPiece>() { whiteKingPiece, blackKingPiece });
+            KingCheckService kingCheckService = new(new List<ChessPiece>() { whiteKingPiece, blackKingPiece });
 
             Assert.Multiple(() =>
             {
@@ -75,9 +75,9 @@ namespace Tests.Services
             ChessPiece blackKingPiece = new ChessPieceKing(ChessPiece.Color.BLACK, new("G5"));
             ChessPiece blackKnightPiece = new ChessPieceKnight(ChessPiece.Color.BLACK, 1, new("F4"));
 
-            List<ChessPiece> chessPieces = new() 
-            { 
-                whiteBishopPiece, whiteKingPiece, blackKnightPiece, blackKingPiece 
+            List<ChessPiece> chessPieces = new()
+            {
+                whiteBishopPiece, whiteKingPiece, blackKnightPiece, blackKingPiece
             };
 
             ChessBoard chessBoard = new();
@@ -85,7 +85,7 @@ namespace Tests.Services
 
             List<BoardPosition> validKnightPositions = new()
             {
-                new("D5"), new("E6"), new("D3"), new("E2"), 
+                new("D5"), new("E6"), new("D3"), new("E2"),
                 new("G2"), new("H3"), new("H5"), new("G6")
             };
             List<Turn> possibleKnightTurns = new();
@@ -102,7 +102,7 @@ namespace Tests.Services
             });
 
             // Construct kingCheckService
-            KingCheckService kingCheckService = new(chessBoard, chessPieces);
+            KingCheckService kingCheckService = new(chessPieces);
 
             Assert.Multiple(() =>
             {
@@ -128,7 +128,7 @@ namespace Tests.Services
             chessBoard.PopulateBoard(chessPieces);
 
             // Construct kingCheckService
-            KingCheckService kingCheckService = new(chessBoard, chessPieces);
+            KingCheckService kingCheckService = new(chessPieces);
 
             Turn moveKingToD1 = new(5, whiteKingPiece, new("D1"), chessBoard);
             Turn moveKingToD2 = new(5, whiteKingPiece, new("D2"), chessBoard);
@@ -145,6 +145,193 @@ namespace Tests.Services
             });
         }
 
+        [Test(Description = "Test involving 9 pieces [Black Bishop on A5, Black Rook on A1, Black Knight on F3, White Queen on D1, White King on E1, White Bishop on F1, White Pawns on D2, E2, and F2] where knight has put king in check, only a single valid move is possible")]
+        public void Test_IsKingInCheck_9PieceWhiteKingInCheck()
+        {
+            ChessPiece whiteQueenPiece = new ChessPieceQueen(ChessPiece.Color.WHITE, 1, new("D1"));
+            ChessPiece whiteKingPiece = new ChessPieceKing(ChessPiece.Color.WHITE, new("E1"));
+            ChessPiece whiteBishopPiece = new ChessPieceBishop(ChessPiece.Color.WHITE, 2, new("F1"));
+            ChessPiece whitePawn4Piece = new ChessPieceWhitePawn(4, new("D2"));
+            ChessPiece whitePawn5Piece = new ChessPieceWhitePawn(4, new("E2"));
+            ChessPiece whitePawn6Piece = new ChessPieceWhitePawn(4, new("F2"));
+            ChessPiece blackBishopPiece = new ChessPieceBishop(ChessPiece.Color.BLACK, 1, new("A5"));
+            ChessPiece blackRookPiece = new ChessPieceRook(ChessPiece.Color.BLACK, 1, new("A1"));
+            ChessPiece blackKnightPiece = new ChessPieceKnight(ChessPiece.Color.BLACK, 1, new("F3"));
+
+            List<ChessPiece> chessPieces = new()
+            {
+                whiteQueenPiece, whiteKingPiece, whiteBishopPiece, whitePawn4Piece,
+                whitePawn5Piece, whitePawn6Piece, blackBishopPiece, blackRookPiece, blackKnightPiece
+            };
+
+            ChessBoard chessBoard = new();
+            chessBoard.PopulateBoard(chessPieces);
+
+            List<Turn> possibleMoves = new()
+            {
+                new(11, whiteQueenPiece, new("A1"), chessBoard), // white queen capture rook
+                new(11, whitePawn4Piece, new("D3"), chessBoard), // white pawn 4 move D3
+                new(11, whitePawn4Piece, new("D4"), chessBoard), // white pawn 4 move D4
+                new(11, whitePawn5Piece, new("E3"), chessBoard), // white pawn 5 move E3
+                new(11, whitePawn5Piece, new("E4"), chessBoard), // white pawn 5 move E4
+                new(11, whiteBishopPiece, new("H3"), chessBoard), // white bishop move H3
+            };
+
+            Turn onlyValidMove = new(11, whitePawn5Piece, new("F3"), chessBoard); // white pawn 5 capture knight on f3
+
+            // Construct kingCheckService
+            KingCheckService kingCheckService = new(chessPieces);
+
+            Assert.Multiple(() =>
+            {
+                foreach (Turn turn in possibleMoves)
+                {
+                    Assert.That(kingCheckService.IsKingInCheck(turn), Is.True, turn.NewPosition.StringValue);
+                }
+
+                // have to somehow remove the black knight from the list of pieces, as it was technically captured in this move
+                var itemToRemove = chessPieces.Single(piece => piece.GetPiece().Equals(ChessPiece.Piece.KNIGHT));
+                chessPieces.Remove(itemToRemove);
+                Assert.That(kingCheckService.IsKingInCheck(onlyValidMove), Is.False);
+            });
+        }
+
+        [Test(Description = "Test involving 8 pieces [Black Bishop on A5, Black Rook on A1, White Queen on D1, White King on E1, White Bishop on F1, White Pawns on D2, E2, and F2] where knight has put king in check, only a single valid move is possible")]
+        public void Test_IsKingInCheck_8PieceWhiteKingPinned()
+        {
+            ChessPiece whiteQueenPiece = new ChessPieceQueen(ChessPiece.Color.WHITE, 1, new("D1"));
+            ChessPiece whiteKingPiece = new ChessPieceKing(ChessPiece.Color.WHITE, new("E1"));
+            ChessPiece whiteBishopPiece = new ChessPieceBishop(ChessPiece.Color.WHITE, 2, new("F1"));
+            ChessPiece whitePawn4Piece = new ChessPieceWhitePawn(4, new("D2"));
+            ChessPiece whitePawn5Piece = new ChessPieceWhitePawn(4, new("E2"));
+            ChessPiece whitePawn6Piece = new ChessPieceWhitePawn(4, new("F2"));
+            ChessPiece blackBishopPiece = new ChessPieceBishop(ChessPiece.Color.BLACK, 1, new("A5"));
+            ChessPiece blackRookPiece = new ChessPieceRook(ChessPiece.Color.BLACK, 1, new("A1"));
+
+            List<ChessPiece> chessPieces = new()
+            {
+                whiteQueenPiece, whiteKingPiece, whiteBishopPiece, whitePawn4Piece,
+                whitePawn5Piece, whitePawn6Piece, blackBishopPiece, blackRookPiece
+            };
+
+            ChessBoard chessBoard = new();
+            chessBoard.PopulateBoard(chessPieces);
+
+            List<Turn> possibleMoves = new()
+            {
+                new(11, whiteQueenPiece, new("C2"), chessBoard), // white queen move C2
+                new(11, whitePawn4Piece, new("D3"), chessBoard), // white pawn 4 move D3
+                new(11, whitePawn4Piece, new("D4"), chessBoard), // white pawn 4 move D4
+            };
+
+            // Construct kingCheckService
+            KingCheckService kingCheckService = new(chessPieces);
+
+            Assert.Multiple(() =>
+            {
+                foreach (Turn turn in possibleMoves)
+                {
+                    Assert.That(kingCheckService.IsKingInCheck(turn), Is.True, turn.NewPosition.StringValue);
+                }
+            });
+        }
+
+        [Test(Description = "Test involving 9 pieces [Black Bishop on A5, Black Rook on A1, Black Knight on F3, White Queen on D1, White King on E1, White Bishop on F1, White Pawns on D2, E2, and F2] where knight has put king in check, only a single valid move is possible")]
+        public void Test_IsCheckMate_9PieceWhiteKingInCheck_NotCheckMate()
+        {
+            ChessPiece whiteQueenPiece = new ChessPieceQueen(ChessPiece.Color.WHITE, 1, new("D1"));
+            ChessPiece whiteKingPiece = new ChessPieceKing(ChessPiece.Color.WHITE, new("E1"));
+            ChessPiece whiteBishopPiece = new ChessPieceBishop(ChessPiece.Color.WHITE, 2, new("F1"));
+            ChessPiece whitePawn4Piece = new ChessPieceWhitePawn(4, new("D2"));
+            ChessPiece whitePawn5Piece = new ChessPieceWhitePawn(5, new("E2"));
+            ChessPiece whitePawn6Piece = new ChessPieceWhitePawn(6, new("F2"));
+            ChessPiece blackBishopPiece = new ChessPieceBishop(ChessPiece.Color.BLACK, 1, new("A5"));
+            ChessPiece blackRookPiece = new ChessPieceRook(ChessPiece.Color.BLACK, 1, new("A1"));
+            ChessPiece blackKnightPiece = new ChessPieceKnight(ChessPiece.Color.BLACK, 1, new("F3"));
+
+            List<ChessPiece> chessPieces = new()
+            {
+                whiteQueenPiece, whiteKingPiece, whiteBishopPiece, whitePawn4Piece,
+                whitePawn5Piece, whitePawn6Piece, blackBishopPiece, blackRookPiece, blackKnightPiece
+            };
+
+            ChessBoard chessBoard = new();
+            chessBoard.PopulateBoard(chessPieces);
+
+            // last turn made was black knight moving from H4 to F3
+            Turn turn = new(12, blackKnightPiece, new("H4"), new("F3"), chessBoard);
+
+            // Construct kingCheckService
+            KingCheckService kingCheckService = new(chessPieces);
+
+            // White Pawn 6 move to F3 is impossible move (only White Pawn 5 move to F3 is valid)
+            // It seems there are problems in the pawn logic, it doesn't see a valid capture 
+            // And it seems to think the F Pawn can capture the Knight on F3, which it cant
+            Assert.That(kingCheckService.IsCheckMate(turn), Is.False);
+        }
+
+        [Test(Description = "Test involving 9 pieces [Black Bishop on A5, Black Bishop on A6, Black Rook on A1, Black Knight on F3, White Queen on D1, White King on E1, White Bishop on F1, White Pawns on D2, and F2] where knight has put king in check, no valid moves are possible")]
+        public void Test_IsCheckMate_9PieceWhiteKingInCheck_CheckMate()
+        {
+            ChessPiece whiteQueenPiece = new ChessPieceQueen(ChessPiece.Color.WHITE, 1, new("D1"));
+            ChessPiece whiteKingPiece = new ChessPieceKing(ChessPiece.Color.WHITE, new("E1"));
+            ChessPiece whiteBishopPiece = new ChessPieceBishop(ChessPiece.Color.WHITE, 2, new("F1"));
+            ChessPiece whitePawn4Piece = new ChessPieceWhitePawn(4, new("D2"));
+            ChessPiece whitePawn6Piece = new ChessPieceWhitePawn(6, new("F2"));
+            ChessPiece blackBishop1Piece = new ChessPieceBishop(ChessPiece.Color.BLACK, 1, new("A5"));
+            ChessPiece blackBishop2Piece = new ChessPieceBishop(ChessPiece.Color.BLACK, 2, new("A6"));
+            ChessPiece blackRookPiece = new ChessPieceRook(ChessPiece.Color.BLACK, 1, new("A1"));
+            ChessPiece blackKnightPiece = new ChessPieceKnight(ChessPiece.Color.BLACK, 1, new("F3"));
+
+            List<ChessPiece> chessPieces = new()
+            {
+                whiteQueenPiece, whiteKingPiece, whiteBishopPiece, whitePawn4Piece,
+                blackBishop2Piece, whitePawn6Piece, blackBishop1Piece, blackRookPiece, blackKnightPiece
+            };
+
+            ChessBoard chessBoard = new();
+            chessBoard.PopulateBoard(chessPieces);
+
+            // last turn made was black knight moving from H4 to F3
+            Turn turn = new(12, blackKnightPiece, new("H4"), new("F3"), chessBoard);
+
+            // Construct kingCheckService
+            KingCheckService kingCheckService = new(chessPieces);
+
+            Assert.That(kingCheckService.IsCheckMate(turn), Is.True);
+        }
+
+        [Test(Description = "Test Check Mate involving 5 pieces")]
+        public void Test_IsCheckMate_5PieceCheckMateOnBlack()
+        {
+            ChessPiece whiteQueenPiece = new ChessPieceQueen(ChessPiece.Color.WHITE, 1, new("C7"));
+            ChessPiece whiteKingPiece = new ChessPieceKing(ChessPiece.Color.WHITE, new("G2"));
+            ChessPiece whiteBishopPiece = new ChessPieceBishop(ChessPiece.Color.WHITE, 2, new("F5"));
+            ChessPiece whitePawn4Piece = new ChessPieceWhitePawn(4, new("D5"));
+            ChessPiece whitePawn3Piece = new ChessPieceWhitePawn(3, new("C4"));
+            ChessPiece whitePawn2Piece = new ChessPieceWhitePawn(2, new("B3"));
+            ChessPiece whiteRookPiece = new ChessPieceRook(ChessPiece.Color.WHITE, 1, new("A4"));
+            ChessPiece whiteKnightPiece = new ChessPieceKnight(ChessPiece.Color.WHITE, 1, new("B5"));
+
+            ChessPiece blackKingPiece = new ChessPieceKing(ChessPiece.Color.BLACK, new("C5"));
+
+            List<ChessPiece> chessPieces = new()
+            {
+                whiteQueenPiece, whiteKingPiece, whiteBishopPiece, whitePawn4Piece,
+                whitePawn3Piece, whitePawn2Piece, whiteRookPiece, whiteKnightPiece, blackKingPiece
+            };
+
+            ChessBoard chessBoard = new();
+            chessBoard.PopulateBoard(chessPieces);
+
+            // last turn made was white queen moving from B7 to C7
+            Turn turn = new(19, whiteQueenPiece, new("B7"), new("C7"), chessBoard);
+
+            // Construct kingCheckService
+            KingCheckService kingCheckService = new(chessPieces);
+
+            Assert.That(kingCheckService.IsCheckMate(turn), Is.True);
+        }
 
     }
 }

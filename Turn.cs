@@ -22,6 +22,7 @@ namespace Chess
         private BoardPosition _previousPosition;
         private BoardPosition _newPosition;
         private ChessBoard _chessBoard;
+        private String _description;
 
         public Turn(int turnNumber, ChessPiece piece, BoardPosition previousPosition, BoardPosition newPosition, ChessBoard chessBoard)
         {
@@ -38,7 +39,27 @@ namespace Chess
             else
             {
                 _playerTurn = Color.WHITE;
-            }  
+            }
+
+            String description = _previousPosition.StringValue;
+
+            if (_piece.GetColor().Equals(ChessPiece.Color.WHITE))
+                description += " White ";
+            else
+                description += " Black ";
+
+            switch (_piece.GetPiece())
+            {
+                case ChessPiece.Piece.PAWN: description += "Pawn " + _piece.GetId() + " "; break;
+                case ChessPiece.Piece.ROOK: description += "Rook " + _piece.GetId() + " "; break;
+                case ChessPiece.Piece.BISHOP: description += "Bishop " + _piece.GetId() + " "; break;
+                case ChessPiece.Piece.KNIGHT: description += "Knight " + _piece.GetId() + " "; break;
+                case ChessPiece.Piece.QUEEN: description += "Queen " + _piece.GetId() + " "; break;
+                case ChessPiece.Piece.KING: description += "King " + _piece.GetId() + " "; break;
+            }
+
+            description += " move " + _newPosition.StringValue;
+            _description = description;
         }
 
         public Turn(int turnNumber, ChessPiece piece, BoardPosition newPosition, ChessBoard chessBoard)
@@ -56,7 +77,27 @@ namespace Chess
             else
             {
                 _playerTurn = Color.WHITE;
-            }      
+            }
+
+            String description = _previousPosition.StringValue;
+
+            if (_piece.GetColor().Equals(ChessPiece.Color.WHITE))
+                description += " White ";
+            else
+                description += " Black ";
+
+            switch (_piece.GetPiece())
+            {
+                case ChessPiece.Piece.PAWN: description += "Pawn " + _piece.GetId() + " "; break;
+                case ChessPiece.Piece.ROOK: description += "Rook " + _piece.GetId() + " "; break;
+                case ChessPiece.Piece.BISHOP: description += "Bishop " + _piece.GetId() + " "; break;
+                case ChessPiece.Piece.KNIGHT: description += "Knight " + _piece.GetId() + " "; break;
+                case ChessPiece.Piece.QUEEN: description += "Queen " + _piece.GetId() + " "; break;
+                case ChessPiece.Piece.KING: description += "King " + _piece.GetId() + " "; break;
+            }
+
+            description += " move " + _newPosition.StringValue;
+            _description = description;
         }
 
         public int TurnNumber { get { return _turnNumber; } }
@@ -65,6 +106,7 @@ namespace Chess
         public BoardPosition NewPosition { get { return _newPosition; } }
         public ChessBoard ChessBoard {  get { return _chessBoard; } }
         public Color PlayerTurn { get { return _playerTurn; } }
+        public String TurnDescription { get { return _description; } }  
 
     }
 }

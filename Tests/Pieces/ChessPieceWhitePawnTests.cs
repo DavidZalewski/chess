@@ -226,5 +226,38 @@ namespace Tests.Pieces
             ChessPiece piece = new ChessPieceWhitePawn(1, boardPosition);
             Assert.That(piece.IsValidMove(board, boardPosition), Is.False);
         }
+
+        [Test(Description = "Tests that the white pawn on E2 can capture Black Knight on F3")]
+        public void Test_WhitePawn_IsValidMove_CanCaptureKnightOnF3()
+        {
+            // Create White Pawn at D4
+            ChessPiece whitePawn5Piece = new ChessPieceWhitePawn(5, new("E2"));
+            ChessPiece blackKnightPiece = new ChessPieceKnight(ChessPiece.Color.BLACK, 1, new("F3"));
+            board.PopulateBoard(new List<ChessPiece>() { whitePawn5Piece, blackKnightPiece });
+
+            Assert.That(whitePawn5Piece.IsValidMove(board, new("F3")), Is.True);
+        }
+
+        [Test(Description = "Tests that the white pawn on F2 cannot capture Black Knight on F3")]
+        public void Test_WhitePawn_IsValidMove_CannotCaptureKnightOnF3()
+        {
+            // Create White Pawn at D4
+            ChessPiece whitePawn6Piece = new ChessPieceWhitePawn(5, new("F2"));
+            ChessPiece blackKnightPiece = new ChessPieceKnight(ChessPiece.Color.BLACK, 1, new("F3"));
+            board.PopulateBoard(new List<ChessPiece>() { whitePawn6Piece, blackKnightPiece });
+
+            Assert.That(whitePawn6Piece.IsValidMove(board, new("F3")), Is.False);
+        }
+
+        [Test(Description = "Tests that the white pawn on F2 cannot jump over Black Knight on F3")]
+        public void Test_WhitePawn_IsValidMove_CannotJumpOverKnightOnF3()
+        {
+            // Create White Pawn at D4
+            ChessPiece whitePawn6Piece = new ChessPieceWhitePawn(5, new("F2"));
+            ChessPiece blackKnightPiece = new ChessPieceKnight(ChessPiece.Color.BLACK, 1, new("F3"));
+            board.PopulateBoard(new List<ChessPiece>() { whitePawn6Piece, blackKnightPiece });
+
+            Assert.That(whitePawn6Piece.IsValidMove(board, new("F4")), Is.False);
+        }
     }
 }
