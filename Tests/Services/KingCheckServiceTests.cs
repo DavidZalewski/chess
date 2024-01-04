@@ -349,5 +349,35 @@ namespace Tests.Services
             Assert.That(kingCheckService.IsCheckMate(turn), Is.False);
         }
 
+        [Test(Description = "Test Check Mate on black with 2 pieces")]
+        public void Test_IsCheckMate_CheckMateBlack_2PieceMate()
+        {
+            ChessPiece whiteQueenPiece = new ChessPieceQueen(ChessPiece.Color.WHITE, 1, new("B7"));
+            ChessPiece whiteKingPiece = new ChessPieceKing(ChessPiece.Color.WHITE, new("D4"));
+            ChessPiece whitePawn3Piece = new ChessPieceWhitePawn(3, new("C6"));
+
+            ChessPiece blackRookPiece = new ChessPieceRook(ChessPiece.Color.BLACK, 2, new("C8"));
+            ChessPiece blackPawnPiece = new ChessPieceBlackPawn(2, new("C7"));
+            ChessPiece blackKingPiece = new ChessPieceKing(ChessPiece.Color.BLACK, new("B8"));
+
+            List<ChessPiece> chessPieces = new List<ChessPiece>()
+            {
+                whiteQueenPiece, whiteKingPiece, whitePawn3Piece,
+                blackRookPiece, blackPawnPiece, blackKingPiece
+            };
+
+            ChessBoard chessBoard = new();
+            chessBoard.PopulateBoard(chessPieces);
+
+            // last turn made was white queen moving from A2 to A4
+            Turn turn = new(21, whiteQueenPiece, new("B5"), new("B7"), chessBoard);
+
+            // Construct kingCheckService
+            KingCheckService kingCheckService = new(chessPieces);
+
+            Assert.That(kingCheckService.IsCheckMate(turn), Is.True);
+        }
+
+
     }
 }
