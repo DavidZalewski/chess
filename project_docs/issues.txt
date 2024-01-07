@@ -1,0 +1,14 @@
+Queen and Bishop are throwing invalid move when the move is valid for a full board
+
+ie. Move BP4 D6, BQ1 should be able to move to A5, and BB1 should be able to move to D7
+ -- currently code says they cant
+ 
+Bp3 on C4 square was somehow captured by Wp3 when it moved from C2 to C4 
+
+
+There is a WK1 on F6, BP5 on E7, BP5 F6 should be a valid capture, but code says it is not
+
+Moved BK2 from G8 to F6, to capture WK1 on F6, but it shows that WK1 is still on F6 and BK2 has disappeared 
+from the board
+
+The board is left in an invalid state

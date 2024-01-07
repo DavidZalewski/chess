@@ -360,7 +360,7 @@ namespace Tests.Services
             ChessPiece blackPawnPiece = new ChessPieceBlackPawn(2, new("C7"));
             ChessPiece blackKingPiece = new ChessPieceKing(ChessPiece.Color.BLACK, new("B8"));
 
-            List<ChessPiece> chessPieces = new List<ChessPiece>()
+            List<ChessPiece> chessPieces = new()
             {
                 whiteQueenPiece, whiteKingPiece, whitePawn3Piece,
                 blackRookPiece, blackPawnPiece, blackKingPiece

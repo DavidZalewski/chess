@@ -259,5 +259,27 @@ namespace Tests.Pieces
 
             Assert.That(whitePawn6Piece.IsValidMove(board, new("F4")), Is.False);
         }
+
+        [Test(Description = "Tests that the White Pawn on C2 cannot capture a Black Pawn on C4")]
+        public void Test_WhitePawn_IsValidMove_CannotCaptureBPOnC4()
+        {
+            // Create White Pawn at D4
+            ChessPiece whitePawn3Piece = new ChessPieceWhitePawn(3, new("C2"));
+            ChessPiece blackPawnPiece = new ChessPieceBlackPawn(3, new("C4"));
+            board.PopulateBoard(new List<ChessPiece>() { whitePawn3Piece, blackPawnPiece });
+
+            Assert.That(whitePawn3Piece.IsValidMove(board, new("C4")), Is.False);
+        }
+
+        [Test(Description = "Tests that the White Pawn on D4 can capture a Black Pawn on E5")]
+        public void Test_WhitePawn_IsValidMove_PawnOnD4CanCapturePawnOnE5()
+        {
+            // Create White Pawn at D4
+            ChessPiece whitePawn3Piece = new ChessPieceWhitePawn(4, new("D4"));
+            ChessPiece blackPawnPiece = new ChessPieceBlackPawn(5, new("E5"));
+            board.PopulateBoard(new List<ChessPiece>() { whitePawn3Piece, blackPawnPiece });
+
+            Assert.That(whitePawn3Piece.IsValidMove(board, new("E5")), Is.True);
+        }
     }
 }

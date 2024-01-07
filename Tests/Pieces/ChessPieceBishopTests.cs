@@ -1,5 +1,6 @@
 using Chess.Board;
 using Chess.Pieces;
+using Chess.Services;
 
 namespace Tests.Pieces
 {
@@ -179,6 +180,26 @@ namespace Tests.Pieces
             board.SetBoardValue(new("D3"), 22);
             board.SetBoardValue(new("E2"), 23);
             Assert.That(piece.IsValidMove(board, new("G5")), Is.True);
+        }
+
+        [Test(Description = "Tests that Black Bishop can move from C8 to D7 with pieces on board not in its path")]
+        public void Test_BlackBishop1_IsValidMove_FromC8ToD7()
+        {
+            List<ChessPiece> chessPieces = ChessPieceFactory.CreateChessPieces();
+            board.PopulateBoard(chessPieces);
+
+            ChessPiece blackPawn4 = chessPieces.First(piece => piece.GetPiece().Equals(ChessPiece.Piece.PAWN) &&
+                                                              piece.GetColor().Equals(ChessPiece.Color.BLACK) &&
+                                                              piece.GetId().Equals(4));
+
+            ChessPiece blackBishop1 = chessPieces.First(piece => piece.GetPiece().Equals(ChessPiece.Piece.BISHOP) &&
+                                                              piece.GetColor().Equals(ChessPiece.Color.BLACK) &&
+                                                              piece.GetId().Equals(1));
+
+
+            Assert.That(blackPawn4.IsValidMove(board, new("D6")), Is.True);
+            blackPawn4.Move(board, new("D6"));
+            Assert.That(blackBishop1.IsValidMove(board, new("D7")), Is.True);
         }
 
     }

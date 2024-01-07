@@ -85,5 +85,15 @@ namespace Chess.Pieces
         {
             _currentPosition = boardPosition;
         }
+
+        public bool Equals(ChessPiece other)
+        {
+            return _color.Equals(other._color) && 
+                   _id == other._id && 
+                   _realValue == other._realValue && 
+                   _piece == other._piece &&
+                   _startingPosition.EqualTo(other._startingPosition) && 
+                   _currentPosition.EqualTo(other._currentPosition);
+        }
     }
 }
