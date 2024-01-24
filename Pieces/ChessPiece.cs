@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 using Chess.Board;
+using Newtonsoft.Json;
 
 namespace Chess.Pieces
 {
@@ -26,6 +28,7 @@ namespace Chess.Pieces
     // ChessBoard. Both need to be in sync with each other at all times.
 
     // I think I should sketch this out on paper to see which approach is simplest.
+    [Serializable]
     public abstract class ChessPiece
     {
         public enum Piece
@@ -50,6 +53,8 @@ namespace Chess.Pieces
         protected int _realValue;
         protected BoardPosition _startingPosition;
         protected BoardPosition _currentPosition;
+        protected bool _hasMoved = false;
+        protected static Func<ChessBoard, BoardPosition, ChessPiece, bool>? _castleEventCallBackFunction = null;
 
         public ChessPiece(Piece piece, Color color, int id, BoardPosition startingPosition)
         {
@@ -60,18 +65,54 @@ namespace Chess.Pieces
             _currentPosition = _startingPosition;
         }
 
+        public abstract ChessPiece Clone();
+
+        protected ChessPiece Clone(ChessPiece copy)
+        {
+            copy._piece = _piece;
+            copy._color = _color;
+            copy._id = _id;
+            copy._startingPosition = _startingPosition;
+            copy._currentPosition = _currentPosition;
+            copy._realValue = _realValue;
+            copy._hasMoved = _hasMoved;
+
+            return copy;
+        }
+
+        public override bool Equals(object? obj)
+        {
+            var item = obj as ChessPiece;
+
+            if (item == null)
+            {
+                return false;
+            }
+
+            return this._color.Equals(item._color) &&
+                   this._hasMoved.Equals(item._hasMoved) &&
+                   this._piece.Equals(item._piece) &&
+                   this._currentPosition.EqualTo(item._currentPosition) &&
+                   this._startingPosition.EqualTo(item._startingPosition) &&
+                   this._id.Equals(item._id) &&
+                   this._realValue.Equals(item._realValue);
+        }
+
         public abstract bool IsValidMove(ChessBoard board, BoardPosition position);
-        protected abstract void ImplementMove(ChessBoard board, BoardPosition position);
+        protected abstract bool ImplementMove(ChessBoard board, BoardPosition position);
 
         public void Move(ChessBoard board, BoardPosition position)
         {
-            ImplementMove(board, position);
+            if (ImplementMove(board, position)) return;
+
             BoardPosition previousPosition = _currentPosition;
             board.SetBoardValue(position, _realValue);
             if (!previousPosition.EqualTo(position))
             {
+                _hasMoved = true;
                 board.SetBoardValue(previousPosition, 0); // empty the previous square
-            }
+                _currentPosition = position; // breaks too many test cases
+            }     
         }
 
         public Piece GetPiece() { return _piece; }
@@ -80,11 +121,20 @@ namespace Chess.Pieces
         public int GetRealValue() { return _realValue; }
         public BoardPosition GetStartingPosition() { return _startingPosition; }
         public BoardPosition GetCurrentPosition() { return _currentPosition; }
+        public bool HasMoved() {  return _hasMoved; }
+
         // used by ghost pieces
         public void SetCurrentPosition(BoardPosition boardPosition)
         {
             _currentPosition = boardPosition;
         }
+
+        public static void SetCastleCallbackFunction(Func<ChessBoard, BoardPosition, ChessPiece, bool> callback) { 
+            _castleEventCallBackFunction = callback; 
+        }
+
+        // used by tests to setup the state of King Piece for certain unit tests
+        internal void SetHasMoved() { _hasMoved = true; }
 
         public bool Equals(ChessPiece other)
         {

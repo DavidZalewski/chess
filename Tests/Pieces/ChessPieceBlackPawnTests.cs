@@ -55,12 +55,14 @@ namespace Tests.Pieces
         [Test(Description = "Tests that the black pawn cannot move 2 squares if it has already moved")]
         public void Test_BlackPawn_IsValidMove_InvalidMove2Squares()
         {
-            BoardPosition boardPosition = new BoardPosition(BoardPosition.VERTICAL.SEVEN, BoardPosition.HORIZONTAL.G);
+            BoardPosition boardPosition = new("G7");
             ChessPiece piece = new ChessPieceBlackPawn(1, boardPosition);
-            BoardPosition nextPosition = new BoardPosition(BoardPosition.VERTICAL.SIX, BoardPosition.HORIZONTAL.G);
+            BoardPosition nextPosition = new("G6");
             Assert.That(piece.IsValidMove(board, nextPosition), Is.True);
+            Assert.That(piece.HasMoved(), Is.False);
             piece.Move(board, nextPosition);
-            BoardPosition newPosition = new BoardPosition(BoardPosition.VERTICAL.FOUR, BoardPosition.HORIZONTAL.G);
+            Assert.That(piece.HasMoved(), Is.True);
+            BoardPosition newPosition = new(BoardPosition.VERTICAL.FOUR, BoardPosition.HORIZONTAL.G);
 
             Assert.That(piece.IsValidMove(board, newPosition), Is.False);
         }
@@ -188,6 +190,17 @@ namespace Tests.Pieces
             ChessPiece piece = new ChessPieceBlackPawn(1, boardPosition);
 
             BoardPosition badPosition = new BoardPosition(BoardPosition.VERTICAL.EIGHT, BoardPosition.HORIZONTAL.E);
+            Assert.That(piece.IsValidMove(board, badPosition), Is.False);
+        }
+
+        [Test(Description = "Tests that the black pawn 2 on A7 cannot move to C5")]
+        public void Test_BlackPawn_IsValidMove_InvalidMove4()
+        {
+            // Create Black Pawn at E4
+            BoardPosition boardPosition = new BoardPosition(BoardPosition.VERTICAL.SEVEN, BoardPosition.HORIZONTAL.A);
+            ChessPiece piece = new ChessPieceBlackPawn(1, boardPosition);
+
+            BoardPosition badPosition = new BoardPosition(BoardPosition.VERTICAL.FIVE, BoardPosition.HORIZONTAL.C);
             Assert.That(piece.IsValidMove(board, badPosition), Is.False);
         }
     }

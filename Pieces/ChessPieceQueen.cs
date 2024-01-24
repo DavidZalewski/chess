@@ -7,6 +7,7 @@ using Chess.Board;
 
 namespace Chess.Pieces
 {
+    [Serializable]
     public class ChessPieceQueen : ChessPiece
     {
         private ChessPieceRook _chessPieceRook;
@@ -17,6 +18,12 @@ namespace Chess.Pieces
             _realValue = (int)_piece + (int)_color; // could also calculate this in base class by adding the two enums together
             _chessPieceBishop = new ChessPieceBishop(color, 5, startingPosition);
             _chessPieceRook = new ChessPieceRook(color, 5, startingPosition);
+        }
+
+        public override ChessPiece Clone()
+        {
+            ChessPieceQueen copy = new(_color, _id, _startingPosition);
+            return Clone(copy);
         }
 
         public override bool IsValidMove(ChessBoard board, BoardPosition position)
@@ -32,10 +39,10 @@ namespace Chess.Pieces
             return isValidBishopMove || isValidRookMove;
         }
 
-        protected override void ImplementMove(ChessBoard board, BoardPosition position)
+        protected override bool ImplementMove(ChessBoard board, BoardPosition position)
         {
             // does this need to exist?
-
+            return false;
         }
     }
 }

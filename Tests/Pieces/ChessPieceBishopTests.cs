@@ -57,6 +57,45 @@ namespace Tests.Pieces
             });
         }
 
+        [Test]
+        public void Test_CloneWhiteBishop_Success()
+        {
+            BoardPosition boardPosition = whiteBishop1StartPosition;
+            ChessPiece piece = new ChessPieceBishop(ChessPiece.Color.WHITE, 1, boardPosition);
+            ChessPiece clone = piece.Clone();
+       
+            Assert.Multiple(() =>
+            {
+                Assert.That(clone, Is.Not.Null);
+                Assert.That(ReferenceEquals(clone, piece), Is.False);
+                Assert.That(clone.GetCurrentPosition(), Is.EqualTo(boardPosition));
+                Assert.That(clone.GetRealValue(), Is.EqualTo(13));
+                Assert.That(clone.GetId(), Is.EqualTo(1));
+                Assert.That(clone.GetColor(), Is.EqualTo(ChessPiece.Color.WHITE));
+                Assert.That(clone.GetPiece(), Is.EqualTo(ChessPiece.Piece.BISHOP));
+            });
+        }
+
+        [Test]
+        public void Test_CloneBlackBishop_Success()
+        {
+            BoardPosition boardPosition = blackBishop1StartPosition;
+            ChessPiece piece = new ChessPieceBishop(ChessPiece.Color.BLACK, 1, boardPosition);
+            ChessPiece clone = piece.Clone();
+
+            
+            Assert.Multiple(() =>
+            {
+                Assert.That(clone, Is.Not.Null);
+                Assert.That(ReferenceEquals(clone, piece), Is.False);
+                Assert.That(clone.GetCurrentPosition(), Is.EqualTo(boardPosition));
+                Assert.That(clone.GetRealValue(), Is.EqualTo(23));
+                Assert.That(clone.GetId(), Is.EqualTo(1));
+                Assert.That(clone.GetColor(), Is.EqualTo(ChessPiece.Color.BLACK));
+                Assert.That(clone.GetPiece(), Is.EqualTo(ChessPiece.Piece.BISHOP));
+            });
+        }
+
         [Test(Description = "Tests whether the white bishop 1 can move to C1 from A3 with no other pieces on board")]
         public void Test_WhiteBishop1_IsValidMove_StartingMove1()
         {
@@ -196,10 +235,31 @@ namespace Tests.Pieces
                                                               piece.GetColor().Equals(ChessPiece.Color.BLACK) &&
                                                               piece.GetId().Equals(1));
 
-
+            Assert.That(blackPawn4.HasMoved(), Is.False);
             Assert.That(blackPawn4.IsValidMove(board, new("D6")), Is.True);
             blackPawn4.Move(board, new("D6"));
+            Assert.That(blackPawn4.HasMoved(), Is.True);
             Assert.That(blackBishop1.IsValidMove(board, new("D7")), Is.True);
+        }
+
+        [Test(Description = "Tests that White Bishop cannot move from C1 to C3")]
+        public void Test_WhiteBishop1_IsValidMove_FromC1ToC3()
+        {
+            List<ChessPiece> chessPieces = ChessPieceFactory.CreateChessPieces();
+            board.PopulateBoard(chessPieces);
+
+            ChessPiece whitePawn2 = chessPieces.First(piece => piece.GetPiece().Equals(ChessPiece.Piece.PAWN) &&
+                                                              piece.GetColor().Equals(ChessPiece.Color.WHITE) &&
+                                                              piece.GetId().Equals(2));
+
+            ChessPiece whiteBishop1 = chessPieces.First(piece => piece.GetPiece().Equals(ChessPiece.Piece.BISHOP) &&
+                                                              piece.GetColor().Equals(ChessPiece.Color.WHITE) &&
+                                                              piece.GetId().Equals(1));
+
+            Assert.That(whitePawn2.IsValidMove(board, new("B3")), Is.True);
+            whitePawn2.Move(board, new("B3"));
+            Assert.That(whitePawn2.HasMoved(), Is.True);
+            Assert.That(whiteBishop1.IsValidMove(board, new("C3")), Is.False);
         }
 
     }

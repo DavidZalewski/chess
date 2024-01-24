@@ -32,6 +32,25 @@ namespace Tests.Pieces
         }
 
         [Test]
+        public void Test_CloneWhiteKing_Success()
+        {
+            ChessPiece whiteKingPiece = new ChessPieceKing(ChessPiece.Color.WHITE, new(BoardPosition.VERTICAL.ONE, BoardPosition.HORIZONTAL.E));
+            ChessPiece clone = whiteKingPiece.Clone();
+
+            Assert.Multiple(() =>
+            {
+                Assert.That(clone, Is.Not.Null);
+                Assert.That(ReferenceEquals(clone, whiteKingPiece), Is.False);
+                Assert.That(clone.GetCurrentPosition(), Is.EqualTo(e1));
+                Assert.That(clone.GetRealValue(), Is.EqualTo(16));
+                Assert.That(clone.GetId(), Is.EqualTo(1));
+                Assert.That(clone.GetColor(), Is.EqualTo(ChessPiece.Color.WHITE));
+                Assert.That(clone.GetPiece(), Is.EqualTo(ChessPiece.Piece.KING));
+                Assert.That(clone.GetStartingPosition().EqualTo(whiteKingPiece.GetCurrentPosition()), Is.True);
+            });
+        }
+
+        [Test]
         public void Test_ConstructBlackKing_Success()
         {
             ChessPiece blackKingPiece = new ChessPieceKing(ChessPiece.Color.BLACK, new(BoardPosition.VERTICAL.EIGHT, BoardPosition.HORIZONTAL.E));
@@ -44,6 +63,25 @@ namespace Tests.Pieces
                 Assert.That(blackKingPiece.GetColor(), Is.EqualTo(ChessPiece.Color.BLACK));
                 Assert.That(blackKingPiece.GetPiece(), Is.EqualTo(ChessPiece.Piece.KING));
                 Assert.That(blackKingPiece.GetStartingPosition().EqualTo(blackKingPiece.GetCurrentPosition()), Is.True);
+            });
+        }
+
+        [Test]
+        public void Test_CloneBlackKing_Success()
+        {
+            ChessPiece blackKingPiece = new ChessPieceKing(ChessPiece.Color.BLACK, new(BoardPosition.VERTICAL.EIGHT, BoardPosition.HORIZONTAL.E));
+            ChessPiece clone = blackKingPiece.Clone();
+            
+            Assert.Multiple(() =>
+            {
+                Assert.That(clone, Is.Not.Null);
+                Assert.That(ReferenceEquals(clone, blackKingPiece), Is.False);
+                Assert.That(clone.GetCurrentPosition().EqualTo(e8), Is.True);
+                Assert.That(clone.GetRealValue(), Is.EqualTo(26));
+                Assert.That(clone.GetId(), Is.EqualTo(1));
+                Assert.That(clone.GetColor(), Is.EqualTo(ChessPiece.Color.BLACK));
+                Assert.That(clone.GetPiece(), Is.EqualTo(ChessPiece.Piece.KING));
+                Assert.That(clone.GetStartingPosition().EqualTo(blackKingPiece.GetCurrentPosition()), Is.True);
             });
         }
 

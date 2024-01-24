@@ -42,6 +42,25 @@ namespace Tests.Pieces
         }
 
         [Test]
+        public void Test_CloneWhiteQueen_Success()
+        {
+            BoardPosition boardPosition = a3;
+            ChessPiece piece = new ChessPieceQueen(Color.WHITE, 1, boardPosition);
+            ChessPiece clone = piece.Clone();
+            
+            Assert.Multiple(() =>
+            {
+                Assert.That(clone, Is.Not.Null);
+                Assert.That(ReferenceEquals(clone, piece), Is.False);
+                Assert.That(clone.GetCurrentPosition(), Is.EqualTo(boardPosition));
+                Assert.That(clone.GetRealValue(), Is.EqualTo(15));
+                Assert.That(clone.GetId(), Is.EqualTo(1));
+                Assert.That(clone.GetColor(), Is.EqualTo(Color.WHITE));
+                Assert.That(clone.GetPiece(), Is.EqualTo(Piece.QUEEN));
+            });
+        }
+
+        [Test]
         public void Test_ConstructBlackQueen_Success()
         {
             BoardPosition boardPosition = h3;
@@ -55,6 +74,25 @@ namespace Tests.Pieces
                 Assert.That(piece.GetId(), Is.EqualTo(1));
                 Assert.That(piece.GetColor(), Is.EqualTo(Color.BLACK));
                 Assert.That(piece.GetPiece(), Is.EqualTo(Piece.QUEEN));
+            });
+        }
+
+        [Test]
+        public void Test_CloneBlackQueen_Success()
+        {
+            BoardPosition boardPosition = h3;
+            ChessPiece piece = new ChessPieceQueen(Color.BLACK, 1, boardPosition);
+            ChessPiece clone = piece.Clone();
+
+            Assert.Multiple(() =>
+            {
+                Assert.That(clone, Is.Not.Null);
+                Assert.That(ReferenceEquals(clone, piece), Is.False);
+                Assert.That(clone.GetCurrentPosition(), Is.EqualTo(boardPosition));
+                Assert.That(clone.GetRealValue(), Is.EqualTo(25));
+                Assert.That(clone.GetId(), Is.EqualTo(1));
+                Assert.That(clone.GetColor(), Is.EqualTo(Color.BLACK));
+                Assert.That(clone.GetPiece(), Is.EqualTo(Piece.QUEEN));
             });
         }
 

@@ -7,11 +7,18 @@ using Chess.Board;
 
 namespace Chess.Pieces
 {
+    [Serializable]
     public class ChessPieceWhitePawn : ChessPiecePawn
     {
         public ChessPieceWhitePawn(int id, BoardPosition startingPosition) : base(Color.WHITE, id, startingPosition)
         {
             _realValue = 11; // could also calculate this in base class by adding the two enums together
+        }
+
+        public override ChessPiece Clone()
+        {
+            ChessPieceWhitePawn copy = new(_id, _startingPosition);
+            return Clone(copy);
         }
 
         public override bool IsValidMove(ChessBoard board, BoardPosition position)
@@ -67,10 +74,10 @@ namespace Chess.Pieces
             }
         }
 
-        protected override void ImplementMove(ChessBoard board, BoardPosition position)
+        protected override bool ImplementMove(ChessBoard board, BoardPosition position)
         {
             // does this need to exist?
-
+            return false;
         }
     }
 }

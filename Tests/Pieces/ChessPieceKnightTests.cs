@@ -35,6 +35,25 @@ namespace Tests.Pieces
         }
 
         [Test]
+        public void Test_CloneWhiteKnight_Success()
+        {
+            BoardPosition boardPosition = whiteKnight1StartPosition;
+            ChessPiece piece = new ChessPieceKnight(ChessPiece.Color.WHITE, 1, boardPosition);
+            ChessPiece clone = piece.Clone();
+            
+            Assert.Multiple(() =>
+            {
+                Assert.That(clone, Is.Not.Null);
+                Assert.That(ReferenceEquals(clone, piece), Is.False);
+                Assert.That(clone.GetCurrentPosition(), Is.EqualTo(boardPosition));
+                Assert.That(clone.GetRealValue(), Is.EqualTo(12));
+                Assert.That(clone.GetId(), Is.EqualTo(1));
+                Assert.That(clone.GetColor(), Is.EqualTo(ChessPiece.Color.WHITE));
+                Assert.That(clone.GetPiece(), Is.EqualTo(ChessPiece.Piece.KNIGHT));
+            });
+        }
+
+        [Test]
         public void Test_ConstructBlackKnight_Success()
         {
             BoardPosition boardPosition = blackKnight1StartPosition;
@@ -48,6 +67,25 @@ namespace Tests.Pieces
                 Assert.That(piece.GetId(), Is.EqualTo(1));
                 Assert.That(piece.GetColor(), Is.EqualTo(ChessPiece.Color.BLACK));
                 Assert.That(piece.GetPiece(), Is.EqualTo(ChessPiece.Piece.KNIGHT));
+            });
+        }
+
+        [Test]
+        public void Test_CloneBlackKnight_Success()
+        {
+            BoardPosition boardPosition = blackKnight1StartPosition;
+            ChessPiece piece = new ChessPieceKnight(ChessPiece.Color.BLACK, 1, boardPosition);
+            ChessPiece clone = piece.Clone();
+
+            Assert.Multiple(() =>
+            {
+                Assert.That(clone, Is.Not.Null);
+                Assert.That(ReferenceEquals(clone, piece), Is.False);
+                Assert.That(clone.GetCurrentPosition(), Is.EqualTo(boardPosition));
+                Assert.That(clone.GetRealValue(), Is.EqualTo(22));
+                Assert.That(clone.GetId(), Is.EqualTo(1));
+                Assert.That(clone.GetColor(), Is.EqualTo(ChessPiece.Color.BLACK));
+                Assert.That(clone.GetPiece(), Is.EqualTo(ChessPiece.Piece.KNIGHT));
             });
         }
 

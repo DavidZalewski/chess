@@ -9,6 +9,7 @@ using Chess.Pieces;
 
 namespace Chess.Board
 {
+    [Serializable]
     public class ChessBoard
     {
         // the last inner array is assumed to be the starting position
@@ -31,7 +32,8 @@ namespace Chess.Board
 
         public ChessBoard(ChessBoard other)
         {
-            _board = other._board.Clone() as int[,];
+            if (other != null && other._board != null)
+                _board = other._board.Clone() as int[,];
         }
 
         public int[,] GetBoard() { return _board; }
@@ -80,6 +82,12 @@ namespace Chess.Board
                 return value > 0 && value < 20;
             else
                 return value > 20 && value < 30;
+        }
+
+        public bool IsPieceAtPosition(BoardPosition position, ChessPiece.Color color, ChessPiece.Piece piece)
+        {
+            int value = _board[position.VerticalValueAsInt, position.HorizontalValueAsInt];
+            return value == ((int)color + (int)piece);
         }
 
         public bool IsPieceAtPosition(ChessPiece chessPiece)

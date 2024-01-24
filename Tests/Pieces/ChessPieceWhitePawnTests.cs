@@ -35,6 +35,25 @@ namespace Tests.Pieces
             });
         }
 
+        [Test]
+        public void Test_CloneWhitePawn_Success()
+        {
+            BoardPosition boardPosition = new(BoardPosition.VERTICAL.ONE, BoardPosition.HORIZONTAL.A);
+            ChessPiece piece = new ChessPieceWhitePawn(1, boardPosition);
+            ChessPiece clone = piece.Clone();
+            
+            Assert.Multiple(() =>
+            {
+                Assert.That(clone, Is.Not.Null);
+                Assert.That(ReferenceEquals(clone, piece), Is.False);
+                Assert.That(clone.GetCurrentPosition(), Is.EqualTo(boardPosition));
+                Assert.That(clone.GetRealValue(), Is.EqualTo(11));
+                Assert.That(clone.GetId(), Is.EqualTo(1));
+                Assert.That(clone.GetColor(), Is.EqualTo(ChessPiece.Color.WHITE));
+                Assert.That(clone.GetPiece(), Is.EqualTo(ChessPiece.Piece.PAWN));
+            });
+        }
+
         [Test(Description = "Tests whether the white pawn can move a single square up on its first move")]
         public void Test_WhitePawn_IsValidMove_StartingMove1()
         {
@@ -62,7 +81,9 @@ namespace Tests.Pieces
             ChessPiece piece = new ChessPieceWhitePawn(1, boardPosition);
             BoardPosition nextPosition = new(BoardPosition.VERTICAL.THREE, BoardPosition.HORIZONTAL.B);
             Assert.That(piece.IsValidMove(board, nextPosition), Is.True);
+            Assert.That(piece.HasMoved(), Is.False);
             piece.Move(board, nextPosition);
+            Assert.That(piece.HasMoved(), Is.True);
             BoardPosition newPosition = new(BoardPosition.VERTICAL.FIVE, BoardPosition.HORIZONTAL.B);
 
             Assert.That(piece.IsValidMove(board, newPosition), Is.False);

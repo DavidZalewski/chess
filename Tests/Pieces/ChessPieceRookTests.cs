@@ -47,6 +47,24 @@ namespace Tests.Pieces
             });
         }
 
+        [Test]
+        public void Test_CloneWhiteRook_Success()
+        {
+            ChessPiece piece = new ChessPieceRook(Color.WHITE, 1, a1);
+            ChessPiece clone = piece.Clone();
+    
+            Assert.Multiple(() =>
+            {
+                Assert.That(clone, Is.Not.Null);
+                Assert.That(ReferenceEquals(clone, piece), Is.False);
+                Assert.That(clone.GetCurrentPosition(), Is.EqualTo(a1));
+                Assert.That(clone.GetRealValue(), Is.EqualTo(14)); // 14 is rook
+                Assert.That(clone.GetId(), Is.EqualTo(1));
+                Assert.That(clone.GetColor(), Is.EqualTo(Color.WHITE));
+                Assert.That(clone.GetPiece(), Is.EqualTo(Piece.ROOK));
+            });
+        }
+
         [Test(Description = "Test that white rook 1 on A1 can move horizontally across all A squares")]
         public void Test_Rook_IsValidMove_HorizontalFromA1()
         {

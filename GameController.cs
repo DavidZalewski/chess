@@ -6,9 +6,18 @@ using System.Threading.Tasks;
 using Chess.Pieces;
 using Chess.Services;
 using Chess.Board;
+using NUnit.Framework;
+using Chess.Exceptions;
+using System.Text.Json.Nodes;
+using Newtonsoft.Json;
+using System.Reflection.Emit;
+using System.Runtime.Serialization;
+using System.Runtime.Serialization.Formatters.Binary;
+using System.IO;
 
 namespace Chess
 {
+    [Serializable]
     public class GameController
     {
         private ChessBoard _chessBoard;
@@ -23,13 +32,81 @@ namespace Chess
         {
             this._chessBoard = chessBoard;
             _chessPieces = ChessPieceFactory.CreateChessPieces();
-            this._kingCheckService = new KingCheckService(_chessPieces);
+            this._kingCheckService = new KingCheckService();
+        }
+
+        public GameController(ChessBoard chessBoard, List<ChessPiece> chessPieces)
+        {
+            this._chessBoard = chessBoard;
+            this._chessPieces = chessPieces;
+            this._kingCheckService = new KingCheckService();
         }
 
         public void StartGame()
         {
             _chessBoard.PopulateBoard(_chessPieces);
+            ChessPiece.SetCastleCallbackFunction(this.CastleCallBackFunction);
             _turnNumber = 1;
+        }
+
+        public bool CastleCallBackFunction(ChessBoard cb, BoardPosition bp, ChessPiece king)
+        {
+            int hv = bp.HorizontalValueAsInt;
+            int vv = bp.VerticalValueAsInt;
+
+            ChessPiece? rook = _chessPieces.Find(p => {
+                BoardPosition cbp = p.GetCurrentPosition();
+                return cbp.HorizontalValueAsInt == hv && cbp.VerticalValueAsInt == vv;
+            });
+
+            Assert.That(rook, Is.Not.Null);
+
+            if (rook != null)
+            {
+                Assert.That(rook.GetPiece(), Is.EqualTo(ChessPiece.Piece.ROOK));
+
+                // is king left of rook, or right of rook?
+                int d = king.GetCurrentPosition().HorizontalValueAsInt - rook.GetCurrentPosition().HorizontalValueAsInt;
+                BoardPosition.HORIZONTAL kh = king.GetCurrentPosition().HorizontalValue;
+                BoardPosition.HORIZONTAL rh = rook.GetCurrentPosition().HorizontalValue;
+                BoardPosition.VERTICAL v = king.GetCurrentPosition().VerticalValue;
+                // k=4, r=0 4-0=4, k=4, r2=8, k-r2=4-7 = -3
+                if (d == 4)
+                {
+                    // queen side castle
+                    // k goes -2 squares
+                    // r goes +3 squares
+                    kh -= 2;
+                    rh += 3;
+                }
+                else if (d == -3)
+                {
+                    // king side castle
+                    // k goes +2 squares
+                    // r goes -2 squares
+                    kh += 2;
+                    rh -= 2;
+                }
+                else
+                {
+                    throw new Exception("Unexpected Horizontal Distance Found when castling. Are you sure this is a valid castle?");
+                }
+
+                BoardPosition kingLastPosition = king.GetCurrentPosition();
+                BoardPosition rookLastPosition = rook.GetCurrentPosition();
+
+                // set board manually
+                cb.SetBoardValue(kingLastPosition, 0);
+                cb.SetBoardValue(rookLastPosition, 0);
+
+                king.SetCurrentPosition(new(v, kh));
+                rook.SetCurrentPosition(new(v, rh));
+
+                cb.SetBoardValue(king.GetCurrentPosition(), king.GetRealValue());
+                cb.SetBoardValue(rook.GetCurrentPosition(), rook.GetRealValue());
+            }
+
+            return true;
         }
 
         public void ParseMove(String consoleInput)
@@ -37,7 +114,7 @@ namespace Chess
 
         }
 
-        internal ChessPiece FindChessPieceFromString(string input)
+        internal ChessPiece? FindChessPieceFromString(string input)
         {
             ChessPiece.Color color;
             ChessPiece.Piece piece;
@@ -113,6 +190,23 @@ namespace Chess
             return chessPiece;
         }
 
+        public bool IsKingInCheck(ChessPiece.Color color)
+        {
+            ChessPiece chessPieceKing = _chessPieces.First(p => p.GetPiece().Equals(ChessPiece.Piece.KING) && p.GetColor().Equals(color));
+            if (chessPieceKing == null)
+                return false;
+            if (chessPieceKing.GetColor().Equals(ChessPiece.Color.WHITE))
+            {
+                bool IsInCheck = _chessPieces.Any(p => p.GetColor().Equals(ChessPiece.Color.BLACK) && p.IsValidMove(_chessBoard, chessPieceKing.GetCurrentPosition()));
+                return IsInCheck;
+            }
+            else
+            {
+                bool IsInCheck = _chessPieces.Any(p => p.GetColor().Equals(ChessPiece.Color.WHITE) && p.IsValidMove(_chessBoard, chessPieceKing.GetCurrentPosition()));
+                return IsInCheck;
+            }
+        }
+
         public bool IsCheck(Turn turn)
         {
             return _kingCheckService.IsKingInCheck(turn);
@@ -123,18 +217,23 @@ namespace Chess
             return _kingCheckService.IsCheckMate(turn);
         }
 
-        public Turn GetTurnFromCommand(string input)
+        public Turn? GetTurnFromCommand(string input)
         {
             String[] inputs = input.Split(' ');
             if (inputs.Length != 2) return null;
             try
             {
-                ChessPiece chessPiece = FindChessPieceFromString(inputs[0]);
+                ChessPiece? chessPiece = FindChessPieceFromString(inputs[0]);
 
                 if (chessPiece == null) return null;
 
-                Turn turn = new(_turnNumber, chessPiece, new(inputs[1]), _chessBoard);
+                Turn turn = new(_turnNumber, chessPiece, new(inputs[1]), _chessBoard, _chessPieces);
                 return turn;
+            }
+            catch (InvalidMoveException e)
+            {
+                Console.WriteLine("Invalid Move. Please Try Again.");
+                    return null;
             }
             catch (Exception e)
             {
@@ -143,17 +242,100 @@ namespace Chess
             }
         }
 
+        public void ApplyTurnToGameState(Turn turn)
+        {
+            //ChessPiece piece = _chessPieces.Find(p => p.GetColor() == turn.ChessPiece.GetColor() 
+            //                                       && p.GetPiece() == turn.ChessPiece.GetPiece()
+            //                                       && p.GetId() == turn.ChessPiece.GetId());
+            //piece.SetCurrentPosition(turn.NewPosition);
+            //turn.ChessPiece.SetCurrentPosition(turn.NewPosition);
+            
+            _chessBoard = turn.ChessBoard;
+            _chessPieces = turn.ChessPieces;
+            _turns.Add(turn);
+            this.IncrementTurn();
+        }
+
         public ChessBoard GetChessBoard() { return _chessBoard; }
 
-        public void UpdateBoard(ChessBoard board)
+        public bool SaveGameState(string saveFileName)
         {
-            _chessBoard = board;
-            _chessPieces = _chessBoard.PruneCapturedPieces(_chessPieces);
+            string dir = Directory.GetCurrentDirectory();
+
+            string saveFile = Path.Combine(dir, saveFileName);
+            Stream? stream = null;
+            try
+            {
+                // Opens a file and serializes the object into it in binary format.
+                stream = File.Open(saveFile, FileMode.Create);
+                BinaryFormatter formatter = new BinaryFormatter();
+
+#pragma warning disable SYSLIB0011 // Type or member is obsolete
+                formatter.Serialize(stream, this);
+#pragma warning restore SYSLIB0011 // Type or member is obsolete
+                //string jsonGameController = Newtonsoft.Json.JsonConvert.SerializeObject(this);
+                Console.WriteLine(saveFileName + " saved successfully");
+                return true;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("Failed to save game state due to exception: " + e.Message);
+                return false;
+            }
+            finally {
+                if (stream != null) { stream.Close(); }
+            }
+        }
+
+        public bool LoadGameState(string saveFileName)
+        {
+            Stream? stream = null;
+            try
+            {
+                string dir = Directory.GetCurrentDirectory();
+
+                string saveFile = Path.Combine(dir, saveFileName);
+
+                string jsonGameController = File.ReadAllText(saveFile);
+
+                // Opens file "data.xml" and deserializes the object from it.
+                stream = File.Open(saveFileName, FileMode.Open);
+                BinaryFormatter formatter = new BinaryFormatter();
+
+#pragma warning disable SYSLIB0011 // Type or member is obsolete
+                GameController gc = (GameController)formatter.Deserialize(stream);
+#pragma warning restore SYSLIB0011 // Type or member is obsolete
+
+                this._chessBoard = gc._chessBoard;
+                this._chessPieces = gc._chessPieces;
+                this._turns = gc._turns;
+                this._turnNumber = gc._turnNumber;
+                this._kingCheckService = new KingCheckService();
+
+                ChessPiece.SetCastleCallbackFunction(this.CastleCallBackFunction);
+
+                Console.WriteLine("Successfully loaded " + saveFileName);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("Failed to load game state due to exception: " + e.Message);
+                return false;
+            }
+            finally
+            {
+                if (stream != null) { stream.Close(); }
+            }
+            return true;
         }
 
         public string DisplayBoard()
         {
-            int[,] boardData = _chessBoard.GetBoard();
+            return DisplayBoard(_chessBoard);
+        }
+
+        public string DisplayBoard(ChessBoard chessBoard)
+        {
+            int[,] boardData = chessBoard.GetBoard();
             String output = "*|*A*|*B*|*C*|*D*|*E*|*F*|*G*|*H*|*\n";
             int vertIndex = 8;
 
@@ -163,7 +345,7 @@ namespace Chess
                 for (int s = 0; s < 8; s++)
                 {
                     BoardPosition boardPosition = new((BoardPosition.VERTICAL)f, (BoardPosition.HORIZONTAL)s);
-                    if (_chessBoard.IsPieceAtPosition(boardPosition))
+                    if (chessBoard.IsPieceAtPosition(boardPosition))
                     {
                         ChessPiece chessPiece = _chessPieces.First(p => p.GetCurrentPosition().EqualTo(boardPosition));
                         if (chessPiece == null)
@@ -212,13 +394,21 @@ namespace Chess
                 output += "|" + vertIndex + "\n";
                 vertIndex--;
             }
-            output += "*|*A*|*B*|*C*|*D*|*E*|*F*|*G*|*H*|*\n"; 
+            output += "*|*A*|*B*|*C*|*D*|*E*|*F*|*G*|*H*|*\n";
             return output;
         }
 
-        public void IncrementTurn()
+        private void IncrementTurn()
         {
             _turnNumber++;
+        }
+
+        public Turn? GetLastTurn()
+        {
+            if (_turns.Count == 0)
+                return null;
+            else 
+                return _turns[_turns.Count - 1];
         }
     }
 }

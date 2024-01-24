@@ -161,7 +161,7 @@ namespace Tests
         }
 
         [TestCase("WK1 C3")]
-        [TestCase("WK1 C1")]
+        [TestCase("WK1 A3")]
         [TestCase("WK2 F3")]
         [TestCase("WK2 H3")]
         [TestCase("WP1 A3")]
@@ -192,37 +192,39 @@ namespace Tests
             Assert.That(turn, Is.Not.Null);
 
             String[] inputs = input.Split(new char[] { ' ' });
-            ChessPiece piece = gameController.FindChessPieceFromString(inputs[0]);
-
-            Assert.That(piece, Is.Not.Null);
-
             BoardPosition boardPosition = new(inputs[1]);
 
             Assert.That(boardPosition, Is.Not.Null);
             Assert.That(boardPosition.EqualTo(turn.NewPosition), Is.True);
-            Assert.That(turn.ChessPiece.Equals(piece), Is.True);
+
+            ChessPiece? piece = gameController.FindChessPieceFromString(inputs[0]);
+            Assert.That(piece, Is.Not.Null);
+            Assert.That(turn.ChessPiece.Equals(piece), Is.False); // the copies of this piece have different positions
+            gameController.ApplyTurnToGameState(turn); // update the game state
+            piece = gameController.FindChessPieceFromString(inputs[0]);
+            Assert.That(turn.ChessPiece.Equals(piece), Is.True); // the piece should be updated now with the turn board state
         }
 
-        [TestCase("BK1 C3")]
-        [TestCase("BK1 C1")]
-        [TestCase("BK2 F3")]
-        [TestCase("BK2 H3")]
-        [TestCase("BP1 A3")]
-        [TestCase("BP1 A4")]
-        [TestCase("BP2 B3")]
-        [TestCase("BP2 B4")]
-        [TestCase("BP3 C3")]
-        [TestCase("BP3 C4")]
-        [TestCase("BP4 D3")]
-        [TestCase("BP4 D4")]
-        [TestCase("BP5 E3")]
-        [TestCase("BP5 E4")]
-        [TestCase("BP6 F3")]
-        [TestCase("BP6 F4")]
-        [TestCase("BP7 G3")]
-        [TestCase("BP7 G4")]
-        [TestCase("BP8 H3")]
-        [TestCase("BP8 H4")]
+        [TestCase("BK1 A6")]
+        [TestCase("BK1 C6")]
+        [TestCase("BK2 F6")]
+        [TestCase("BK2 H6")]
+        [TestCase("BP1 A6")]
+        [TestCase("BP1 A5")]
+        [TestCase("BP2 B6")]
+        [TestCase("BP2 B5")]
+        [TestCase("BP3 C6")]
+        [TestCase("BP3 C5")]
+        [TestCase("BP4 D6")]
+        [TestCase("BP4 D5")]
+        [TestCase("BP5 E6")]
+        [TestCase("BP5 E5")]
+        [TestCase("BP6 F6")]
+        [TestCase("BP6 F5")]
+        [TestCase("BP7 G6")]
+        [TestCase("BP7 G5")]
+        [TestCase("BP8 H6")]
+        [TestCase("BP8 H5")]
         public void Test_GameController_GetMoveFromCommand_BlackTurn2(String input)
         {
             List<ChessPiece> chessPieces = ChessPieceFactory.CreateChessPieces();
@@ -235,15 +237,18 @@ namespace Tests
             Assert.That(turn, Is.Not.Null);
 
             String[] inputs = input.Split(new char[] { ' ' });
-            ChessPiece piece = gameController.FindChessPieceFromString(inputs[0]);
-
-            Assert.That(piece, Is.Not.Null);
-
             BoardPosition boardPosition = new(inputs[1]);
 
             Assert.That(boardPosition, Is.Not.Null);
             Assert.That(boardPosition.EqualTo(turn.NewPosition), Is.True);
-            Assert.That(turn.ChessPiece.Equals(piece), Is.True);
+
+            ChessPiece? piece = gameController.FindChessPieceFromString(inputs[0]);
+
+            Assert.That(piece, Is.Not.Null);
+            Assert.That(turn.ChessPiece.Equals(piece), Is.False); // the copies of this piece have different positions
+            gameController.ApplyTurnToGameState(turn); // update the game state
+            piece = gameController.FindChessPieceFromString(inputs[0]);
+            Assert.That(turn.ChessPiece.Equals(piece), Is.True); // the piece should be updated now with the turn board state
         }
 
         [Test]

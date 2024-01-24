@@ -7,11 +7,18 @@ using Chess.Board;
 
 namespace Chess.Pieces
 {
+    [Serializable]
     public class ChessPieceBishop : ChessPiece
     {
         public ChessPieceBishop(Color color, int id, BoardPosition startingPosition) : base(Piece.BISHOP, color, id, startingPosition)
         {
             _realValue = (int)_piece + (int)_color; // could also calculate this in base class by adding the two enums together
+        }
+
+        public override ChessPiece Clone()
+        {
+            ChessPieceBishop copy = new(_color, _id, _startingPosition);
+            return Clone(copy);
         }
 
         public override bool IsValidMove(ChessBoard board, BoardPosition position)
@@ -23,14 +30,15 @@ namespace Chess.Pieces
             int h2 = position.HorizontalValueAsInt;
 
             int vdistance = v1 - v2;
+            int hdistance = h1 - h2;
 
-            bool isSquareAValidDiagonal = h1 + vdistance == h2 || h2 + vdistance == h1;
+            bool isSquareAValidDiagonal = v1 + hdistance == v2 || v2 + hdistance == v1;
             // a friendly piece cannot be on the destination square
             bool isFriendlyPieceOnSquare = board.IsPieceAtPosition(position, _color);
             if (!isSquareAValidDiagonal || isFriendlyPieceOnSquare) { return false; }
 
             string operation = "";
-            int hdistance = h1 - h2;
+            
 
             // based on what the vdistance and hdistance are, if they are positive numbers, we are decrementing
             // if they are negative numbers, we are incrementing
@@ -117,10 +125,10 @@ namespace Chess.Pieces
             return true;
         }
 
-        protected override void ImplementMove(ChessBoard board, BoardPosition position)
+        protected override bool ImplementMove(ChessBoard board, BoardPosition position)
         {
             // does this need to exist?
-
+            return false;
         }
     }
 }

@@ -8,14 +8,10 @@ using Chess.Pieces;
 
 namespace Chess.Services
 {
+    [Serializable]
     public class KingCheckService
     {
-        private List<ChessPiece> _chessPieces;
-
-        public KingCheckService(List<ChessPiece> chessPieces)
-        {
-            _chessPieces = chessPieces;
-        }
+        public KingCheckService() {}
 
         public bool IsKingInCheck(Turn turnToBeMade)
         {
@@ -24,8 +20,8 @@ namespace Chess.Services
 
             if (turnToBeMade.PlayerTurn.Equals(Turn.Color.WHITE))
             {
-                opponentPieces = _chessPieces.FindAll(piece => piece.GetColor().Equals(ChessPiece.Color.BLACK) && turnToBeMade.ChessBoard.IsPieceAtPosition(piece));
-                chessPieceKing = _chessPieces.Find(piece => piece.GetPiece().Equals(ChessPiece.Piece.KING) && piece.GetColor().Equals(ChessPiece.Color.WHITE));
+                opponentPieces = turnToBeMade.ChessPieces.FindAll(piece => piece.GetColor().Equals(ChessPiece.Color.BLACK)); // && turnToBeMade.ChessBoard.IsPieceAtPosition(piece));
+                chessPieceKing = turnToBeMade.ChessPieces.Find(piece => piece.GetPiece().Equals(ChessPiece.Piece.KING) && piece.GetColor().Equals(ChessPiece.Color.WHITE));
                 if (chessPieceKing == null)
                 {
                     throw new Exception("Could not find King piece for IsKingInCheck - something unexpected has happened!");
@@ -33,8 +29,8 @@ namespace Chess.Services
             }
             else
             {
-                opponentPieces = _chessPieces.FindAll(piece => piece.GetColor().Equals(ChessPiece.Color.WHITE) && turnToBeMade.ChessBoard.IsPieceAtPosition(piece));
-                chessPieceKing = _chessPieces.Find(piece => piece.GetPiece().Equals(ChessPiece.Piece.KING) && piece.GetColor().Equals(ChessPiece.Color.BLACK));
+                opponentPieces = turnToBeMade.ChessPieces.FindAll(piece => piece.GetColor().Equals(ChessPiece.Color.WHITE)); // && turnToBeMade.ChessBoard.IsPieceAtPosition(piece));
+                chessPieceKing = turnToBeMade.ChessPieces.Find(piece => piece.GetPiece().Equals(ChessPiece.Piece.KING) && piece.GetColor().Equals(ChessPiece.Color.BLACK));
                 if (chessPieceKing == null)
                 {
                     throw new Exception("Could not find King piece for IsKingInCheck - something unexpected has happened!");
@@ -44,7 +40,7 @@ namespace Chess.Services
             BoardPosition positionToCheck;
 
             // Determine if the king itself has moved, or if another piece has moved that may expose the king to a check
-            if (turnToBeMade.ChessPiece.Equals(chessPieceKing))
+            if (turnToBeMade.ChessPiece.GetRealValue().Equals(chessPieceKing.GetRealValue()))
             {
                 // The king has moved, would this new position put it in check?
                 positionToCheck = turnToBeMade.NewPosition;
@@ -84,21 +80,22 @@ namespace Chess.Services
             // otherwise if the turn passed in was whites turn, then we should check if its checkmate for black king
 
             if (turn.PlayerTurn.Equals(Turn.Color.WHITE))
-                friendlyPieces = _chessPieces.FindAll(piece => piece.GetColor().Equals(ChessPiece.Color.BLACK));
+                friendlyPieces = turn.ChessPieces.FindAll(piece => piece.GetColor().Equals(ChessPiece.Color.BLACK));
             else
-                friendlyPieces = _chessPieces.FindAll(piece => piece.GetColor().Equals(ChessPiece.Color.WHITE));
+                friendlyPieces = turn.ChessPieces.FindAll(piece => piece.GetColor().Equals(ChessPiece.Color.WHITE));
 
             List<Turn> possibleMoves = new();
 
             foreach (ChessPiece piece in friendlyPieces)
             {
+                // iterate over all board positions
                 for (int i = 0; i < 8; i++)
                 {
                     for (int j = 0; j < 8; j++)
                     {
                         BoardPosition pos = new((BoardPosition.VERTICAL)i, (BoardPosition.HORIZONTAL)j);
                         if (piece.IsValidMove(turn.ChessBoard, pos))
-                            possibleMoves.Add(new(turn.TurnNumber + 1, piece, pos, turn.ChessBoard));
+                            possibleMoves.Add(new(turn.TurnNumber + 1, piece, piece.GetCurrentPosition(), pos, turn.ChessBoard, turn.ChessPieces));
                     }
                 }
             }

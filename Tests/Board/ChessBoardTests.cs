@@ -60,6 +60,30 @@ namespace Tests.Board
         }
 
         [Test]
+        public void Test_IsPieceAtPosition_SpecificColorAndPiece_Success1()
+        {
+            BoardPosition boardPosition = new("G6");
+            Assert.That(chessBoard.IsPieceAtPosition(boardPosition), Is.False);
+            chessBoard.SetBoardValue(boardPosition, 21);
+            Assert.That(chessBoard.IsPieceAtPosition(boardPosition, ChessPiece.Color.WHITE), Is.False);
+            Assert.That(chessBoard.IsPieceAtPosition(boardPosition, ChessPiece.Color.BLACK), Is.True);
+            Assert.That(chessBoard.IsPieceAtPosition(boardPosition, ChessPiece.Color.BLACK, ChessPiece.Piece.PAWN), Is.True);
+            Assert.That(chessBoard.IsPieceAtPosition(boardPosition, ChessPiece.Color.BLACK, ChessPiece.Piece.ROOK), Is.False);
+        }
+
+        [Test]
+        public void Test_IsPieceAtPosition_SpecificColorAndPiece_Success2()
+        {
+            BoardPosition boardPosition = new("G6");
+            Assert.That(chessBoard.IsPieceAtPosition(boardPosition), Is.False);
+            chessBoard.SetBoardValue(boardPosition, 24);
+            Assert.That(chessBoard.IsPieceAtPosition(boardPosition, ChessPiece.Color.WHITE), Is.False);
+            Assert.That(chessBoard.IsPieceAtPosition(boardPosition, ChessPiece.Color.BLACK), Is.True);
+            Assert.That(chessBoard.IsPieceAtPosition(boardPosition, ChessPiece.Color.BLACK, ChessPiece.Piece.PAWN), Is.False);
+            Assert.That(chessBoard.IsPieceAtPosition(boardPosition, ChessPiece.Color.BLACK, ChessPiece.Piece.ROOK), Is.True);
+        }
+
+        [Test]
         public void Test_PopulateBoard_Success()
         {
             chessBoard.PopulateBoard(ChessPieceFactory.CreateChessPieces());

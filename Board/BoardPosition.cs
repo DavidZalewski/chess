@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace Chess.Board
 {
+    [Serializable]
     public class BoardPosition
     {
         private VERTICAL v_value;
