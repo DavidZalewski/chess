@@ -55,6 +55,7 @@ namespace Chess.Pieces
         protected BoardPosition _currentPosition;
         protected bool _hasMoved = false;
         protected static Func<ChessBoard, BoardPosition, ChessPiece, bool>? _castleEventCallBackFunction = null;
+        protected string _pieceName;
 
         public ChessPiece(Piece piece, Color color, int id, BoardPosition startingPosition)
         {
@@ -63,6 +64,7 @@ namespace Chess.Pieces
             _id = id;
             _startingPosition = startingPosition;
             _currentPosition = _startingPosition;
+            SetPieceName();
         }
 
         public abstract ChessPiece Clone();
@@ -76,6 +78,7 @@ namespace Chess.Pieces
             copy._currentPosition = _currentPosition;
             copy._realValue = _realValue;
             copy._hasMoved = _hasMoved;
+            copy._pieceName = _pieceName;
 
             return copy;
         }
@@ -89,13 +92,14 @@ namespace Chess.Pieces
                 return false;
             }
 
-            return this._color.Equals(item._color) &&
-                   this._hasMoved.Equals(item._hasMoved) &&
-                   this._piece.Equals(item._piece) &&
+            return this._color == (item._color) &&
+                   this._hasMoved == (item._hasMoved) &&
+                   this._piece == (item._piece) &&
                    this._currentPosition.EqualTo(item._currentPosition) &&
                    this._startingPosition.EqualTo(item._startingPosition) &&
-                   this._id.Equals(item._id) &&
-                   this._realValue.Equals(item._realValue);
+                   this._id == (item._id) &&
+                   this._pieceName == (item._pieceName) &&
+                   this._realValue == (item._realValue);
         }
 
         public abstract bool IsValidMove(ChessBoard board, BoardPosition position);
@@ -122,6 +126,29 @@ namespace Chess.Pieces
         public BoardPosition GetStartingPosition() { return _startingPosition; }
         public BoardPosition GetCurrentPosition() { return _currentPosition; }
         public bool HasMoved() {  return _hasMoved; }
+
+        public string GetPieceName() { return _pieceName; }
+        private void SetPieceName()
+        {
+            if (_color.Equals(Color.WHITE))
+            {
+                _pieceName += "White ";
+            }
+            else
+            {
+                _pieceName += "Black ";
+            }
+            switch (_piece)
+            {
+                case Piece.PAWN: _pieceName += "Pawn "; break;
+                case Piece.KNIGHT: _pieceName += "Knight "; break;
+                case Piece.BISHOP: _pieceName += "Bishop "; break;
+                case Piece.ROOK: _pieceName += "Rook "; break;
+                case Piece.QUEEN: _pieceName += "Queen "; break;
+                case Piece.KING: _pieceName += "King "; break;
+            }
+            _pieceName += _id;
+        }
 
         // used by ghost pieces
         public void SetCurrentPosition(BoardPosition boardPosition)

@@ -7,6 +7,22 @@ namespace Tests
 {
     public class TurnTests
     {
+
+        private List<ChessPiece> GetDifferenceBetweenLists(List<ChessPiece> chessPiecesList1, List<ChessPiece> chessPiecesList2)
+        {
+            List<ChessPiece> removedChessPieces = chessPiecesList1.Where((ChessPiece cp1) =>
+            {
+                return !chessPiecesList2.Any((ChessPiece cp2) =>
+                {
+                    return cp1.GetColor() == cp2.GetColor() &&
+                                  cp1.GetId() == cp2.GetId() &&
+                                  cp1.GetRealValue() == cp2.GetRealValue() &&
+                                  cp1.GetPiece() == cp2.GetPiece();
+                });
+            }).ToList();
+            return removedChessPieces;
+        }
+
         [Test]
         public void Test_ConstructTurn_Success()
         {
@@ -33,6 +49,41 @@ namespace Tests
                 Assert.That(turn1.ChessBoard.Equals(board), Is.False); // should be a copy, not the same object reference
                 Assert.That(turn1.PlayerTurn, Is.EqualTo(Turn.Color.WHITE));
             });
+        }
+
+        [Test]
+        public void Test_ConstructTurn_Capture_Piece_Success()
+        {
+            ChessBoard board = new();
+            List<ChessPiece> chessPieces = ChessPieceFactory.CreateChessPieces();
+            // find white pawn 1
+            ChessPiece whitePawn = chessPieces.First(pieces => pieces.GetColor() == ChessPiece.Color.WHITE &&
+                                                     pieces.GetPiece() == ChessPiece.Piece.PAWN);
+
+            // set white pawn 1 to A6 as starting position
+            board.PopulateBoard(chessPieces);
+            whitePawn.Move(board, new("A6"));
+            BoardPosition newPosition = new("B7");
+            Assert.That(whitePawn.IsValidMove(board, newPosition), Is.True);
+
+            Turn turn = new(1, whitePawn, newPosition, board, chessPieces);
+
+            Assert.That(turn, Is.Not.Null);
+            Assert.Multiple(() =>
+            {
+                Assert.That(chessPieces.Count, Is.EqualTo(32));
+                Assert.That(turn.ChessPieces.Count, Is.EqualTo(31));
+
+                List<ChessPiece> removedChessPieces = GetDifferenceBetweenLists(chessPieces, turn.ChessPieces);
+
+                Assert.That(removedChessPieces.Count == 1);
+
+                ChessPiece removedBlackPawn2Piece = removedChessPieces.First();
+                Assert.That(removedBlackPawn2Piece.GetPiece() == ChessPiece.Piece.PAWN &&
+                            removedBlackPawn2Piece.GetColor() == ChessPiece.Color.BLACK &&
+                            removedBlackPawn2Piece.GetId() == 2);
+            });
+
         }
     }
 }

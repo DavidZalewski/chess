@@ -30,7 +30,7 @@ namespace Chess.Board
 
         public ChessBoard() { }
 
-        public ChessBoard(ChessBoard other)
+        public ChessBoard(ChessBoard? other)
         {
             if (other != null && other._board != null)
                 _board = other._board.Clone() as int[,];
@@ -48,7 +48,7 @@ namespace Chess.Board
             return true;
         }
 
-        public List<ChessPiece> PruneCapturedPieces(List<ChessPiece> chessPieces)
+        public List<ChessPiece> PruneCapturedPieces(List<ChessPiece> chessPieces, Func<List<ChessPiece>, bool> callBackFunction)
         {
             List<ChessPiece> piecesToRemove = new();
             foreach (ChessPiece piece in chessPieces)
@@ -57,6 +57,9 @@ namespace Chess.Board
                 if (_board[piecePos.VerticalValueAsInt, piecePos.HorizontalValueAsInt] != piece.GetRealValue())
                     piecesToRemove.Add(piece);
             }
+
+            if (callBackFunction != null && piecesToRemove.Count > 0)
+                callBackFunction.Invoke(piecesToRemove);
 
             foreach (ChessPiece piece in piecesToRemove)
                 chessPieces.Remove(piece);

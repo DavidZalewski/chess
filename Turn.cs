@@ -27,22 +27,25 @@ namespace Chess
         private ChessBoard _chessBoard;
         private String _description;
         private List<ChessPiece> _chessPieces = new List<ChessPiece>();
+        private string _action;
 
         public Turn(int turnNumber, ChessPiece piece, BoardPosition previousPosition, BoardPosition newPosition, ChessBoard chessBoard, List<ChessPiece> chessPieces)
         {
             _turnNumber = turnNumber;
             _previousPosition = previousPosition;
             _newPosition = newPosition;
+            _action = " move ";
+            ChessPiece.SetCastleCallbackFunction(this.CastleCallBackFunction);
             _chessBoard = new ChessBoard(chessBoard); // copy state of board
             _chessPieces = chessPieces.Select(a => (ChessPiece)a.Clone()).ToArray().ToList(); // copy list of pieces
             _piece = _chessPieces.First(p => p.Equals(piece)); // copy constructor here, what if piece is captured later? this reference becomes null
             if (!_piece.IsValidMove(_chessBoard, _newPosition))
                 throw new Exception("Cannot construct turn. Invalid Move for piece");
-            ChessPiece.SetCastleCallbackFunction(this.CastleCallBackFunction);
             _piece.Move(_chessBoard, _newPosition); // update the board to reflect latest state - if there is a capture here - update the list of pieces we just copied to reflect the current state of board                     
-            //if (!_castleCallBackCalled)
-            //    _piece.SetCurrentPosition(_newPosition);
-            _chessPieces = _chessBoard.PruneCapturedPieces(_chessPieces);
+            _chessPieces = _chessBoard.PruneCapturedPieces(_chessPieces, (List<ChessPiece> removedPieces) => {
+                _action = " capture [" + removedPieces[0].GetPieceName() + "] ";
+                return true;
+            });
 
             if (turnNumber % 2 == 0)
             {
@@ -52,26 +55,7 @@ namespace Chess
             {
                 _playerTurn = Color.WHITE;
             }
-
-            String description = _previousPosition.StringValue;
-
-            if (_piece.GetColor().Equals(ChessPiece.Color.WHITE))
-                description += " White ";
-            else
-                description += " Black ";
-
-            switch (_piece.GetPiece())
-            {
-                case ChessPiece.Piece.PAWN: description += "Pawn " + _piece.GetId() + " "; break;
-                case ChessPiece.Piece.ROOK: description += "Rook " + _piece.GetId() + " "; break;
-                case ChessPiece.Piece.BISHOP: description += "Bishop " + _piece.GetId() + " "; break;
-                case ChessPiece.Piece.KNIGHT: description += "Knight " + _piece.GetId() + " "; break;
-                case ChessPiece.Piece.QUEEN: description += "Queen " + _piece.GetId() + " "; break;
-                case ChessPiece.Piece.KING: description += "King " + _piece.GetId() + " "; break;
-            }
-
-            description += " move " + _newPosition.StringValue;
-            _description = description;
+            _description = _piece.GetPieceName() + " " + _previousPosition.StringValue + _action + _newPosition.StringValue;
         }
 
         public Turn(int turnNumber, ChessPiece piece, BoardPosition newPosition, ChessBoard chessBoard, List<ChessPiece> chessPieces) 
@@ -114,6 +98,7 @@ namespace Chess
                     // queen side castle
                     // k goes -2 squares
                     // r goes +3 squares
+                    _action = " Castle (Queen Side) ";
                     kh -= 2;
                     rh += 3;
                 }
@@ -122,6 +107,7 @@ namespace Chess
                     // king side castle
                     // k goes +2 squares
                     // r goes -2 squares
+                    _action = " Castle (King Side) ";
                     kh += 2;
                     rh -= 2;
                 }

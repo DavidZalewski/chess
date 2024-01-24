@@ -137,7 +137,7 @@ namespace Tests.Board
                 whitePawn5Piece, whitePawn6Piece, blackBishopPiece, blackRookPiece, blackKnightPiece, blackPawn1Piece
             };
 
-            List<ChessPiece> prunedPieces = chessBoard.PruneCapturedPieces(allChessPieces);
+            List<ChessPiece> prunedPieces = chessBoard.PruneCapturedPieces(allChessPieces, lcp => true);
 
             Assert.That(prunedPieces.SequenceEqual(chessPiecesOnBoard), Is.True);
         }

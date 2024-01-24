@@ -23,7 +23,7 @@ namespace Chess
 
             String? input = "";
 
-            while (input != "quit" || input != "over")
+            while (input != "quit")
             {
                 Console.WriteLine(gameController.DisplayBoard());
                 
@@ -116,8 +116,9 @@ namespace Chess
                                     Console.WriteLine("Black wins against White by CheckMate!");
                                 }
                                 Console.WriteLine("Game Over.");
-                                input = "over";
-                                continue;
+                                gameController.ApplyTurnToGameState(turn);
+                                Console.WriteLine(gameController.DisplayBoard());
+                                break;
                             }
                             if (gameController.IsCheck(turn))
                             {
@@ -142,7 +143,9 @@ namespace Chess
                     Console.WriteLine(ex.ToString());
                 }
                 
-            }
+            } // end while
+
+            Console.WriteLine("Program Terminated Successfully");
         }
     }
 }
