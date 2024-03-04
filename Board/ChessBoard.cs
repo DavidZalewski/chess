@@ -100,6 +100,11 @@ namespace Chess.Board
             return val == chessPiece.GetRealValue();
         }
 
+        public ChessPiece GetPieceAtPosition(BoardPosition boardPosition, GameController gameController)
+        {
+            return null;
+        }
+
         internal void InternalTestOnly_SetBoard(int[,] boardValue)
         {
             _board = boardValue;

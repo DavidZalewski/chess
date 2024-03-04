@@ -83,6 +83,35 @@ namespace Tests.Board
             Assert.That(chessBoard.IsPieceAtPosition(boardPosition, ChessPiece.Color.BLACK, ChessPiece.Piece.ROOK), Is.True);
         }
 
+        [TestCase("D4", "white-pawn")]
+        [TestCase("E8", "knight")]
+        [TestCase("A5", "rook")]
+        [TestCase("H7", "black-pawn")]
+        public void Test_GetPieceAtPosition_Piece_On_Square_Success(string boardPos, string pieceType)
+        {
+            BoardPosition boardPosition = new(boardPos);
+
+            ChessPiece CreatePiece(string val)
+            {
+                switch (val)
+                {
+                    case "white-pawn": return new ChessPieceWhitePawn(1, boardPosition);
+                    case "knight": return new ChessPieceKnight(ChessPiece.Color.BLACK, 1, boardPosition);
+                    case "rook": return new ChessPieceRook(ChessPiece.Color.WHITE, 1, boardPosition);
+                    default: return new ChessPieceBlackPawn(1, boardPosition);
+                }
+            }
+
+            ChessPiece expectedPiece = CreatePiece(pieceType);
+
+            chessBoard.SetBoardValue(boardPosition, expectedPiece.GetRealValue());
+
+            List<ChessPiece> chessPieces = new() { expectedPiece };
+
+            Chess.GameController gameController = new(chessBoard, chessPieces);
+
+            Assert.That(chessBoard.GetPieceAtPosition(boardPosition, gameController) is not null, Is.True);        }
+
         [Test]
         public void Test_PopulateBoard_Success()
         {

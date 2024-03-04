@@ -21,7 +21,7 @@ namespace Chess.Pieces
             return Clone(copy);
         }
 
-        public override bool IsValidMove(ChessBoard board, BoardPosition position)
+        public override bool IsValidMove(ChessBoard board, BoardPosition position, GameController gameController)
         {
             // get the distance
             //   2       =                    6                        4
@@ -68,10 +68,30 @@ namespace Chess.Pieces
                 else
                     return false;
             }
+            else if (_currentPosition.HorizontalValueAsInt - position.HorizontalValueAsInt == 1 ||
+            _currentPosition.HorizontalValueAsInt - position.HorizontalValueAsInt == -1)
+            {
+                // Potential en passant capture attempt
+                if (position.VerticalValueAsInt == _currentPosition.VerticalValueAsInt - 1) // White pawn moving forward
+                {
+                    ChessPiece targetPiece = board.GetPieceAtPosition(new BoardPosition(position.VerticalValue, position.HorizontalValue), gameController);
+
+                    if (targetPiece is ChessPieceBlackPawn &&
+                        targetPiece.EnPassantTarget != null &&
+                        targetPiece.EnPassantTarget.Equals(position))
+                    {
+                        // Valid en passant capture
+                        return true;
+                    }
+                    else return false;
+                }
+                else return false;
+            }
             else
             {
                 return false;
             }
+
         }
 
         protected override bool ImplementMove(ChessBoard board, BoardPosition position)
