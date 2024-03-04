@@ -19,9 +19,56 @@ namespace Chess
             ChessBoard chessBoard = new();
             GameController gameController = new(chessBoard);
 
+            Console.WriteLine("Would you like to play the tutorial? (y/n):");
+            String? input = "";
+
+            while (input != null)
+            {
+                input = Console.ReadLine();
+
+                if (input != null && input.ToLower().Equals("y"))
+                {
+                    Console.WriteLine("Starting tutorial");
+                    Console.WriteLine("Chess is a game of planning, tactics, and strategy.");
+                    Console.WriteLine("Let's jump right in by starting an example game. You can exit the tutorial anytime by typing exit");
+                    gameController.StartGame();
+                    Console.WriteLine(gameController.DisplayBoard());
+                    Console.WriteLine("The game starts with White moving first, to move a piece, type in the name of the piece, followed by the position on the board.");
+
+                    while (input != null)
+                    {
+                        Console.WriteLine("Start the game by moving WP4 and moving it to D4 by typing in the following: WP4 D4");
+                        input = Console.ReadLine();
+                        if (input.ToUpper().Equals("WP4 D4"))
+                        {
+                            Turn? turn = gameController.GetTurnFromCommand(input);
+                            if (turn != null)
+                            {
+                                gameController.ApplyTurnToGameState(turn);
+                                Console.WriteLine(turn.TurnDescription);
+                                Console.WriteLine(gameController.DisplayBoard());
+
+                                Console.WriteLine("You can see that WP4 has moved from D2 to D4");
+                            }
+                            else
+                            {
+                                Console.WriteLine("Something unexpected has happened in the tutorial.");
+                                break;
+                            }
+                        }
+                        else
+                        {
+                            Console.WriteLine("Wrong command typed in.");
+                        }
+                    }
+                }
+                else
+                    break;
+            }
+
             gameController.StartGame();
 
-            String? input = "";
+            
 
             while (input != "quit")
             {
@@ -40,42 +87,31 @@ namespace Chess
                     Console.WriteLine("Turn " + gameController.TurnNumber + " - White to move. Please enter a command (piece name + position : ie. 'WK1 C3')");
                     if (gameController.GetLastTurn() != null && gameController.IsKingInCheck(ChessPiece.Color.WHITE))
                     {
-                        Console.WriteLine("Black King is currently in check");
+                        Console.WriteLine("White King is currently in check");
                     }
-                }         
+                } 
 
                 try
                 {
                     input = Console.ReadLine();
                     if (input != null && input.Length > 0)
                     {
-                        if (input.ToLower().Contains("save"))
+                        if (input.ToLower().Contains("save") || input.ToLower().Contains("load"))
                         {
                             string[] inputs = input.Split(' ');
                             if (inputs.Length == 2)
                             {
                                 string fileName = inputs[1];
-                                gameController.SaveGameState(fileName);
+
+                                if (input.ToLower().Contains("save"))
+                                    gameController.SaveGameState(fileName);
+                                else if (input.ToLower().Contains("load"))
+                                    gameController.LoadGameState(fileName);
                                 continue;
                             }
                             else
                             {
                                 Console.WriteLine("Invalid Command for Save. ie: Save g1");
-                            }
-
-                        }
-                        else if (input.ToLower().Contains("load"))
-                        {
-                            string[] inputs = input.Split(' ');
-                            if (inputs.Length == 2)
-                            {
-                                string fileName = inputs[1];
-                                gameController.LoadGameState(fileName);
-                                continue;
-                            }
-                            else
-                            {
-                                Console.WriteLine("Invalid Command for Load. ie: Save g1");
                             }
 
                         }

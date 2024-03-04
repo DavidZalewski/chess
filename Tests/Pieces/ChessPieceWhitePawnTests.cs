@@ -302,5 +302,31 @@ namespace Tests.Pieces
 
             Assert.That(whitePawn3Piece.IsValidMove(board, new("E5")), Is.True);
         }
+
+        [Test(Description = "Tests that the White Pawn on row 5 can capture a Black Pawn via enpassant on squares left and right of the white pawn square")]     
+        [TestCase("B5", "A5", "C5", "A6", "C6")]
+        [TestCase("C5", "B5", "D5", "B6", "D6")]
+        [TestCase("D5", "C5", "E5", "C6", "E6")]
+        [TestCase("E5", "F5", "D5", "F6", "D6")]
+        [TestCase("F5", "E5", "G5", "E6", "G6")]
+        [TestCase("G5", "F5", "H5", "F6", "H6")]
+        public void Test_WhitePawn_IsValidMove_PawnOnD4CanCapturePawnOnE5(String whitePawnPos, String blackPawnPosLeft, String blackPawnPosRight, String enPassantPosLeft, String enPassantPosRight)
+        {
+            // Create White Pawn at {{ whitePawnPos }}
+            // ID argument can be mocked as it has no affect on logic here
+            ChessPiece whitePawnPiece = new ChessPieceWhitePawn(1, new(whitePawnPos));
+            ChessPiece blackPawnPieceLeft = new ChessPieceBlackPawn(1, new(blackPawnPosLeft));
+            ChessPiece blackPawnPieceRight = new ChessPieceBlackPawn(2, new(blackPawnPosRight));
+
+            // Need a way to set Black Pawn state, better way is to track if its last move was 2 squares. Even simpler than what the model suggested.
+
+            board.PopulateBoard(new List<ChessPiece>() { whitePawnPiece, blackPawnPieceLeft, blackPawnPieceRight });
+
+            Assert.Multiple(() =>
+            {
+                Assert.That(whitePawnPiece.IsValidMove(board, new(enPassantPosLeft)), Is.True);
+                Assert.That(whitePawnPiece.IsValidMove(board, new(enPassantPosRight)), Is.True);
+            });
+        }
     }
 }
