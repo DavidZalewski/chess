@@ -310,7 +310,7 @@ namespace Tests.Pieces
         [TestCase("E5", "F5", "D5", "F6", "D6")]
         [TestCase("F5", "E5", "G5", "E6", "G6")]
         [TestCase("G5", "F5", "H5", "F6", "H6")]
-        public void Test_WhitePawn_IsValidMove_PawnOnD4CanCapturePawnOnE5(String whitePawnPos, String blackPawnPosLeft, String blackPawnPosRight, String enPassantPosLeft, String enPassantPosRight)
+        public void Test_WhitePawn_IsValidMove_EnPassant(String whitePawnPos, String blackPawnPosLeft, String blackPawnPosRight, String enPassantPosLeft, String enPassantPosRight)
         {
             // Create White Pawn at {{ whitePawnPos }}
             // ID argument can be mocked as it has no affect on logic here
