@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Chess.Board;
+﻿using Chess.Board;
 using Chess.Pieces;
 
 namespace Chess.Services
@@ -11,7 +6,7 @@ namespace Chess.Services
     [Serializable]
     public class KingCheckService
     {
-        public KingCheckService() {}
+        public KingCheckService() { }
 
         public bool IsKingInCheck(Turn turnToBeMade)
         {
@@ -99,13 +94,13 @@ namespace Chess.Services
                     }
                 }
             }
-            
+
             foreach (Turn possibleTurn in possibleMoves)
             {
                 if (!IsKingInCheck(possibleTurn))
                     return false;
             }
-             
+
             return true; // Check Mate
         }
     }

@@ -1,6 +1,5 @@
 ﻿using Chess.Board;
 using Chess.Pieces;
-using Chess.Services;
 
 namespace Chess
 {
@@ -68,19 +67,19 @@ namespace Chess
 
             gameController.StartGame();
 
-            
+
 
             while (input != "quit")
             {
                 Console.WriteLine(gameController.DisplayBoard());
-                
+
                 if (gameController.TurnNumber % 2 == 0)
                 {
                     Console.WriteLine("Turn " + gameController.TurnNumber + " - Black to move. Please enter a command (piece name + position : ie. 'BP4 D5')");
                     if (gameController.GetLastTurn() != null && gameController.IsKingInCheck(ChessPiece.Color.BLACK))
                     {
                         Console.WriteLine("Black King is currently in check");
-                    } 
+                    }
                 }
                 else
                 {
@@ -89,7 +88,7 @@ namespace Chess
                     {
                         Console.WriteLine("White King is currently in check");
                     }
-                } 
+                }
 
                 try
                 {
@@ -178,7 +177,7 @@ namespace Chess
                     Console.WriteLine("Exception encountered.");
                     Console.WriteLine(ex.ToString());
                 }
-                
+
             } // end while
 
             Console.WriteLine("Program Terminated Successfully");

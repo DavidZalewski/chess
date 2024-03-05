@@ -1,12 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Security.Cryptography.X509Certificates;
-using System.Text;
-using System.Threading.Tasks;
-using Chess.Board;
-using Newtonsoft.Json;
+﻿using Chess.Board;
 
 namespace Chess.Pieces
 {
@@ -64,7 +56,7 @@ namespace Chess.Pieces
             _id = id;
             _startingPosition = startingPosition;
             _currentPosition = _startingPosition;
-            SetPieceName();
+            _pieceName = GetPieceName("generate");
         }
 
         public abstract ChessPiece Clone();
@@ -116,7 +108,7 @@ namespace Chess.Pieces
                 _hasMoved = true;
                 board.SetBoardValue(previousPosition, 0); // empty the previous square
                 _currentPosition = position; // breaks too many test cases
-            }     
+            }
         }
 
         public Piece GetPiece() { return _piece; }
@@ -125,29 +117,34 @@ namespace Chess.Pieces
         public int GetRealValue() { return _realValue; }
         public BoardPosition GetStartingPosition() { return _startingPosition; }
         public BoardPosition GetCurrentPosition() { return _currentPosition; }
-        public bool HasMoved() {  return _hasMoved; }
+        public bool HasMoved() { return _hasMoved; }
+
+        public BoardPosition EnPassantTarget { get; set; }
 
         public string GetPieceName() { return _pieceName; }
-        private void SetPieceName()
+        private string GetPieceName(string dummyArgument)
         {
+            string pieceName = "";
             if (_color.Equals(Color.WHITE))
             {
-                _pieceName += "White ";
+                pieceName += "White ";
             }
             else
             {
-                _pieceName += "Black ";
+                pieceName += "Black ";
             }
             switch (_piece)
             {
-                case Piece.PAWN: _pieceName += "Pawn "; break;
-                case Piece.KNIGHT: _pieceName += "Knight "; break;
-                case Piece.BISHOP: _pieceName += "Bishop "; break;
-                case Piece.ROOK: _pieceName += "Rook "; break;
-                case Piece.QUEEN: _pieceName += "Queen "; break;
-                case Piece.KING: _pieceName += "King "; break;
+                case Piece.PAWN: pieceName += "Pawn "; break;
+                case Piece.KNIGHT: pieceName += "Knight "; break;
+                case Piece.BISHOP: pieceName += "Bishop "; break;
+                case Piece.ROOK: pieceName += "Rook "; break;
+                case Piece.QUEEN: pieceName += "Queen "; break;
+                case Piece.KING: pieceName += "King "; break;
             }
-            _pieceName += _id;
+            pieceName += _id;
+
+            return pieceName;
         }
 
         // used by ghost pieces
@@ -156,8 +153,9 @@ namespace Chess.Pieces
             _currentPosition = boardPosition;
         }
 
-        public static void SetCastleCallbackFunction(Func<ChessBoard, BoardPosition, ChessPiece, bool> callback) { 
-            _castleEventCallBackFunction = callback; 
+        public static void SetCastleCallbackFunction(Func<ChessBoard, BoardPosition, ChessPiece, bool> callback)
+        {
+            _castleEventCallBackFunction = callback;
         }
 
         // used by tests to setup the state of King Piece for certain unit tests
@@ -165,11 +163,11 @@ namespace Chess.Pieces
 
         public bool Equals(ChessPiece other)
         {
-            return _color.Equals(other._color) && 
-                   _id == other._id && 
-                   _realValue == other._realValue && 
+            return _color.Equals(other._color) &&
+                   _id == other._id &&
+                   _realValue == other._realValue &&
                    _piece == other._piece &&
-                   _startingPosition.EqualTo(other._startingPosition) && 
+                   _startingPosition.EqualTo(other._startingPosition) &&
                    _currentPosition.EqualTo(other._currentPosition);
         }
     }

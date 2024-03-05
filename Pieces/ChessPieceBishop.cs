@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Chess.Board;
+﻿using Chess.Board;
 
 namespace Chess.Pieces
 {
@@ -38,7 +33,7 @@ namespace Chess.Pieces
             if (!isSquareAValidDiagonal || isFriendlyPieceOnSquare) { return false; }
 
             string operation = "";
-            
+
 
             // based on what the vdistance and hdistance are, if they are positive numbers, we are decrementing
             // if they are negative numbers, we are incrementing

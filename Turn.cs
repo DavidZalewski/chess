@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Chess.Board;
+﻿using Chess.Board;
 using Chess.Pieces;
 using NUnit.Framework;
-using static Chess.Pieces.ChessPiece;
 
 namespace Chess
 {
@@ -42,7 +36,8 @@ namespace Chess
             if (!_piece.IsValidMove(_chessBoard, _newPosition))
                 throw new Exception("Cannot construct turn. Invalid Move for piece");
             _piece.Move(_chessBoard, _newPosition); // update the board to reflect latest state - if there is a capture here - update the list of pieces we just copied to reflect the current state of board                     
-            _chessPieces = _chessBoard.PruneCapturedPieces(_chessPieces, (List<ChessPiece> removedPieces) => {
+            _chessPieces = _chessBoard.PruneCapturedPieces(_chessPieces, (List<ChessPiece> removedPieces) =>
+            {
                 _action = " capture [" + removedPieces[0].GetPieceName() + "] ";
                 return true;
             });
@@ -58,16 +53,16 @@ namespace Chess
             _description = _piece.GetPieceName() + " " + _previousPosition.StringValue + _action + _newPosition.StringValue;
         }
 
-        public Turn(int turnNumber, ChessPiece piece, BoardPosition newPosition, ChessBoard chessBoard, List<ChessPiece> chessPieces) 
-            : this(turnNumber, piece, piece.GetCurrentPosition(), newPosition, chessBoard, chessPieces) {}
+        public Turn(int turnNumber, ChessPiece piece, BoardPosition newPosition, ChessBoard chessBoard, List<ChessPiece> chessPieces)
+            : this(turnNumber, piece, piece.GetCurrentPosition(), newPosition, chessBoard, chessPieces) { }
 
         public int TurnNumber { get { return _turnNumber; } }
         public ChessPiece ChessPiece { get { return _piece; } }
-        public BoardPosition PreviousPosition {  get { return _previousPosition; } }
+        public BoardPosition PreviousPosition { get { return _previousPosition; } }
         public BoardPosition NewPosition { get { return _newPosition; } }
-        public ChessBoard ChessBoard {  get { return _chessBoard; } }
+        public ChessBoard ChessBoard { get { return _chessBoard; } }
         public Color PlayerTurn { get { return _playerTurn; } }
-        public String TurnDescription { get { return _description; } }  
+        public String TurnDescription { get { return _description; } }
         public List<ChessPiece> ChessPieces { get { return _chessPieces; } }
 
 
@@ -76,7 +71,8 @@ namespace Chess
             int hv = boardPosition.HorizontalValueAsInt;
             int vv = boardPosition.VerticalValueAsInt;
 
-            ChessPiece? rook = _chessPieces.Find(p => {
+            ChessPiece? rook = _chessPieces.Find(p =>
+            {
                 BoardPosition cbp = p.GetCurrentPosition();
                 return cbp.HorizontalValueAsInt == hv && cbp.VerticalValueAsInt == vv;
             });

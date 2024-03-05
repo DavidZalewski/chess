@@ -1,19 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Chess.Board;
+using Chess.Exceptions;
 using Chess.Pieces;
 using Chess.Services;
-using Chess.Board;
 using NUnit.Framework;
-using Chess.Exceptions;
-using System.Text.Json.Nodes;
-using Newtonsoft.Json;
-using System.Reflection.Emit;
-using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
-using System.IO;
 
 namespace Chess
 {
@@ -28,7 +18,7 @@ namespace Chess
 
         public int TurnNumber { get => _turnNumber; }
 
-        public GameController(ChessBoard chessBoard) 
+        public GameController(ChessBoard chessBoard)
         {
             this._chessBoard = chessBoard;
             _chessPieces = ChessPieceFactory.CreateChessPieces();
@@ -54,7 +44,8 @@ namespace Chess
             int hv = bp.HorizontalValueAsInt;
             int vv = bp.VerticalValueAsInt;
 
-            ChessPiece? rook = _chessPieces.Find(p => {
+            ChessPiece? rook = _chessPieces.Find(p =>
+            {
                 BoardPosition cbp = p.GetCurrentPosition();
                 return cbp.HorizontalValueAsInt == hv && cbp.VerticalValueAsInt == vv;
             });
@@ -233,7 +224,7 @@ namespace Chess
             catch (InvalidMoveException e)
             {
                 Console.WriteLine("Invalid Move. Please Try Again.");
-                    return null;
+                return null;
             }
             catch (Exception e)
             {
@@ -249,7 +240,7 @@ namespace Chess
             //                                       && p.GetId() == turn.ChessPiece.GetId());
             //piece.SetCurrentPosition(turn.NewPosition);
             //turn.ChessPiece.SetCurrentPosition(turn.NewPosition);
-            
+
             _chessBoard = turn.ChessBoard;
             _chessPieces = turn.ChessPieces;
             _turns.Add(turn);
@@ -282,7 +273,8 @@ namespace Chess
                 Console.WriteLine("Failed to save game state due to exception: " + e.Message);
                 return false;
             }
-            finally {
+            finally
+            {
                 if (stream != null) { stream.Close(); }
             }
         }
@@ -407,7 +399,7 @@ namespace Chess
         {
             if (_turns.Count == 0)
                 return null;
-            else 
+            else
                 return _turns[_turns.Count - 1];
         }
     }

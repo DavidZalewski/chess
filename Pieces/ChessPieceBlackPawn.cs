@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Chess.Board;
+﻿using Chess.Board;
 
 namespace Chess.Pieces
 {
@@ -64,7 +59,7 @@ namespace Chess.Pieces
                         return false;
                     else
                         return true;
-                }  
+                }
                 else
                     return false;
             }

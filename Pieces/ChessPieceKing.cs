@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Chess.Board;
-using Newtonsoft.Json;
+﻿using Chess.Board;
 
 namespace Chess.Pieces
 {
@@ -69,7 +63,7 @@ namespace Chess.Pieces
                 {
                     _castleEventCallBackFunction.Invoke(board, position, this);
                     return true;
-                }         
+                }
             }
             return false;
         }
