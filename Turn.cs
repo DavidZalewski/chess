@@ -30,12 +30,35 @@ namespace Chess
             _newPosition = newPosition;
             _action = " move ";
             ChessPiece.SetCastleCallbackFunction(this.CastleCallBackFunction);
+            ChessPiece.SetIsEnPassantCallbackFunction(this.IsEnPassantCallBackFunction);
             _chessBoard = new ChessBoard(chessBoard); // copy state of board
             _chessPieces = chessPieces.Select(a => (ChessPiece)a.Clone()).ToArray().ToList(); // copy list of pieces
-            _piece = _chessPieces.First(p => p.Equals(piece)); // copy constructor here, what if piece is captured later? this reference becomes null
+            _piece = _chessPieces.First(p => p.Equals(piece)); 
             if (!_piece.IsValidMove(_chessBoard, _newPosition))
                 throw new Exception("Cannot construct turn. Invalid Move for piece");
             _piece.Move(_chessBoard, _newPosition); // update the board to reflect latest state - if there is a capture here - update the list of pieces we just copied to reflect the current state of board                     
+            // we have to handle En Passant pruning differently
+            _chessPieces.ForEach((ChessPiece cp) =>
+            {
+                if (cp is ChessPiecePawn)
+                {
+                    if ((cp as ChessPiecePawn).IsEnPassantTarget)
+                    {
+                        Assert.That(_chessBoard.IsPieceAtPosition(cp.GetCurrentPosition()), Is.True);
+                        _chessBoard.SetBoardValue(cp.GetCurrentPosition(), 0);
+                        _action = " capture [" + cp.GetPieceName() + "] ";
+                    }
+                }
+            });
+            _chessPieces.RemoveAll((ChessPiece cp) =>
+            {
+                if (cp is ChessPiecePawn)
+                {
+                    return (cp as ChessPiecePawn).IsEnPassantTarget;
+                }
+                else { return false; }
+            });
+
             _chessPieces = _chessBoard.PruneCapturedPieces(_chessPieces, (List<ChessPiece> removedPieces) =>
             {
                 _action = " capture [" + removedPieces[0].GetPieceName() + "] ";
@@ -129,6 +152,69 @@ namespace Chess
             return true;
         }
 
+        public bool IsEnPassantCallBackFunction(ChessBoard chessBoard, BoardPosition boardPosition, ChessPiece pawnAttemptingEnPassant)
+        {
+            BoardPosition.VERTICAL enPassantRow;
+            ChessPiece.Color opponentColor;
+            int enPassantOffSet = 0;
+
+            if (pawnAttemptingEnPassant.GetColor().Equals(ChessPiece.Color.WHITE))
+            {
+                enPassantRow = BoardPosition.VERTICAL.FIVE;
+                opponentColor = ChessPiece.Color.BLACK;
+                enPassantOffSet = -1;
+            }
+            else
+            {
+                enPassantRow = BoardPosition.VERTICAL.FOUR;
+                opponentColor = ChessPiece.Color.WHITE;
+                enPassantOffSet = +1;
+            }
+
+            BoardPosition pawnPos = pawnAttemptingEnPassant.GetCurrentPosition();
+
+            // Is the pawn in the correct Row to do this? En Passant is only possible if a pawn is on a specific row on the board
+            if (pawnPos.VerticalValue != enPassantRow)
+                return false;
+
+            // Are there opponent pieces to its immediate left or right?
+
+            // TODO: Provide better constructors for these kinds of operations
+            BoardPosition bpl = new(pawnPos.VerticalValue, (BoardPosition.HORIZONTAL)pawnPos.HorizontalValueAsInt - 1);
+            BoardPosition bpr = new(pawnPos.VerticalValue, (BoardPosition.HORIZONTAL)pawnPos.HorizontalValueAsInt + 1);
+
+            foreach (BoardPosition bpToCheck in new List<BoardPosition>() { bpl, bpr })
+            {
+                // Is there an opponent piece at this position?
+                if (chessBoard.IsPieceAtPosition(bpToCheck, opponentColor))
+                {
+                    ChessPiece? opponentPiece = _chessPieces.Find((ChessPiece cp) => cp.GetCurrentPosition().EqualTo(bpToCheck));
+                    Assert.That(opponentPiece, Is.Not.Null, "This assertion failed. If ChessBoard.IsPieceAtPosition returns true, the piece must exist in the collection");
+
+                    // Is the opponent piece a pawn?
+                    if (opponentPiece is ChessPiecePawn)
+                    {
+                        // Did that pawn move 2 squares?
+                        if ((opponentPiece as ChessPiecePawn).MovedTwoSquares)
+                        {
+                            // is the position a capture position?
+                            // Get the opponent pawn position, and get the position that is 1 square behind it
+                            BoardPosition oppPos = opponentPiece.GetCurrentPosition();
+                            // this operation needs to support both + 1 (for black) and -1 (for white)
+                            BoardPosition enPassantCapturePos = new((BoardPosition.VERTICAL)oppPos.VerticalValueAsInt + enPassantOffSet, oppPos.HorizontalValue);
+                            if (enPassantCapturePos.EqualTo(boardPosition))
+                            {
+                                (opponentPiece as ChessPiecePawn).IsEnPassantTarget = true;
+                                return true; // This is a valid En Passant capture move
+                            }
+                        }
+                    }
+                }
+
+            }
+
+            return false;
+        }
 
     }
 }

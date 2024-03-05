@@ -73,6 +73,11 @@ namespace Chess.Board
 
         public bool IsPieceAtPosition(BoardPosition position, ChessPiece.Color color)
         {
+            if ((position.VerticalValueAsInt < 0 || position.VerticalValueAsInt > 7) ||
+                (position.HorizontalValueAsInt < 0 || position.HorizontalValueAsInt > 7))
+            {
+                return false; // index out of bounds
+            }
             int value = _board[position.VerticalValueAsInt, position.HorizontalValueAsInt];
             if (color == ChessPiece.Color.WHITE)
                 return value > 0 && value < 20;

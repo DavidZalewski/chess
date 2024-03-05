@@ -356,25 +356,74 @@ namespace Tests.Pieces
             Assert.That(blackKing.IsValidMove(chessBoard, new("H8")), Is.True); // King moving to H8 is interpreted as Kings Side Castle
         }
 
-        [Test]
-        [Ignore("En Passant Not Implemented")]
-        public void Test_Pawn_EnPassant()
+        [Test(Description = "Tests that the White Pawn on row 5 can capture a Black Pawn via enpassant on squares left and right of the white pawn square")]
+        [TestCase("B5", "A5", "C5", "A6", "C6")]
+        [TestCase("C5", "B5", "D5", "B6", "D6")]
+        [TestCase("D5", "C5", "E5", "C6", "E6")]
+        [TestCase("E5", "F5", "D5", "F6", "D6")]
+        [TestCase("F5", "E5", "G5", "E6", "G6")]
+        [TestCase("G5", "F5", "H5", "F6", "H6")]
+        public void Test_WhitePawn_IsValidMove_EnPassant(String whitePawnPos, String blackPawnPosLeft, String blackPawnPosRight, String enPassantPosLeft, String enPassantPosRight)
         {
-            List<ChessPiece> chessPieces = ChessPieceFactory.CreateChessPieces();
+            // Create White Pawn at {{ whitePawnPos }}
+            // ID argument can be mocked as it has no affect on logic here
+            ChessPiece whitePawnPiece = new ChessPieceWhitePawn(1, new(whitePawnPos));
+            ChessPiece blackPawnPieceLeft = new ChessPieceBlackPawn(1, new(blackPawnPosLeft));
+            ChessPiece blackPawnPieceRight = new ChessPieceBlackPawn(2, new(blackPawnPosRight));
 
-            ChessPiece whiteKing = chessPieces.First(piece => piece.GetColor().Equals(ChessPiece.Color.WHITE) &&
-                                                              piece.GetPiece().Equals(ChessPiece.Piece.KING));
-            ChessBoard chessBoard = new();
+            // Need to set some internal state values to perform this test
+            (blackPawnPieceLeft as ChessPiecePawn).SetMovedTwoSquares();
+            (blackPawnPieceRight as ChessPiecePawn).SetMovedTwoSquares();
 
-            chessBoard.PopulateBoard(chessPieces);
+            ChessBoard board = new();
+            List<ChessPiece> chessPieces = new() { whitePawnPiece, blackPawnPieceLeft, blackPawnPieceRight };
 
-            // remove all back pieces except for rook and king
-            // move the king somewhere
-            // move the king back
-            // try to castle
-            // should fail
+            GameController gameController = new(board, chessPieces);
+            gameController.StartGame();
 
-            Assert.Fail("Not implemented!");
+            Assert.Multiple(() =>
+            {
+                Assert.That(whitePawnPiece.IsValidMove(board, new(enPassantPosLeft)), Is.True);
+                Assert.That((blackPawnPieceLeft as ChessPiecePawn).IsEnPassantTarget, Is.True);
+                Assert.That(whitePawnPiece.IsValidMove(board, new(enPassantPosRight)), Is.True);
+                Assert.That((blackPawnPieceRight as ChessPiecePawn).IsEnPassantTarget, Is.True);
+            });
         }
+
+        [Test(Description = "Tests that the Black Pawn on row 4 can capture a White Pawn via enpassant on squares left and right of the black pawn square")]
+        [TestCase("B4", "A4", "C4", "A3", "C3")]
+        [TestCase("C4", "B4", "D4", "B3", "D3")]
+        [TestCase("D4", "C4", "E4", "C3", "E3")]
+        [TestCase("E4", "F4", "D4", "F3", "D3")]
+        [TestCase("F4", "E4", "G4", "E3", "G3")]
+        [TestCase("G4", "F4", "H4", "F3", "H3")]
+        public void Test_BlackPawn_IsValidMove_EnPassant(String blackPawnPos, String whitePawnPosLeft, String whitePawnPosRight, String enPassantPosLeft, String enPassantPosRight)
+        {
+            // Create Black Pawn at {{ blackPawnPos }}
+            // ID argument can be mocked as it has no affect on logic here
+            ChessPiece blackPawnPiece = new ChessPieceBlackPawn(1, new(blackPawnPos));
+            ChessPiece whitePawnPieceLeft = new ChessPieceWhitePawn(1, new(whitePawnPosLeft));
+            ChessPiece whitePawnPieceRight = new ChessPieceWhitePawn(2, new(whitePawnPosRight));
+
+            // Need to set some internal state values to perform this test
+            (whitePawnPieceLeft as ChessPiecePawn).SetMovedTwoSquares();
+            (whitePawnPieceRight as ChessPiecePawn).SetMovedTwoSquares();
+
+            ChessBoard board = new();
+            List<ChessPiece> chessPieces = new() { blackPawnPiece, whitePawnPieceLeft, whitePawnPieceRight };
+
+            GameController gameController = new(board, chessPieces);
+            gameController.StartGame();
+
+            Assert.Multiple(() =>
+            {
+                Assert.That(blackPawnPiece.IsValidMove(board, new(enPassantPosLeft)), Is.True);
+                Assert.That((whitePawnPieceLeft as ChessPiecePawn).IsEnPassantTarget, Is.True);
+                Assert.That(blackPawnPiece.IsValidMove(board, new(enPassantPosRight)), Is.True);
+                Assert.That((whitePawnPieceRight as ChessPiecePawn).IsEnPassantTarget, Is.True);
+            });
+        }
+
+
     }
 }

@@ -13,6 +13,8 @@ namespace Chess.Pieces
         public override ChessPiece Clone()
         {
             ChessPieceBlackPawn copy = new(_id, _startingPosition);
+            copy.IsEnPassantTarget = this.IsEnPassantTarget;
+            copy.MovedTwoSquares = this.MovedTwoSquares;
             return Clone(copy);
         }
 
@@ -22,7 +24,11 @@ namespace Chess.Pieces
             //   -2       =                    1                        3
             int verticalDistance = _currentPosition.VerticalValueAsInt - position.VerticalValueAsInt;
 
-            // TODO: embessen move check
+            if (_IsEnPassantCallBackFunction != null)
+            {
+                bool IsValidEnPassant = _IsEnPassantCallBackFunction.Invoke(board, position, this);
+                if (IsValidEnPassant) { return true; }
+            }
             // TODO: handle promotions
 
             if (verticalDistance == -1)
@@ -58,7 +64,10 @@ namespace Chess.Pieces
                     if (board.IsPieceAtPosition(previousSquare))
                         return false;
                     else
+                    {
+                        MovedTwoSquares = true; // We use this to for En Passant
                         return true;
+                    }                      
                 }
                 else
                     return false;

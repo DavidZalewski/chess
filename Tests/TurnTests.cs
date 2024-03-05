@@ -85,5 +85,49 @@ namespace Tests
             });
 
         }
+
+        [Test]
+        public void Test_ConstructTurn_Capture_Piece_EnPassant_Success()
+        {
+            ChessBoard board = new();
+            List<ChessPiece> chessPieces = ChessPieceFactory.CreateChessPieces();
+            // find white pawn 1
+            ChessPiece whitePawn = chessPieces.First(pieces => pieces.GetColor() == ChessPiece.Color.WHITE &&
+                                                     pieces.GetPiece() == ChessPiece.Piece.PAWN);
+            // find black pawn 2
+            ChessPiece blackPawn2 = chessPieces.First(pieces => pieces.GetColor() == ChessPiece.Color.BLACK &&
+                                         pieces.GetPiece() == ChessPiece.Piece.PAWN && pieces.GetId() == 2);
+   
+            GameController gc = new(board, chessPieces);
+            gc.StartGame();
+
+            // set white pawn 1 to A5 and black pawn 2 to B5 to setup en passant
+            whitePawn.Move(board, new("A5"));
+            blackPawn2.Move(board, new("B5"));
+            (blackPawn2 as ChessPiecePawn).SetMovedTwoSquares();
+
+            BoardPosition newPosition = new("B6");
+            Assert.That(whitePawn.IsValidMove(board, newPosition), Is.True);
+
+            Turn turn = new(1, whitePawn, newPosition, board, chessPieces);
+
+            Assert.That(turn, Is.Not.Null);
+            Assert.Multiple(() =>
+            {
+                Assert.That(chessPieces.Count, Is.EqualTo(32));
+                Assert.That(turn.ChessPieces.Count, Is.EqualTo(31));
+
+                List<ChessPiece> removedChessPieces = GetDifferenceBetweenLists(chessPieces, turn.ChessPieces);
+
+                Assert.That(removedChessPieces.Count == 1);
+
+                ChessPiece removedBlackPawn2Piece = removedChessPieces.First();
+                Assert.That(removedBlackPawn2Piece.GetPiece() == ChessPiece.Piece.PAWN &&
+                            removedBlackPawn2Piece.GetColor() == ChessPiece.Color.BLACK &&
+                            removedBlackPawn2Piece.GetId() == 2);
+            });
+
+        }
+
     }
 }

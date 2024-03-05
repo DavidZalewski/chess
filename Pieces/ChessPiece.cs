@@ -47,6 +47,7 @@ namespace Chess.Pieces
         protected BoardPosition _currentPosition;
         protected bool _hasMoved = false;
         protected static Func<ChessBoard, BoardPosition, ChessPiece, bool>? _castleEventCallBackFunction = null;
+        protected static Func<ChessBoard, BoardPosition, ChessPiece, bool>? _IsEnPassantCallBackFunction = null;
         protected string _pieceName;
 
         public ChessPiece(Piece piece, Color color, int id, BoardPosition startingPosition)
@@ -107,7 +108,7 @@ namespace Chess.Pieces
             {
                 _hasMoved = true;
                 board.SetBoardValue(previousPosition, 0); // empty the previous square
-                _currentPosition = position; // breaks too many test cases
+                _currentPosition = position;
             }
         }
 
@@ -118,8 +119,6 @@ namespace Chess.Pieces
         public BoardPosition GetStartingPosition() { return _startingPosition; }
         public BoardPosition GetCurrentPosition() { return _currentPosition; }
         public bool HasMoved() { return _hasMoved; }
-
-        public BoardPosition EnPassantTarget { get; set; }
 
         public string GetPieceName() { return _pieceName; }
         private string GetPieceName(string dummyArgument)
@@ -156,6 +155,11 @@ namespace Chess.Pieces
         public static void SetCastleCallbackFunction(Func<ChessBoard, BoardPosition, ChessPiece, bool> callback)
         {
             _castleEventCallBackFunction = callback;
+        }
+
+        public static void SetIsEnPassantCallbackFunction(Func<ChessBoard, BoardPosition, ChessPiece, bool> callback)
+        {
+            _IsEnPassantCallBackFunction = callback;
         }
 
         // used by tests to setup the state of King Piece for certain unit tests

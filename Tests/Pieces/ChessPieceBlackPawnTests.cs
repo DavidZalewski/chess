@@ -49,7 +49,12 @@ namespace Tests.Pieces
             ChessPiece piece = new ChessPieceBlackPawn(1, boardPosition);
             BoardPosition newPosition = new BoardPosition(BoardPosition.VERTICAL.FIVE, BoardPosition.HORIZONTAL.E);
 
-            Assert.That(piece.IsValidMove(board, newPosition), Is.True);
+            Assert.Multiple(() =>
+            {
+                Assert.That(piece.IsValidMove(board, newPosition), Is.True);
+                Assert.That(piece is ChessPiecePawn, Is.True);
+                Assert.That((piece as ChessPiecePawn).MovedTwoSquares, Is.True);
+            });
         }
 
         [Test(Description = "Tests that the black pawn cannot move 2 squares if it has already moved")]
