@@ -47,6 +47,7 @@ namespace Chess.Pieces
             BLACK = 20
         }
 
+        public static GameController? GameController { protected get; set; }
         protected Piece _piece;
         protected Color _color;
         protected int _id;
@@ -68,6 +69,8 @@ namespace Chess.Pieces
         }
 
         public abstract ChessPiece Clone();
+
+        public abstract IEnumerable<BoardPosition> GetValidMoves(ChessBoard board);
 
         protected ChessPiece Clone(ChessPiece copy)
         {

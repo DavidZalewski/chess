@@ -79,5 +79,26 @@ namespace Chess.Pieces
             // does this need to exist?
             return false;
         }
+
+        public override IEnumerable<BoardPosition> GetValidMoves(ChessBoard board)
+        {
+            // ... Your existing move generation logic ...
+            // At this point in the code there is nothing that is generating possible moves, as we first have to check which moves are valid
+            // This response avoids answering the actual question.
+            BoardPosition position;
+
+            // En Passant Move Check
+            var lastMove = GameController?.GetLastTurn();
+            if (lastMove != null && lastMove.ChessPiece is ChessPiecePawn &&
+                Math.Abs(lastMove.NewPosition.VerticalValueAsInt - lastMove.PreviousPosition.VerticalValueAsInt) == 2 && // moved two squares
+                lastMove.PreviousPosition.HorizontalValueAsInt == _currentPosition.HorizontalValueAsInt && // landed beside this pawn
+                /* Unclear: what is position here? Which position for which piece? */ 
+                position.VerticalValueAsInt == lastMove.NewPosition.VerticalValueAsInt - 1 && // target square is behind
+                Math.Abs(position.HorizontalValueAsInt - _currentPosition.HorizontalValueAsInt) == 1)
+            {
+                yield return position;
+            }
+        }
+
     }
 }
