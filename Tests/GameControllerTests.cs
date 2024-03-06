@@ -195,7 +195,7 @@ namespace Tests
             BoardPosition boardPosition = new(inputs[1]);
 
             Assert.That(boardPosition, Is.Not.Null);
-            Assert.That(boardPosition.EqualTo(turn.NewPosition), Is.True);
+            Assert.That(boardPosition == turn.NewPosition, Is.True);
 
             ChessPiece? piece = gameController.FindChessPieceFromString(inputs[0]);
             Assert.That(piece, Is.Not.Null);
@@ -240,7 +240,7 @@ namespace Tests
             BoardPosition boardPosition = new(inputs[1]);
 
             Assert.That(boardPosition, Is.Not.Null);
-            Assert.That(boardPosition.EqualTo(turn.NewPosition), Is.True);
+            Assert.That(boardPosition == turn.NewPosition, Is.True);
 
             ChessPiece? piece = gameController.FindChessPieceFromString(inputs[0]);
 

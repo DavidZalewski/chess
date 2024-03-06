@@ -75,18 +75,22 @@ namespace Chess.Pieces
             {
                 bool isFriendlyRookOnSquare = board.IsPieceAtPosition(position, _color, Piece.ROOK);
                 List<BoardPosition> positionsLeadingToCastle = new();
-
+                BoardPosition A1 = new("A1");
+                BoardPosition A8 = new("A8");
+                BoardPosition H1 = new("H1");
+                BoardPosition H8 = new("H8");
                 if (_color.Equals(Color.WHITE))
                 {
+                    
                     // White King's Queen's Side Castle
-                    if (position.EqualTo(new("A1")))
+                    if (position == A1)
                     {
                         positionsLeadingToCastle.Add(new("B1"));
                         positionsLeadingToCastle.Add(new("C1"));
                         positionsLeadingToCastle.Add(new("D1"));
                     }
                     // White King's Side Castle
-                    else if (position.EqualTo(new("H1")))
+                    else if (position == H1)
                     {
                         positionsLeadingToCastle.Add(new("F1"));
                         positionsLeadingToCastle.Add(new("G1"));
@@ -95,14 +99,14 @@ namespace Chess.Pieces
                 else
                 {
                     // Black King's Queen's Side Castle
-                    if (position.EqualTo(new("A8")))
+                    if (position == A8)
                     {
                         positionsLeadingToCastle.Add(new("B8"));
                         positionsLeadingToCastle.Add(new("C8"));
                         positionsLeadingToCastle.Add(new("D8"));
                     }
                     // Black King's Side Castle
-                    else if (position.EqualTo(new("H8")))
+                    else if (position == H8)
                     {
                         positionsLeadingToCastle.Add(new("F8"));
                         positionsLeadingToCastle.Add(new("G8"));

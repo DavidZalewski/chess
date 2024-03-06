@@ -141,7 +141,7 @@ namespace Chess
                 // Is there an opponent piece at this position?
                 if (chessBoard.IsPieceAtPosition(bpToCheck, opponentColor))
                 {
-                    ChessPiece? opponentPiece = _chessPieces.Find((ChessPiece cp) => cp.GetCurrentPosition().EqualTo(bpToCheck));
+                    ChessPiece? opponentPiece = _chessPieces.Find((ChessPiece cp) => cp.GetCurrentPosition() == bpToCheck);
                     Assert.That(opponentPiece, Is.Not.Null, "This assertion failed. If ChessBoard.IsPieceAtPosition returns true, the piece must exist in the collection");
 
                     // Is the opponent piece a pawn?
@@ -155,7 +155,7 @@ namespace Chess
                             BoardPosition oppPos = opponentPiece.GetCurrentPosition();
                             // this operation needs to support both + 1 (for black) and -1 (for white)
                             BoardPosition enPassantCapturePos = new((RANK) oppPos.RankAsInt + enPassantOffSet, oppPos.File);
-                            if (enPassantCapturePos.EqualTo(boardPosition))
+                            if (enPassantCapturePos == boardPosition)
                             {
                                 (opponentPiece as ChessPiecePawn).IsEnPassantTarget = true;
                                 return true; // This is a valid En Passant capture move
@@ -404,7 +404,7 @@ namespace Chess
                     BoardPosition boardPosition = new((RANK)f, (FILE)s);
                     if (chessBoard.IsPieceAtPosition(boardPosition))
                     {
-                        ChessPiece chessPiece = _chessPieces.First(p => p.GetCurrentPosition().EqualTo(boardPosition));
+                        ChessPiece chessPiece = _chessPieces.First(p => p.GetCurrentPosition() == boardPosition);
                         if (chessPiece == null)
                         {
                             throw new Exception("Unexpected! Fix this");

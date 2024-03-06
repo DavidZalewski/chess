@@ -30,7 +30,7 @@ namespace Tests
             List<ChessPiece> chessPieces = ChessPieceFactory.CreateChessPieces();
             ChessPiece whitePawn = chessPieces.First(pieces => pieces.GetColor() == ChessPiece.Color.WHITE &&
                                                      pieces.GetPiece() == ChessPiece.Piece.PAWN);
-            BoardPosition previousPosition = new(whitePawn.GetCurrentPosition());
+            BoardPosition previousPosition = whitePawn.GetCurrentPosition();
             BoardPosition newPosition = new(previousPosition.Rank - 2, previousPosition.File);
             board.PopulateBoard(chessPieces);
 

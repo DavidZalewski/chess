@@ -36,28 +36,15 @@ namespace Tests.Board
             Assert.That(SplitIntegerGetSecondValue(value), Is.EqualTo(expected));
         }
 
-        [Test]
-        public void Test_ConstructBoardPosition_Success2()
+        [TestCase(RANK.THREE, FILE.F, "F3")]
+        [TestCase(RANK.EIGHT, FILE.H, "H8")]
+        [TestCase(RANK.ONE, FILE.A, "A1")]
+        [TestCase(RANK.FOUR, FILE.G, "G4")]
+        public void Test_ConstructBoardPosition_Success(RANK rank, FILE file, string expectedStringValue)
         {
-            BoardPosition boardPosition = new(RANK.THREE, FILE.F);
+            BoardPosition boardPosition = new(rank, file);
             Assert.That(boardPosition, Is.Not.Null);
-            Assert.That(boardPosition.StringValue, Is.EqualTo("F3"));
-        }
-
-        [Test]
-        public void Test_ConstructBoardPosition_Success3()
-        {
-            BoardPosition boardPosition = new(RANK.EIGHT, FILE.H);
-            Assert.That(boardPosition, Is.Not.Null);
-            Assert.That(boardPosition.StringValue, Is.EqualTo("H8"));
-        }
-
-        [Test]
-        public void Test_ConstructBoardPosition_Success4()
-        {
-            BoardPosition boardPosition = new(RANK.ONE, FILE.A);
-            Assert.That(boardPosition, Is.Not.Null);
-            Assert.That(boardPosition.StringValue, Is.EqualTo("A1"));
+            Assert.That(boardPosition.StringValue, Is.EqualTo(expectedStringValue));
         }
 
         [TestCase("A", FILE.A)]
@@ -161,22 +148,6 @@ namespace Tests.Board
         public void Test_ConstructBoardPosition_ExceptionThrown(string position)
         {
             Assert.Throws<ArgumentException>(() => new BoardPosition(position));
-        }
-
-
-        [Test]
-        public void Test_CopyConstructBoardPosition_Success()
-        {
-            BoardPosition boardPosition = new(RANK.ONE, FILE.A);
-            Assert.That(boardPosition, Is.Not.Null);
-
-            BoardPosition boardPosition2 = new(boardPosition);
-            Assert.Multiple(() =>
-            {
-                Assert.That(boardPosition2, Is.Not.Null);
-                Assert.That(ReferenceEquals(boardPosition, boardPosition2), Is.False); // should be a copy, not the same object reference
-                Assert.That(boardPosition2.StringValue, Is.EqualTo("A1"));
-            });
         }
 
         [Test]

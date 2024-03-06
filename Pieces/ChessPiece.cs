@@ -88,8 +88,8 @@ namespace Chess.Pieces
             return this._color == (item._color) &&
                    this._hasMoved == (item._hasMoved) &&
                    this._piece == (item._piece) &&
-                   this._currentPosition.EqualTo(item._currentPosition) &&
-                   this._startingPosition.EqualTo(item._startingPosition) &&
+                   this._currentPosition == item._currentPosition &&
+                   this._startingPosition == item._startingPosition &&
                    this._id == (item._id) &&
                    this._pieceName == (item._pieceName) &&
                    this._realValue == (item._realValue);
@@ -104,7 +104,7 @@ namespace Chess.Pieces
 
             BoardPosition previousPosition = _currentPosition;
             board.SetBoardValue(position, _realValue);
-            if (!previousPosition.EqualTo(position))
+            if (previousPosition != position)
             {
                 _hasMoved = true;
                 board.SetBoardValue(previousPosition, 0); // empty the previous square
@@ -171,8 +171,8 @@ namespace Chess.Pieces
                    _id == other._id &&
                    _realValue == other._realValue &&
                    _piece == other._piece &&
-                   _startingPosition.EqualTo(other._startingPosition) &&
-                   _currentPosition.EqualTo(other._currentPosition);
+                   _startingPosition == other._startingPosition &&
+                   _currentPosition == other._currentPosition;
         }
     }
 }

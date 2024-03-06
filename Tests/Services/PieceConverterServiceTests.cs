@@ -16,9 +16,9 @@ namespace Tests.Services
             Assert.Multiple(() =>
             {
                 Assert.That(queen.GetColor(), Is.EqualTo(ChessPiece.Color.WHITE));
-                Assert.That(queen.GetCurrentPosition().EqualTo(h2), Is.True);
+                Assert.That(queen.GetCurrentPosition() == h2, Is.True);
                 Assert.That(queen.GetPiece(), Is.EqualTo(ChessPiece.Piece.QUEEN));
-                Assert.That(queen.GetStartingPosition().EqualTo(h2), Is.True);
+                Assert.That(queen.GetStartingPosition() == h2, Is.True);
                 Assert.That(queen.GetId(), Is.EqualTo(11));
                 Assert.That(queen.GetRealValue(), Is.EqualTo(15));
             });
@@ -34,9 +34,9 @@ namespace Tests.Services
             Assert.Multiple(() =>
             {
                 Assert.That(rook.GetColor(), Is.EqualTo(ChessPiece.Color.BLACK));
-                Assert.That(rook.GetCurrentPosition().EqualTo(a4), Is.True);
+                Assert.That(rook.GetCurrentPosition() == a4, Is.True);
                 Assert.That(rook.GetPiece(), Is.EqualTo(ChessPiece.Piece.ROOK));
-                Assert.That(rook.GetStartingPosition().EqualTo(a4), Is.True);
+                Assert.That(rook.GetStartingPosition() == a4, Is.True);
                 Assert.That(rook.GetId(), Is.EqualTo(25)); // color + id (20 + 5) == 25
                 Assert.That(rook.GetRealValue(), Is.EqualTo(24));
             });
@@ -52,9 +52,9 @@ namespace Tests.Services
             Assert.Multiple(() =>
             {
                 Assert.That(knight.GetColor(), Is.EqualTo(ChessPiece.Color.BLACK));
-                Assert.That(knight.GetCurrentPosition().EqualTo(a4), Is.True);
+                Assert.That(knight.GetCurrentPosition() == a4, Is.True);
                 Assert.That(knight.GetPiece(), Is.EqualTo(ChessPiece.Piece.KNIGHT));
-                Assert.That(knight.GetStartingPosition().EqualTo(a4), Is.True);
+                Assert.That(knight.GetStartingPosition() == a4, Is.True);
                 Assert.That(knight.GetId(), Is.EqualTo(27)); // COLOR + Id = (20 + 7) == 27
                 Assert.That(knight.GetRealValue(), Is.EqualTo(22));
             });
@@ -70,9 +70,9 @@ namespace Tests.Services
             Assert.Multiple(() =>
             {
                 Assert.That(bishop.GetColor(), Is.EqualTo(ChessPiece.Color.WHITE));
-                Assert.That(bishop.GetCurrentPosition().EqualTo(h4), Is.True);
+                Assert.That(bishop.GetCurrentPosition() == h4, Is.True);
                 Assert.That(bishop.GetPiece(), Is.EqualTo(ChessPiece.Piece.BISHOP));
-                Assert.That(bishop.GetStartingPosition().EqualTo(h4), Is.True);
+                Assert.That(bishop.GetStartingPosition() == h4, Is.True);
                 Assert.That(bishop.GetId(), Is.EqualTo(16)); // COLOR + Id = (10 + 6) == 16
                 Assert.That(bishop.GetRealValue(), Is.EqualTo(13));
             });
