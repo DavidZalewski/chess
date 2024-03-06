@@ -46,13 +46,13 @@ namespace Chess
 
         public bool CastleCallBackFunction(ChessBoard cb, BoardPosition bp, ChessPiece king)
         {
-            int hv = bp.HorizontalValueAsInt;
-            int vv = bp.VerticalValueAsInt;
+            int hv = bp.FileAsInt;
+            int vv = bp.RankAsInt;
 
             ChessPiece? rook = _chessPieces.Find(p =>
             {
                 BoardPosition cbp = p.GetCurrentPosition();
-                return cbp.HorizontalValueAsInt == hv && cbp.VerticalValueAsInt == vv;
+                return cbp.FileAsInt == hv && cbp.RankAsInt == vv;
             });
 
             Assert.That(rook, Is.Not.Null);
@@ -62,10 +62,10 @@ namespace Chess
                 Assert.That(rook.GetPiece(), Is.EqualTo(ChessPiece.Piece.ROOK));
 
                 // is king left of rook, or right of rook?
-                int d = king.GetCurrentPosition().HorizontalValueAsInt - rook.GetCurrentPosition().HorizontalValueAsInt;
-                BoardPosition.HORIZONTAL kh = king.GetCurrentPosition().HorizontalValue;
-                BoardPosition.HORIZONTAL rh = rook.GetCurrentPosition().HorizontalValue;
-                BoardPosition.VERTICAL v = king.GetCurrentPosition().VerticalValue;
+                int d = king.GetCurrentPosition().FileAsInt - rook.GetCurrentPosition().FileAsInt;
+                FILE kh = king.GetCurrentPosition().File;
+                FILE rh = rook.GetCurrentPosition().File;
+                RANK v = king.GetCurrentPosition().Rank;
                 // k=4, r=0 4-0=4, k=4, r2=8, k-r2=4-7 = -3
                 if (d == 4)
                 {
@@ -107,19 +107,19 @@ namespace Chess
 
         public bool IsEnPassantCallBackFunction(ChessBoard chessBoard, BoardPosition boardPosition, ChessPiece pawnAttemptingEnPassant)
         {
-            BoardPosition.VERTICAL enPassantRow;
+            RANK enPassantRow;
             ChessPiece.Color opponentColor;
             int enPassantOffSet = 0;
 
             if (pawnAttemptingEnPassant.GetColor().Equals(ChessPiece.Color.WHITE))
             {
-                enPassantRow = BoardPosition.VERTICAL.FIVE;
+                enPassantRow = RANK.FIVE;
                 opponentColor = ChessPiece.Color.BLACK;
                 enPassantOffSet = -1;
             }
             else
             {
-                enPassantRow = BoardPosition.VERTICAL.FOUR;
+                enPassantRow = RANK.FOUR;
                 opponentColor = ChessPiece.Color.WHITE;
                 enPassantOffSet = +1;
             }
@@ -127,14 +127,14 @@ namespace Chess
             BoardPosition pawnPos = pawnAttemptingEnPassant.GetCurrentPosition();
 
             // Is the pawn in the correct Row to do this? En Passant is only possible if a pawn is on a specific row on the board
-            if (pawnPos.VerticalValue != enPassantRow)
+            if (pawnPos.Rank != enPassantRow)
                 return false;
 
             // Are there opponent pieces to its immediate left or right?
             
             // TODO: Provide better constructors for these kinds of operations
-            BoardPosition bpl = new(pawnPos.VerticalValue, (BoardPosition.HORIZONTAL) pawnPos.HorizontalValueAsInt - 1);
-            BoardPosition bpr = new(pawnPos.VerticalValue, (BoardPosition.HORIZONTAL) pawnPos.HorizontalValueAsInt + 1);
+            BoardPosition bpl = new(pawnPos.Rank, (FILE) pawnPos.FileAsInt - 1);
+            BoardPosition bpr = new(pawnPos.Rank, (FILE) pawnPos.FileAsInt + 1);
 
             foreach(BoardPosition bpToCheck in new List<BoardPosition>() { bpl, bpr })
             {
@@ -154,7 +154,7 @@ namespace Chess
                             // Get the opponent pawn position, and get the position that is 1 square behind it
                             BoardPosition oppPos = opponentPiece.GetCurrentPosition();
                             // this operation needs to support both + 1 (for black) and -1 (for white)
-                            BoardPosition enPassantCapturePos = new((BoardPosition.VERTICAL) oppPos.VerticalValueAsInt + enPassantOffSet, oppPos.HorizontalValue);
+                            BoardPosition enPassantCapturePos = new((RANK) oppPos.RankAsInt + enPassantOffSet, oppPos.File);
                             if (enPassantCapturePos.EqualTo(boardPosition))
                             {
                                 (opponentPiece as ChessPiecePawn).IsEnPassantTarget = true;
@@ -401,7 +401,7 @@ namespace Chess
                 output += vertIndex;
                 for (int s = 0; s < 8; s++)
                 {
-                    BoardPosition boardPosition = new((BoardPosition.VERTICAL)f, (BoardPosition.HORIZONTAL)s);
+                    BoardPosition boardPosition = new((RANK)f, (FILE)s);
                     if (chessBoard.IsPieceAtPosition(boardPosition))
                     {
                         ChessPiece chessPiece = _chessPieces.First(p => p.GetCurrentPosition().EqualTo(boardPosition));

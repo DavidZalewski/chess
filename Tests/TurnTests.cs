@@ -31,7 +31,7 @@ namespace Tests
             ChessPiece whitePawn = chessPieces.First(pieces => pieces.GetColor() == ChessPiece.Color.WHITE &&
                                                      pieces.GetPiece() == ChessPiece.Piece.PAWN);
             BoardPosition previousPosition = new(whitePawn.GetCurrentPosition());
-            BoardPosition newPosition = new(previousPosition.VerticalValue - 2, previousPosition.HorizontalValue);
+            BoardPosition newPosition = new(previousPosition.Rank - 2, previousPosition.File);
             board.PopulateBoard(chessPieces);
 
             Assert.That(whitePawn.IsValidMove(board, newPosition), Is.True);

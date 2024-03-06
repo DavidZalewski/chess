@@ -19,10 +19,10 @@ namespace Chess.Pieces
             bool isFriendlyPieceOnSquare = board.IsPieceAtPosition(position, _color);
             if (isFriendlyPieceOnSquare) { return false; }
 
-            int v1 = _currentPosition.VerticalValueAsInt;
-            int v2 = position.VerticalValueAsInt;
-            int h1 = _currentPosition.HorizontalValueAsInt;
-            int h2 = position.HorizontalValueAsInt;
+            int v1 = _currentPosition.RankAsInt;
+            int v2 = position.RankAsInt;
+            int h1 = _currentPosition.FileAsInt;
+            int h2 = position.FileAsInt;
 
             int vdistance = v1 - v2;
             int hdistance = h1 - h2;

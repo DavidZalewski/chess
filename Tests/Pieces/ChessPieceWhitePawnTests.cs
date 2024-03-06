@@ -21,7 +21,7 @@ namespace Tests.Pieces
         [Test]
         public void Test_ConstructWhitePawn_Success()
         {
-            BoardPosition boardPosition = new(BoardPosition.VERTICAL.ONE, BoardPosition.HORIZONTAL.A);
+            BoardPosition boardPosition = new(RANK.ONE, FILE.A);
             ChessPiece piece = new ChessPieceWhitePawn(1, boardPosition);
 
             Assert.That(piece, Is.Not.Null);
@@ -38,7 +38,7 @@ namespace Tests.Pieces
         [Test]
         public void Test_CloneWhitePawn_Success()
         {
-            BoardPosition boardPosition = new(BoardPosition.VERTICAL.ONE, BoardPosition.HORIZONTAL.A);
+            BoardPosition boardPosition = new(RANK.ONE, FILE.A);
             ChessPiece piece = new ChessPieceWhitePawn(1, boardPosition);
             ChessPiece clone = piece.Clone();
             
@@ -57,9 +57,9 @@ namespace Tests.Pieces
         [Test(Description = "Tests whether the white pawn can move a single square up on its first move")]
         public void Test_WhitePawn_IsValidMove_StartingMove1()
         {
-            BoardPosition boardPosition = new BoardPosition(BoardPosition.VERTICAL.TWO, BoardPosition.HORIZONTAL.C);
+            BoardPosition boardPosition = new BoardPosition(RANK.TWO, FILE.C);
             ChessPiece piece = new ChessPieceWhitePawn(1, boardPosition);
-            BoardPosition newPosition = new BoardPosition(BoardPosition.VERTICAL.THREE, BoardPosition.HORIZONTAL.C);
+            BoardPosition newPosition = new BoardPosition(RANK.THREE, FILE.C);
 
             Assert.That(piece.IsValidMove(board, newPosition), Is.True);
         }
@@ -67,9 +67,9 @@ namespace Tests.Pieces
         [Test(Description = "Tests whether the white pawn can move two squares up on its first move")]
         public void Test_WhitePawn_IsValidMove_StartingMove2()
         {
-            BoardPosition boardPosition = new BoardPosition(BoardPosition.VERTICAL.TWO, BoardPosition.HORIZONTAL.D);
+            BoardPosition boardPosition = new BoardPosition(RANK.TWO, FILE.D);
             ChessPiece piece = new ChessPieceWhitePawn(1, boardPosition);
-            BoardPosition newPosition = new BoardPosition(BoardPosition.VERTICAL.FOUR, BoardPosition.HORIZONTAL.D);
+            BoardPosition newPosition = new BoardPosition(RANK.FOUR, FILE.D);
 
             Assert.Multiple(() =>
             {
@@ -82,14 +82,14 @@ namespace Tests.Pieces
         [Test(Description = "Tests that the white pawn cannot move 2 squares if it has already moved")]
         public void Test_WhitePawn_IsValidMove_InvalidMove2Squares()
         {
-            BoardPosition boardPosition = new(BoardPosition.VERTICAL.TWO, BoardPosition.HORIZONTAL.B);
+            BoardPosition boardPosition = new(RANK.TWO, FILE.B);
             ChessPiece piece = new ChessPieceWhitePawn(1, boardPosition);
-            BoardPosition nextPosition = new(BoardPosition.VERTICAL.THREE, BoardPosition.HORIZONTAL.B);
+            BoardPosition nextPosition = new(RANK.THREE, FILE.B);
             Assert.That(piece.IsValidMove(board, nextPosition), Is.True);
             Assert.That(piece.HasMoved(), Is.False);
             piece.Move(board, nextPosition);
             Assert.That(piece.HasMoved(), Is.True);
-            BoardPosition newPosition = new(BoardPosition.VERTICAL.FIVE, BoardPosition.HORIZONTAL.B);
+            BoardPosition newPosition = new(RANK.FIVE, FILE.B);
 
             Assert.That(piece.IsValidMove(board, newPosition), Is.False);
         }
@@ -97,30 +97,30 @@ namespace Tests.Pieces
         [Test(Description = "Tests that the white pawn cannot move horizontally when there is no capture")]
         public void Test_WhitePawn_IsValidMove_InvalidHorizontalMove1()
         {
-            BoardPosition boardPosition = new BoardPosition(BoardPosition.VERTICAL.FOUR, BoardPosition.HORIZONTAL.B);
+            BoardPosition boardPosition = new BoardPosition(RANK.FOUR, FILE.B);
             ChessPiece piece = new ChessPieceWhitePawn(1, boardPosition);
 
-            BoardPosition badHorizontalPosition = new BoardPosition(BoardPosition.VERTICAL.TWO, BoardPosition.HORIZONTAL.C);
+            BoardPosition badHorizontalPosition = new BoardPosition(RANK.TWO, FILE.C);
             Assert.That(piece.IsValidMove(board, badHorizontalPosition), Is.False);
         }
 
         [Test(Description = "Tests that the white pawn cannot move horizontally when there is no capture - another variation")]
         public void Test_WhitePawn_IsValidMove_InvalidHorizontalMove2()
         {
-            BoardPosition boardPosition = new BoardPosition(BoardPosition.VERTICAL.FOUR, BoardPosition.HORIZONTAL.B);
+            BoardPosition boardPosition = new BoardPosition(RANK.FOUR, FILE.B);
             ChessPiece piece = new ChessPieceWhitePawn(1, boardPosition);
 
-            BoardPosition badHorizontalPosition = new BoardPosition(BoardPosition.VERTICAL.FIVE, BoardPosition.HORIZONTAL.C);
+            BoardPosition badHorizontalPosition = new BoardPosition(RANK.FIVE, FILE.C);
             Assert.That(piece.IsValidMove(board, badHorizontalPosition), Is.False);
         }
 
         [Test(Description = "Tests that the white pawn cannot move horizontally without moving forward")]
         public void Test_WhitePawn_IsValidMove_InvalidHorizontalMove3()
         {
-            BoardPosition boardPosition = new BoardPosition(BoardPosition.VERTICAL.FOUR, BoardPosition.HORIZONTAL.B);
+            BoardPosition boardPosition = new BoardPosition(RANK.FOUR, FILE.B);
             ChessPiece piece = new ChessPieceWhitePawn(1, boardPosition);
 
-            BoardPosition badHorizontalPosition = new BoardPosition(BoardPosition.VERTICAL.SEVEN, BoardPosition.HORIZONTAL.B);
+            BoardPosition badHorizontalPosition = new BoardPosition(RANK.SEVEN, FILE.B);
             Assert.That(piece.IsValidMove(board, badHorizontalPosition), Is.False);
         }
 
@@ -128,10 +128,10 @@ namespace Tests.Pieces
         public void Test_WhitePawn_IsValidMove_ValidHorizontalMoveCapture1()
         {
             // Create White Pawn at D4
-            BoardPosition boardPosition = new BoardPosition(BoardPosition.VERTICAL.FOUR, BoardPosition.HORIZONTAL.D);
+            BoardPosition boardPosition = new BoardPosition(RANK.FOUR, FILE.D);
             ChessPiece piece = new ChessPieceWhitePawn(1, boardPosition);
 
-            BoardPosition capturePosition = new BoardPosition(BoardPosition.VERTICAL.FIVE, BoardPosition.HORIZONTAL.E);
+            BoardPosition capturePosition = new BoardPosition(RANK.FIVE, FILE.E);
             // Set black pawn at E5
             board.SetBoardValue(capturePosition, 21);
             Assert.That(piece.IsValidMove(board, capturePosition), Is.True);
@@ -141,10 +141,10 @@ namespace Tests.Pieces
         public void Test_WhitePawn_IsValidMove_ValidHorizontalMoveCapture2()
         {
             // Create White Pawn at D3
-            BoardPosition boardPosition = new BoardPosition(BoardPosition.VERTICAL.THREE, BoardPosition.HORIZONTAL.D);
+            BoardPosition boardPosition = new BoardPosition(RANK.THREE, FILE.D);
             ChessPiece piece = new ChessPieceWhitePawn(1, boardPosition);
 
-            BoardPosition capturePosition = new BoardPosition(BoardPosition.VERTICAL.FOUR, BoardPosition.HORIZONTAL.E);
+            BoardPosition capturePosition = new BoardPosition(RANK.FOUR, FILE.E);
             // Set black pawn at E4
             board.SetBoardValue(capturePosition, 21);
             Assert.That(piece.IsValidMove(board, capturePosition), Is.True);
@@ -154,10 +154,10 @@ namespace Tests.Pieces
         public void Test_WhitePawn_IsValidMove_InvalidCapture1()
         {
             // Create White Pawn at D4
-            BoardPosition boardPosition = new BoardPosition(BoardPosition.VERTICAL.FOUR, BoardPosition.HORIZONTAL.D);
+            BoardPosition boardPosition = new BoardPosition(RANK.FOUR, FILE.D);
             ChessPiece piece = new ChessPieceWhitePawn(1, boardPosition);
 
-            BoardPosition capturePosition = new BoardPosition(BoardPosition.VERTICAL.THREE, BoardPosition.HORIZONTAL.E);
+            BoardPosition capturePosition = new BoardPosition(RANK.THREE, FILE.E);
             // Set white pawn at E3
             board.SetBoardValue(capturePosition, 11);
             Assert.That(piece.IsValidMove(board, capturePosition), Is.False);
@@ -167,10 +167,10 @@ namespace Tests.Pieces
         public void Test_WhitePawn_IsValidMove_InvalidCapture2()
         {
             // Create White Pawn at D4
-            BoardPosition boardPosition = new BoardPosition(BoardPosition.VERTICAL.FOUR, BoardPosition.HORIZONTAL.D);
+            BoardPosition boardPosition = new BoardPosition(RANK.FOUR, FILE.D);
             ChessPiece piece = new ChessPieceWhitePawn(1, boardPosition);
 
-            BoardPosition capturePosition = new BoardPosition(BoardPosition.VERTICAL.THREE, BoardPosition.HORIZONTAL.D);
+            BoardPosition capturePosition = new BoardPosition(RANK.THREE, FILE.D);
             // Set black pawn at D3
             board.SetBoardValue(capturePosition, 21);
             Assert.That(piece.IsValidMove(board, capturePosition), Is.False);
@@ -180,10 +180,10 @@ namespace Tests.Pieces
         public void Test_WhitePawn_IsValidMove_InvalidMoveBackwards()
         {
             // Create White Pawn at D4
-            BoardPosition boardPosition = new BoardPosition(BoardPosition.VERTICAL.FOUR, BoardPosition.HORIZONTAL.D);
+            BoardPosition boardPosition = new BoardPosition(RANK.FOUR, FILE.D);
             ChessPiece piece = new ChessPieceWhitePawn(1, boardPosition);
 
-            BoardPosition badPosition = new BoardPosition(BoardPosition.VERTICAL.FOUR, BoardPosition.HORIZONTAL.C);
+            BoardPosition badPosition = new BoardPosition(RANK.FOUR, FILE.C);
             Assert.That(piece.IsValidMove(board, badPosition), Is.False);
         }
 
@@ -191,10 +191,10 @@ namespace Tests.Pieces
         public void Test_WhitePawn_IsValidMove_InvalidMove1()
         {
             // Create White Pawn at D4
-            BoardPosition boardPosition = new BoardPosition(BoardPosition.VERTICAL.FOUR, BoardPosition.HORIZONTAL.D);
+            BoardPosition boardPosition = new BoardPosition(RANK.FOUR, FILE.D);
             ChessPiece piece = new ChessPieceWhitePawn(1, boardPosition);
 
-            BoardPosition badPosition = new BoardPosition(BoardPosition.VERTICAL.SEVEN, BoardPosition.HORIZONTAL.G);
+            BoardPosition badPosition = new BoardPosition(RANK.SEVEN, FILE.G);
             Assert.That(piece.IsValidMove(board, badPosition), Is.False);
         }
 
@@ -202,10 +202,10 @@ namespace Tests.Pieces
         public void Test_WhitePawn_IsValidMove_InvalidMove2()
         {
             // Create White Pawn at D4
-            BoardPosition boardPosition = new BoardPosition(BoardPosition.VERTICAL.FOUR, BoardPosition.HORIZONTAL.D);
+            BoardPosition boardPosition = new BoardPosition(RANK.FOUR, FILE.D);
             ChessPiece piece = new ChessPieceWhitePawn(1, boardPosition);
 
-            BoardPosition badPosition = new BoardPosition(BoardPosition.VERTICAL.ONE, BoardPosition.HORIZONTAL.A);
+            BoardPosition badPosition = new BoardPosition(RANK.ONE, FILE.A);
             Assert.That(piece.IsValidMove(board, badPosition), Is.False);
         }
 
@@ -213,10 +213,10 @@ namespace Tests.Pieces
         public void Test_WhitePawn_IsValidMove_InvalidMove3()
         {
             // Create White Pawn at D4
-            BoardPosition boardPosition = new BoardPosition(BoardPosition.VERTICAL.FOUR, BoardPosition.HORIZONTAL.D);
+            BoardPosition boardPosition = new BoardPosition(RANK.FOUR, FILE.D);
             ChessPiece piece = new ChessPieceWhitePawn(1, boardPosition);
 
-            BoardPosition badPosition = new BoardPosition(BoardPosition.VERTICAL.EIGHT, BoardPosition.HORIZONTAL.D);
+            BoardPosition badPosition = new BoardPosition(RANK.EIGHT, FILE.D);
             Assert.That(piece.IsValidMove(board, badPosition), Is.False);
         }
 
@@ -224,9 +224,9 @@ namespace Tests.Pieces
         public void Test_WhitePawn_IsValidMove_BlockedByWhite()
         {
             // Create White Pawn at D4
-            BoardPosition boardPosition = new(BoardPosition.VERTICAL.FOUR, BoardPosition.HORIZONTAL.E);
+            BoardPosition boardPosition = new(RANK.FOUR, FILE.E);
             ChessPiece piece = new ChessPieceWhitePawn(1, boardPosition);
-            BoardPosition F4 = new(BoardPosition.VERTICAL.FOUR, BoardPosition.HORIZONTAL.F);
+            BoardPosition F4 = new(RANK.FOUR, FILE.F);
             // set white bishop at F4, directly in front of white pawn at E4
             board.SetBoardValue(F4, 13);
             Assert.That(piece.IsValidMove(board, F4), Is.False);
@@ -236,9 +236,9 @@ namespace Tests.Pieces
         public void Test_WhitePawn_IsValidMove_BlockedByBlack()
         {
             // Create White Pawn at D4
-            BoardPosition boardPosition = new(BoardPosition.VERTICAL.FOUR, BoardPosition.HORIZONTAL.E);
+            BoardPosition boardPosition = new(RANK.FOUR, FILE.E);
             ChessPiece piece = new ChessPieceWhitePawn(1, boardPosition);
-            BoardPosition F4 = new(BoardPosition.VERTICAL.FOUR, BoardPosition.HORIZONTAL.F);
+            BoardPosition F4 = new(RANK.FOUR, FILE.F);
             // set black bishop at F4, directly in front of white pawn at E4
             board.SetBoardValue(F4, 23);
             Assert.That(piece.IsValidMove(board, F4), Is.False);
@@ -248,7 +248,7 @@ namespace Tests.Pieces
         public void Test_WhitePawn_IsValidMove_SamePosition()
         {
             // Create White Pawn at D4
-            BoardPosition boardPosition = new(BoardPosition.VERTICAL.FOUR, BoardPosition.HORIZONTAL.E);
+            BoardPosition boardPosition = new(RANK.FOUR, FILE.E);
             ChessPiece piece = new ChessPieceWhitePawn(1, boardPosition);
             Assert.That(piece.IsValidMove(board, boardPosition), Is.False);
         }

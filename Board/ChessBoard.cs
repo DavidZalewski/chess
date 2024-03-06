@@ -47,7 +47,7 @@ namespace Chess.Board
             foreach (ChessPiece piece in chessPieces)
             {
                 BoardPosition piecePos = piece.GetCurrentPosition();
-                if (_board[piecePos.VerticalValueAsInt, piecePos.HorizontalValueAsInt] != piece.GetRealValue())
+                if (_board[piecePos.RankAsInt, piecePos.FileAsInt] != piece.GetRealValue())
                     piecesToRemove.Add(piece);
             }
 
@@ -62,23 +62,23 @@ namespace Chess.Board
 
         public bool SetBoardValue(BoardPosition position, int value)
         {
-            _board[position.VerticalValueAsInt, position.HorizontalValueAsInt] = value;
+            _board[position.RankAsInt, position.FileAsInt] = value;
             return true;
         }
 
         public bool IsPieceAtPosition(BoardPosition position)
         {
-            return _board[position.VerticalValueAsInt, position.HorizontalValueAsInt] > 0;
+            return _board[position.RankAsInt, position.FileAsInt] > 0;
         }
 
         public bool IsPieceAtPosition(BoardPosition position, ChessPiece.Color color)
         {
-            if ((position.VerticalValueAsInt < 0 || position.VerticalValueAsInt > 7) ||
-                (position.HorizontalValueAsInt < 0 || position.HorizontalValueAsInt > 7))
+            if ((position.RankAsInt < 0 || position.RankAsInt > 7) ||
+                (position.FileAsInt < 0 || position.FileAsInt > 7))
             {
                 return false; // index out of bounds
             }
-            int value = _board[position.VerticalValueAsInt, position.HorizontalValueAsInt];
+            int value = _board[position.RankAsInt, position.FileAsInt];
             if (color == ChessPiece.Color.WHITE)
                 return value > 0 && value < 20;
             else
@@ -87,14 +87,14 @@ namespace Chess.Board
 
         public bool IsPieceAtPosition(BoardPosition position, ChessPiece.Color color, ChessPiece.Piece piece)
         {
-            int value = _board[position.VerticalValueAsInt, position.HorizontalValueAsInt];
+            int value = _board[position.RankAsInt, position.FileAsInt];
             return value == ((int)color + (int)piece);
         }
 
         public bool IsPieceAtPosition(ChessPiece chessPiece)
         {
             BoardPosition position = chessPiece.GetCurrentPosition();
-            int val = _board[position.VerticalValueAsInt, position.HorizontalValueAsInt];
+            int val = _board[position.RankAsInt, position.FileAsInt];
             return val == chessPiece.GetRealValue();
         }
 

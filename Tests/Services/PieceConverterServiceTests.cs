@@ -9,7 +9,7 @@ namespace Tests.Services
         [Test]
         public void Test_PromoteWhitePawnIntoWhiteQueen_Success()
         {
-            BoardPosition h2 = new(BoardPosition.VERTICAL.TWO, BoardPosition.HORIZONTAL.H);
+            BoardPosition h2 = new(RANK.TWO, FILE.H);
             ChessPiece piece = new ChessPieceWhitePawn(1, h2);
             ChessPiece? queen = PieceConverterService.PromotePawn(piece, typeof(ChessPieceQueen));
             Assert.That(queen, Is.Not.Null);
@@ -27,7 +27,7 @@ namespace Tests.Services
         [Test]
         public void Test_PromoteBlackPawnIntoBlackRook_Success()
         {
-            BoardPosition a4 = new(BoardPosition.VERTICAL.FOUR, BoardPosition.HORIZONTAL.A);
+            BoardPosition a4 = new(RANK.FOUR, FILE.A);
             ChessPiece piece = new ChessPieceBlackPawn(5, a4); // pawn 5
             ChessPiece? rook = PieceConverterService.PromotePawn(piece, typeof(ChessPieceRook));
             Assert.That(rook, Is.Not.Null);
@@ -45,7 +45,7 @@ namespace Tests.Services
         [Test]
         public void Test_PromoteBlackPawnIntoBlackKnight_Success()
         {
-            BoardPosition a4 = new(BoardPosition.VERTICAL.FOUR, BoardPosition.HORIZONTAL.A);
+            BoardPosition a4 = new(RANK.FOUR, FILE.A);
             ChessPiece piece = new ChessPieceBlackPawn(7, a4);
             ChessPiece? knight = PieceConverterService.PromotePawn(piece, typeof(ChessPieceKnight));
             Assert.That(knight, Is.Not.Null);
@@ -63,7 +63,7 @@ namespace Tests.Services
         [Test]
         public void Test_PromoteWhitePawnIntoWhiteBishop_Success()
         {
-            BoardPosition h4 = new(BoardPosition.VERTICAL.FOUR, BoardPosition.HORIZONTAL.H);
+            BoardPosition h4 = new(RANK.FOUR, FILE.H);
             ChessPiece piece = new ChessPieceWhitePawn(6, h4);
             ChessPiece? bishop = PieceConverterService.PromotePawn(piece, typeof(ChessPieceBishop));
             Assert.That(bishop, Is.Not.Null);
@@ -81,7 +81,7 @@ namespace Tests.Services
         [Test]
         public void Test_PromoteWhitePawnIntoUnknownType_ReturnsNull()
         {
-            BoardPosition h4 = new(BoardPosition.VERTICAL.FOUR, BoardPosition.HORIZONTAL.H);
+            BoardPosition h4 = new(RANK.FOUR, FILE.H);
             ChessPiece piece = new ChessPieceWhitePawn(6, h4);
             ChessPiece? unknown = PieceConverterService.PromotePawn(piece, typeof(double));
             Assert.That(unknown, Is.Null);

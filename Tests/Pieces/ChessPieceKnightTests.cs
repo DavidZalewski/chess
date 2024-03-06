@@ -6,10 +6,10 @@ namespace Tests.Pieces
     public class ChessPieceKnightTests
     {
         private ChessBoard board = new ChessBoard();
-        private BoardPosition whiteKnight1StartPosition = new(BoardPosition.VERTICAL.TWO, BoardPosition.HORIZONTAL.A);
-        private BoardPosition whiteKnight2StartPosition = new(BoardPosition.VERTICAL.SEVEN, BoardPosition.HORIZONTAL.A);
-        private BoardPosition blackKnight1StartPosition = new(BoardPosition.VERTICAL.TWO, BoardPosition.HORIZONTAL.H);
-        private BoardPosition blackKnight2StartPosition = new(BoardPosition.VERTICAL.SEVEN, BoardPosition.HORIZONTAL.H);
+        private BoardPosition whiteKnight1StartPosition = new(RANK.TWO, FILE.A);
+        private BoardPosition whiteKnight2StartPosition = new(RANK.SEVEN, FILE.A);
+        private BoardPosition blackKnight1StartPosition = new(RANK.TWO, FILE.H);
+        private BoardPosition blackKnight2StartPosition = new(RANK.SEVEN, FILE.H);
 
         [SetUp]
         public void Setup()
@@ -94,7 +94,7 @@ namespace Tests.Pieces
         {
             BoardPosition boardPosition = whiteKnight1StartPosition;
             ChessPiece piece = new ChessPieceKnight(ChessPiece.Color.WHITE, 1, boardPosition);
-            BoardPosition newPosition = new(BoardPosition.VERTICAL.ONE, BoardPosition.HORIZONTAL.C);
+            BoardPosition newPosition = new(RANK.ONE, FILE.C);
 
             Assert.That(piece.IsValidMove(board, newPosition), Is.True);
         }
@@ -104,7 +104,7 @@ namespace Tests.Pieces
         {
             BoardPosition boardPosition = whiteKnight1StartPosition;
             ChessPiece piece = new ChessPieceKnight(ChessPiece.Color.WHITE, 1, boardPosition);
-            BoardPosition newPosition = new(BoardPosition.VERTICAL.THREE, BoardPosition.HORIZONTAL.C);
+            BoardPosition newPosition = new(RANK.THREE, FILE.C);
 
             Assert.That(piece.IsValidMove(board, newPosition), Is.True);
         }
@@ -114,7 +114,7 @@ namespace Tests.Pieces
         {
             BoardPosition boardPosition = whiteKnight2StartPosition;
             ChessPiece piece = new ChessPieceKnight(ChessPiece.Color.WHITE, 2, boardPosition);
-            BoardPosition newPosition = new(BoardPosition.VERTICAL.SIX, BoardPosition.HORIZONTAL.C);
+            BoardPosition newPosition = new(RANK.SIX, FILE.C);
 
             Assert.That(piece.IsValidMove(board, newPosition), Is.True);
         }
@@ -124,7 +124,7 @@ namespace Tests.Pieces
         {
             BoardPosition boardPosition = whiteKnight2StartPosition;
             ChessPiece piece = new ChessPieceKnight(ChessPiece.Color.WHITE, 2, boardPosition);
-            BoardPosition newPosition = new(BoardPosition.VERTICAL.EIGHT, BoardPosition.HORIZONTAL.C);
+            BoardPosition newPosition = new(RANK.EIGHT, FILE.C);
 
             Assert.That(piece.IsValidMove(board, newPosition), Is.True);
         }
@@ -134,7 +134,7 @@ namespace Tests.Pieces
         {
             BoardPosition boardPosition = blackKnight1StartPosition;
             ChessPiece piece = new ChessPieceKnight(ChessPiece.Color.BLACK, 1, boardPosition);
-            BoardPosition newPosition = new(BoardPosition.VERTICAL.ONE, BoardPosition.HORIZONTAL.F);
+            BoardPosition newPosition = new(RANK.ONE, FILE.F);
 
             Assert.That(piece.IsValidMove(board, newPosition), Is.True);
         }
@@ -144,7 +144,7 @@ namespace Tests.Pieces
         {
             BoardPosition boardPosition = blackKnight1StartPosition;
             ChessPiece piece = new ChessPieceKnight(ChessPiece.Color.BLACK, 1, boardPosition);
-            BoardPosition newPosition = new(BoardPosition.VERTICAL.THREE, BoardPosition.HORIZONTAL.F);
+            BoardPosition newPosition = new(RANK.THREE, FILE.F);
 
             Assert.That(piece.IsValidMove(board, newPosition), Is.True);
         }
@@ -154,7 +154,7 @@ namespace Tests.Pieces
         {
             BoardPosition boardPosition = blackKnight2StartPosition;
             ChessPiece piece = new ChessPieceKnight(ChessPiece.Color.BLACK, 2, boardPosition);
-            BoardPosition newPosition = new(BoardPosition.VERTICAL.SIX, BoardPosition.HORIZONTAL.F);
+            BoardPosition newPosition = new(RANK.SIX, FILE.F);
 
             Assert.That(piece.IsValidMove(board, newPosition), Is.True);
         }
@@ -164,7 +164,7 @@ namespace Tests.Pieces
         {
             BoardPosition boardPosition = blackKnight2StartPosition;
             ChessPiece piece = new ChessPieceKnight(ChessPiece.Color.BLACK, 2, boardPosition);
-            BoardPosition newPosition = new(BoardPosition.VERTICAL.EIGHT, BoardPosition.HORIZONTAL.F);
+            BoardPosition newPosition = new(RANK.EIGHT, FILE.F);
 
             Assert.That(piece.IsValidMove(board, newPosition), Is.True);
         }
@@ -173,7 +173,7 @@ namespace Tests.Pieces
         public void Test_WhiteKnight1_IsValidMove_InvalidCapture()
         {
             BoardPosition boardPosition = whiteKnight1StartPosition;
-            BoardPosition c3 = new(BoardPosition.VERTICAL.THREE, BoardPosition.HORIZONTAL.C);
+            BoardPosition c3 = new(RANK.THREE, FILE.C);
             ChessPiece piece = new ChessPieceKnight(ChessPiece.Color.WHITE, 1, boardPosition);
             // Set White Pawn on C3
             board.SetBoardValue(c3, 11);
@@ -184,7 +184,7 @@ namespace Tests.Pieces
         public void Test_BlackKnight2_IsValidMove_InvalidCapture()
         {
             BoardPosition boardPosition = blackKnight2StartPosition;
-            BoardPosition f3 = new(BoardPosition.VERTICAL.THREE, BoardPosition.HORIZONTAL.F);
+            BoardPosition f3 = new(RANK.THREE, FILE.F);
             ChessPiece piece = new ChessPieceKnight(ChessPiece.Color.BLACK, 2, boardPosition);
             // Set Black Pawn on F3
             board.SetBoardValue(f3, 21);
@@ -194,18 +194,18 @@ namespace Tests.Pieces
         [Test(Description = "Tests that white knight can move to all of these valid locations if starting from C3")]
         public void Test_WhiteKnight1_IsValidMove_FromC3()
         {
-            ChessPiece piece = new ChessPieceKnight(ChessPiece.Color.WHITE, 1, new BoardPosition(BoardPosition.VERTICAL.THREE, BoardPosition.HORIZONTAL.C));
+            ChessPiece piece = new ChessPieceKnight(ChessPiece.Color.WHITE, 1, new BoardPosition(RANK.THREE, FILE.C));
 
             // valid positions if knight on C3
             // A2, A4, B1, D1, E2, E4, D5, B5,  
-            BoardPosition a2 = new(BoardPosition.VERTICAL.TWO, BoardPosition.HORIZONTAL.A);
-            BoardPosition a4 = new(BoardPosition.VERTICAL.FOUR, BoardPosition.HORIZONTAL.A);
-            BoardPosition b1 = new(BoardPosition.VERTICAL.ONE, BoardPosition.HORIZONTAL.B);
-            BoardPosition d1 = new(BoardPosition.VERTICAL.ONE, BoardPosition.HORIZONTAL.D);
-            BoardPosition e2 = new(BoardPosition.VERTICAL.TWO, BoardPosition.HORIZONTAL.E);
-            BoardPosition e4 = new(BoardPosition.VERTICAL.FOUR, BoardPosition.HORIZONTAL.E);
-            BoardPosition d5 = new(BoardPosition.VERTICAL.FIVE, BoardPosition.HORIZONTAL.D);
-            BoardPosition b5 = new(BoardPosition.VERTICAL.FIVE, BoardPosition.HORIZONTAL.B);
+            BoardPosition a2 = new(RANK.TWO, FILE.A);
+            BoardPosition a4 = new(RANK.FOUR, FILE.A);
+            BoardPosition b1 = new(RANK.ONE, FILE.B);
+            BoardPosition d1 = new(RANK.ONE, FILE.D);
+            BoardPosition e2 = new(RANK.TWO, FILE.E);
+            BoardPosition e4 = new(RANK.FOUR, FILE.E);
+            BoardPosition d5 = new(RANK.FIVE, FILE.D);
+            BoardPosition b5 = new(RANK.FIVE, FILE.B);
 
             Assert.Multiple(() =>
             {
@@ -223,21 +223,21 @@ namespace Tests.Pieces
         [Test(Description = "Tests that white knight can move to some of these valid locations if starting from C3")]
         public void Test_WhiteKnight1_IsValidMove_FromC3OnlySome()
         {
-            ChessPiece piece = new ChessPieceKnight(ChessPiece.Color.WHITE, 1, new BoardPosition(BoardPosition.VERTICAL.THREE, BoardPosition.HORIZONTAL.C));
+            ChessPiece piece = new ChessPieceKnight(ChessPiece.Color.WHITE, 1, new BoardPosition(RANK.THREE, FILE.C));
 
             // valid positions if knight on C3
             // A2, A4, B1, D1, E2, E4, D5, B5,  
-            BoardPosition a2 = new(BoardPosition.VERTICAL.TWO, BoardPosition.HORIZONTAL.A);
-            BoardPosition a4 = new(BoardPosition.VERTICAL.FOUR, BoardPosition.HORIZONTAL.A);
+            BoardPosition a2 = new(RANK.TWO, FILE.A);
+            BoardPosition a4 = new(RANK.FOUR, FILE.A);
 
-            BoardPosition b1 = new(BoardPosition.VERTICAL.ONE, BoardPosition.HORIZONTAL.B);
-            BoardPosition b5 = new(BoardPosition.VERTICAL.FIVE, BoardPosition.HORIZONTAL.B);
+            BoardPosition b1 = new(RANK.ONE, FILE.B);
+            BoardPosition b5 = new(RANK.FIVE, FILE.B);
 
-            BoardPosition d1 = new(BoardPosition.VERTICAL.ONE, BoardPosition.HORIZONTAL.D);
-            BoardPosition d5 = new(BoardPosition.VERTICAL.FIVE, BoardPosition.HORIZONTAL.D);
+            BoardPosition d1 = new(RANK.ONE, FILE.D);
+            BoardPosition d5 = new(RANK.FIVE, FILE.D);
 
-            BoardPosition e2 = new(BoardPosition.VERTICAL.TWO, BoardPosition.HORIZONTAL.E);
-            BoardPosition e4 = new(BoardPosition.VERTICAL.FOUR, BoardPosition.HORIZONTAL.E);
+            BoardPosition e2 = new(RANK.TWO, FILE.E);
+            BoardPosition e4 = new(RANK.FOUR, FILE.E);
 
             // Set White Pawn at B1 and B5, and D5
             board.SetBoardValue(b1, 11);
@@ -265,21 +265,21 @@ namespace Tests.Pieces
         [Test(Description = "Tests that black knight can move to some of these valid locations if starting from F3")]
         public void Test_BlackKnight1_IsValidMove_FromF3OnlySome()
         {
-            ChessPiece piece = new ChessPieceKnight(ChessPiece.Color.BLACK, 1, new BoardPosition(BoardPosition.VERTICAL.THREE, BoardPosition.HORIZONTAL.F));
+            ChessPiece piece = new ChessPieceKnight(ChessPiece.Color.BLACK, 1, new BoardPosition(RANK.THREE, FILE.F));
 
             // valid positions if knight on F3
             // H2, H4, G1, E1, D2, D4, E5, G5,  
-            BoardPosition h2 = new(BoardPosition.VERTICAL.TWO, BoardPosition.HORIZONTAL.H);
-            BoardPosition h4 = new(BoardPosition.VERTICAL.FOUR, BoardPosition.HORIZONTAL.H);
+            BoardPosition h2 = new(RANK.TWO, FILE.H);
+            BoardPosition h4 = new(RANK.FOUR, FILE.H);
 
-            BoardPosition g1 = new(BoardPosition.VERTICAL.ONE, BoardPosition.HORIZONTAL.G);
-            BoardPosition g5 = new(BoardPosition.VERTICAL.FIVE, BoardPosition.HORIZONTAL.G);
+            BoardPosition g1 = new(RANK.ONE, FILE.G);
+            BoardPosition g5 = new(RANK.FIVE, FILE.G);
 
-            BoardPosition e1 = new(BoardPosition.VERTICAL.ONE, BoardPosition.HORIZONTAL.E);
-            BoardPosition e5 = new(BoardPosition.VERTICAL.FIVE, BoardPosition.HORIZONTAL.E);
+            BoardPosition e1 = new(RANK.ONE, FILE.E);
+            BoardPosition e5 = new(RANK.FIVE, FILE.E);
 
-            BoardPosition d2 = new(BoardPosition.VERTICAL.TWO, BoardPosition.HORIZONTAL.D);
-            BoardPosition d4 = new(BoardPosition.VERTICAL.FOUR, BoardPosition.HORIZONTAL.D);
+            BoardPosition d2 = new(RANK.TWO, FILE.D);
+            BoardPosition d4 = new(RANK.FOUR, FILE.D);
 
             // Set Black Pawn at G1 and G5, and E5
             board.SetBoardValue(g1, 21);
@@ -307,19 +307,19 @@ namespace Tests.Pieces
         [Test(Description = "Tests that these are invalid moves for knight at starting position D4")]
         public void Test_Knight1_IsValidMove_InvalidMovesFromD4()
         {
-            ChessPiece piece = new ChessPieceKnight(ChessPiece.Color.BLACK, 1, new BoardPosition(BoardPosition.VERTICAL.FOUR, BoardPosition.HORIZONTAL.D));
+            ChessPiece piece = new ChessPieceKnight(ChessPiece.Color.BLACK, 1, new BoardPosition(RANK.FOUR, FILE.D));
 
-            BoardPosition h2 = new(BoardPosition.VERTICAL.TWO, BoardPosition.HORIZONTAL.H);
-            BoardPosition h4 = new(BoardPosition.VERTICAL.FOUR, BoardPosition.HORIZONTAL.H);
+            BoardPosition h2 = new(RANK.TWO, FILE.H);
+            BoardPosition h4 = new(RANK.FOUR, FILE.H);
 
-            BoardPosition g1 = new(BoardPosition.VERTICAL.ONE, BoardPosition.HORIZONTAL.G);
-            BoardPosition g5 = new(BoardPosition.VERTICAL.FIVE, BoardPosition.HORIZONTAL.G);
+            BoardPosition g1 = new(RANK.ONE, FILE.G);
+            BoardPosition g5 = new(RANK.FIVE, FILE.G);
 
-            BoardPosition e1 = new(BoardPosition.VERTICAL.ONE, BoardPosition.HORIZONTAL.E);
-            BoardPosition e5 = new(BoardPosition.VERTICAL.FIVE, BoardPosition.HORIZONTAL.E);
+            BoardPosition e1 = new(RANK.ONE, FILE.E);
+            BoardPosition e5 = new(RANK.FIVE, FILE.E);
 
-            BoardPosition d2 = new(BoardPosition.VERTICAL.TWO, BoardPosition.HORIZONTAL.D);
-            BoardPosition d4 = new(BoardPosition.VERTICAL.FOUR, BoardPosition.HORIZONTAL.D);
+            BoardPosition d2 = new(RANK.TWO, FILE.D);
+            BoardPosition d4 = new(RANK.FOUR, FILE.D);
 
             Assert.Multiple(() =>
             {

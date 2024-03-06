@@ -22,7 +22,7 @@ namespace Chess.Pieces
         {
             // get the distance
             //   -2       =                    1                        3
-            int verticalDistance = _currentPosition.VerticalValueAsInt - position.VerticalValueAsInt;
+            int verticalDistance = _currentPosition.RankAsInt - position.RankAsInt;
 
             if (_IsEnPassantCallBackFunction != null)
             {
@@ -33,7 +33,7 @@ namespace Chess.Pieces
 
             if (verticalDistance == -1)
             {
-                if (_currentPosition.HorizontalValue == position.HorizontalValue)
+                if (_currentPosition.File == position.File)
                 {
                     // is there a piece on this position that is blocking the pawn from moving?
                     if (board.IsPieceAtPosition(position))
@@ -44,7 +44,7 @@ namespace Chess.Pieces
                 // if the position to move pawn is on a different horizontal value, check if its a valid capture
                 else
                 {
-                    int horizontalDistance = _currentPosition.HorizontalValueAsInt - position.HorizontalValueAsInt;
+                    int horizontalDistance = _currentPosition.FileAsInt - position.FileAsInt;
                     // adjacent and there is a black piece there?
                     if (board.IsPieceAtPosition(position, Color.WHITE) && (horizontalDistance == 1 || horizontalDistance == -1))
                     {
@@ -57,9 +57,9 @@ namespace Chess.Pieces
             // if the pawn hasn't moved yet, it can jump 2 squares instead of 1
             else if (verticalDistance == -2 && _currentPosition.Equals(_startingPosition))
             {
-                if (_currentPosition.HorizontalValue == position.HorizontalValue)
+                if (_currentPosition.File == position.File)
                 {
-                    BoardPosition previousSquare = new BoardPosition((BoardPosition.VERTICAL)position.VerticalValueAsInt - 1, position.HorizontalValue);
+                    BoardPosition previousSquare = new BoardPosition((RANK)position.RankAsInt - 1, position.File);
                     // is there a piece in front of it that it is trying to jump over?
                     if (board.IsPieceAtPosition(previousSquare))
                         return false;

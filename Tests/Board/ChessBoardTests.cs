@@ -33,7 +33,7 @@ namespace Tests.Board
         [Test]
         public void Test_IsPieceAtPosition_Success()
         {
-            BoardPosition boardPosition = new BoardPosition(BoardPosition.VERTICAL.THREE, BoardPosition.HORIZONTAL.F);
+            BoardPosition boardPosition = new BoardPosition(RANK.THREE, FILE.F);
             Assert.That(chessBoard.IsPieceAtPosition(boardPosition), Is.False);
             chessBoard.SetBoardValue(boardPosition, 11);
             Assert.That(chessBoard.IsPieceAtPosition(boardPosition), Is.True);
@@ -42,7 +42,7 @@ namespace Tests.Board
         [Test]
         public void Test_IsPieceAtPosition_SpecificColor_Success1()
         {
-            BoardPosition boardPosition = new BoardPosition(BoardPosition.VERTICAL.THREE, BoardPosition.HORIZONTAL.F);
+            BoardPosition boardPosition = new BoardPosition(RANK.THREE, FILE.F);
             Assert.That(chessBoard.IsPieceAtPosition(boardPosition), Is.False);
             chessBoard.SetBoardValue(boardPosition, 11);
             Assert.That(chessBoard.IsPieceAtPosition(boardPosition, ChessPiece.Color.WHITE), Is.True);
@@ -52,7 +52,7 @@ namespace Tests.Board
         [Test]
         public void Test_IsPieceAtPosition_SpecificColor_Success2()
         {
-            BoardPosition boardPosition = new BoardPosition(BoardPosition.VERTICAL.SIX, BoardPosition.HORIZONTAL.G);
+            BoardPosition boardPosition = new BoardPosition(RANK.SIX, FILE.G);
             Assert.That(chessBoard.IsPieceAtPosition(boardPosition), Is.False);
             chessBoard.SetBoardValue(boardPosition, 21);
             Assert.That(chessBoard.IsPieceAtPosition(boardPosition, ChessPiece.Color.WHITE), Is.False);

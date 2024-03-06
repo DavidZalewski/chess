@@ -88,7 +88,7 @@ namespace Chess.Services
                 {
                     for (int j = 0; j < 8; j++)
                     {
-                        BoardPosition pos = new((BoardPosition.VERTICAL)i, (BoardPosition.HORIZONTAL)j);
+                        BoardPosition pos = new((RANK)i, (FILE)j);
                         if (piece.IsValidMove(turn.ChessBoard, pos))
                             possibleMoves.Add(new(turn.TurnNumber + 1, piece, piece.GetCurrentPosition(), pos, turn.ChessBoard, turn.ChessPieces));
                     }

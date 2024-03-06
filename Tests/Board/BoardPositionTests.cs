@@ -37,16 +37,9 @@ namespace Tests.Board
         }
 
         [Test]
-        public void Test_ConstructBoardPosition_Success()
-        {
-            BoardPosition boardPosition = new(BoardPosition.VERTICAL.THREE, BoardPosition.HORIZONTAL.F, "F3");
-            Assert.That(boardPosition, Is.Not.Null);
-        }
-
-        [Test]
         public void Test_ConstructBoardPosition_Success2()
         {
-            BoardPosition boardPosition = new(BoardPosition.VERTICAL.THREE, BoardPosition.HORIZONTAL.F);
+            BoardPosition boardPosition = new(RANK.THREE, FILE.F);
             Assert.That(boardPosition, Is.Not.Null);
             Assert.That(boardPosition.StringValue, Is.EqualTo("F3"));
         }
@@ -54,7 +47,7 @@ namespace Tests.Board
         [Test]
         public void Test_ConstructBoardPosition_Success3()
         {
-            BoardPosition boardPosition = new(BoardPosition.VERTICAL.EIGHT, BoardPosition.HORIZONTAL.H);
+            BoardPosition boardPosition = new(RANK.EIGHT, FILE.H);
             Assert.That(boardPosition, Is.Not.Null);
             Assert.That(boardPosition.StringValue, Is.EqualTo("H8"));
         }
@@ -62,9 +55,55 @@ namespace Tests.Board
         [Test]
         public void Test_ConstructBoardPosition_Success4()
         {
-            BoardPosition boardPosition = new(BoardPosition.VERTICAL.ONE, BoardPosition.HORIZONTAL.A);
+            BoardPosition boardPosition = new(RANK.ONE, FILE.A);
             Assert.That(boardPosition, Is.Not.Null);
             Assert.That(boardPosition.StringValue, Is.EqualTo("A1"));
+        }
+
+        [TestCase("A", FILE.A)]
+        [TestCase("B", FILE.B)]
+        [TestCase("C", FILE.C)]
+        [TestCase("D", FILE.D)]
+        [TestCase("E", FILE.E)]
+        [TestCase("F", FILE.F)]
+        [TestCase("G", FILE.G)]
+        [TestCase("H", FILE.H)]
+        public void Test_GetFile_Success(char alpha, FILE expected)
+        {
+            FILE file = BoardPosition.GetFile(alpha);
+            Assert.That(file == expected, Is.True);
+        }
+
+        [TestCase("X")]
+        [TestCase("0")]
+        [TestCase("1")]
+        [TestCase("9")]
+        [TestCase("!")]
+        public void Test_GetFile_ThrowsArgumentException(char alpha)
+        {
+            Assert.Throws<ArgumentException>(() => BoardPosition.GetFile(alpha));
+        }
+
+        [TestCase(1, RANK.ONE)]
+        [TestCase(2, RANK.TWO)]
+        [TestCase(3, RANK.THREE)]
+        [TestCase(4, RANK.FOUR)]
+        [TestCase(5, RANK.FIVE)]
+        [TestCase(6, RANK.SIX)]
+        [TestCase(7, RANK.SEVEN)]
+        [TestCase(8, RANK.EIGHT)]
+        public void Test_GetRank_Success(int num, RANK expected)
+        {
+            RANK rank = BoardPosition.GetRank(num);
+            Assert.That(rank == expected, Is.True);
+        }
+
+        [TestCase(0)]
+        [TestCase(9)]
+        [TestCase(1000)]
+        public void Test_GetRank_ThrowsArgumentException(int num)
+        {
+            Assert.Throws<ArgumentException>(() => BoardPosition.GetRank(num));
         }
 
         [TestCase("A1", 70)]
@@ -104,8 +143,8 @@ namespace Tests.Board
 
             Assert.Multiple(() =>
             {
-                Assert.That(boardPosition.VerticalValue, Is.EqualTo((BoardPosition.VERTICAL)firstIndex));
-                Assert.That(boardPosition.HorizontalValue, Is.EqualTo((BoardPosition.HORIZONTAL)secondIndex));
+                Assert.That(boardPosition.Rank, Is.EqualTo((RANK)firstIndex));
+                Assert.That(boardPosition.File, Is.EqualTo((FILE)secondIndex));
             });
         }
 
@@ -121,21 +160,21 @@ namespace Tests.Board
         [TestCase("1")]
         public void Test_ConstructBoardPosition_ExceptionThrown(string position)
         {
-            Assert.Throws<Exception>(() => new BoardPosition(position));
+            Assert.Throws<ArgumentException>(() => new BoardPosition(position));
         }
 
 
         [Test]
         public void Test_CopyConstructBoardPosition_Success()
         {
-            BoardPosition boardPosition = new(BoardPosition.VERTICAL.ONE, BoardPosition.HORIZONTAL.A);
+            BoardPosition boardPosition = new(RANK.ONE, FILE.A);
             Assert.That(boardPosition, Is.Not.Null);
 
             BoardPosition boardPosition2 = new(boardPosition);
             Assert.Multiple(() =>
             {
                 Assert.That(boardPosition2, Is.Not.Null);
-                Assert.That(boardPosition.Equals(boardPosition2), Is.False); // should be a copy, not the same object reference
+                Assert.That(ReferenceEquals(boardPosition, boardPosition2), Is.False); // should be a copy, not the same object reference
                 Assert.That(boardPosition2.StringValue, Is.EqualTo("A1"));
             });
         }
@@ -143,17 +182,37 @@ namespace Tests.Board
         [Test]
         public void Test_BoardPositions_Are_Equal()
         {
-            BoardPosition boardPosition1 = new(BoardPosition.VERTICAL.ONE, BoardPosition.HORIZONTAL.A);
-            BoardPosition boardPosition2 = new(BoardPosition.VERTICAL.ONE, BoardPosition.HORIZONTAL.A);
-            Assert.That(boardPosition1.EqualTo(boardPosition2));
+            BoardPosition boardPosition1 = new(RANK.ONE, FILE.A);
+            BoardPosition boardPosition2 = new(RANK.ONE, FILE.A);
+            Assert.That(boardPosition1 == boardPosition2);
+        }
+
+        [Test]
+        public void Test_BoardPositions_Are_Equal_Both_Null()
+        {
+            BoardPosition? boardPosition1 = null;
+            BoardPosition? boardPosition2 = null;
+#pragma warning disable CS8604 // Possible null reference argument.
+            Assert.That(boardPosition1 == boardPosition2);
+#pragma warning restore CS8604 // Possible null reference argument.
         }
 
         [Test]
         public void Test_BoardPositions_Are_Not_Equal()
         {
-            BoardPosition boardPosition1 = new BoardPosition(BoardPosition.VERTICAL.FIVE, BoardPosition.HORIZONTAL.F);
-            BoardPosition boardPosition2 = new BoardPosition(BoardPosition.VERTICAL.ONE, BoardPosition.HORIZONTAL.A);
-            Assert.That(boardPosition1.EqualTo(boardPosition2), Is.False);
+            BoardPosition boardPosition1 = new(RANK.FIVE, FILE.F);
+            BoardPosition boardPosition2 = new(RANK.ONE, FILE.A);
+            Assert.That(boardPosition1 != boardPosition2);
+        }
+
+        [Test]
+        public void Test_BoardPositions_Are_Not_Equal_Null_Handling()
+        {
+            BoardPosition boardPosition1 = new(RANK.FIVE, FILE.F);
+            BoardPosition? boardPosition2 = null;
+#pragma warning disable CS8604 // Possible null reference argument.
+            Assert.That(boardPosition1 != boardPosition2);
+#pragma warning restore CS8604 // Possible null reference argument.
         }
 
     }

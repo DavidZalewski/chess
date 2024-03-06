@@ -19,10 +19,10 @@ namespace Chess.Pieces
         public override bool IsValidMove(ChessBoard board, BoardPosition position)
         {
             // using algorithm deduced from project docs
-            int v1 = _currentPosition.VerticalValueAsInt;
-            int v2 = position.VerticalValueAsInt;
-            int h1 = _currentPosition.HorizontalValueAsInt;
-            int h2 = position.HorizontalValueAsInt;
+            int v1 = _currentPosition.RankAsInt;
+            int v2 = position.RankAsInt;
+            int h1 = _currentPosition.FileAsInt;
+            int h2 = position.FileAsInt;
 
             int vdistance = v1 - v2;
             int hdistance = h1 - h2;
@@ -58,19 +58,19 @@ namespace Chess.Pieces
             {
                 // these casts should always succeed, given that erroneous positions that dont exist on board are passed into
                 // this function
-                BoardPosition.VERTICAL vVal = (BoardPosition.VERTICAL)firstIndex;
-                BoardPosition.HORIZONTAL hVal = (BoardPosition.HORIZONTAL)secondIndex;
+                RANK vVal = (RANK)firstIndex;
+                FILE hVal = (FILE)secondIndex;
                 BoardPosition pathToPosition = new(vVal, hVal);
                 return board.IsPieceAtPosition(pathToPosition);
             }
 
-            bool isCurrentPositionIfSoSkip(int i, int j) => _currentPosition.VerticalValueAsInt == i && _currentPosition.HorizontalValueAsInt == j;
+            bool isCurrentPositionIfSoSkip(int i, int j) => _currentPosition.RankAsInt == i && _currentPosition.FileAsInt == j;
 
             if (operation == "v-")
             {
                 for (int i = v1; i > v2; i--)
                 {
-                    if (!isCurrentPositionIfSoSkip(i, _currentPosition.HorizontalValueAsInt) && isPieceBlockingPath(i, _currentPosition.HorizontalValueAsInt))
+                    if (!isCurrentPositionIfSoSkip(i, _currentPosition.FileAsInt) && isPieceBlockingPath(i, _currentPosition.FileAsInt))
                     {
                         return false;
                     }
@@ -80,7 +80,7 @@ namespace Chess.Pieces
             {
                 for (int j = h1; j < h2; j++)
                 {
-                    if (!isCurrentPositionIfSoSkip(_currentPosition.VerticalValueAsInt, j) && isPieceBlockingPath(_currentPosition.VerticalValueAsInt, j))
+                    if (!isCurrentPositionIfSoSkip(_currentPosition.RankAsInt, j) && isPieceBlockingPath(_currentPosition.RankAsInt, j))
                     {
                         return false;
                     }
@@ -90,7 +90,7 @@ namespace Chess.Pieces
             {
                 for (int i = v1; i < v2; i++)
                 {
-                    if (!isCurrentPositionIfSoSkip(i, _currentPosition.HorizontalValueAsInt) && isPieceBlockingPath(i, _currentPosition.HorizontalValueAsInt))
+                    if (!isCurrentPositionIfSoSkip(i, _currentPosition.FileAsInt) && isPieceBlockingPath(i, _currentPosition.FileAsInt))
                     {
                         return false;
                     }
@@ -100,7 +100,7 @@ namespace Chess.Pieces
             {
                 for (int j = h1; j > h2; j--)
                 {
-                    if (!isCurrentPositionIfSoSkip(_currentPosition.VerticalValueAsInt, j) && isPieceBlockingPath(_currentPosition.VerticalValueAsInt, j))
+                    if (!isCurrentPositionIfSoSkip(_currentPosition.RankAsInt, j) && isPieceBlockingPath(_currentPosition.RankAsInt, j))
                     {
                         return false;
                     }

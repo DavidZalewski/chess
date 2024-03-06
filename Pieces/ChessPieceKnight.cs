@@ -20,8 +20,8 @@ namespace Chess.Pieces
         {
             // get the distance
             //   2       =                                  7                             5
-            int verticalDistance = _currentPosition.VerticalValueAsInt - position.VerticalValueAsInt;
-            int horizontalDistance = _currentPosition.HorizontalValueAsInt - position.HorizontalValueAsInt;
+            int verticalDistance = _currentPosition.RankAsInt - position.RankAsInt;
+            int horizontalDistance = _currentPosition.FileAsInt - position.FileAsInt;
 
             if (verticalDistance == 1 || verticalDistance == -1)
             {

@@ -19,10 +19,10 @@ namespace Tests.Services
                 {
                     Assert.That(piece.GetColor(), Is.EqualTo(Color.WHITE));
                     Assert.That(piece.GetPiece(), Is.EqualTo(Piece.PAWN));
-                    Assert.That(piece.GetStartingPosition().VerticalValue, Is.EqualTo(BoardPosition.VERTICAL.TWO));
-                    Assert.That(piece.GetStartingPosition().HorizontalValueAsInt, Is.EqualTo(i - 1));
-                    Assert.That(piece.GetCurrentPosition().VerticalValue, Is.EqualTo(piece.GetStartingPosition().VerticalValue));
-                    Assert.That(piece.GetCurrentPosition().HorizontalValue, Is.EqualTo(piece.GetStartingPosition().HorizontalValue));
+                    Assert.That(piece.GetStartingPosition().Rank, Is.EqualTo(RANK.TWO));
+                    Assert.That(piece.GetStartingPosition().FileAsInt, Is.EqualTo(i - 1));
+                    Assert.That(piece.GetCurrentPosition().Rank, Is.EqualTo(piece.GetStartingPosition().Rank));
+                    Assert.That(piece.GetCurrentPosition().File, Is.EqualTo(piece.GetStartingPosition().File));
                     Assert.That(piece.GetRealValue(), Is.EqualTo(11));
                     Assert.That(piece.GetId(), Is.EqualTo(i));
                 });
@@ -42,10 +42,10 @@ namespace Tests.Services
                 {
                     Assert.That(piece.GetColor(), Is.EqualTo(Color.BLACK));
                     Assert.That(piece.GetPiece(), Is.EqualTo(Piece.PAWN));
-                    Assert.That(piece.GetStartingPosition().VerticalValue, Is.EqualTo(BoardPosition.VERTICAL.SEVEN));
-                    Assert.That(piece.GetStartingPosition().HorizontalValueAsInt, Is.EqualTo(i - 1));
-                    Assert.That(piece.GetCurrentPosition().VerticalValue, Is.EqualTo(piece.GetStartingPosition().VerticalValue));
-                    Assert.That(piece.GetCurrentPosition().HorizontalValue, Is.EqualTo(piece.GetStartingPosition().HorizontalValue));
+                    Assert.That(piece.GetStartingPosition().Rank, Is.EqualTo(RANK.SEVEN));
+                    Assert.That(piece.GetStartingPosition().FileAsInt, Is.EqualTo(i - 1));
+                    Assert.That(piece.GetCurrentPosition().Rank, Is.EqualTo(piece.GetStartingPosition().Rank));
+                    Assert.That(piece.GetCurrentPosition().File, Is.EqualTo(piece.GetStartingPosition().File));
                     Assert.That(piece.GetRealValue(), Is.EqualTo(21));
                     Assert.That(piece.GetId(), Is.EqualTo(i));
                 });
@@ -66,18 +66,18 @@ namespace Tests.Services
                 {
                     Assert.That(piece.GetColor(), Is.EqualTo(Color.WHITE));
                     Assert.That(piece.GetPiece(), Is.EqualTo(Piece.KNIGHT));
-                    Assert.That(piece.GetStartingPosition().VerticalValue, Is.EqualTo(BoardPosition.VERTICAL.ONE));
-                    Assert.That(piece.GetCurrentPosition().VerticalValue, Is.EqualTo(piece.GetStartingPosition().VerticalValue));
-                    Assert.That(piece.GetCurrentPosition().HorizontalValue, Is.EqualTo(piece.GetStartingPosition().HorizontalValue));
+                    Assert.That(piece.GetStartingPosition().Rank, Is.EqualTo(RANK.ONE));
+                    Assert.That(piece.GetCurrentPosition().Rank, Is.EqualTo(piece.GetStartingPosition().Rank));
+                    Assert.That(piece.GetCurrentPosition().File, Is.EqualTo(piece.GetStartingPosition().File));
                     Assert.That(piece.GetRealValue(), Is.EqualTo(12));
                 });
             }
 
             Assert.Multiple(() =>
             {
-                Assert.That(pieces[0].GetStartingPosition().HorizontalValue, Is.EqualTo(BoardPosition.HORIZONTAL.B));
+                Assert.That(pieces[0].GetStartingPosition().File, Is.EqualTo(FILE.B));
                 Assert.That(pieces[0].GetId(), Is.EqualTo(1));
-                Assert.That(pieces[1].GetStartingPosition().HorizontalValue, Is.EqualTo(BoardPosition.HORIZONTAL.G));
+                Assert.That(pieces[1].GetStartingPosition().File, Is.EqualTo(FILE.G));
                 Assert.That(pieces[1].GetId(), Is.EqualTo(2));
             });
 
@@ -96,18 +96,18 @@ namespace Tests.Services
                 {
                     Assert.That(piece.GetColor(), Is.EqualTo(Color.BLACK));
                     Assert.That(piece.GetPiece(), Is.EqualTo(Piece.KNIGHT));
-                    Assert.That(piece.GetStartingPosition().VerticalValue, Is.EqualTo(BoardPosition.VERTICAL.EIGHT));
-                    Assert.That(piece.GetCurrentPosition().VerticalValue, Is.EqualTo(piece.GetStartingPosition().VerticalValue));
-                    Assert.That(piece.GetCurrentPosition().HorizontalValue, Is.EqualTo(piece.GetStartingPosition().HorizontalValue));
+                    Assert.That(piece.GetStartingPosition().Rank, Is.EqualTo(RANK.EIGHT));
+                    Assert.That(piece.GetCurrentPosition().Rank, Is.EqualTo(piece.GetStartingPosition().Rank));
+                    Assert.That(piece.GetCurrentPosition().File, Is.EqualTo(piece.GetStartingPosition().File));
                     Assert.That(piece.GetRealValue(), Is.EqualTo(22));
                 });
             }
 
             Assert.Multiple(() =>
             {
-                Assert.That(pieces[0].GetStartingPosition().HorizontalValue, Is.EqualTo(BoardPosition.HORIZONTAL.B));
+                Assert.That(pieces[0].GetStartingPosition().File, Is.EqualTo(FILE.B));
                 Assert.That(pieces[0].GetId(), Is.EqualTo(1));
-                Assert.That(pieces[1].GetStartingPosition().HorizontalValue, Is.EqualTo(BoardPosition.HORIZONTAL.G));
+                Assert.That(pieces[1].GetStartingPosition().File, Is.EqualTo(FILE.G));
                 Assert.That(pieces[1].GetId(), Is.EqualTo(2));
             });
 
@@ -126,18 +126,18 @@ namespace Tests.Services
                 {
                     Assert.That(piece.GetColor(), Is.EqualTo(Color.WHITE));
                     Assert.That(piece.GetPiece(), Is.EqualTo(Piece.BISHOP));
-                    Assert.That(piece.GetStartingPosition().VerticalValue, Is.EqualTo(BoardPosition.VERTICAL.ONE));
-                    Assert.That(piece.GetCurrentPosition().VerticalValue, Is.EqualTo(piece.GetStartingPosition().VerticalValue));
-                    Assert.That(piece.GetCurrentPosition().HorizontalValue, Is.EqualTo(piece.GetStartingPosition().HorizontalValue));
+                    Assert.That(piece.GetStartingPosition().Rank, Is.EqualTo(RANK.ONE));
+                    Assert.That(piece.GetCurrentPosition().Rank, Is.EqualTo(piece.GetStartingPosition().Rank));
+                    Assert.That(piece.GetCurrentPosition().File, Is.EqualTo(piece.GetStartingPosition().File));
                     Assert.That(piece.GetRealValue(), Is.EqualTo(13));
                 });
             }
 
             Assert.Multiple(() =>
             {
-                Assert.That(pieces[0].GetStartingPosition().HorizontalValue, Is.EqualTo(BoardPosition.HORIZONTAL.C));
+                Assert.That(pieces[0].GetStartingPosition().File, Is.EqualTo(FILE.C));
                 Assert.That(pieces[0].GetId(), Is.EqualTo(1));
-                Assert.That(pieces[1].GetStartingPosition().HorizontalValue, Is.EqualTo(BoardPosition.HORIZONTAL.F));
+                Assert.That(pieces[1].GetStartingPosition().File, Is.EqualTo(FILE.F));
                 Assert.That(pieces[1].GetId(), Is.EqualTo(2));
             });
         }
@@ -155,18 +155,18 @@ namespace Tests.Services
                 {
                     Assert.That(piece.GetColor(), Is.EqualTo(Color.BLACK));
                     Assert.That(piece.GetPiece(), Is.EqualTo(Piece.BISHOP));
-                    Assert.That(piece.GetStartingPosition().VerticalValue, Is.EqualTo(BoardPosition.VERTICAL.EIGHT));
-                    Assert.That(piece.GetCurrentPosition().VerticalValue, Is.EqualTo(piece.GetStartingPosition().VerticalValue));
-                    Assert.That(piece.GetCurrentPosition().HorizontalValue, Is.EqualTo(piece.GetStartingPosition().HorizontalValue));
+                    Assert.That(piece.GetStartingPosition().Rank, Is.EqualTo(RANK.EIGHT));
+                    Assert.That(piece.GetCurrentPosition().Rank, Is.EqualTo(piece.GetStartingPosition().Rank));
+                    Assert.That(piece.GetCurrentPosition().File, Is.EqualTo(piece.GetStartingPosition().File));
                     Assert.That(piece.GetRealValue(), Is.EqualTo(23));
                 });
             }
 
             Assert.Multiple(() =>
             {
-                Assert.That(pieces[0].GetStartingPosition().HorizontalValue, Is.EqualTo(BoardPosition.HORIZONTAL.C));
+                Assert.That(pieces[0].GetStartingPosition().File, Is.EqualTo(FILE.C));
                 Assert.That(pieces[0].GetId(), Is.EqualTo(1));
-                Assert.That(pieces[1].GetStartingPosition().HorizontalValue, Is.EqualTo(BoardPosition.HORIZONTAL.F));
+                Assert.That(pieces[1].GetStartingPosition().File, Is.EqualTo(FILE.F));
                 Assert.That(pieces[1].GetId(), Is.EqualTo(2));
             });
         }
@@ -184,18 +184,18 @@ namespace Tests.Services
                 {
                     Assert.That(piece.GetColor(), Is.EqualTo(Color.WHITE));
                     Assert.That(piece.GetPiece(), Is.EqualTo(Piece.ROOK));
-                    Assert.That(piece.GetStartingPosition().VerticalValue, Is.EqualTo(BoardPosition.VERTICAL.ONE));
-                    Assert.That(piece.GetCurrentPosition().VerticalValue, Is.EqualTo(piece.GetStartingPosition().VerticalValue));
-                    Assert.That(piece.GetCurrentPosition().HorizontalValue, Is.EqualTo(piece.GetStartingPosition().HorizontalValue));
+                    Assert.That(piece.GetStartingPosition().Rank, Is.EqualTo(RANK.ONE));
+                    Assert.That(piece.GetCurrentPosition().Rank, Is.EqualTo(piece.GetStartingPosition().Rank));
+                    Assert.That(piece.GetCurrentPosition().File, Is.EqualTo(piece.GetStartingPosition().File));
                     Assert.That(piece.GetRealValue(), Is.EqualTo(14));
                 });
             }
 
             Assert.Multiple(() =>
             {
-                Assert.That(pieces[0].GetStartingPosition().HorizontalValue, Is.EqualTo(BoardPosition.HORIZONTAL.A));
+                Assert.That(pieces[0].GetStartingPosition().File, Is.EqualTo(FILE.A));
                 Assert.That(pieces[0].GetId(), Is.EqualTo(1));
-                Assert.That(pieces[1].GetStartingPosition().HorizontalValue, Is.EqualTo(BoardPosition.HORIZONTAL.H));
+                Assert.That(pieces[1].GetStartingPosition().File, Is.EqualTo(FILE.H));
                 Assert.That(pieces[1].GetId(), Is.EqualTo(2));
             });
         }
@@ -213,18 +213,18 @@ namespace Tests.Services
                 {
                     Assert.That(piece.GetColor(), Is.EqualTo(Color.BLACK));
                     Assert.That(piece.GetPiece(), Is.EqualTo(Piece.ROOK));
-                    Assert.That(piece.GetStartingPosition().VerticalValue, Is.EqualTo(BoardPosition.VERTICAL.EIGHT));
-                    Assert.That(piece.GetCurrentPosition().VerticalValue, Is.EqualTo(piece.GetStartingPosition().VerticalValue));
-                    Assert.That(piece.GetCurrentPosition().HorizontalValue, Is.EqualTo(piece.GetStartingPosition().HorizontalValue));
+                    Assert.That(piece.GetStartingPosition().Rank, Is.EqualTo(RANK.EIGHT));
+                    Assert.That(piece.GetCurrentPosition().Rank, Is.EqualTo(piece.GetStartingPosition().Rank));
+                    Assert.That(piece.GetCurrentPosition().File, Is.EqualTo(piece.GetStartingPosition().File));
                     Assert.That(piece.GetRealValue(), Is.EqualTo(24));
                 });
             }
 
             Assert.Multiple(() =>
             {
-                Assert.That(pieces[0].GetStartingPosition().HorizontalValue, Is.EqualTo(BoardPosition.HORIZONTAL.A));
+                Assert.That(pieces[0].GetStartingPosition().File, Is.EqualTo(FILE.A));
                 Assert.That(pieces[0].GetId(), Is.EqualTo(1));
-                Assert.That(pieces[1].GetStartingPosition().HorizontalValue, Is.EqualTo(BoardPosition.HORIZONTAL.H));
+                Assert.That(pieces[1].GetStartingPosition().File, Is.EqualTo(FILE.H));
                 Assert.That(pieces[1].GetId(), Is.EqualTo(2));
             });
         }
@@ -241,19 +241,19 @@ namespace Tests.Services
                 Assert.Multiple(() =>
                 {
                     Assert.That(piece.GetColor(), Is.EqualTo(Color.WHITE));
-                    Assert.That(piece.GetStartingPosition().VerticalValue, Is.EqualTo(BoardPosition.VERTICAL.ONE));
-                    Assert.That(piece.GetCurrentPosition().VerticalValue, Is.EqualTo(piece.GetStartingPosition().VerticalValue));
-                    Assert.That(piece.GetCurrentPosition().HorizontalValue, Is.EqualTo(piece.GetStartingPosition().HorizontalValue));
+                    Assert.That(piece.GetStartingPosition().Rank, Is.EqualTo(RANK.ONE));
+                    Assert.That(piece.GetCurrentPosition().Rank, Is.EqualTo(piece.GetStartingPosition().Rank));
+                    Assert.That(piece.GetCurrentPosition().File, Is.EqualTo(piece.GetStartingPosition().File));
                     Assert.That(piece.GetId(), Is.EqualTo(1));
                 });
             }
 
             Assert.Multiple(() =>
             {
-                Assert.That(pieces[0].GetStartingPosition().HorizontalValue, Is.EqualTo(BoardPosition.HORIZONTAL.D));
+                Assert.That(pieces[0].GetStartingPosition().File, Is.EqualTo(FILE.D));
                 Assert.That(pieces[0].GetPiece(), Is.EqualTo(Piece.QUEEN));
                 Assert.That(pieces[0].GetRealValue(), Is.EqualTo(15));
-                Assert.That(pieces[1].GetStartingPosition().HorizontalValue, Is.EqualTo(BoardPosition.HORIZONTAL.E));
+                Assert.That(pieces[1].GetStartingPosition().File, Is.EqualTo(FILE.E));
                 Assert.That(pieces[1].GetPiece(), Is.EqualTo(Piece.KING));
                 Assert.That(pieces[1].GetRealValue(), Is.EqualTo(16));
             });
@@ -271,19 +271,19 @@ namespace Tests.Services
                 Assert.Multiple(() =>
                 {
                     Assert.That(piece.GetColor(), Is.EqualTo(Color.BLACK));
-                    Assert.That(piece.GetStartingPosition().VerticalValue, Is.EqualTo(BoardPosition.VERTICAL.EIGHT));
-                    Assert.That(piece.GetCurrentPosition().VerticalValue, Is.EqualTo(piece.GetStartingPosition().VerticalValue));
-                    Assert.That(piece.GetCurrentPosition().HorizontalValue, Is.EqualTo(piece.GetStartingPosition().HorizontalValue));
+                    Assert.That(piece.GetStartingPosition().Rank, Is.EqualTo(RANK.EIGHT));
+                    Assert.That(piece.GetCurrentPosition().Rank, Is.EqualTo(piece.GetStartingPosition().Rank));
+                    Assert.That(piece.GetCurrentPosition().File, Is.EqualTo(piece.GetStartingPosition().File));
                     Assert.That(piece.GetId(), Is.EqualTo(1));
                 });
             }
 
             Assert.Multiple(() =>
             {
-                Assert.That(pieces[0].GetStartingPosition().HorizontalValue, Is.EqualTo(BoardPosition.HORIZONTAL.D));
+                Assert.That(pieces[0].GetStartingPosition().File, Is.EqualTo(FILE.D));
                 Assert.That(pieces[0].GetPiece(), Is.EqualTo(Piece.QUEEN));
                 Assert.That(pieces[0].GetRealValue(), Is.EqualTo(25));
-                Assert.That(pieces[1].GetStartingPosition().HorizontalValue, Is.EqualTo(BoardPosition.HORIZONTAL.E));
+                Assert.That(pieces[1].GetStartingPosition().File, Is.EqualTo(FILE.E));
                 Assert.That(pieces[1].GetPiece(), Is.EqualTo(Piece.KING));
                 Assert.That(pieces[1].GetRealValue(), Is.EqualTo(26));
             });
@@ -301,8 +301,8 @@ namespace Tests.Services
                 Assert.Multiple(() =>
                 {
                     Assert.That(piece.GetColor(), Is.EqualTo(Color.WHITE));
-                    Assert.That(piece.GetCurrentPosition().VerticalValue, Is.EqualTo(piece.GetStartingPosition().VerticalValue));
-                    Assert.That(piece.GetCurrentPosition().HorizontalValue, Is.EqualTo(piece.GetStartingPosition().HorizontalValue));
+                    Assert.That(piece.GetCurrentPosition().Rank, Is.EqualTo(piece.GetStartingPosition().Rank));
+                    Assert.That(piece.GetCurrentPosition().File, Is.EqualTo(piece.GetStartingPosition().File));
                 });
             }
 
@@ -355,8 +355,8 @@ namespace Tests.Services
                 Assert.Multiple(() =>
                 {
                     Assert.That(piece.GetColor(), Is.EqualTo(Color.BLACK));
-                    Assert.That(piece.GetCurrentPosition().VerticalValue, Is.EqualTo(piece.GetStartingPosition().VerticalValue));
-                    Assert.That(piece.GetCurrentPosition().HorizontalValue, Is.EqualTo(piece.GetStartingPosition().HorizontalValue));
+                    Assert.That(piece.GetCurrentPosition().Rank, Is.EqualTo(piece.GetStartingPosition().Rank));
+                    Assert.That(piece.GetCurrentPosition().File, Is.EqualTo(piece.GetStartingPosition().File));
                 });
             }
 
@@ -413,8 +413,8 @@ namespace Tests.Services
                         Assert.That(piece.GetColor(), Is.EqualTo(Color.WHITE));
                     else
                         Assert.That(piece.GetColor(), Is.EqualTo(Color.BLACK));
-                    Assert.That(piece.GetCurrentPosition().VerticalValue, Is.EqualTo(piece.GetStartingPosition().VerticalValue));
-                    Assert.That(piece.GetCurrentPosition().HorizontalValue, Is.EqualTo(piece.GetStartingPosition().HorizontalValue));
+                    Assert.That(piece.GetCurrentPosition().Rank, Is.EqualTo(piece.GetStartingPosition().Rank));
+                    Assert.That(piece.GetCurrentPosition().File, Is.EqualTo(piece.GetStartingPosition().File));
                 });
                 i++;
             }
