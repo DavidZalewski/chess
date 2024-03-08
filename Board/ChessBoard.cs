@@ -94,7 +94,6 @@ namespace Chess.Board
                 if (!square.Piece.Equals(piece))
                 {
                     piecesToRemove.Add(piece);
-                    square.Piece = NoPiece.Instance;
                     piece.SetCurrentPosition(null);
                 }            
             }

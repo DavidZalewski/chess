@@ -32,7 +32,7 @@ namespace Chess
             ChessPiece.SetCastleCallbackFunction(this.CastleCallBackFunction);
             ChessPiece.SetIsEnPassantCallbackFunction(this.IsEnPassantCallBackFunction);
             _chessBoard = new ChessBoard(chessBoard); // copy state of board
-            _chessPieces = chessPieces.Select(a => (ChessPiece)a.Clone()).ToArray().ToList(); // copy list of pieces
+            _chessPieces = chessPieces.Select(a => (ChessPiece)a.Clone()).ToArray().ToList(); // TODO: No longer needed
             _piece = _chessPieces.First(p => p.Equals(piece)); 
             if (!_piece.IsValidMove(_chessBoard, _newPosition))
                 throw new Exception("Cannot construct turn. Invalid Move for piece");
@@ -45,7 +45,6 @@ namespace Chess
                     if ((cp as ChessPiecePawn).IsEnPassantTarget)
                     {
                         Assert.That(_chessBoard.IsPieceAtPosition(cp.GetCurrentPosition()), Is.True);
-                        _chessBoard.Board[cp.GetCurrentPosition().FileAsInt, cp.GetCurrentPosition().RankAsInt].Piece = NoPiece.Instance;
                         _action = " capture [" + cp.GetPieceName() + "] ";
                     }
                 }
