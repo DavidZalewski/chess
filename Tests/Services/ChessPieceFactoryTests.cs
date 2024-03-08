@@ -420,5 +420,38 @@ namespace Tests.Services
             }
 
         }
+
+        [Test]
+        public void CreatePieceFromInt_ValidInput_ReturnsCorrectPiece()
+        {
+            var position = new BoardPosition(RANK.ONE, FILE.A);
+
+            // Test each piece type and color using a loop
+            for (int i = 1; i <= 6; i++)
+            {
+                var whitePiece = ChessPieceFactory.CreatePieceFromInt(position, 10 + i);
+                Assert.That(ChessPiece.Color.WHITE == whitePiece.GetColor());
+                Assert.That(i == (int)whitePiece.GetPiece());
+                Assert.That(position == whitePiece.GetCurrentPosition());
+                Assert.That(10 + i == whitePiece.GetRealValue());
+
+                var blackPiece = ChessPieceFactory.CreatePieceFromInt(position, 20 + i);
+                Assert.That(ChessPiece.Color.BLACK == blackPiece.GetColor());
+                Assert.That(i == (int)blackPiece.GetPiece());
+                Assert.That(position == blackPiece.GetCurrentPosition());
+                Assert.That(20 + i == blackPiece.GetRealValue());
+            }
+
+            // Test NoPiece
+            var noPiece = ChessPieceFactory.CreatePieceFromInt(position, 0);
+            Assert.That(noPiece is NoPiece);
+        }
+
+        [Test]
+        public void CreatePieceFromInt_InvalidInput_ThrowsArgumentException()
+        {
+            var position = new BoardPosition(RANK.ONE, FILE.A);
+            Assert.Throws<ArgumentException>(() => ChessPieceFactory.CreatePieceFromInt(position, -1));
+        }
     }
 }

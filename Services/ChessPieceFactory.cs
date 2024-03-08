@@ -143,5 +143,26 @@ namespace Chess.Services
             chessPieces.AddRange(CreateBlackChessPieces());
             return chessPieces;
         }
+
+        internal static ChessPiece CreatePieceFromInt(BoardPosition position, int value)
+        {
+            return value switch
+            {
+                0 => NoPiece.Instance,
+                11 => new ChessPieceWhitePawn(1, position),
+                12 => new ChessPieceKnight(ChessPiece.Color.WHITE, 1, position),
+                13 => new ChessPieceBishop(ChessPiece.Color.WHITE, 1, position),
+                14 => new ChessPieceRook(ChessPiece.Color.WHITE, 1, position),
+                15 => new ChessPieceQueen(ChessPiece.Color.WHITE, 1, position),
+                16 => new ChessPieceKing(ChessPiece.Color.WHITE, position),
+                21 => new ChessPieceBlackPawn(1, position),
+                22 => new ChessPieceKnight(ChessPiece.Color.BLACK, 1, position),
+                23 => new ChessPieceBishop(ChessPiece.Color.BLACK, 1, position),
+                24 => new ChessPieceRook(ChessPiece.Color.BLACK, 1, position),
+                25 => new ChessPieceQueen(ChessPiece.Color.BLACK, 1, position),
+                26 => new ChessPieceKing(ChessPiece.Color.BLACK, position),
+                _ => throw new ArgumentException("Invalid piece value"),
+            };
+        }
     }
 }
