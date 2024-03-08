@@ -428,7 +428,7 @@ namespace Tests.Services
         [TestCase(14, typeof(ChessPieceRook))]
         [TestCase(15, typeof(ChessPieceQueen))]
         [TestCase(16, typeof(ChessPieceKing))]
-        [TestCase(21, typeof(ChessPieceWhitePawn))]
+        [TestCase(21, typeof(ChessPieceBlackPawn))]
         [TestCase(22, typeof(ChessPieceKnight))]
         [TestCase(23, typeof(ChessPieceBishop))]
         [TestCase(24, typeof(ChessPieceRook))]
@@ -442,12 +442,18 @@ namespace Tests.Services
             // Act
             var piece = ChessPieceFactory.CreatePieceFromInt(position, value);
 
-            // Assert
-            Assert.That(piece.GetType(), Is.EqualTo(expectedType));
-            Assert.That(piece.GetColor(), Is.EqualTo((value > 20) ? ChessPiece.Color.BLACK : ChessPiece.Color.WHITE));
-            Assert.That(piece.GetPiece(), Is.EqualTo((ChessPiece.Piece)(value % 10))); // Extract specific piece type
-            Assert.That(piece.GetCurrentPosition(), Is.EqualTo(position));
-            Assert.That(piece.GetRealValue(), Is.EqualTo(value));
+            Assert.Multiple(() =>
+            {
+                // Assert
+                Assert.That(piece.GetType(), Is.EqualTo(expectedType));
+                Assert.That(piece.GetColor(), Is.EqualTo((value > 20) ? ChessPiece.Color.BLACK : ChessPiece.Color.WHITE));
+                Assert.That(piece.GetPiece(), Is.EqualTo((ChessPiece.Piece)(value % 10))); // Extract specific piece type
+                if (expectedType.Name == "NoPiece")
+                    Assert.That(piece.GetCurrentPosition(), Is.Null);
+                else
+                    Assert.That(piece.GetCurrentPosition(), Is.EqualTo(position));
+                Assert.That(piece.GetRealValue(), Is.EqualTo(value));
+            });
         }
 
         [Test]
