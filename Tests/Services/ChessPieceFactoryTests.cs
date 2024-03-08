@@ -420,5 +420,45 @@ namespace Tests.Services
             }
 
         }
+
+        [TestCase(0, typeof(NoPiece))]
+        [TestCase(11, typeof(ChessPieceWhitePawn))]
+        [TestCase(12, typeof(ChessPieceKnight))]
+        [TestCase(13, typeof(ChessPieceBishop))]
+        [TestCase(14, typeof(ChessPieceRook))]
+        [TestCase(15, typeof(ChessPieceQueen))]
+        [TestCase(16, typeof(ChessPieceKing))]
+        [TestCase(21, typeof(ChessPieceWhitePawn))]
+        [TestCase(22, typeof(ChessPieceKnight))]
+        [TestCase(23, typeof(ChessPieceBishop))]
+        [TestCase(24, typeof(ChessPieceRook))]
+        [TestCase(25, typeof(ChessPieceQueen))]
+        [TestCase(26, typeof(ChessPieceKing))]
+        public void CreatePieceFromInt_ValidValue_ReturnsCorrectPiece(int value, Type expectedType)
+        {
+            // Arrange
+            var position = new BoardPosition(RANK.ONE, FILE.A); // Example position
+
+            // Act
+            var piece = ChessPieceFactory.CreatePieceFromInt(position, value);
+
+            // Assert
+            Assert.That(piece.GetType(), Is.EqualTo(expectedType));
+            Assert.That(piece.GetColor(), Is.EqualTo((value > 20) ? ChessPiece.Color.BLACK : ChessPiece.Color.WHITE));
+            Assert.That(piece.GetPiece(), Is.EqualTo((ChessPiece.Piece)(value % 10))); // Extract specific piece type
+            Assert.That(piece.GetCurrentPosition(), Is.EqualTo(position));
+            Assert.That(piece.GetRealValue(), Is.EqualTo(value));
+        }
+
+        [Test]
+        public void CreatePieceFromInt_InvalidValue_ThrowsException()
+        {
+            // Arrange
+            var position = new BoardPosition(RANK.ONE, FILE.A);
+            int invalidValue = 99;
+
+            // Act & Assert
+            Assert.Throws<ArgumentException>(() => ChessPieceFactory.CreatePieceFromInt(position, invalidValue));
+        }
     }
 }
