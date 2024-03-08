@@ -139,10 +139,5 @@ namespace Chess.Board
         {
             Board[position.RankAsInt, position.FileAsInt] = square;
         }
-
-        internal void InternalTestOnly_SetBoard(Square[,] boardValue)
-        {
-            Board = boardValue;
-        }
     }
 }
