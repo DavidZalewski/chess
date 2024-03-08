@@ -146,37 +146,23 @@ namespace Chess.Services
 
         internal static ChessPiece CreatePieceFromInt(BoardPosition position, int value)
         {
-            switch (value)
+            return value switch
             {
-                case 0:
-                    return NoPiece.Instance;
-                case 11:
-                    return new ChessPieceWhitePawn(1, position);
-                case 12:
-                    return new ChessPieceKnight(ChessPiece.Color.WHITE, 1, position);
-                case 13:
-                    return new ChessPieceBishop(ChessPiece.Color.WHITE, 1, position);
-                case 14:
-                    return new ChessPieceRook(ChessPiece.Color.WHITE, 1, position);
-                case 15:
-                    return new ChessPieceQueen(ChessPiece.Color.WHITE, 1, position);
-                case 16:
-                    return new ChessPieceKing(ChessPiece.Color.WHITE, position);
-                case 21:
-                    return new ChessPieceBlackPawn(1, position);
-                case 22:
-                    return new ChessPieceKnight(ChessPiece.Color.BLACK, 1, position);
-                case 23:
-                    return new ChessPieceBishop(ChessPiece.Color.BLACK, 1, position);
-                case 24:
-                    return new ChessPieceRook(ChessPiece.Color.BLACK, 1, position);
-                case 25:
-                    return new ChessPieceQueen(ChessPiece.Color.BLACK, 1, position);
-                case 26:
-                    return new ChessPieceKing(ChessPiece.Color.BLACK, position);
-                default:
-                    throw new ArgumentException("Invalid piece value", nameof(value));
-            }
+                0 => NoPiece.Instance,
+                11 => new ChessPieceWhitePawn(1, position),
+                12 => new ChessPieceKnight(ChessPiece.Color.WHITE, 1, position),
+                13 => new ChessPieceBishop(ChessPiece.Color.WHITE, 1, position),
+                14 => new ChessPieceRook(ChessPiece.Color.WHITE, 1, position),
+                15 => new ChessPieceQueen(ChessPiece.Color.WHITE, 1, position),
+                16 => new ChessPieceKing(ChessPiece.Color.WHITE, position),
+                21 => new ChessPieceBlackPawn(1, position),
+                22 => new ChessPieceKnight(ChessPiece.Color.BLACK, 1, position),
+                23 => new ChessPieceBishop(ChessPiece.Color.BLACK, 1, position),
+                24 => new ChessPieceRook(ChessPiece.Color.BLACK, 1, position),
+                25 => new ChessPieceQueen(ChessPiece.Color.BLACK, 1, position),
+                26 => new ChessPieceKing(ChessPiece.Color.BLACK, position),
+                _ => throw new ArgumentException("Invalid piece value"),
+            };
         }
     }
 }
