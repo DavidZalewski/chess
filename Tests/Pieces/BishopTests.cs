@@ -131,8 +131,8 @@ namespace Tests.Pieces
 
             // Set White Pawns on B2 and B4 which block Bishop from moving
             // TODO: Implement Later
-            //board.SetBoardValue(new(RANK.TWO, FILE.B), 11);
-            //board.SetBoardValue(new(RANK.FOUR, FILE.B), 11);
+            board.SetBoardValue(new(RANK.TWO, FILE.B), 11);
+            board.SetBoardValue(new(RANK.FOUR, FILE.B), 11);
 
             Assert.Multiple(() =>
             {
@@ -157,7 +157,7 @@ namespace Tests.Pieces
 
             // Set Black Pawn on B4 which block Bishop
             // TODO: Implement Later
-            //board.SetBoardValue(new(RANK.FOUR, FILE.B), 21);
+            board.SetBoardValue(new(RANK.FOUR, FILE.B), 21);
 
             Assert.Multiple(() =>
             {
@@ -176,7 +176,7 @@ namespace Tests.Pieces
 
             // Set Black Pawn on D6
             // TODO: Implement Later
-            //board.SetBoardValue(d6, 21);
+            board.SetBoardValue(d6, 21);
 
             Assert.That(piece.IsValidMove(board, d6), Is.True);
         }
@@ -220,8 +220,8 @@ namespace Tests.Pieces
         {
             ChessPiece piece = new ChessPieceBishop(ChessPiece.Color.WHITE, 1, new("C1"));
             // TODO: Implement Later
-            //board.SetBoardValue(new("D3"), 22);
-            //board.SetBoardValue(new("E2"), 23);
+            board.SetBoardValue(new("D3"), 22);
+            board.SetBoardValue(new("E2"), 23);
             Assert.That(piece.IsValidMove(board, new("G5")), Is.True);
         }
 

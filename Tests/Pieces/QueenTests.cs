@@ -130,8 +130,8 @@ namespace Tests.Pieces
 
             // Set Black Pawns on B2 and B4 which block Bishop from moving
             // TODO: Implement Later
-            //board.SetBoardValue(new(RANK.TWO, FILE.B), 21);
-            //board.SetBoardValue(new(RANK.FOUR, FILE.B), 11);
+            board.SetBoardValue(new(RANK.TWO, FILE.B), 21);
+            board.SetBoardValue(new(RANK.FOUR, FILE.B), 11);
 
             Assert.Multiple(() =>
             {
@@ -156,7 +156,7 @@ namespace Tests.Pieces
 
             // Set Black Pawn on B4 which block Queen
             // TODO: Implement Later
-            // board.SetBoardValue(new(RANK.FOUR, FILE.B), 21);
+            board.SetBoardValue(new(RANK.FOUR, FILE.B), 21);
 
             Assert.Multiple(() =>
             {
@@ -175,7 +175,7 @@ namespace Tests.Pieces
 
             // Set White Pawn on D6
             // TODO: Implement Later
-            // board.SetBoardValue(d6, 11);
+            board.SetBoardValue(d6, 11);
 
             Assert.That(piece.IsValidMove(board, d6), Is.True);
         }
@@ -327,7 +327,7 @@ namespace Tests.Pieces
 
             // Set White Pawn on c4
             // TODO: Implement Later
-            //board.SetBoardValue(new(RANK.FOUR, FILE.C), 11);
+            board.SetBoardValue(new(RANK.FOUR, FILE.C), 11);
 
             Assert.Multiple(() =>
             {
@@ -351,7 +351,7 @@ namespace Tests.Pieces
 
             // Set White Pawn on c4
             // TODO: Implement Later
-            //board.SetBoardValue(new(RANK.TWO, FILE.F), 11);
+            board.SetBoardValue(new(RANK.TWO, FILE.F), 11);
 
             Assert.Multiple(() =>
             {
@@ -395,7 +395,7 @@ namespace Tests.Pieces
                 new BoardPosition(RANK.FOUR, FILE.B));
             BoardPosition b8 = new(RANK.EIGHT, FILE.B);
             // TODO: Implement Later
-            //board.SetBoardValue(b8, 12); // white knight on B8
+            board.SetBoardValue(b8, 12); // white knight on B8
             Assert.That(piece.IsValidMove(board, b8), Is.True);
         }
 
@@ -406,7 +406,7 @@ namespace Tests.Pieces
                 new BoardPosition(RANK.FOUR, FILE.B));
             BoardPosition b8 = new(RANK.EIGHT, FILE.B);
             // TODO: Implement Later
-            //board.SetBoardValue(b8, 22); // black knight on B8
+            board.SetBoardValue(b8, 22); // black knight on B8
             Assert.That(piece.IsValidMove(board, b8), Is.False);
         }
 
@@ -417,7 +417,7 @@ namespace Tests.Pieces
                 new BoardPosition(RANK.FOUR, FILE.B));
             BoardPosition b8 = new(RANK.EIGHT, FILE.B);
             // TODO: Implement Later
-            //board.SetBoardValue(b8, 12); // white knight on B8
+            board.SetBoardValue(b8, 12); // white knight on B8
             Assert.That(piece.IsValidMove(board, b8), Is.True);
         }
 
@@ -428,7 +428,7 @@ namespace Tests.Pieces
                 new BoardPosition(RANK.FOUR, FILE.B));
             BoardPosition b8 = new(RANK.EIGHT, FILE.B);
             // TODO: Implement Later
-            //board.SetBoardValue(b8, 22); // black knight on B8
+            board.SetBoardValue(b8, 22); // black knight on B8
             Assert.That(piece.IsValidMove(board, b8), Is.False);
         }
 

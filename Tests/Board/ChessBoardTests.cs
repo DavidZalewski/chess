@@ -1,6 +1,7 @@
 using Chess.Board;
 using Chess.Pieces;
 using Chess.Services;
+using static Chess.Pieces.ChessPiece;
 
 namespace Tests.Board
 {
@@ -22,9 +23,14 @@ namespace Tests.Board
 
             Assert.Multiple(() =>
             {
-                Assert.That(board1, Is.Not.Null);
-                Assert.That(board2, Is.Not.Null);
-                Assert.That(board1, Is.Not.EqualTo(board2));
+                Assert.That(board1, Is.Not.Null); // pass
+                Assert.That(board2, Is.Not.Null); // pass
+
+                //Assert.That(board1, Is.EqualTo(board2)); // pass???
+                Assert.That(board1 != board2); // pass 
+                Assert.That(ReferenceEquals(board1, board2), Is.False); // pass
+                //Assert.That(board1, Is.Not.EqualTo(board2)); // fail???
+
                 Assert.That(board1.Board, Is.EqualTo(board2.Board));
                 Assert.That(Object.ReferenceEquals(board1.Board,board2.Board), Is.False);
             });
@@ -35,8 +41,7 @@ namespace Tests.Board
         {
             BoardPosition boardPosition = new BoardPosition(RANK.THREE, FILE.F);
             Assert.That(chessBoard.IsPieceAtPosition(boardPosition), Is.False);
-            // TODO: Implement this 
-            // chessBoard.SetBoardValue(boardPosition, 11);
+            chessBoard.SetBoardValue(boardPosition, 11);
             Assert.That(chessBoard.IsPieceAtPosition(boardPosition), Is.True);
         }
 
@@ -45,10 +50,9 @@ namespace Tests.Board
         {
             BoardPosition boardPosition = new BoardPosition(RANK.THREE, FILE.F);
             Assert.That(chessBoard.IsPieceAtPosition(boardPosition), Is.False);
-            // TODO: Implement this 
-            //chessBoard.SetBoardValue(boardPosition, 11);
-            Assert.That(chessBoard.IsPieceAtPosition(boardPosition, ChessPiece.Color.WHITE), Is.True);
-            Assert.That(chessBoard.IsPieceAtPosition(boardPosition, ChessPiece.Color.BLACK), Is.False);
+            chessBoard.SetBoardValue(boardPosition, 11);
+            Assert.That(chessBoard.IsPieceAtPosition(boardPosition, Color.WHITE), Is.True);
+            Assert.That(chessBoard.IsPieceAtPosition(boardPosition, Color.BLACK), Is.False);
         }
 
         [Test]
@@ -56,10 +60,9 @@ namespace Tests.Board
         {
             BoardPosition boardPosition = new BoardPosition(RANK.SIX, FILE.G);
             Assert.That(chessBoard.IsPieceAtPosition(boardPosition), Is.False);
-            // TODO: Implement this 
-            //chessBoard.SetBoardValue(boardPosition, 21);
-            Assert.That(chessBoard.IsPieceAtPosition(boardPosition, ChessPiece.Color.WHITE), Is.False);
-            Assert.That(chessBoard.IsPieceAtPosition(boardPosition, ChessPiece.Color.BLACK), Is.True);
+            chessBoard.SetBoardValue(boardPosition, 21);
+            Assert.That(chessBoard.IsPieceAtPosition(boardPosition, Color.WHITE), Is.False);
+            Assert.That(chessBoard.IsPieceAtPosition(boardPosition, Color.BLACK), Is.True);
         }
 
         [Test]
@@ -67,12 +70,11 @@ namespace Tests.Board
         {
             BoardPosition boardPosition = new("G6");
             Assert.That(chessBoard.IsPieceAtPosition(boardPosition), Is.False);
-            // TODO: Implement this 
-            //chessBoard.SetBoardValue(boardPosition, 21);
-            Assert.That(chessBoard.IsPieceAtPosition(boardPosition, ChessPiece.Color.WHITE), Is.False);
-            Assert.That(chessBoard.IsPieceAtPosition(boardPosition, ChessPiece.Color.BLACK), Is.True);
-            Assert.That(chessBoard.IsPieceAtPosition(boardPosition, ChessPiece.Color.BLACK, ChessPiece.Piece.PAWN), Is.True);
-            Assert.That(chessBoard.IsPieceAtPosition(boardPosition, ChessPiece.Color.BLACK, ChessPiece.Piece.ROOK), Is.False);
+            chessBoard.SetBoardValue(boardPosition, 21);
+            Assert.That(chessBoard.IsPieceAtPosition(boardPosition, Color.WHITE), Is.False);
+            Assert.That(chessBoard.IsPieceAtPosition(boardPosition, Color.BLACK), Is.True);
+            Assert.That(chessBoard.IsPieceAtPosition(boardPosition, Color.BLACK, ChessPiece.Piece.PAWN), Is.True);
+            Assert.That(chessBoard.IsPieceAtPosition(boardPosition, Color.BLACK, ChessPiece.Piece.ROOK), Is.False);
         }
 
         [Test]
@@ -80,54 +82,56 @@ namespace Tests.Board
         {
             BoardPosition boardPosition = new("G6");
             Assert.That(chessBoard.IsPieceAtPosition(boardPosition), Is.False);
-            // TODO: Implement this 
-            //chessBoard.SetBoardValue(boardPosition, 24);
-            Assert.That(chessBoard.IsPieceAtPosition(boardPosition, ChessPiece.Color.WHITE), Is.False);
-            Assert.That(chessBoard.IsPieceAtPosition(boardPosition, ChessPiece.Color.BLACK), Is.True);
-            Assert.That(chessBoard.IsPieceAtPosition(boardPosition, ChessPiece.Color.BLACK, ChessPiece.Piece.PAWN), Is.False);
-            Assert.That(chessBoard.IsPieceAtPosition(boardPosition, ChessPiece.Color.BLACK, ChessPiece.Piece.ROOK), Is.True);
+            chessBoard.SetBoardValue(boardPosition, 24);
+            Assert.That(chessBoard.IsPieceAtPosition(boardPosition, Color.WHITE), Is.False);
+            Assert.That(chessBoard.IsPieceAtPosition(boardPosition, Color.BLACK), Is.True);
+            Assert.That(chessBoard.IsPieceAtPosition(boardPosition, Color.BLACK, ChessPiece.Piece.PAWN), Is.False);
+            Assert.That(chessBoard.IsPieceAtPosition(boardPosition, Color.BLACK, ChessPiece.Piece.ROOK), Is.True);
         }
 
-        // TODO rewrite this to work with Square[,]
         [Test]
         public void Test_PopulateBoard_Success()
         {
-            chessBoard.PopulateBoard(ChessPieceFactory.CreateChessPieces());
-            
-            int[,] innerBoard = new int[8, 8]; // chessBoard.Board;
-            int[,] expectedBoard = new int[8, 8]
+            List<ChessPiece> chessPieces = ChessPieceFactory.CreateChessPieces();
+            chessBoard.PopulateBoard(chessPieces);
+            Square[,] board = chessBoard.Board;
+
+            Assert.Multiple(() =>
+            {
+                // iterate through all created chess pieces, and assert that they exist on the board in their correct places
+                foreach(ChessPiece piece in chessPieces)
                 {
-                    { 24, 22, 23, 25, 26, 23, 22, 24 },
-                    { 21, 21, 21, 21, 21, 21, 21, 21 },
-                    { 0, 0, 0, 0, 0, 0, 0, 0 },
-                    { 0, 0, 0, 0, 0, 0, 0, 0 },
-                    { 0, 0, 0, 0, 0, 0, 0, 0 },
-                    { 0, 0, 0, 0, 0, 0, 0, 0 },
-                    { 11, 11, 11, 11, 11, 11, 11, 11 },
-                    { 14, 12, 13, 15, 16, 13, 12, 14 }
-                };
+                    BoardPosition boardPosition = piece.GetStartingPosition();
+                    Square square = board[boardPosition.RankAsInt, boardPosition.FileAsInt];
+                    Assert.That(square, Is.Not.Null);
+                    Assert.That(square.Piece.Equals(piece));
+                }
 
-            // LINQ to test for 2d array equality
-            bool equal = innerBoard.Rank == expectedBoard.Rank &&
-                        Enumerable.Range(0, innerBoard.Rank)
-                        .All(dimension => innerBoard.GetLength(dimension) == expectedBoard.GetLength(dimension)) &&
-                        innerBoard.Cast<int>().SequenceEqual(expectedBoard.Cast<int>());
-
-            Assert.That(equal, Is.True);
+                // iterate through ranks 3 through 6 and assert that all pieces are of NoPiece here
+                for (int rank = (int)RANK.THREE; rank <= (int)RANK.SIX; rank++)
+                {
+                    for (int file = (int)FILE.A; file <= (int)FILE.H; file++)
+                    {
+                        Square square = board[rank, file];
+                        Assert.That(square, Is.Not.Null);
+                        Assert.That(square.Piece.Equals(NoPiece.Instance));
+                    }
+                }
+            });
         }
 
         [Test]
-        public void Test_PruneCapturedPieces_Success()
+        public void Test_RemoveCapturedPieces_Success()
         {
-            ChessPiece whiteQueenPiece = new ChessPieceQueen(ChessPiece.Color.WHITE, 1, new("D1"));
-            ChessPiece whiteKingPiece = new ChessPieceKing(ChessPiece.Color.WHITE, new("E1"));
-            ChessPiece whiteBishopPiece = new ChessPieceBishop(ChessPiece.Color.WHITE, 2, new("F1"));
+            ChessPiece whiteQueenPiece = new ChessPieceQueen(Color.WHITE, 1, new("D1"));
+            ChessPiece whiteKingPiece = new ChessPieceKing(Color.WHITE, new("E1"));
+            ChessPiece whiteBishopPiece = new ChessPieceBishop(Color.WHITE, 2, new("F1"));
             ChessPiece whitePawn4Piece = new ChessPieceWhitePawn(4, new("D2"));
             ChessPiece whitePawn5Piece = new ChessPieceWhitePawn(4, new("E2"));
             ChessPiece whitePawn6Piece = new ChessPieceWhitePawn(4, new("F2"));
-            ChessPiece blackBishopPiece = new ChessPieceBishop(ChessPiece.Color.BLACK, 1, new("A5"));
-            ChessPiece blackRookPiece = new ChessPieceRook(ChessPiece.Color.BLACK, 1, new("A1"));
-            ChessPiece blackKnightPiece = new ChessPieceKnight(ChessPiece.Color.BLACK, 1, new("F3"));
+            ChessPiece blackBishopPiece = new ChessPieceBishop(Color.BLACK, 1, new("A5"));
+            ChessPiece blackRookPiece = new ChessPieceRook(Color.BLACK, 1, new("A1"));
+            ChessPiece blackKnightPiece = new ChessPieceKnight(Color.BLACK, 1, new("F3"));
             ChessPiece blackPawn1Piece = new ChessPieceBlackPawn(1, new("F5"));
 
             List<ChessPiece> chessPiecesOnBoard = new()
@@ -144,7 +148,7 @@ namespace Tests.Board
                 whitePawn5Piece, whitePawn6Piece, blackBishopPiece, blackRookPiece, blackKnightPiece, blackPawn1Piece
             };
 
-            List<ChessPiece> prunedPieces = chessBoard.PruneCapturedPieces(allChessPieces, lcp => true);
+            List<ChessPiece> prunedPieces = chessBoard.RemovedCapturedPieces(allChessPieces, lcp => true);
 
             Assert.That(prunedPieces.SequenceEqual(chessPiecesOnBoard), Is.True);
         }

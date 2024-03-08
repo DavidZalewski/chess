@@ -1,5 +1,6 @@
 ﻿using Chess.Board;
 using Chess.Pieces;
+using Chess.Services;
 
 namespace Tests.Pieces
 {
@@ -88,8 +89,11 @@ namespace Tests.Pieces
         [Test(Description = "Tests that the white king has no valid moves it can make at the start of the game")]
         public void Test_WhiteKing_IsValidMove_NoValidMovesFromStart()
         {
-            ChessPiece whiteKingPiece = new ChessPieceKing(ChessPiece.Color.WHITE, new(RANK.ONE, FILE.E));
+            List<ChessPiece> chessPieces = ChessPieceFactory.CreateChessPieces();
+            ChessPiece whiteKingPiece = chessPieces.Find((ChessPiece cp) => cp.GetColor().Equals(ChessPiece.Color.WHITE) &&
+                                                                            cp.GetPiece().Equals(ChessPiece.Piece.KING));
             ChessBoard chessBoard = new();
+            chessBoard.PopulateBoard(chessPieces);
             List<BoardPosition> possibleMoves = new();
 
             for (int i = 0; i < 8; i++)
@@ -102,6 +106,7 @@ namespace Tests.Pieces
 
             Assert.Multiple(() =>
             {
+                Assert.That(whiteKingPiece is not null);
                 foreach (BoardPosition possibleMove in possibleMoves)
                 {
                     Assert.That(whiteKingPiece.IsValidMove(chessBoard, possibleMove), Is.False, possibleMove.StringValue);
@@ -112,8 +117,11 @@ namespace Tests.Pieces
         [Test(Description = "Tests that the black king has no valid moves it can make at the start of the game")]
         public void Test_BlackKing_IsValidMove_NoValidMovesFromStart()
         {
-            ChessPiece blackKingPiece = new ChessPieceKing(ChessPiece.Color.BLACK, new(RANK.EIGHT, FILE.E));
+            List<ChessPiece> chessPieces = ChessPieceFactory.CreateChessPieces();
+            ChessPiece blackKingPiece = chessPieces.Find((ChessPiece cp) => cp.GetColor().Equals(ChessPiece.Color.BLACK) &&
+                                                                            cp.GetPiece().Equals(ChessPiece.Piece.KING));
             ChessBoard chessBoard = new();
+            chessBoard.PopulateBoard(chessPieces);
             List<BoardPosition> possibleMoves = new();
 
             for (int i = 0; i < 8; i++)
@@ -126,6 +134,7 @@ namespace Tests.Pieces
 
             Assert.Multiple(() =>
             {
+                Assert.That(blackKingPiece is not null);
                 foreach (BoardPosition possibleMove in possibleMoves)
                 {
                     Assert.That(blackKingPiece.IsValidMove(chessBoard, possibleMove), Is.False);

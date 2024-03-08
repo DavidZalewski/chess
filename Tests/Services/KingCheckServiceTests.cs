@@ -20,9 +20,8 @@ namespace Tests.Services
         {
             // Construct board; set black king on D5 and white king on E3 on chess board object
             ChessBoard chessBoard = new();
-            // TODO: Implement Later
-            //chessBoard.SetBoardValue(new BoardPosition("E3"), 16);
-            //chessBoard.SetBoardValue(new BoardPosition("D5"), 26);
+            chessBoard.SetBoardValue(new BoardPosition("E3"), 16);
+            chessBoard.SetBoardValue(new BoardPosition("D5"), 26);
 
             // create the chess piece objects with the correct positions as on the chessboard object
             ChessPiece whiteKingPiece = new ChessPieceKing(ChessPiece.Color.WHITE, new BoardPosition("E3"));
@@ -49,8 +48,8 @@ namespace Tests.Services
             // Construct board; set black king on D5 and white king on E3 on chess board object
             ChessBoard chessBoard = new();
             // TODO: Implement Later
-            //chessBoard.SetBoardValue(new BoardPosition("E3"), 16);
-            //chessBoard.SetBoardValue(new BoardPosition("D5"), 26);
+            chessBoard.SetBoardValue(new BoardPosition("E3"), 16);
+            chessBoard.SetBoardValue(new BoardPosition("D5"), 26);
 
             // create the chess piece objects with the correct positions as on the chessboard object
             ChessPiece whiteKingPiece = new ChessPieceKing(ChessPiece.Color.WHITE, new BoardPosition("E3"));

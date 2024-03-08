@@ -59,7 +59,7 @@ namespace Chess
                 else { return false; }
             });
 
-            _chessPieces = _chessBoard.PruneCapturedPieces(_chessPieces, (List<ChessPiece> removedPieces) =>
+            _chessPieces = _chessBoard.RemovedCapturedPieces(_chessPieces, (List<ChessPiece> removedPieces) =>
             {
                 _action = " capture [" + removedPieces[0].GetPieceName() + "] ";
                 return true;

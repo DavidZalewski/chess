@@ -36,7 +36,17 @@ namespace Chess.Board
         public ChessBoard(ChessBoard? other)
         {
             if (other != null && other.Board != null)
-                Board = other.Board.Clone() as Square[,];
+            {
+                Board = new Square[8, 8]; // Create a new array
+
+                for (int row = 0; row < 8; row++)
+                {
+                    for (int col = 0; col < 8; col++)
+                    {
+                        Board[row, col] = new Square(other.Board[row, col]); // Copy each Square
+                    }
+                }
+            }
         }
 
         private void InitializeBoard()
@@ -68,21 +78,25 @@ namespace Chess.Board
         {
             // Quick placeholder logic during the change
             ChessPiece piece = ChessPieceFactory.CreatePieceFromInt(position, value);
-            Square square = new Square() { Position = position, Piece = piece };
+            Square square = new() { Position = position, Piece = piece };
             SetSquareValue(position, square);
             return true;
         }
 
-        public List<ChessPiece> PruneCapturedPieces(List<ChessPiece> chessPieces, Func<List<ChessPiece>, bool> callBackFunction)
+        // TODO: This function may no longer be needed
+        public List<ChessPiece> RemovedCapturedPieces(List<ChessPiece> chessPieces, Func<List<ChessPiece>, bool> callBackFunction)
         {
             List<ChessPiece> piecesToRemove = new();
             foreach (ChessPiece piece in chessPieces)
             {
                 BoardPosition piecePos = piece.GetCurrentPosition();
                 Square square = Board[piecePos.RankAsInt, piecePos.FileAsInt];
-                piecesToRemove.Add(piece);
-                square.Piece = NoPiece.Instance;
-                piece.SetCurrentPosition(null);
+                if (!square.Piece.Equals(piece))
+                {
+                    piecesToRemove.Add(piece);
+                    square.Piece = NoPiece.Instance;
+                    piece.SetCurrentPosition(null);
+                }            
             }
 
             if (callBackFunction != null && piecesToRemove.Count > 0)

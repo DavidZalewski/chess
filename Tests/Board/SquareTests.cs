@@ -1,10 +1,5 @@
 ﻿using Chess.Board;
 using Chess.Pieces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Tests.Board
 {
@@ -19,9 +14,12 @@ namespace Tests.Board
                 Piece = NoPiece.Instance
             };
 
-            Assert.Equals(RANK.FOUR, square.Position.Rank);
-            Assert.Equals(FILE.F, square.Position.File);
-            Assert.Equals(NoPiece.Instance, square.Piece);
+            Assert.Multiple(() =>
+            {
+                Assert.That(RANK.FOUR == square.Position.Rank);
+                Assert.That(FILE.F == square.Position.File);
+                Assert.That(NoPiece.Instance == square.Piece);
+            });
         }
     }
 }

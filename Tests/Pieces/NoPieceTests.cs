@@ -16,7 +16,7 @@ namespace Tests.Pieces
             var noPiece1 = NoPiece.Instance;
             var noPiece2 = NoPiece.Instance;
 
-            Assert.Equals(noPiece1, noPiece2); // Check if they refer to the same object
+            Assert.That(ReferenceEquals(noPiece1, noPiece2), Is.True); // Check if they refer to the same object
         }
 
         [Test]
@@ -30,7 +30,7 @@ namespace Tests.Pieces
         public void Square_HasCorrectDefaultPiece()
         {
             var square = new Square();
-            Assert.Equals(NoPiece.Instance, square.Piece);
+            Assert.That(NoPiece.Instance == square.Piece);
         }
     }
 }

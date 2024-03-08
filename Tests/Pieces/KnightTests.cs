@@ -176,8 +176,7 @@ namespace Tests.Pieces
             BoardPosition c3 = new(RANK.THREE, FILE.C);
             ChessPiece piece = new ChessPieceKnight(ChessPiece.Color.WHITE, 1, boardPosition);
             // Set White Pawn on C3
-            // TODO: Implement Later
-            //board.SetBoardValue(c3, 11);
+            board.SetBoardValue(c3, 11);
             Assert.That(piece.IsValidMove(board, c3), Is.False);
         }
 
@@ -189,7 +188,7 @@ namespace Tests.Pieces
             ChessPiece piece = new ChessPieceKnight(ChessPiece.Color.BLACK, 2, boardPosition);
             // Set Black Pawn on F3
             // TODO: Implement Later
-            //board.SetBoardValue(f3, 21);
+            board.SetBoardValue(f3, 21);
             Assert.That(piece.IsValidMove(board, f3), Is.False);
         }
 
@@ -243,14 +242,14 @@ namespace Tests.Pieces
 
             // Set White Pawn at B1 and B5, and D5
             // TODO: Implement Later
-            //board.SetBoardValue(b1, 11);
-            //board.SetBoardValue(b5, 11);
-            //board.SetBoardValue(d5, 11);
+            board.SetBoardValue(b1, 11);
+            board.SetBoardValue(b5, 11);
+            board.SetBoardValue(d5, 11);
             //// Set White King at A4
-            //board.SetBoardValue(a4, 15);
+            board.SetBoardValue(a4, 15);
             //// Set Black Pawn at E2 and E4
-            //board.SetBoardValue(e2, 21);
-            //board.SetBoardValue(e4, 21);
+            board.SetBoardValue(e2, 21);
+            board.SetBoardValue(e4, 21);
 
             Assert.Multiple(() =>
             {
@@ -286,14 +285,14 @@ namespace Tests.Pieces
 
             // Set Black Pawn at G1 and G5, and E5
             // TODO: Implement Later
-            //board.SetBoardValue(g1, 21);
-            //board.SetBoardValue(g5, 21);
-            //board.SetBoardValue(e5, 21);
+            board.SetBoardValue(g1, 21);
+            board.SetBoardValue(g5, 21);
+            board.SetBoardValue(e5, 21);
             //// Set Black King at H4
-            //board.SetBoardValue(h4, 25);
+            board.SetBoardValue(h4, 25);
             //// Set White Pawn at D2 and D4
-            //board.SetBoardValue(d2, 11);
-            //board.SetBoardValue(d4, 11);
+            board.SetBoardValue(d2, 11);
+            board.SetBoardValue(d4, 11);
 
             Assert.Multiple(() =>
             {

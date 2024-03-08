@@ -92,8 +92,6 @@ namespace Chess
                 BoardPosition rookLastPosition = rook.GetCurrentPosition();
 
                 // set board manually
-                // TODO: IMPLEMENT THIS BACK IN
-                /*
                 cb.SetBoardValue(kingLastPosition, 0);
                 cb.SetBoardValue(rookLastPosition, 0);
 
@@ -102,7 +100,6 @@ namespace Chess
 
                 cb.SetBoardValue(king.GetCurrentPosition(), king.GetRealValue());
                 cb.SetBoardValue(rook.GetCurrentPosition(), rook.GetRealValue());
-                */
             }
 
             return true;
