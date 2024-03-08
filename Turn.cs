@@ -45,7 +45,7 @@ namespace Chess
                     if ((cp as ChessPiecePawn).IsEnPassantTarget)
                     {
                         Assert.That(_chessBoard.IsPieceAtPosition(cp.GetCurrentPosition()), Is.True);
-                        _chessBoard.SetBoardValue(cp.GetCurrentPosition(), 0);
+                        _chessBoard.Board[cp.GetCurrentPosition().FileAsInt, cp.GetCurrentPosition().RankAsInt].Piece = NoPiece.Instance;
                         _action = " capture [" + cp.GetPieceName() + "] ";
                     }
                 }
@@ -139,14 +139,14 @@ namespace Chess
                 BoardPosition rookLastPosition = rook.GetCurrentPosition();
 
                 // set board manually
-                _chessBoard.SetBoardValue(kingLastPosition, 0);
-                _chessBoard.SetBoardValue(rookLastPosition, 0);
+                _chessBoard.Board[kingLastPosition.FileAsInt, kingLastPosition.RankAsInt].Piece = NoPiece.Instance;
+                _chessBoard.Board[rookLastPosition.FileAsInt, rookLastPosition.RankAsInt].Piece = NoPiece.Instance;
 
                 king.SetCurrentPosition(new(v, kh));
                 rook.SetCurrentPosition(new(v, rh));
 
-                _chessBoard.SetBoardValue(king.GetCurrentPosition(), king.GetRealValue());
-                _chessBoard.SetBoardValue(rook.GetCurrentPosition(), rook.GetRealValue());
+                _chessBoard.Board[king.GetCurrentPosition().FileAsInt, king.GetCurrentPosition().RankAsInt].Piece = king;
+                _chessBoard.Board[rook.GetCurrentPosition().FileAsInt, rook.GetCurrentPosition().RankAsInt].Piece = rook;
             }
 
             return true;

@@ -92,6 +92,8 @@ namespace Chess
                 BoardPosition rookLastPosition = rook.GetCurrentPosition();
 
                 // set board manually
+                // TODO: IMPLEMENT THIS BACK IN
+                /*
                 cb.SetBoardValue(kingLastPosition, 0);
                 cb.SetBoardValue(rookLastPosition, 0);
 
@@ -100,6 +102,7 @@ namespace Chess
 
                 cb.SetBoardValue(king.GetCurrentPosition(), king.GetRealValue());
                 cb.SetBoardValue(rook.GetCurrentPosition(), rook.GetRealValue());
+                */
             }
 
             return true;
@@ -392,8 +395,8 @@ namespace Chess
 
         public string DisplayBoard(ChessBoard chessBoard)
         {
-            int[,] boardData = chessBoard.GetBoard();
-            String output = "*|*A*|*B*|*C*|*D*|*E*|*F*|*G*|*H*|*\n";
+            Square[,] boardData = chessBoard.Board; // Use the Square array directly
+            string output = "*|*A*|*B*|*C*|*D*|*E*|*F*|*G*|*H*|*\n";
             int vertIndex = 8;
 
             for (int f = 0; f < 8; f++)
@@ -401,47 +404,40 @@ namespace Chess
                 output += vertIndex;
                 for (int s = 0; s < 8; s++)
                 {
-                    BoardPosition boardPosition = new((RANK)f, (FILE)s);
-                    if (chessBoard.IsPieceAtPosition(boardPosition))
+                    if (boardData[f, s].Piece != NoPiece.Instance) // Check for chess piece
                     {
-                        ChessPiece chessPiece = _chessPieces.First(p => p.GetCurrentPosition() == boardPosition);
-                        if (chessPiece == null)
+                        ChessPiece chessPiece = boardData[f, s].Piece; // Get the piece directly 
+                        Assert.That(chessPiece is not NoPiece);
+                        String c = "", p = "", i = "";
+                        switch (chessPiece.GetColor())
                         {
-                            throw new Exception("Unexpected! Fix this");
+                            case ChessPiece.Color.WHITE: c = "W"; break;
+                            case ChessPiece.Color.BLACK: c = "B"; break;
+                        }
+
+                        switch (chessPiece.GetPiece())
+                        {
+                            case ChessPiece.Piece.PAWN: p = "P"; break;
+                            case ChessPiece.Piece.KNIGHT: p = "K"; break;
+                            case ChessPiece.Piece.BISHOP: p = "B"; break;
+                            case ChessPiece.Piece.ROOK: p = "R"; break;
+                            case ChessPiece.Piece.QUEEN: p = "Q"; break;
+                            case ChessPiece.Piece.KING:
+                                {
+                                    p = "K"; i = ""; break;
+                                }
+                        }
+
+                        if (!chessPiece.GetPiece().Equals(ChessPiece.Piece.KING))
+                        {
+                            i = chessPiece.GetId().ToString();
                         }
                         else
                         {
-                            String c = "", p = "", i = "";
-                            switch (chessPiece.GetColor())
-                            {
-                                case ChessPiece.Color.WHITE: c = "W"; break;
-                                case ChessPiece.Color.BLACK: c = "B"; break;
-                            }
-
-                            switch (chessPiece.GetPiece())
-                            {
-                                case ChessPiece.Piece.PAWN: p = "P"; break;
-                                case ChessPiece.Piece.KNIGHT: p = "K"; break;
-                                case ChessPiece.Piece.BISHOP: p = "B"; break;
-                                case ChessPiece.Piece.ROOK: p = "R"; break;
-                                case ChessPiece.Piece.QUEEN: p = "Q"; break;
-                                case ChessPiece.Piece.KING:
-                                    {
-                                        p = "K"; i = ""; break;
-                                    }
-                            }
-
-                            if (!chessPiece.GetPiece().Equals(ChessPiece.Piece.KING))
-                            {
-                                i = chessPiece.GetId().ToString();
-                            }
-                            else
-                            {
-                                i = "0";
-                            }
-
-                            output += "|" + c + p + i;
+                            i = "0";
                         }
+
+                        output += "|" + c + p + i;
                     }
                     else
                     {
@@ -454,6 +450,70 @@ namespace Chess
             output += "*|*A*|*B*|*C*|*D*|*E*|*F*|*G*|*H*|*\n";
             return output;
         }
+        //public string DisplayBoard(ChessBoard chessBoard)
+        //{
+        //    int[,] boardData = chessBoard.Board;
+        //    String output = "*|*A*|*B*|*C*|*D*|*E*|*F*|*G*|*H*|*\n";
+        //    int vertIndex = 8;
+
+        //    for (int f = 0; f < 8; f++)
+        //    {
+        //        output += vertIndex;
+        //        for (int s = 0; s < 8; s++)
+        //        {
+        //            BoardPosition boardPosition = new((RANK)f, (FILE)s);
+        //            if (chessBoard.IsPieceAtPosition(boardPosition))
+        //            {
+        //                ChessPiece chessPiece = _chessPieces.First(p => p.GetCurrentPosition() == boardPosition);
+        //                if (chessPiece == null)
+        //                {
+        //                    throw new Exception("Unexpected! Fix this");
+        //                }
+        //                else
+        //                {
+        //                    String c = "", p = "", i = "";
+        //                    switch (chessPiece.GetColor())
+        //                    {
+        //                        case ChessPiece.Color.WHITE: c = "W"; break;
+        //                        case ChessPiece.Color.BLACK: c = "B"; break;
+        //                    }
+
+        //                    switch (chessPiece.GetPiece())
+        //                    {
+        //                        case ChessPiece.Piece.PAWN: p = "P"; break;
+        //                        case ChessPiece.Piece.KNIGHT: p = "K"; break;
+        //                        case ChessPiece.Piece.BISHOP: p = "B"; break;
+        //                        case ChessPiece.Piece.ROOK: p = "R"; break;
+        //                        case ChessPiece.Piece.QUEEN: p = "Q"; break;
+        //                        case ChessPiece.Piece.KING:
+        //                            {
+        //                                p = "K"; i = ""; break;
+        //                            }
+        //                    }
+
+        //                    if (!chessPiece.GetPiece().Equals(ChessPiece.Piece.KING))
+        //                    {
+        //                        i = chessPiece.GetId().ToString();
+        //                    }
+        //                    else
+        //                    {
+        //                        i = "0";
+        //                    }
+
+        //                    output += "|" + c + p + i;
+        //                }
+        //            }
+        //            else
+        //            {
+        //                output += "|   ";
+        //            }
+        //        }
+        //        output += "|" + vertIndex + "\n";
+        //        vertIndex--;
+        //    }
+        //    output += "*|*A*|*B*|*C*|*D*|*E*|*F*|*G*|*H*|*\n";
+        //    return output;
+        //}
 
         public Turn? GetLastTurn()
         {

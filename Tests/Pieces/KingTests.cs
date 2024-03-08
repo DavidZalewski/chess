@@ -3,7 +3,7 @@ using Chess.Pieces;
 
 namespace Tests.Pieces
 {
-    public class ChessPieceKingTests
+    public class KingTests
     {
         private readonly BoardPosition e1 = new(RANK.ONE, FILE.E);
         private readonly BoardPosition e8 = new(RANK.EIGHT, FILE.E);
@@ -85,30 +85,11 @@ namespace Tests.Pieces
             });
         }
 
-        private ChessBoard InitializeFullBoard()
-        {
-            ChessBoard chessBoard = new();
-            int[,] boardValue = new int[8, 8]
-            {
-                { 24 /*A8*/, 22, 23, 25, 26, 23, 22, 24 /*H8*/},
-                { 21, 21, 21, 21, 21, 21, 21, 21 },
-                { 0, 0, 0, 0, 0, 0, 0, 0 },
-                { 0, 0, 0, 0, 0, 0, 0, 0 },
-                { 0, 0, 0, 0, 0, 0, 0, 0 },
-                { 0, 0, 0, 0, 0, 0, 0, 0 },
-                { 11, 11, 11, 11, 11, 11, 11, 11 },
-                { 14 /*A1*/, 12, 13, 15, 16, 13, 12, 11 /*H1*/},
-            };
-            chessBoard.InternalTestOnly_SetBoard(boardValue);
-
-            return chessBoard;
-        }
-
         [Test(Description = "Tests that the white king has no valid moves it can make at the start of the game")]
         public void Test_WhiteKing_IsValidMove_NoValidMovesFromStart()
         {
             ChessPiece whiteKingPiece = new ChessPieceKing(ChessPiece.Color.WHITE, new(RANK.ONE, FILE.E));
-            ChessBoard chessBoard = InitializeFullBoard();
+            ChessBoard chessBoard = new();
             List<BoardPosition> possibleMoves = new();
 
             for (int i = 0; i < 8; i++)
@@ -132,7 +113,7 @@ namespace Tests.Pieces
         public void Test_BlackKing_IsValidMove_NoValidMovesFromStart()
         {
             ChessPiece blackKingPiece = new ChessPieceKing(ChessPiece.Color.BLACK, new(RANK.EIGHT, FILE.E));
-            ChessBoard chessBoard = InitializeFullBoard();
+            ChessBoard chessBoard = new();
             List<BoardPosition> possibleMoves = new();
 
             for (int i = 0; i < 8; i++)

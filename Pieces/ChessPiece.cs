@@ -30,7 +30,8 @@ namespace Chess.Pieces
             BISHOP = 3,
             ROOK = 4,
             QUEEN = 5,
-            KING = 6
+            KING = 6,
+            NO_PIECE = 7
         }
 
         public enum Color
@@ -103,11 +104,12 @@ namespace Chess.Pieces
             if (ImplementMove(board, position)) return;
 
             BoardPosition previousPosition = _currentPosition;
-            board.SetBoardValue(position, _realValue);
+            board.Board[position.RankAsInt, position.FileAsInt].Piece = this;
             if (previousPosition != position)
             {
                 _hasMoved = true;
-                board.SetBoardValue(previousPosition, 0); // empty the previous square
+                board.Board[previousPosition.RankAsInt, previousPosition.FileAsInt].Piece = NoPiece.Instance;
+
                 _currentPosition = position;
             }
         }

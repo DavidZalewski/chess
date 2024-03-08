@@ -1,4 +1,5 @@
 ﻿using Chess.Pieces;
+using Chess.Services;
 
 namespace Chess.Board
 {
@@ -9,27 +10,49 @@ namespace Chess.Board
         // looking at diagrams where the board is labelled, white is always on the bottom
         // therefore first value in array [0,0] is A8
         // A1 is found at [7,0]
-        private int[,] _board = new int[8, 8]
-        {
-            { 0 /*A8*/, 0, 0, 0, 0, 0, 0, 0 /*H8*/},
-            { 0, 0, 0, 0, 0, 0, 0, 0 },
-            { 0, 0, 0, 0, 0, 0, 0, 0 },
-            { 0, 0, 0, 0, 0, 0, 0, 0 },
-            { 0, 0, 0, 0, 0, 0, 0, 0 },
-            { 0, 0, 0, 0, 0, 0, 0, 0 },
-            { 0, 0, 0, 0, 0, 0, 0, 0 },
-            { 0 /*A1*/, 0, 0, 0, 0, 0, 0, 0 /*H1*/},
-        };
 
-        public ChessBoard() { }
+        // This code is kept for historical reasons, so that at a glance we can see how this board is abstracted in its raw presentation
+        // All future code beyond this point simply encapsulates this internal representation in an intuitive way
+        //private int[,] _board = new int[8, 8]
+        //{
+        //    { 0 /*A8*/, 0, 0, 0, 0, 0, 0, 0 /*H8*/},
+        //    { 0, 0, 0, 0, 0, 0, 0, 0 },
+        //    { 0, 0, 0, 0, 0, 0, 0, 0 },
+        //    { 0, 0, 0, 0, 0, 0, 0, 0 },
+        //    { 0, 0, 0, 0, 0, 0, 0, 0 },
+        //    { 0, 0, 0, 0, 0, 0, 0, 0 },
+        //    { 0, 0, 0, 0, 0, 0, 0, 0 },
+        //    { 0 /*A1*/, 0, 0, 0, 0, 0, 0, 0 /*H1*/},
+        //};
+
+        public Square[,] Board { get; set; }
+
+        public ChessBoard() 
+        {
+            Board = new Square[8, 8];
+            InitializeBoard();
+        }
 
         public ChessBoard(ChessBoard? other)
         {
-            if (other != null && other._board != null)
-                _board = other._board.Clone() as int[,];
+            if (other != null && other.Board != null)
+                Board = other.Board.Clone() as Square[,];
         }
 
-        public int[,] GetBoard() { return _board; }
+        private void InitializeBoard()
+        {
+            for (int row = 0; row < 8; row++)
+            {
+                for (int col = 0; col < 8; col++)
+                {
+                    Board[row, col] = new Square()
+                    {
+                        Position = new BoardPosition((RANK)row, (FILE)col),
+                        Piece = NoPiece.Instance
+                    };
+                }
+            }
+        }
 
         public bool PopulateBoard(List<ChessPiece> chessPieces)
         {
@@ -47,8 +70,10 @@ namespace Chess.Board
             foreach (ChessPiece piece in chessPieces)
             {
                 BoardPosition piecePos = piece.GetCurrentPosition();
-                if (_board[piecePos.RankAsInt, piecePos.FileAsInt] != piece.GetRealValue())
-                    piecesToRemove.Add(piece);
+                Square square = Board[piecePos.RankAsInt, piecePos.FileAsInt];
+                piecesToRemove.Add(piece);
+                square.Piece = NoPiece.Instance;
+                piece.SetCurrentPosition(null);
             }
 
             if (callBackFunction != null && piecesToRemove.Count > 0)
@@ -60,15 +85,9 @@ namespace Chess.Board
             return chessPieces;
         }
 
-        public bool SetBoardValue(BoardPosition position, int value)
-        {
-            _board[position.RankAsInt, position.FileAsInt] = value;
-            return true;
-        }
-
         public bool IsPieceAtPosition(BoardPosition position)
         {
-            return _board[position.RankAsInt, position.FileAsInt] > 0;
+            return Board[position.RankAsInt, position.FileAsInt].Piece is not NoPiece;
         }
 
         public bool IsPieceAtPosition(BoardPosition position, ChessPiece.Color color)
@@ -78,29 +97,25 @@ namespace Chess.Board
             {
                 return false; // index out of bounds
             }
-            int value = _board[position.RankAsInt, position.FileAsInt];
-            if (color == ChessPiece.Color.WHITE)
-                return value > 0 && value < 20;
-            else
-                return value > 20 && value < 30;
+            ChessPiece piece = Board[position.RankAsInt, position.FileAsInt].Piece;
+            return (piece is not NoPiece && piece.GetColor() == color);
         }
 
-        public bool IsPieceAtPosition(BoardPosition position, ChessPiece.Color color, ChessPiece.Piece piece)
+        public bool IsPieceAtPosition(BoardPosition position, ChessPiece.Color color, ChessPiece.Piece pieceType)
         {
-            int value = _board[position.RankAsInt, position.FileAsInt];
-            return value == ((int)color + (int)piece);
+            ChessPiece piece = Board[position.RankAsInt, position.FileAsInt].Piece;
+            return (piece is not NoPiece && piece.GetColor() == color && piece.GetPiece() == pieceType);
         }
 
         public bool IsPieceAtPosition(ChessPiece chessPiece)
         {
             BoardPosition position = chessPiece.GetCurrentPosition();
-            int val = _board[position.RankAsInt, position.FileAsInt];
-            return val == chessPiece.GetRealValue();
+            return Board[position.RankAsInt, position.FileAsInt].Piece == chessPiece;
         }
 
-        internal void InternalTestOnly_SetBoard(int[,] boardValue)
+        internal void InternalTestOnly_SetBoard(Square[,] boardValue)
         {
-            _board = boardValue;
+            Board = boardValue;
         }
     }
 }

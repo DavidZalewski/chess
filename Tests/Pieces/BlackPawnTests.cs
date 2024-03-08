@@ -3,11 +3,11 @@ using Chess.Pieces;
 
 namespace Tests.Pieces
 {
-    public class ChessPieceBlackPawnTests
+    public class BlackPawnTests
     {
         private ChessBoard board = new ChessBoard();
 
-        public ChessPieceBlackPawnTests()
+        public BlackPawnTests()
         {
             Setup();
         }
@@ -111,7 +111,8 @@ namespace Tests.Pieces
 
             BoardPosition capturePosition = new BoardPosition(RANK.FOUR, FILE.D);
             // Set white pawn at D5
-            board.SetBoardValue(capturePosition, 11);
+            // TODO: Implement Later
+            //board.SetBoardValue(capturePosition, 11);
             Assert.That(piece.IsValidMove(board, capturePosition), Is.True);
         }
 
@@ -124,7 +125,8 @@ namespace Tests.Pieces
 
             BoardPosition capturePosition = new BoardPosition(RANK.THREE, FILE.D);
             // Set white pawn at D3
-            board.SetBoardValue(capturePosition, 11);
+            // TODO: Implement Later
+            //board.SetBoardValue(capturePosition, 11);
             Assert.That(piece.IsValidMove(board, capturePosition), Is.True);
         }
 
@@ -137,7 +139,8 @@ namespace Tests.Pieces
 
             BoardPosition capturePosition = new BoardPosition(RANK.THREE, FILE.D);
             // Set black pawn at D3
-            board.SetBoardValue(capturePosition, 21);
+            // TODO: Implement Later
+            //board.SetBoardValue(capturePosition, 21);
             Assert.That(piece.IsValidMove(board, capturePosition), Is.False);
         }
 
@@ -150,7 +153,8 @@ namespace Tests.Pieces
 
             BoardPosition capturePosition = new BoardPosition(RANK.THREE, FILE.E);
             // Set white pawn at E3
-            board.SetBoardValue(capturePosition, 11);
+            // TODO: Implement Later
+            //board.SetBoardValue(capturePosition, 11);
             Assert.That(piece.IsValidMove(board, capturePosition), Is.False);
         }
 

@@ -25,8 +25,8 @@ namespace Tests.Board
                 Assert.That(board1, Is.Not.Null);
                 Assert.That(board2, Is.Not.Null);
                 Assert.That(board1, Is.Not.EqualTo(board2));
-                Assert.That(board1.GetBoard(), Is.EqualTo(board2.GetBoard()));
-                Assert.That(Object.ReferenceEquals(board1.GetBoard(),board2.GetBoard()), Is.False);
+                Assert.That(board1.Board, Is.EqualTo(board2.Board));
+                Assert.That(Object.ReferenceEquals(board1.Board,board2.Board), Is.False);
             });
         }
 
@@ -35,7 +35,8 @@ namespace Tests.Board
         {
             BoardPosition boardPosition = new BoardPosition(RANK.THREE, FILE.F);
             Assert.That(chessBoard.IsPieceAtPosition(boardPosition), Is.False);
-            chessBoard.SetBoardValue(boardPosition, 11);
+            // TODO: Implement this 
+            // chessBoard.SetBoardValue(boardPosition, 11);
             Assert.That(chessBoard.IsPieceAtPosition(boardPosition), Is.True);
         }
 
@@ -44,7 +45,8 @@ namespace Tests.Board
         {
             BoardPosition boardPosition = new BoardPosition(RANK.THREE, FILE.F);
             Assert.That(chessBoard.IsPieceAtPosition(boardPosition), Is.False);
-            chessBoard.SetBoardValue(boardPosition, 11);
+            // TODO: Implement this 
+            //chessBoard.SetBoardValue(boardPosition, 11);
             Assert.That(chessBoard.IsPieceAtPosition(boardPosition, ChessPiece.Color.WHITE), Is.True);
             Assert.That(chessBoard.IsPieceAtPosition(boardPosition, ChessPiece.Color.BLACK), Is.False);
         }
@@ -54,7 +56,8 @@ namespace Tests.Board
         {
             BoardPosition boardPosition = new BoardPosition(RANK.SIX, FILE.G);
             Assert.That(chessBoard.IsPieceAtPosition(boardPosition), Is.False);
-            chessBoard.SetBoardValue(boardPosition, 21);
+            // TODO: Implement this 
+            //chessBoard.SetBoardValue(boardPosition, 21);
             Assert.That(chessBoard.IsPieceAtPosition(boardPosition, ChessPiece.Color.WHITE), Is.False);
             Assert.That(chessBoard.IsPieceAtPosition(boardPosition, ChessPiece.Color.BLACK), Is.True);
         }
@@ -64,7 +67,8 @@ namespace Tests.Board
         {
             BoardPosition boardPosition = new("G6");
             Assert.That(chessBoard.IsPieceAtPosition(boardPosition), Is.False);
-            chessBoard.SetBoardValue(boardPosition, 21);
+            // TODO: Implement this 
+            //chessBoard.SetBoardValue(boardPosition, 21);
             Assert.That(chessBoard.IsPieceAtPosition(boardPosition, ChessPiece.Color.WHITE), Is.False);
             Assert.That(chessBoard.IsPieceAtPosition(boardPosition, ChessPiece.Color.BLACK), Is.True);
             Assert.That(chessBoard.IsPieceAtPosition(boardPosition, ChessPiece.Color.BLACK, ChessPiece.Piece.PAWN), Is.True);
@@ -76,18 +80,21 @@ namespace Tests.Board
         {
             BoardPosition boardPosition = new("G6");
             Assert.That(chessBoard.IsPieceAtPosition(boardPosition), Is.False);
-            chessBoard.SetBoardValue(boardPosition, 24);
+            // TODO: Implement this 
+            //chessBoard.SetBoardValue(boardPosition, 24);
             Assert.That(chessBoard.IsPieceAtPosition(boardPosition, ChessPiece.Color.WHITE), Is.False);
             Assert.That(chessBoard.IsPieceAtPosition(boardPosition, ChessPiece.Color.BLACK), Is.True);
             Assert.That(chessBoard.IsPieceAtPosition(boardPosition, ChessPiece.Color.BLACK, ChessPiece.Piece.PAWN), Is.False);
             Assert.That(chessBoard.IsPieceAtPosition(boardPosition, ChessPiece.Color.BLACK, ChessPiece.Piece.ROOK), Is.True);
         }
 
+        // TODO rewrite this to work with Square[,]
         [Test]
         public void Test_PopulateBoard_Success()
         {
             chessBoard.PopulateBoard(ChessPieceFactory.CreateChessPieces());
-            int[,] innerBoard = chessBoard.GetBoard();
+            
+            int[,] innerBoard = new int[8, 8]; // chessBoard.Board;
             int[,] expectedBoard = new int[8, 8]
                 {
                     { 24, 22, 23, 25, 26, 23, 22, 24 },
