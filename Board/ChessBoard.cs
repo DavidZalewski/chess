@@ -64,6 +64,15 @@ namespace Chess.Board
             return true;
         }
 
+        public bool SetBoardValue(BoardPosition position, int value)
+        {
+            // Quick placeholder logic during the change
+            ChessPiece piece = ChessPieceFactory.CreatePieceFromInt(position, value);
+            Square square = new Square() { Position = position, Piece = piece };
+            SetSquareValue(position, square);
+            return true;
+        }
+
         public List<ChessPiece> PruneCapturedPieces(List<ChessPiece> chessPieces, Func<List<ChessPiece>, bool> callBackFunction)
         {
             List<ChessPiece> piecesToRemove = new();
@@ -111,6 +120,11 @@ namespace Chess.Board
         {
             BoardPosition position = chessPiece.GetCurrentPosition();
             return Board[position.RankAsInt, position.FileAsInt].Piece == chessPiece;
+        }
+
+        private void SetSquareValue(BoardPosition position, Square square)
+        {
+            Board[position.RankAsInt, position.FileAsInt] = square;
         }
 
         internal void InternalTestOnly_SetBoard(Square[,] boardValue)
