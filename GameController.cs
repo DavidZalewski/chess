@@ -401,7 +401,7 @@ namespace Chess
                 output += vertIndex;
                 for (int s = 0; s < 8; s++)
                 {
-                    if (boardData[f, s].Piece != NoPiece.Instance) // Check for chess piece
+                    if (boardData[f, s].Piece is not NoPiece) // Check for chess piece
                     {
                         ChessPiece chessPiece = boardData[f, s].Piece; // Get the piece directly 
                         Assert.That(chessPiece is not NoPiece);

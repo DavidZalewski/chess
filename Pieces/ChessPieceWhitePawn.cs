@@ -26,6 +26,7 @@ namespace Chess.Pieces
 
             if (_IsEnPassantCallBackFunction != null)
             {
+                Console.WriteLine("ChessPieceBlackPawn.IsValidMove: Invoking IsEnPassantCallBackFunction");
                 bool IsValidEnPassant = _IsEnPassantCallBackFunction.Invoke(board, position, this);
                 if (IsValidEnPassant) { return true; }
             }

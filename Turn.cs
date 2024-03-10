@@ -30,13 +30,22 @@ namespace Chess
             _newPosition = newPosition;
             _action = " move ";
             ChessPiece.SetCastleCallbackFunction(this.CastleCallBackFunction);
-            ChessPiece.SetIsEnPassantCallbackFunction(this.IsEnPassantCallBackFunction);
+            ChessPiece.SetIsEnPassantCallbackFunction(this.IsEnPassantCallBackFunction); // THIS IS THE PROBLEM
             _chessBoard = new ChessBoard(chessBoard); // copy state of board
-            _chessPieces = chessPieces.Select(a => (ChessPiece)a.Clone()).ToArray().ToList(); // TODO: No longer needed
-            _piece = _chessPieces.First(p => p.Equals(piece)); 
+            _chessPieces = _chessBoard.Board
+                .Cast<Square>()
+                .Select(square => square.Piece)
+                .Where(piece => piece is not NoPiece)
+                .ToArray()
+                .ToList();
+            _piece = _chessPieces.First(p => p.Equals(piece));
+            Console.WriteLine("Turn Ctor: Piece: " + _piece.GetPieceName());
+            Console.WriteLine("Ctor: Turn._chessPieces.Count(): " + _chessPieces.Count);
             if (!_piece.IsValidMove(_chessBoard, _newPosition))
                 throw new Exception("Cannot construct turn. Invalid Move for piece");
+            Console.WriteLine("After _piece.IsValidMove(): Turn._chessPieces.Count(): " + _chessPieces.Count);
             _piece.Move(_chessBoard, _newPosition); // update the board to reflect latest state - if there is a capture here - update the list of pieces we just copied to reflect the current state of board                     
+            Console.WriteLine("After _piece.Move(): Turn._chessPieces.Count(): " + _chessPieces.Count);
             // we have to handle En Passant pruning differently
             _chessPieces.ForEach((ChessPiece cp) =>
             {
@@ -44,25 +53,40 @@ namespace Chess
                 {
                     if ((cp as ChessPiecePawn).IsEnPassantTarget)
                     {
+                        Console.WriteLine(cp.GetPieceName() + " Is En Passant Target");
                         Assert.That(_chessBoard.IsPieceAtPosition(cp.GetCurrentPosition()), Is.True);
                         _action = " capture [" + cp.GetPieceName() + "] ";
                     }
                 }
             });
-            _chessPieces.RemoveAll((ChessPiece cp) =>
+            Console.WriteLine("After _chessPieces.ForEach: Turn._chessPieces.Count(): " + _chessPieces.Count);
+
+            ChessPiece enPassantCapturedPiece = _chessPieces.Find(p => p is ChessPiecePawn && (p as ChessPiecePawn).IsEnPassantTarget);
+            
+            if (enPassantCapturedPiece != null)
             {
-                if (cp is ChessPiecePawn)
+                BoardPosition enPassantPiecePosition = enPassantCapturedPiece.GetCurrentPosition();
+                Square enPassantPieceCapturedSquare = chessBoard.Board[enPassantPiecePosition.RankAsInt, (int)enPassantPiecePosition.FileAsInt];
+                enPassantPieceCapturedSquare.Piece = NoPiece.Instance;
+
+                _chessPieces.RemoveAll((ChessPiece cp) =>
                 {
-                    return (cp as ChessPiecePawn).IsEnPassantTarget;
-                }
-                else { return false; }
-            });
+                    if (cp is ChessPiecePawn)
+                    {
+                        return (cp as ChessPiecePawn).IsEnPassantTarget;
+                    }
+                    else { return false; }
+                });
+            }
+            Console.WriteLine("After _chessPieces.RemoveAll: Turn._chessPieces.Count(): " + _chessPieces.Count);
 
             _chessPieces = _chessBoard.RemovedCapturedPieces(_chessPieces, (List<ChessPiece> removedPieces) =>
             {
                 _action = " capture [" + removedPieces[0].GetPieceName() + "] ";
                 return true;
             });
+
+            Console.WriteLine("After _chessBoard.RemovedCapturedPieces: Turn._chessPieces.Count(): " + _chessPieces.Count);
 
             if (turnNumber % 2 == 0)
             {
@@ -73,6 +97,7 @@ namespace Chess
                 _playerTurn = Color.WHITE;
             }
             _description = _piece.GetPieceName() + " " + _previousPosition.StringValue + _action + _newPosition.StringValue;
+            Console.WriteLine("Turn CTOR End: Description: " + _description);
         }
 
         public Turn(int turnNumber, ChessPiece piece, BoardPosition newPosition, ChessBoard chessBoard, List<ChessPiece> chessPieces)
@@ -153,6 +178,7 @@ namespace Chess
 
         public bool IsEnPassantCallBackFunction(ChessBoard chessBoard, BoardPosition boardPosition, ChessPiece pawnAttemptingEnPassant)
         {
+            Console.WriteLine("IsEnPassantCallBackFunction invoked for Turn: " + _description);
             RANK enPassantRow;
             ChessPiece.Color opponentColor;
             int enPassantOffSet = 0;

@@ -89,6 +89,11 @@ namespace Chess.Services
                     for (int j = 0; j < 8; j++)
                     {
                         BoardPosition pos = new((RANK)i, (FILE)j);
+
+                        // This may solve the problem
+                        ChessPiece.SetCastleCallbackFunction(turn.CastleCallBackFunction);
+                        ChessPiece.SetIsEnPassantCallbackFunction(turn.IsEnPassantCallBackFunction);
+
                         if (piece.IsValidMove(turn.ChessBoard, pos))
                             possibleMoves.Add(new(turn.TurnNumber + 1, piece, piece.GetCurrentPosition(), pos, turn.ChessBoard, turn.ChessPieces));
                     }

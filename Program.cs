@@ -1,14 +1,11 @@
 ﻿using Chess.Board;
 using Chess.Pieces;
+using Chess.Services;
+using System.Collections.Immutable;
+using System.Linq;
 
 namespace Chess
 {
-    // TODO: load g1
-    // keep playing until you get checkmate
-    // save game before checkmate move
-    /// <summary>
-    ///  debug why game doesnt think its checkmate
-    /// </summary>
     internal class Program
     {
         static void Main(string[] args)
@@ -63,6 +60,19 @@ namespace Chess
                 }
                 else
                     break;
+            }
+
+            Console.WriteLine("Select init board state (all, pawns)?");
+            input = Console.ReadLine();
+
+            if (input == "pawns")
+            {
+                Console.WriteLine("Init Pawns Only");
+                List<ChessPiece> pieces = ChessPieceFactory.CreateWhitePawns();
+                pieces.AddRange(ChessPieceFactory.CreateBlackPawns());
+                pieces.Add(new ChessPieceKing(ChessPiece.Color.BLACK, new("E8")));
+                pieces.Add(new ChessPieceKing(ChessPiece.Color.WHITE, new("E1")));
+                gameController = new GameController(chessBoard, pieces);
             }
 
             gameController.StartGame();

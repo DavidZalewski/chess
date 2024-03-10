@@ -2,6 +2,7 @@
 
 namespace Chess.Pieces
 {
+    [Serializable]
     public class NoPiece : ChessPiece
     {
         private static NoPiece _instance;
