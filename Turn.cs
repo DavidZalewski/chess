@@ -52,7 +52,7 @@ namespace Chess
             if (enPassantCapturedPiece != null)
             {
                 _action = " capture [" + enPassantCapturedPiece.GetPieceName() + "] ";
-                chessBoard.SetPieceAtPosition(enPassantCapturedPiece.GetCurrentPosition(), NoPiece.Instance);
+                _chessBoard.SetPieceAtPosition(enPassantCapturedPiece.GetCurrentPosition(), NoPiece.Instance);
             }
             Console.WriteLine("After _chessPieces.RemoveAll: Turn._chessPieces.Count(): " + _chessPieces.Count);
 

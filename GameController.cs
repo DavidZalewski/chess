@@ -390,6 +390,7 @@ namespace Chess
             return DisplayBoard(_chessBoard);
         }
 
+        // TODO: Move this method to ChessBoard
         public string DisplayBoard(ChessBoard chessBoard)
         {
             Square[,] boardData = chessBoard.Board; // Use the Square array directly

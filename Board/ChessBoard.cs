@@ -35,16 +35,18 @@ namespace Chess.Board
 
         public ChessBoard(ChessBoard? other)
         {
-            if (other != null && other.Board != null)
+            if (other == null || other.Board == null)
             {
-                Board = new Square[8, 8]; // Create a new array
+                throw new ArgumentNullException(nameof(other));
+            }
 
-                for (int row = 0; row < 8; row++)
+            Board = new Square[8, 8]; // Create a new array
+
+            for (int row = 0; row < 8; row++)
+            {
+                for (int col = 0; col < 8; col++)
                 {
-                    for (int col = 0; col < 8; col++)
-                    {
-                        Board[row, col] = new Square(other.Board[row, col]); // Copy each Square
-                    }
+                    Board[row, col] = new Square(other.Board[row, col]); // Copy each Square
                 }
             }
         }
@@ -116,7 +118,6 @@ namespace Chess.Board
             return (piece is not NoPiece && piece.GetColor() == color && piece.GetPiece() == pieceType);
         }
 
-        // TODO: Write test for this
         public void SetPieceAtPosition(BoardPosition position, ChessPiece piece)
         {
             GetSquare(position).Piece = piece;

@@ -1,6 +1,4 @@
-﻿using System.Linq.Expressions;
-
-namespace Chess.Board
+﻿namespace Chess.Board
 {
     public enum RANK { ONE = 7, TWO = 6, THREE = 5, FOUR = 4, FIVE = 3, SIX = 2, SEVEN = 1, EIGHT = 0 }
     public enum FILE { A = 0, B = 1, C = 2, D = 3, E = 4, F = 5, G = 6, H = 7 }

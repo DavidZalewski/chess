@@ -1,6 +1,7 @@
 using Chess.Board;
 using Chess.Pieces;
 using Chess.Services;
+using System.Collections.Generic;
 using static Chess.Pieces.ChessPiece;
 
 namespace Tests.Board
@@ -34,6 +35,12 @@ namespace Tests.Board
                 Assert.That(board1.Board, Is.EqualTo(board2.Board));
                 Assert.That(Object.ReferenceEquals(board1.Board,board2.Board), Is.False);
             });
+        }
+
+        [Test]
+        public void Test_ChessBoardCopyConstructor_NullArgument_ThrowsArgumentNullException()
+        {
+            Assert.That(() => new ChessBoard(null), Throws.ArgumentNullException);
         }
 
         [Test]
@@ -118,6 +125,91 @@ namespace Tests.Board
                     }
                 }
             });
+        }
+
+        //[Test]
+        //public void Test_SetPieceAtPosition_Success()
+        //{
+        //    // Arrange various test cases
+        //    BoardPosition a1 = new BoardPosition(RANK.ONE, FILE.A);
+        //    BoardPosition e4 = new BoardPosition(RANK.FOUR, FILE.E);
+        //    BoardPosition h8 = new BoardPosition(RANK.EIGHT, FILE.H);
+        //    var testCases = new List<(BoardPosition position, ChessPiece piece)>
+        //    {
+        //        (a1, new ChessPieceRook(ChessPiece.Color.WHITE, 1, a1)),
+        //        (e4, new ChessPieceBlackPawn(1, e4)),
+        //        (h8, new ChessPieceKnight(ChessPiece.Color.WHITE, 1, h8))
+        //        // Add more test cases as needed 
+        //    };
+
+        //    // Act & Assert
+        //    foreach (var (position, piece) in testCases)
+        //    {
+        //        chessBoard.SetPieceAtPosition(position, piece);
+        //        Square square = chessBoard.GetSquare(position);
+
+        //        Assert.That(square, Is.Not.Null);
+        //        Assert.That(square.Piece, Is.EqualTo(piece));
+        //    }
+        //}
+
+        [Test]
+        public void Test_SetPieceAtPosition_PieceExistsInCorrectSquare()
+        {
+            // Arrange
+            BoardPosition a1 = new("A1");
+            BoardPosition d4 = new("D4");
+            BoardPosition h8 = new("H8");
+            var positions = new[] { a1, d4, h8 };
+            var pieces = new ChessPiece[] { new ChessPieceRook(Color.WHITE, 1, a1),
+                              new ChessPieceQueen(Color.BLACK, 1, d4),
+                              new ChessPieceBishop(Color.BLACK, 2, h8) };
+
+            for (int i = 0; i < positions.Length; i++)
+            {
+                // Act
+                chessBoard.SetPieceAtPosition(positions[i], pieces[i]);
+                var square = chessBoard.Board[positions[i].RankAsInt, positions[i].FileAsInt];
+
+                // Assert
+                Assert.Multiple(() =>
+                {
+                    Assert.That(square.Piece, Is.EqualTo(pieces[i]), $"Piece not set correctly at {positions[i]}");
+                    Assert.That(square.Piece.GetCurrentPosition(), Is.EqualTo(positions[i]), $"Piece position not updated correctly at {positions[i]}");
+                });
+            }
+        }
+
+        [Test]
+        public void Test_GetActivePieces_NewBoard_Returns32Pieces()
+        {
+            // Arrange
+            ChessBoard board = new();
+            board.PopulateBoard(ChessPieceFactory.CreateChessPieces());
+
+            // Act
+            List<ChessPiece> activePieces = board.GetActivePieces();
+
+            // Assert
+            Assert.That(activePieces.Count == 32);
+        }
+
+        [Test]
+        public void Test_GetActivePieces_RemovedPieces_ReturnsCorrectCount()
+        {
+            // Arrange
+            ChessBoard board = new ChessBoard();
+            board.PopulateBoard(ChessPieceFactory.CreateChessPieces());
+
+            // Act
+            board.SetPieceAtPosition(new ("A1"), NoPiece.Instance);
+            board.SetPieceAtPosition(new ("B1"), NoPiece.Instance);
+            board.SetPieceAtPosition(new ("C1"), NoPiece.Instance);
+
+            List<ChessPiece> activePieces = board.GetActivePieces();
+
+            // Assert
+            Assert.That(activePieces.Count == 29);
         }
     }
 }
