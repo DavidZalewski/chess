@@ -202,10 +202,10 @@ namespace Tests.Pieces
                 int assertsInvoked = 0;
                 foreach (BoardPosition position in possibleMoves)
                 {
-                    if (!validMoves.Any(vm => vm.File == position.File && vm.Rank == position.Rank))
+                    if (!validMoves.Any(vm => vm == position))
                     {
-                        Assert.That(whiteKingPiece.IsValidMove(chessBoard, position), Is.False);
-                        Assert.That(blackKingPiece.IsValidMove(chessBoard, position), Is.False);
+                        Assert.That(whiteKingPiece.IsValidMove(chessBoard, position), Is.False, $"White King on D4 should not be able to move to {position.StringValue}");
+                        Assert.That(blackKingPiece.IsValidMove(chessBoard, position), Is.False, $"Black King on D4 should not be able to move to {position.StringValue}");
                         assertsInvoked++;
                     }
                 }

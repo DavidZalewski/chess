@@ -114,8 +114,5 @@
         {
             return Rank == other.Rank; // If the ranks are equal, then the positions are on the same rank
         }
-
-        // TODO: creation methods for .Left(), .Right(), .Up(), .Down(), .OffSet(int, int)
-        // TODO: methods .IsDiagonal(BoardPosition other), .IsOnSameFile(BoardPosition other), .IsOnSameRank(BoardPosition other)
     }
 }

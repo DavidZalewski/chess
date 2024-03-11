@@ -13,45 +13,14 @@ namespace Chess.Pieces
 
         public override bool IsValidMove(ChessBoard board, BoardPosition position)
         {
-            bool isCastling = IsCastleMove(board, position);
-            if (isCastling) return true;
+            if (position == _currentPosition) return false; // Is the current position the same as where its being asked to move?
+            if (IsCastleMove(board, position)) return true; // Are we Castling?
+            if (board.IsPieceAtPosition(position, _color)) return false; // Is there a friendly piece blocking us here?
 
-            bool isFriendlyPieceOnSquare = board.IsPieceAtPosition(position, _color);
-            if (isFriendlyPieceOnSquare) { return false; }
+            int vdistance = Math.Abs(_currentPosition.RankAsInt - position.RankAsInt);
+            int hdistance = Math.Abs(_currentPosition.FileAsInt - position.FileAsInt);
 
-            int v1 = _currentPosition.RankAsInt;
-            int v2 = position.RankAsInt;
-            int h1 = _currentPosition.FileAsInt;
-            int h2 = position.FileAsInt;
-
-            int vdistance = v1 - v2;
-            int hdistance = h1 - h2;
-
-            // TODO: Simplify these
-            if (vdistance == 0 && hdistance == 1 || vdistance == 0 && hdistance == -1) // moving side to side
-            {
-                return true;
-            }
-            else if (vdistance == 1 && hdistance == 0 || vdistance == -1 && hdistance == 0) // moving up / down
-            {
-                return true;
-            }
-            else if (vdistance == 1 && hdistance == -1 || vdistance == -1 && hdistance == -1) // moving diagonal
-            {
-                return true;
-            }
-            else if (vdistance == -1 && hdistance == 1 || vdistance == -1 && hdistance == 1) // moving diagonal
-            {
-                return true;
-            }
-            else if (vdistance == 1 && hdistance == 1) // moving diagonal upright
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
+            return vdistance <= 1 && hdistance <= 1;
         }
 
         protected override bool ImplementMove(ChessBoard board, BoardPosition position)

@@ -66,7 +66,6 @@ namespace Chess.Board
             }
         }
 
-        // TODO: Create Test for this
         public List<ChessPiece> GetActivePieces()
         {
             return Board
