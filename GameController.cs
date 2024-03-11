@@ -1,4 +1,5 @@
 ﻿using Chess.Board;
+using Chess.Callbacks;
 using Chess.Exceptions;
 using Chess.Pieces;
 using Chess.Services;
@@ -39,131 +40,12 @@ namespace Chess
             // Why is GameController even registering callbacks?
             // The Turn object is what handles the state of the game
             // Does this actually need to exist?
-            ChessPiece.SetCastleCallbackFunction(this.CastleCallBackFunction);
-            ChessPiece.SetIsEnPassantCallbackFunction(this.IsEnPassantCallBackFunction);
+            ChessPiece.SetCastleCallbackFunction(SpecialMovesHandlers.DoCastleMove);
+            ChessPiece.SetIsEnPassantCallbackFunction(SpecialMovesHandlers.IsEnPassantMove);
             _turnNumber = 1;
         }
 
-        public bool CastleCallBackFunction(ChessBoard cb, BoardPosition bp, ChessPiece king)
-        {
-            int hv = bp.FileAsInt;
-            int vv = bp.RankAsInt;
 
-            ChessPiece? rook = cb.GetActivePieces().Find(p => p.GetCurrentPosition() == bp);
-
-            Assert.That(rook, Is.Not.Null);
-
-            if (rook != null)
-            {
-                Assert.That(rook.GetPiece(), Is.EqualTo(ChessPiece.Piece.ROOK));
-
-                // is king left of rook, or right of rook?
-                int d = king.GetCurrentPosition().FileAsInt - rook.GetCurrentPosition().FileAsInt;
-                FILE kh = king.GetCurrentPosition().File;
-                FILE rh = rook.GetCurrentPosition().File;
-                RANK v = king.GetCurrentPosition().Rank;
-                // k=4, r=0 4-0=4, k=4, r2=8, k-r2=4-7 = -3
-                if (d == 4)
-                {
-                    // queen side castle
-                    // k goes -2 squares
-                    // r goes +3 squares
-                    kh -= 2;
-                    rh += 3;
-                }
-                else if (d == -3)
-                {
-                    // king side castle
-                    // k goes +2 squares
-                    // r goes -2 squares
-                    kh += 2;
-                    rh -= 2;
-                }
-                else
-                {
-                    throw new Exception("Unexpected Horizontal Distance Found when castling. Are you sure this is a valid castle?");
-                }
-
-                BoardPosition kingLastPosition = king.GetCurrentPosition();
-                BoardPosition rookLastPosition = rook.GetCurrentPosition();
-
-                // set board manually
-                cb.SetBoardValue(kingLastPosition, 0);
-                cb.SetBoardValue(rookLastPosition, 0);
-
-                king.SetCurrentPosition(new(v, kh));
-                rook.SetCurrentPosition(new(v, rh));
-
-                cb.SetBoardValue(king.GetCurrentPosition(), king.GetRealValue());
-                cb.SetBoardValue(rook.GetCurrentPosition(), rook.GetRealValue());
-            }
-
-            return true;
-        }
-
-        public bool IsEnPassantCallBackFunction(ChessBoard chessBoard, BoardPosition boardPosition, ChessPiece pawnAttemptingEnPassant)
-        {
-            RANK enPassantRow;
-            ChessPiece.Color opponentColor;
-            int enPassantOffSet = 0;
-
-            if (pawnAttemptingEnPassant.GetColor().Equals(ChessPiece.Color.WHITE))
-            {
-                enPassantRow = RANK.FIVE;
-                opponentColor = ChessPiece.Color.BLACK;
-                enPassantOffSet = -1;
-            }
-            else
-            {
-                enPassantRow = RANK.FOUR;
-                opponentColor = ChessPiece.Color.WHITE;
-                enPassantOffSet = +1;
-            }
-
-            BoardPosition pawnPos = pawnAttemptingEnPassant.GetCurrentPosition();
-
-            // Is the pawn in the correct Row to do this? En Passant is only possible if a pawn is on a specific row on the board
-            if (pawnPos.Rank != enPassantRow)
-                return false;
-
-            // Are there opponent pieces to its immediate left or right?
-            
-            // TODO: Provide better constructors for these kinds of operations
-            BoardPosition bpl = new(pawnPos.Rank, (FILE) pawnPos.FileAsInt - 1);
-            BoardPosition bpr = new(pawnPos.Rank, (FILE) pawnPos.FileAsInt + 1);
-
-            foreach(BoardPosition bpToCheck in new List<BoardPosition>() { bpl, bpr })
-            {
-                // Is there an opponent piece at this position?
-                if (chessBoard.IsPieceAtPosition(bpToCheck, opponentColor))
-                {
-                    ChessPiece? opponentPiece = _chessPieces.Find((ChessPiece cp) => cp.GetCurrentPosition() == bpToCheck);
-                    Assert.That(opponentPiece, Is.Not.Null, "This assertion failed. If ChessBoard.IsPieceAtPosition returns true, the piece must exist in the collection");
-
-                    // Is the opponent piece a pawn?
-                    if (opponentPiece is ChessPiecePawn)
-                    {
-                        // Did that pawn move 2 squares?
-                        if ((opponentPiece as ChessPiecePawn).MovedTwoSquares)
-                        {
-                            // is the position a capture position?
-                            // Get the opponent pawn position, and get the position that is 1 square behind it
-                            BoardPosition oppPos = opponentPiece.GetCurrentPosition();
-                            // this operation needs to support both + 1 (for black) and -1 (for white)
-                            BoardPosition enPassantCapturePos = new((RANK) oppPos.RankAsInt + enPassantOffSet, oppPos.File);
-                            if (enPassantCapturePos == boardPosition)
-                            {
-                                (opponentPiece as ChessPiecePawn).IsEnPassantTarget = true;
-                                return true; // This is a valid En Passant capture move
-                            }
-                        }
-                    }
-                }
-
-            }
-
-            return false;
-        }
 
         public void ParseMove(String consoleInput)
         {
@@ -364,8 +246,8 @@ namespace Chess
                 this._turnNumber = gc._turnNumber;
                 this._kingCheckService = new KingCheckService();
 
-                ChessPiece.SetCastleCallbackFunction(this.CastleCallBackFunction);
-                ChessPiece.SetIsEnPassantCallbackFunction(this.IsEnPassantCallBackFunction);
+                ChessPiece.SetCastleCallbackFunction(SpecialMovesHandlers.DoCastleMove);
+                ChessPiece.SetIsEnPassantCallbackFunction(SpecialMovesHandlers.IsEnPassantMove);
 
                 Console.WriteLine("Successfully loaded " + saveFileName);
             }
