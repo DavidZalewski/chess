@@ -36,7 +36,7 @@ namespace Tests
 
             Assert.That(whitePawn.IsValidMove(board, newPosition), Is.True);
 
-            Turn turn1 = new(1, whitePawn, previousPosition, newPosition, board, chessPieces);
+            Turn turn1 = new(1, whitePawn, previousPosition, newPosition, board);
 
             Assert.That(turn1, Is.Not.Null);
             Assert.Multiple(() =>
@@ -66,7 +66,7 @@ namespace Tests
             BoardPosition newPosition = new("B7");
             Assert.That(whitePawn.IsValidMove(board, newPosition), Is.True);
 
-            Turn turn = new(1, whitePawn, newPosition, board, chessPieces);
+            Turn turn = new(1, whitePawn, newPosition, board);
 
             Assert.That(turn, Is.Not.Null);
             Assert.Multiple(() =>
@@ -109,7 +109,7 @@ namespace Tests
             BoardPosition newPosition = new("B6");
             Assert.That(whitePawn.IsValidMove(board, newPosition), Is.True);
 
-            Turn turn = new(1, whitePawn, newPosition, board, chessPieces);
+            Turn turn = new(1, whitePawn, newPosition, board);
 
             Assert.That(turn, Is.Not.Null);
             Assert.Multiple(() =>

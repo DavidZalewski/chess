@@ -119,39 +119,5 @@ namespace Tests.Board
                 }
             });
         }
-
-        [Test]
-        public void Test_RemoveCapturedPieces_Success()
-        {
-            ChessPiece whiteQueenPiece = new ChessPieceQueen(Color.WHITE, 1, new("D1"));
-            ChessPiece whiteKingPiece = new ChessPieceKing(Color.WHITE, new("E1"));
-            ChessPiece whiteBishopPiece = new ChessPieceBishop(Color.WHITE, 2, new("F1"));
-            ChessPiece whitePawn4Piece = new ChessPieceWhitePawn(4, new("D2"));
-            ChessPiece whitePawn5Piece = new ChessPieceWhitePawn(4, new("E2"));
-            ChessPiece whitePawn6Piece = new ChessPieceWhitePawn(4, new("F2"));
-            ChessPiece blackBishopPiece = new ChessPieceBishop(Color.BLACK, 1, new("A5"));
-            ChessPiece blackRookPiece = new ChessPieceRook(Color.BLACK, 1, new("A1"));
-            ChessPiece blackKnightPiece = new ChessPieceKnight(Color.BLACK, 1, new("F3"));
-            ChessPiece blackPawn1Piece = new ChessPieceBlackPawn(1, new("F5"));
-
-            List<ChessPiece> chessPiecesOnBoard = new()
-            {
-                whiteQueenPiece, whiteKingPiece, whiteBishopPiece, whitePawn4Piece,
-                whitePawn5Piece, whitePawn6Piece, blackBishopPiece, blackRookPiece
-            };
-
-            chessBoard.PopulateBoard(chessPiecesOnBoard);
-
-            List<ChessPiece> allChessPieces = new()
-            {
-                whiteQueenPiece, whiteKingPiece, whiteBishopPiece, whitePawn4Piece,
-                whitePawn5Piece, whitePawn6Piece, blackBishopPiece, blackRookPiece, blackKnightPiece, blackPawn1Piece
-            };
-
-            List<ChessPiece> prunedPieces = chessBoard.RemovedCapturedPieces(allChessPieces, lcp => true);
-
-            Assert.That(prunedPieces.SequenceEqual(chessPiecesOnBoard), Is.True);
-        }
-
     }
 }

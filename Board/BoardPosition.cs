@@ -64,5 +64,8 @@ namespace Chess.Board
 
         public int RankAsInt { get { return (int)Rank; } }
         public int FileAsInt { get { return (int)File; } }
+
+        // TODO: creation methods for .Left(), .Right(), .Up(), .Down(), .OffSet(int, int)
+        // TODO: methods .IsDiagonal(BoardPosition other), .IsOnSameFile(BoardPosition other), .IsOnSameRank(BoardPosition other)
     }
 }

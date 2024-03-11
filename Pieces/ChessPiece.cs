@@ -104,12 +104,11 @@ namespace Chess.Pieces
             if (ImplementMove(board, position)) return;
 
             BoardPosition previousPosition = _currentPosition;
-            board.Board[position.RankAsInt, position.FileAsInt].Piece = this;
+            board.SetPieceAtPosition(position, this);
             if (previousPosition != position)
             {
                 _hasMoved = true;
-                board.Board[previousPosition.RankAsInt, previousPosition.FileAsInt].Piece = NoPiece.Instance;
-
+                board.SetPieceAtPosition(previousPosition, NoPiece.Instance);
                 _currentPosition = position;
             }
         }

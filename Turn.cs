@@ -7,12 +7,14 @@ namespace Chess
     [Serializable]
     public class Turn
     {
+        // TODO: Consolidate these enums so that only a single Color enum is required
         public enum Color
         {
             WHITE = 10,
             BLACK = 20
         }
 
+        // TODO: convert these into properties
         private int _turnNumber;
         private Color _playerTurn;
         private ChessPiece _piece;
@@ -23,7 +25,7 @@ namespace Chess
         private List<ChessPiece> _chessPieces = new List<ChessPiece>();
         private string _action;
 
-        public Turn(int turnNumber, ChessPiece piece, BoardPosition previousPosition, BoardPosition newPosition, ChessBoard chessBoard, List<ChessPiece> chessPieces)
+        public Turn(int turnNumber, ChessPiece piece, BoardPosition previousPosition, BoardPosition newPosition, ChessBoard chessBoard)
         {
             _turnNumber = turnNumber;
             _previousPosition = previousPosition;
@@ -32,12 +34,7 @@ namespace Chess
             ChessPiece.SetCastleCallbackFunction(this.CastleCallBackFunction);
             ChessPiece.SetIsEnPassantCallbackFunction(this.IsEnPassantCallBackFunction); // THIS IS THE PROBLEM
             _chessBoard = new ChessBoard(chessBoard); // copy state of board
-            _chessPieces = _chessBoard.Board
-                .Cast<Square>()
-                .Select(square => square.Piece)
-                .Where(piece => piece is not NoPiece)
-                .ToArray()
-                .ToList();
+            _chessPieces = _chessBoard.GetActivePieces();
             _piece = _chessPieces.First(p => p.Equals(piece));
             Console.WriteLine("Turn Ctor: Piece: " + _piece.GetPieceName());
             Console.WriteLine("Ctor: Turn._chessPieces.Count(): " + _chessPieces.Count);
@@ -46,45 +43,20 @@ namespace Chess
             Console.WriteLine("After _piece.IsValidMove(): Turn._chessPieces.Count(): " + _chessPieces.Count);
             _piece.Move(_chessBoard, _newPosition); // update the board to reflect latest state - if there is a capture here - update the list of pieces we just copied to reflect the current state of board                     
             Console.WriteLine("After _piece.Move(): Turn._chessPieces.Count(): " + _chessPieces.Count);
-            // we have to handle En Passant pruning differently
-            _chessPieces.ForEach((ChessPiece cp) =>
-            {
-                if (cp is ChessPiecePawn)
-                {
-                    if ((cp as ChessPiecePawn).IsEnPassantTarget)
-                    {
-                        Console.WriteLine(cp.GetPieceName() + " Is En Passant Target");
-                        Assert.That(_chessBoard.IsPieceAtPosition(cp.GetCurrentPosition()), Is.True);
-                        _action = " capture [" + cp.GetPieceName() + "] ";
-                    }
-                }
-            });
             Console.WriteLine("After _chessPieces.ForEach: Turn._chessPieces.Count(): " + _chessPieces.Count);
 
+            // TODO: Determine if the last move made was an En Passant capture
+            // Store another property on ChessPiecePawn.IsEnPassantCaptureMove
             ChessPiece enPassantCapturedPiece = _chessPieces.Find(p => p is ChessPiecePawn && (p as ChessPiecePawn).IsEnPassantTarget);
             
             if (enPassantCapturedPiece != null)
             {
-                BoardPosition enPassantPiecePosition = enPassantCapturedPiece.GetCurrentPosition();
-                Square enPassantPieceCapturedSquare = chessBoard.Board[enPassantPiecePosition.RankAsInt, (int)enPassantPiecePosition.FileAsInt];
-                enPassantPieceCapturedSquare.Piece = NoPiece.Instance;
-
-                _chessPieces.RemoveAll((ChessPiece cp) =>
-                {
-                    if (cp is ChessPiecePawn)
-                    {
-                        return (cp as ChessPiecePawn).IsEnPassantTarget;
-                    }
-                    else { return false; }
-                });
+                _action = " capture [" + enPassantCapturedPiece.GetPieceName() + "] ";
+                chessBoard.SetPieceAtPosition(enPassantCapturedPiece.GetCurrentPosition(), NoPiece.Instance);
             }
             Console.WriteLine("After _chessPieces.RemoveAll: Turn._chessPieces.Count(): " + _chessPieces.Count);
 
-            _chessPieces = _chessBoard.RemovedCapturedPieces(_chessPieces, (List<ChessPiece> removedPieces) =>
-            {
-                _action = " capture [" + removedPieces[0].GetPieceName() + "] ";
-                return true;
-            });
+            _chessPieces = _chessBoard.GetActivePieces();
 
             Console.WriteLine("After _chessBoard.RemovedCapturedPieces: Turn._chessPieces.Count(): " + _chessPieces.Count);
 
@@ -100,8 +72,8 @@ namespace Chess
             Console.WriteLine("Turn CTOR End: Description: " + _description);
         }
 
-        public Turn(int turnNumber, ChessPiece piece, BoardPosition newPosition, ChessBoard chessBoard, List<ChessPiece> chessPieces)
-            : this(turnNumber, piece, piece.GetCurrentPosition(), newPosition, chessBoard, chessPieces) { }
+        public Turn(int turnNumber, ChessPiece piece, BoardPosition newPosition, ChessBoard chessBoard)
+            : this(turnNumber, piece, piece.GetCurrentPosition(), newPosition, chessBoard) { }
 
         public int TurnNumber { get { return _turnNumber; } }
         public ChessPiece ChessPiece { get { return _piece; } }
@@ -113,6 +85,8 @@ namespace Chess
         public List<ChessPiece> ChessPieces { get { return _chessPieces; } }
 
 
+        // TODO: review this method signature: chessBoard arg is never used in preference to member _chessBoard
+        // Can this method signature be shortened?
         public bool CastleCallBackFunction(ChessBoard chessBoard, BoardPosition boardPosition, ChessPiece king)
         {
             int hv = boardPosition.FileAsInt;
@@ -163,14 +137,10 @@ namespace Chess
                 BoardPosition rookLastPosition = rook.GetCurrentPosition();
 
                 // set board manually
-                _chessBoard.Board[kingLastPosition.FileAsInt, kingLastPosition.RankAsInt].Piece = NoPiece.Instance;
-                _chessBoard.Board[rookLastPosition.FileAsInt, rookLastPosition.RankAsInt].Piece = NoPiece.Instance;
-
-                king.SetCurrentPosition(new(v, kh));
-                rook.SetCurrentPosition(new(v, rh));
-
-                _chessBoard.Board[king.GetCurrentPosition().FileAsInt, king.GetCurrentPosition().RankAsInt].Piece = king;
-                _chessBoard.Board[rook.GetCurrentPosition().FileAsInt, rook.GetCurrentPosition().RankAsInt].Piece = rook;
+                _chessBoard.SetPieceAtPosition(kingLastPosition, NoPiece.Instance);
+                _chessBoard.SetPieceAtPosition(rookLastPosition, NoPiece.Instance);
+                _chessBoard.SetPieceAtPosition(new(v, kh), king);
+                _chessBoard.SetPieceAtPosition(new(v, rh), rook);
             }
 
             return true;

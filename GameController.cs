@@ -288,7 +288,7 @@ namespace Chess
 
                 if (chessPiece == null) return null;
 
-                Turn turn = new(_turnNumber, chessPiece, new(inputs[1]), _chessBoard, _chessPieces);
+                Turn turn = new(_turnNumber, chessPiece, new(inputs[1]), _chessBoard);
                 return turn;
             }
             catch (InvalidMoveException e)

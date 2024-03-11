@@ -95,7 +95,7 @@ namespace Chess.Services
                         ChessPiece.SetIsEnPassantCallbackFunction(turn.IsEnPassantCallBackFunction);
 
                         if (piece.IsValidMove(turn.ChessBoard, pos))
-                            possibleMoves.Add(new(turn.TurnNumber + 1, piece, piece.GetCurrentPosition(), pos, turn.ChessBoard, turn.ChessPieces));
+                            possibleMoves.Add(new(turn.TurnNumber + 1, piece, piece.GetCurrentPosition(), pos, turn.ChessBoard));
                     }
                 }
             }

@@ -60,7 +60,7 @@ namespace Tests.Pieces
         [Test]
         public void Test_CloneWhiteBishop_Success()
         {
-            BoardPosition boardPosition = whiteBishop1StartPosition;
+            BoardPosition boardPosition = whiteBishop2StartPosition;
             ChessPiece piece = new ChessPieceBishop(ChessPiece.Color.WHITE, 1, boardPosition);
             ChessPiece clone = piece.Clone();
        
@@ -79,7 +79,7 @@ namespace Tests.Pieces
         [Test]
         public void Test_CloneBlackBishop_Success()
         {
-            BoardPosition boardPosition = blackBishop1StartPosition;
+            BoardPosition boardPosition = blackBishop2StartPosition;
             ChessPiece piece = new ChessPieceBishop(ChessPiece.Color.BLACK, 1, boardPosition);
             ChessPiece clone = piece.Clone();
 

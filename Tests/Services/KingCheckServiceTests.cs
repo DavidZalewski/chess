@@ -20,6 +20,7 @@ namespace Tests.Services
         {
             // Construct board; set black king on D5 and white king on E3 on chess board object
             ChessBoard chessBoard = new();
+            // TODO: Refactor this to pass in piece objects
             chessBoard.SetBoardValue(new BoardPosition("E3"), 16);
             chessBoard.SetBoardValue(new BoardPosition("D5"), 26);
 
@@ -29,8 +30,8 @@ namespace Tests.Services
             List<ChessPiece> chessPieces = new() { whiteKingPiece, blackKingPiece };
 
             // Construct Turn objects - this doesnt seem right - the board state doesnt match the turn description
-            Turn whiteKingTurnD4 = new(9, whiteKingPiece, new BoardPosition("E3"), new BoardPosition("D4"), chessBoard, chessPieces);
-            Turn whiteKingTurnE4 = new(9, whiteKingPiece, new BoardPosition("E3"), new BoardPosition("E4"), chessBoard, chessPieces);
+            Turn whiteKingTurnD4 = new(9, whiteKingPiece, new BoardPosition("E3"), new BoardPosition("D4"), chessBoard);
+            Turn whiteKingTurnE4 = new(9, whiteKingPiece, new BoardPosition("E3"), new BoardPosition("E4"), chessBoard);
 
             // Construct kingCheckService
             KingCheckService kingCheckService = new();
@@ -59,8 +60,8 @@ namespace Tests.Services
             List<ChessPiece> chessPieces = new() { whiteKingPiece, blackKingPiece };
 
             // Construct Turn objects - this doesnt seem right - the board state doesnt match the turn description
-            Turn blackKingTurnD4 = new(10, blackKingPiece, new BoardPosition("D5"), new BoardPosition("D4"), chessBoard, chessPieces);
-            Turn blackKingTurnE4 = new(10, blackKingPiece, new BoardPosition("D5"), new BoardPosition("E4"), chessBoard, chessPieces);
+            Turn blackKingTurnD4 = new(10, blackKingPiece, new BoardPosition("D5"), new BoardPosition("D4"), chessBoard);
+            Turn blackKingTurnE4 = new(10, blackKingPiece, new BoardPosition("D5"), new BoardPosition("E4"), chessBoard);
 
             // Construct kingCheckService
             KingCheckService kingCheckService = new();
@@ -102,7 +103,7 @@ namespace Tests.Services
                 foreach (BoardPosition position in validKnightPositions)
                 {
                     Assert.That(blackKnightPiece.IsValidMove(chessBoard, position), Is.True);
-                    possibleKnightTurns.Add(new(2, blackKnightPiece, position, chessBoard, chessPieces));
+                    possibleKnightTurns.Add(new(2, blackKnightPiece, position, chessBoard));
                 }
             });
 
@@ -135,8 +136,8 @@ namespace Tests.Services
             // Construct kingCheckService
             KingCheckService kingCheckService = new();
 
-            Turn moveKingToD1 = new(5, whiteKingPiece, new("D1"), chessBoard, chessPieces);
-            Turn moveKingToD2 = new(5, whiteKingPiece, new("D2"), chessBoard, chessPieces);
+            Turn moveKingToD1 = new(5, whiteKingPiece, new("D1"), chessBoard);
+            Turn moveKingToD2 = new(5, whiteKingPiece, new("D2"), chessBoard);
 
             Assert.Multiple(() =>
             {
@@ -174,15 +175,15 @@ namespace Tests.Services
 
             List<Turn> possibleMoves = new()
             {
-                new(11, whiteQueenPiece, new("A1"), chessBoard, chessPieces), // white queen capture rook
-                new(11, whitePawn4Piece, new("D3"), chessBoard, chessPieces), // white pawn 4 move D3
-                new(11, whitePawn4Piece, new("D4"), chessBoard, chessPieces), // white pawn 4 move D4
-                new(11, whitePawn5Piece, new("E3"), chessBoard, chessPieces), // white pawn 5 move E3
-                new(11, whitePawn5Piece, new("E4"), chessBoard, chessPieces), // white pawn 5 move E4
-                new(11, whiteBishopPiece, new("H3"), chessBoard, chessPieces), // white bishop move H3
+                new(11, whiteQueenPiece, new("A1"), chessBoard), // white queen capture rook
+                new(11, whitePawn4Piece, new("D3"), chessBoard), // white pawn 4 move D3
+                new(11, whitePawn4Piece, new("D4"), chessBoard), // white pawn 4 move D4
+                new(11, whitePawn5Piece, new("E3"), chessBoard), // white pawn 5 move E3
+                new(11, whitePawn5Piece, new("E4"), chessBoard), // white pawn 5 move E4
+                new(11, whiteBishopPiece, new("H3"), chessBoard), // white bishop move H3
             };
 
-            Turn onlyValidMove = new(11, whitePawn5Piece, new("F3"), chessBoard, chessPieces); // white pawn 5 capture knight on f3
+            Turn onlyValidMove = new(11, whitePawn5Piece, new("F3"), chessBoard); // white pawn 5 capture knight on f3
 
             // Construct kingCheckService
             KingCheckService kingCheckService = new();
@@ -224,9 +225,9 @@ namespace Tests.Services
 
             List<Turn> possibleMoves = new()
             {
-                new(11, whiteQueenPiece, new("C2"), chessBoard, chessPieces), // white queen move C2
-                new(11, whitePawn4Piece, new("D3"), chessBoard, chessPieces), // white pawn 4 move D3
-                new(11, whitePawn4Piece, new("D4"), chessBoard, chessPieces), // white pawn 4 move D4
+                new(11, whiteQueenPiece, new("C2"), chessBoard), // white queen move C2
+                new(11, whitePawn4Piece, new("D3"), chessBoard), // white pawn 4 move D3
+                new(11, whitePawn4Piece, new("D4"), chessBoard), // white pawn 4 move D4
             };
 
             // Construct kingCheckService
@@ -293,7 +294,7 @@ namespace Tests.Services
             //InternalDebug_DrawBoard(chessBoard);
 
             // last turn made was black knight moving from H4 to F3
-            Turn turn = new(12, blackKnightPiece, new("H4"), new("F3"), chessBoard, chessPieces);
+            Turn turn = new(12, blackKnightPiece, new("H4"), new("F3"), chessBoard);
 
             // Construct kingCheckService
             KingCheckService kingCheckService = new();
@@ -328,7 +329,7 @@ namespace Tests.Services
             chessBoard.PopulateBoard(chessPieces);
 
             // last turn made was black knight moving from H4 to F3
-            Turn turn = new(12, blackKnightPiece, new("H4"), new("F3"), chessBoard, chessPieces);
+            Turn turn = new(12, blackKnightPiece, new("H4"), new("F3"), chessBoard);
 
             // Construct kingCheckService
             KingCheckService kingCheckService = new();
@@ -362,7 +363,7 @@ namespace Tests.Services
             chessBoard.PopulateBoard(chessPieces);
 
             // last turn made was white queen moving from B7 to C7
-            Turn turn = new(19, whiteQueenPiece, new("B7"), new("C7"), chessBoard, chessPieces);
+            Turn turn = new(19, whiteQueenPiece, new("B7"), new("C7"), chessBoard);
 
             // Construct kingCheckService
             KingCheckService kingCheckService = new();
@@ -378,7 +379,7 @@ namespace Tests.Services
             chessBoard.PopulateBoard(chessPieces);
 
             // last turn made was white pawn moving from A2 to A4
-            Turn turn = new(1, chessPieces.First(), new("A2"), new("A4"), chessBoard, chessPieces);
+            Turn turn = new(1, chessPieces.First(), new("A2"), new("A4"), chessBoard);
 
             // Construct kingCheckService
             KingCheckService kingCheckService = new();
@@ -407,7 +408,7 @@ namespace Tests.Services
             chessBoard.PopulateBoard(chessPieces);
 
             // last turn made was white queen moving from B5 to B7
-            Turn turn = new(21, whiteQueenPiece, new("B5"), new("B7"), chessBoard, chessPieces);
+            Turn turn = new(21, whiteQueenPiece, new("B5"), new("B7"), chessBoard);
 
             // Construct kingCheckService
             KingCheckService kingCheckService = new();

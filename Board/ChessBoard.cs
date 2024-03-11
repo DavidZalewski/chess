@@ -64,6 +64,17 @@ namespace Chess.Board
             }
         }
 
+        // TODO: Create Test for this
+        public List<ChessPiece> GetActivePieces()
+        {
+            return Board
+                .Cast<Square>()
+                .Select(square => square.Piece)
+                .Where(piece => piece is not NoPiece)
+                .ToArray()
+                .ToList();
+        }
+
         public bool PopulateBoard(List<ChessPiece> chessPieces)
         {
             foreach (ChessPiece piece in chessPieces)
@@ -83,33 +94,9 @@ namespace Chess.Board
             return true;
         }
 
-        // TODO: This function may no longer be needed
-        public List<ChessPiece> RemovedCapturedPieces(List<ChessPiece> chessPieces, Func<List<ChessPiece>, bool> callBackFunction)
-        {
-            List<ChessPiece> piecesToRemove = new();
-            foreach (ChessPiece piece in chessPieces)
-            {
-                BoardPosition piecePos = piece.GetCurrentPosition();
-                Square square = Board[piecePos.RankAsInt, piecePos.FileAsInt];
-                if (!square.Piece.Equals(piece))
-                {
-                    piecesToRemove.Add(piece);
-                    piece.SetCurrentPosition(null);
-                }            
-            }
-
-            if (callBackFunction != null && piecesToRemove.Count > 0)
-                callBackFunction.Invoke(piecesToRemove);
-
-            foreach (ChessPiece piece in piecesToRemove)
-                chessPieces.Remove(piece);
-
-            return chessPieces;
-        }
-
         public bool IsPieceAtPosition(BoardPosition position)
         {
-            return Board[position.RankAsInt, position.FileAsInt].Piece is not NoPiece;
+            return GetSquare(position).Piece is not NoPiece;
         }
 
         public bool IsPieceAtPosition(BoardPosition position, ChessPiece.Color color)
@@ -119,25 +106,31 @@ namespace Chess.Board
             {
                 return false; // index out of bounds
             }
-            ChessPiece piece = Board[position.RankAsInt, position.FileAsInt].Piece;
+            ChessPiece piece = GetSquare(position).Piece;
             return (piece is not NoPiece && piece.GetColor() == color);
         }
 
         public bool IsPieceAtPosition(BoardPosition position, ChessPiece.Color color, ChessPiece.Piece pieceType)
         {
-            ChessPiece piece = Board[position.RankAsInt, position.FileAsInt].Piece;
+            ChessPiece piece = GetSquare(position).Piece;
             return (piece is not NoPiece && piece.GetColor() == color && piece.GetPiece() == pieceType);
         }
 
-        public bool IsPieceAtPosition(ChessPiece chessPiece)
+        // TODO: Write test for this
+        public void SetPieceAtPosition(BoardPosition position, ChessPiece piece)
         {
-            BoardPosition position = chessPiece.GetCurrentPosition();
-            return Board[position.RankAsInt, position.FileAsInt].Piece == chessPiece;
+            GetSquare(position).Piece = piece;
+            piece.SetCurrentPosition(position);
         }
 
         private void SetSquareValue(BoardPosition position, Square square)
         {
             Board[position.RankAsInt, position.FileAsInt] = square;
+        }
+
+        private Square GetSquare(BoardPosition position)
+        {
+            return Board[position.RankAsInt, position.FileAsInt];
         }
     }
 }
