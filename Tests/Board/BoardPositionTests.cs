@@ -186,5 +186,78 @@ namespace Tests.Board
 #pragma warning restore CS8604 // Possible null reference argument.
         }
 
+        [Test]
+        public void Left_WhenCalled_ReturnsNewBoardPositionOneFileToTheLeft()
+        {
+            BoardPosition pos = new(RANK.EIGHT, FILE.D);
+            BoardPosition newPos = pos.Left();
+
+            Assert.That(newPos.File, Is.EqualTo(FILE.C));
+        }
+
+        [Test]
+        public void Right_WhenCalled_ReturnsNewBoardPositionOneFileToTheRight()
+        {
+            BoardPosition pos = new(RANK.EIGHT, FILE.D);
+            BoardPosition newPos = pos.Right();
+
+            Assert.That(newPos.File, Is.EqualTo(FILE.E));
+        }
+
+        [Test]
+        public void Up_WhenCalled_ReturnsNewBoardPositionOneRankUp()
+        {
+            BoardPosition pos = new(RANK.SEVEN, FILE.D);
+            BoardPosition newPos = pos.Up();
+
+            Assert.That(newPos.Rank, Is.EqualTo(RANK.EIGHT));
+        }
+
+        [Test]
+        public void Down_WhenCalled_ReturnsNewBoardPositionOneRankDown()
+        {
+            BoardPosition pos = new(RANK.SEVEN, FILE.D);
+            BoardPosition newPos = pos.Down();
+
+            Assert.That(newPos.Rank, Is.EqualTo(RANK.SIX));
+        }
+
+        [Test]
+        public void Offset_WhenCalled_ReturnsNewBoardPositionWithOffsetApplied()
+        {
+            BoardPosition pos = new(RANK.SEVEN, FILE.D);
+            BoardPosition newPos = pos.Offset(-2, 1);
+
+            Assert.That(newPos.Rank, Is.EqualTo(RANK.FIVE));
+            Assert.That(newPos.File, Is.EqualTo(FILE.E));
+        }
+
+        [Test]
+        public void IsDiagonal_WhenCalled_ReturnsTrueIfPositionsAreDiagonal()
+        {
+            BoardPosition pos1 = new(RANK.SEVEN, FILE.D);
+            BoardPosition pos2 = new(RANK.FIVE, FILE.B);
+
+            Assert.That(pos1.IsDiagonal(pos2), Is.True);
+        }
+
+        [Test]
+        public void IsOnSameFile_WhenCalled_ReturnsTrueIfPositionsAreOnTheSameFile()
+        {
+            BoardPosition pos1 = new(RANK.SEVEN, FILE.D);
+            BoardPosition pos2 = new(RANK.FIVE, FILE.D);
+
+            Assert.That(pos1.IsOnSameFile(pos2), Is.True);
+        }
+
+        [Test]
+        public void IsOnSameRank_WhenCalled_ReturnsTrueIfPositionsAreOnTheSameRank()
+        {
+            BoardPosition pos1 = new(RANK.SEVEN, FILE.D);
+            BoardPosition pos2 = new(RANK.SEVEN, FILE.B);
+
+            Assert.That(pos1.IsOnSameRank(pos2), Is.True);
+        }
+
     }
 }

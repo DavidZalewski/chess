@@ -63,6 +63,58 @@
         public int RankAsInt { get { return (int)Rank; } }
         public int FileAsInt { get { return (int)File; } }
 
+        public BoardPosition Left()
+        {
+            if (File == FILE.A) return null; // If the file is already at the leftmost edge, return null
+            return new BoardPosition(Rank, (FILE)(FileAsInt - 1)); // Subtract 1 from the file
+        }
+
+        public BoardPosition Right()
+        {
+            if (File == FILE.H) return null; // If the file is already at the rightmost edge, return null
+            return new BoardPosition(Rank, (FILE)(FileAsInt + 1)); // Add 1 to the file
+        }
+
+        public BoardPosition Up()
+        {
+            if (Rank == RANK.ONE) return null; // If the rank is already at the topmost edge, return null
+            return new BoardPosition(Rank - 1, File); // Subtract 1 from the rank
+        }
+
+        public BoardPosition Down()
+        {
+            if (Rank == RANK.EIGHT) return null; // If the rank is already at the bottommost edge, return null
+            return new BoardPosition(Rank + 1, File); // Add 1 to the rank
+        }
+
+        public BoardPosition Offset(int rankOffset, int fileOffset)
+        {
+            int newRank = RankAsInt - rankOffset; // need to invert this to make it intuitive
+            int newFile = FileAsInt + fileOffset;
+
+            if (newRank < 0 || newRank > 8 || newFile < 0 || newFile > 8) return null; // If the new rank or file is out of bounds, return null
+
+            return new BoardPosition((RANK)newRank, (FILE)newFile); // Create a new BoardPosition with the new rank and file
+        }
+
+        public bool IsDiagonal(BoardPosition other)
+        {
+            int rankDiff = Math.Abs((int)Rank - (int)other.Rank);
+            int fileDiff = Math.Abs((int)File - (int)other.File);
+
+            return rankDiff == fileDiff; // If the absolute difference in rank and file is equal, then the positions are diagonal to each other
+        }
+
+        public bool IsOnSameFile(BoardPosition other)
+        {
+            return File == other.File; // If the files are equal, then the positions are on the same file
+        }
+
+        public bool IsOnSameRank(BoardPosition other)
+        {
+            return Rank == other.Rank; // If the ranks are equal, then the positions are on the same rank
+        }
+
         // TODO: creation methods for .Left(), .Right(), .Up(), .Down(), .OffSet(int, int)
         // TODO: methods .IsDiagonal(BoardPosition other), .IsOnSameFile(BoardPosition other), .IsOnSameRank(BoardPosition other)
     }
