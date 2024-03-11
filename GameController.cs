@@ -49,11 +49,7 @@ namespace Chess
             int hv = bp.FileAsInt;
             int vv = bp.RankAsInt;
 
-            ChessPiece? rook = _chessPieces.Find(p =>
-            {
-                BoardPosition cbp = p.GetCurrentPosition();
-                return cbp.FileAsInt == hv && cbp.RankAsInt == vv;
-            });
+            ChessPiece? rook = cb.GetActivePieces().Find(p => p.GetCurrentPosition() == bp);
 
             Assert.That(rook, Is.Not.Null);
 
