@@ -1,7 +1,6 @@
 ﻿using Chess.Board;
 using Chess.Callbacks;
 using Chess.Pieces;
-using NUnit.Framework;
 
 namespace Chess
 {
