@@ -16,7 +16,7 @@ namespace Tests.Pieces
         }
 
         [Test]
-        public void Test_ConstructWhiteKing_Success()
+        public void ConstructWhiteKing_Success()
         {
             ChessPiece whiteKingPiece = new ChessPieceKing(ChessPiece.Color.WHITE, new(RANK.ONE, FILE.E));
 
@@ -33,7 +33,7 @@ namespace Tests.Pieces
         }
 
         [Test]
-        public void Test_CloneWhiteKing_Success()
+        public void CloneWhiteKing_Success()
         {
             ChessPiece whiteKingPiece = new ChessPieceKing(ChessPiece.Color.WHITE, new(RANK.ONE, FILE.E));
             ChessPiece clone = whiteKingPiece.Clone();
@@ -52,7 +52,7 @@ namespace Tests.Pieces
         }
 
         [Test]
-        public void Test_ConstructBlackKing_Success()
+        public void ConstructBlackKing_Success()
         {
             ChessPiece blackKingPiece = new ChessPieceKing(ChessPiece.Color.BLACK, new(RANK.EIGHT, FILE.E));
             Assert.That(blackKingPiece, Is.Not.Null);
@@ -68,7 +68,7 @@ namespace Tests.Pieces
         }
 
         [Test]
-        public void Test_CloneBlackKing_Success()
+        public void CloneBlackKing_Success()
         {
             ChessPiece blackKingPiece = new ChessPieceKing(ChessPiece.Color.BLACK, new(RANK.EIGHT, FILE.E));
             ChessPiece clone = blackKingPiece.Clone();
@@ -87,7 +87,7 @@ namespace Tests.Pieces
         }
 
         [Test(Description = "Tests that the white king has no valid moves it can make at the start of the game")]
-        public void Test_WhiteKing_IsValidMove_NoValidMovesFromStart()
+        public void WhiteKing_IsValidMove_NoValidMovesFromStart()
         {
             List<ChessPiece> chessPieces = ChessPieceFactory.CreateChessPieces();
             ChessPiece whiteKingPiece = chessPieces.Find((ChessPiece cp) => cp.GetColor().Equals(ChessPiece.Color.WHITE) &&
@@ -115,7 +115,7 @@ namespace Tests.Pieces
         }
 
         [Test(Description = "Tests that the black king has no valid moves it can make at the start of the game")]
-        public void Test_BlackKing_IsValidMove_NoValidMovesFromStart()
+        public void BlackKing_IsValidMove_NoValidMovesFromStart()
         {
             List<ChessPiece> chessPieces = ChessPieceFactory.CreateChessPieces();
             ChessPiece blackKingPiece = chessPieces.Find((ChessPiece cp) => cp.GetColor().Equals(ChessPiece.Color.BLACK) &&
@@ -143,7 +143,7 @@ namespace Tests.Pieces
         }
 
         [Test(Description = "Tests that white or black king on empty board starting on D4 can move to all valid positions")]
-        public void Test_King_IsValidMove_ValidMovesFromD4()
+        public void King_IsValidMove_ValidMovesFromD4()
         {
             ChessPiece whiteKingPiece = new ChessPieceKing(ChessPiece.Color.WHITE, new(RANK.FOUR, FILE.D));
             ChessPiece blackKingPiece = new ChessPieceKing(ChessPiece.Color.BLACK, new(RANK.FOUR, FILE.D));
@@ -171,7 +171,7 @@ namespace Tests.Pieces
         }
 
         [Test(Description = "Tests that white or black king on empty board starting on D4 cannot move to these positions")]
-        public void Test_King_IsValidMove_InvalidMovesFromD4()
+        public void King_IsValidMove_InvalidMovesFromD4()
         {
             ChessPiece whiteKingPiece = new ChessPieceKing(ChessPiece.Color.WHITE, new(RANK.FOUR, FILE.D));
             ChessPiece blackKingPiece = new ChessPieceKing(ChessPiece.Color.BLACK, new(RANK.FOUR, FILE.D));

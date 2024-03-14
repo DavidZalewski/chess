@@ -18,7 +18,7 @@ namespace Tests.Board
         }
 
         [Test]
-        public void Test_CopyConstructChessBoard_Success()
+        public void CopyConstructChessBoard_Success()
         {
             ChessBoard board1 = new();
             ChessBoard board2 = new(board1);
@@ -39,13 +39,13 @@ namespace Tests.Board
         }
 
         [Test]
-        public void Test_ChessBoardCopyConstructor_NullArgument_ThrowsArgumentNullException()
+        public void ChessBoardCopyConstructor_NullArgument_ThrowsArgumentNullException()
         {
             Assert.That(() => new ChessBoard(null), Throws.ArgumentNullException);
         }
 
         [Test]
-        public void Test_IsPieceAtPosition_Success()
+        public void IsPieceAtPosition_Success()
         {
             BoardPosition boardPosition = new BoardPosition(RANK.THREE, FILE.F);
             Assert.That(chessBoard.IsPieceAtPosition(boardPosition), Is.False);
@@ -54,7 +54,7 @@ namespace Tests.Board
         }
 
         [Test]
-        public void Test_IsPieceAtPosition_SpecificColor_Success1()
+        public void IsPieceAtPosition_SpecificColor_Success1()
         {
             BoardPosition boardPosition = new BoardPosition(RANK.THREE, FILE.F);
             Assert.That(chessBoard.IsPieceAtPosition(boardPosition), Is.False);
@@ -64,7 +64,7 @@ namespace Tests.Board
         }
 
         [Test]
-        public void Test_IsPieceAtPosition_SpecificColor_Success2()
+        public void IsPieceAtPosition_SpecificColor_Success2()
         {
             BoardPosition boardPosition = new BoardPosition(RANK.SIX, FILE.G);
             Assert.That(chessBoard.IsPieceAtPosition(boardPosition), Is.False);
@@ -74,7 +74,7 @@ namespace Tests.Board
         }
 
         [Test]
-        public void Test_IsPieceAtPosition_SpecificColorAndPiece_Success1()
+        public void IsPieceAtPosition_SpecificColorAndPiece_Success1()
         {
             BoardPosition boardPosition = new("G6");
             Assert.That(chessBoard.IsPieceAtPosition(boardPosition), Is.False);
@@ -86,7 +86,7 @@ namespace Tests.Board
         }
 
         [Test]
-        public void Test_IsPieceAtPosition_SpecificColorAndPiece_Success2()
+        public void IsPieceAtPosition_SpecificColorAndPiece_Success2()
         {
             BoardPosition boardPosition = new("G6");
             Assert.That(chessBoard.IsPieceAtPosition(boardPosition), Is.False);
@@ -98,7 +98,7 @@ namespace Tests.Board
         }
 
         [Test]
-        public void Test_PopulateBoard_Success()
+        public void PopulateBoard_Success()
         {
             List<ChessPiece> chessPieces = ChessPieceFactory.CreateChessPieces();
             chessBoard.PopulateBoard(chessPieces);
@@ -129,7 +129,7 @@ namespace Tests.Board
         }
 
         [Test]
-        public void Test_SetPieceAtPosition_PieceExistsInCorrectSquare()
+        public void SetPieceAtPosition_PieceExistsInCorrectSquare()
         {
             // Arrange
             BoardPosition a1 = new("A1");
@@ -156,7 +156,7 @@ namespace Tests.Board
         }
 
         [Test]
-        public void Test_GetActivePieces_NewBoard_Returns32Pieces()
+        public void GetActivePieces_NewBoard_Returns32Pieces()
         {
             // Arrange
             ChessBoard board = new();
@@ -170,7 +170,7 @@ namespace Tests.Board
         }
 
         [Test]
-        public void Test_GetActivePieces_RemovedPieces_ReturnsCorrectCount()
+        public void GetActivePieces_RemovedPieces_ReturnsCorrectCount()
         {
             // Arrange
             ChessBoard board = new ChessBoard();

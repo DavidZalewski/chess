@@ -8,7 +8,7 @@ namespace Tests.Services
     public class ChessPieceFactoryTests
     {
         [Test]
-        public void Test_BuildWhitePawns_Success()
+        public void BuildWhitePawns_Success()
         {
             List<ChessPiece> pieces = ChessPieceFactory.CreateWhitePawns();
 
@@ -31,7 +31,7 @@ namespace Tests.Services
         }
 
         [Test]
-        public void Test_BuildBlackPawns_Success()
+        public void BuildBlackPawns_Success()
         {
             List<ChessPiece> pieces = ChessPieceFactory.CreateBlackPawns();
 
@@ -54,7 +54,7 @@ namespace Tests.Services
         }
 
         [Test]
-        public void Test_BuildWhiteKnights_Success()
+        public void BuildWhiteKnights_Success()
         {
             List<ChessPiece> pieces = ChessPieceFactory.CreateWhiteKnights();
 
@@ -84,7 +84,7 @@ namespace Tests.Services
         }
 
         [Test]
-        public void Test_BuildBlackKnights_Success()
+        public void BuildBlackKnights_Success()
         {
             List<ChessPiece> pieces = ChessPieceFactory.CreateBlackKnights();
 
@@ -114,7 +114,7 @@ namespace Tests.Services
         }
 
         [Test]
-        public void Test_BuildWhiteBishops_Success()
+        public void BuildWhiteBishops_Success()
         {
             List<ChessPiece> pieces = ChessPieceFactory.CreateWhiteBishops();
 
@@ -143,7 +143,7 @@ namespace Tests.Services
         }
 
         [Test]
-        public void Test_BuildBlackBishops_Success()
+        public void BuildBlackBishops_Success()
         {
             List<ChessPiece> pieces = ChessPieceFactory.CreateBlackBishops();
 
@@ -172,7 +172,7 @@ namespace Tests.Services
         }
 
         [Test]
-        public void Test_BuildWhiteRooks_Success()
+        public void BuildWhiteRooks_Success()
         {
             List<ChessPiece> pieces = ChessPieceFactory.CreateWhiteRooks();
 
@@ -201,7 +201,7 @@ namespace Tests.Services
         }
 
         [Test]
-        public void Test_BuildBlackRooks_Success()
+        public void BuildBlackRooks_Success()
         {
             List<ChessPiece> pieces = ChessPieceFactory.CreateBlackRooks();
 
@@ -230,7 +230,7 @@ namespace Tests.Services
         }
 
         [Test]
-        public void Test_BuildWhiteQueenAndKing_Success()
+        public void BuildWhiteQueenAndKing_Success()
         {
             List<ChessPiece> pieces = ChessPieceFactory.CreateWhiteQueenAndKing();
 
@@ -260,7 +260,7 @@ namespace Tests.Services
         }
 
         [Test]
-        public void Test_BuildBlackQueenAndKing_Success()
+        public void BuildBlackQueenAndKing_Success()
         {
             List<ChessPiece> pieces = ChessPieceFactory.CreateBlackQueenAndKing();
 
@@ -290,7 +290,7 @@ namespace Tests.Services
         }
 
         [Test]
-        public void Test_BuildWhitePieces_Success()
+        public void BuildWhitePieces_Success()
         {
             List<ChessPiece> pieces = ChessPieceFactory.CreateWhiteChessPieces();
 
@@ -344,7 +344,7 @@ namespace Tests.Services
         }
 
         [Test]
-        public void Test_BuildBlackPieces_Success()
+        public void BuildBlackPieces_Success()
         {
             List<ChessPiece> pieces = ChessPieceFactory.CreateBlackChessPieces();
 
@@ -398,7 +398,7 @@ namespace Tests.Services
         }
 
         [Test]
-        public void Test_BuildPieces_Success()
+        public void BuildPieces_Success()
         {
             List<ChessPiece> pieces = ChessPieceFactory.CreateChessPieces();
 

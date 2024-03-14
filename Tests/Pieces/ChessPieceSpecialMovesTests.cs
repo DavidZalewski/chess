@@ -14,7 +14,7 @@ namespace Tests.Pieces
     {
 
         [Test]
-        public void Test_IsValidMove_Castling_CannotCastleAtStart()
+        public void IsValidMove_Castling_CannotCastleAtStart()
         {
             List<ChessPiece> chessPieces = ChessPieceFactory.CreateChessPieces();
 
@@ -29,7 +29,7 @@ namespace Tests.Pieces
         }
 
         [Test]
-        public void Test_IsValidMove_Castling_CannotCastle_WhiteKingMoved()
+        public void IsValidMove_Castling_CannotCastle_WhiteKingMoved()
         {
             List<ChessPiece> chessPieces = ChessPieceFactory.CreateChessPieces();
 
@@ -69,7 +69,7 @@ namespace Tests.Pieces
         }
 
         [Test]
-        public void Test_IsValidMove_Castling_CannotCastle_WhiteKingWasChecked()
+        public void IsValidMove_Castling_CannotCastle_WhiteKingWasChecked()
         {
             List<ChessPiece> chessPieces = ChessPieceFactory.CreateChessPieces();
 
@@ -88,14 +88,14 @@ namespace Tests.Pieces
             chessBoard.PopulateBoard(chessPieces);
 
             Assert.That(whiteKing is ChessPieceKing, Is.True);
-            (whiteKing as ChessPieceKing).Test_SetWasInCheck();
+            (whiteKing as ChessPieceKing).SetWasInCheck();
 
             Assert.That(whiteKing.IsValidMove(chessBoard, new("A1")), Is.False); // King moving to A1 is interpreted as Castle
             Assert.That(whiteKing.IsValidMove(chessBoard, new("H1")), Is.False); // King moving to A8 is interpreted as Castle
         }
 
         [Test]
-        public void Test_IsValidMove_Castling_Castle_WhiteKingSide()
+        public void IsValidMove_Castling_Castle_WhiteKingSide()
         {
             List<ChessPiece> chessPieces = ChessPieceFactory.CreateChessPieces();
 
@@ -117,7 +117,7 @@ namespace Tests.Pieces
         }
 
         [Test]
-        public void Test_IsValidMove_Castling_Castle_WhiteQueenSide()
+        public void IsValidMove_Castling_Castle_WhiteQueenSide()
         {
             List<ChessPiece> chessPieces = ChessPieceFactory.CreateChessPieces();
 
@@ -138,7 +138,7 @@ namespace Tests.Pieces
         }
 
         [Test]
-        public void Test_Move_Castling_Castle_WhiteQueenSide()
+        public void Move_Castling_Castle_WhiteQueenSide()
         {
             List<ChessPiece> chessPieces = ChessPieceFactory.CreateChessPieces();
 
@@ -164,7 +164,7 @@ namespace Tests.Pieces
         }
 
         [Test]
-        public void Test_Move_Castling_Castle_WhiteKingSide()
+        public void Move_Castling_Castle_WhiteKingSide()
         {
             List<ChessPiece> chessPieces = ChessPieceFactory.CreateChessPieces();
 
@@ -190,7 +190,7 @@ namespace Tests.Pieces
         }
 
         [Test]
-        public void Test_Move_Castling_Castle_BlackQueenSide()
+        public void Move_Castling_Castle_BlackQueenSide()
         {
             List<ChessPiece> chessPieces = ChessPieceFactory.CreateChessPieces();
 
@@ -216,7 +216,7 @@ namespace Tests.Pieces
         }
 
         [Test]
-        public void Test_Move_Castling_Castle_BlackKingSide()
+        public void Move_Castling_Castle_BlackKingSide()
         {
             List<ChessPiece> chessPieces = ChessPieceFactory.CreateChessPieces();
 
@@ -242,7 +242,7 @@ namespace Tests.Pieces
         }
 
         [Test]
-        public void Test_IsValidMove_Castling_CannotCastle_BlackKingMoved()
+        public void IsValidMove_Castling_CannotCastle_BlackKingMoved()
         {
             List<ChessPiece> chessPieces = ChessPieceFactory.CreateChessPieces();
 
@@ -282,7 +282,7 @@ namespace Tests.Pieces
         }
 
         [Test]
-        public void Test_IsValidMove_Castling_CannotCastle_BlackKingWasChecked()
+        public void IsValidMove_Castling_CannotCastle_BlackKingWasChecked()
         {
             List<ChessPiece> chessPieces = ChessPieceFactory.CreateChessPieces();
 
@@ -301,7 +301,7 @@ namespace Tests.Pieces
             chessBoard.PopulateBoard(chessPieces);
 
             Assert.That(blackKing is ChessPieceKing, Is.True);
-            (blackKing as ChessPieceKing).Test_SetWasInCheck();
+            (blackKing as ChessPieceKing).SetWasInCheck();
 
             // remove all back pieces except for rook and king
             // move the king somewhere
@@ -314,7 +314,7 @@ namespace Tests.Pieces
         }
 
         [Test]
-        public void Test_IsValidMove_Castling_Castle_BlackKingSide()
+        public void IsValidMove_Castling_Castle_BlackKingSide()
         {
             List<ChessPiece> chessPieces = ChessPieceFactory.CreateChessPieces();
 
@@ -336,7 +336,7 @@ namespace Tests.Pieces
         }
 
         [Test]
-        public void Test_IsValidMove_Castling_Castle_BlackQueenSide()
+        public void IsValidMove_Castling_Castle_BlackQueenSide()
         {
             List<ChessPiece> chessPieces = ChessPieceFactory.CreateChessPieces();
 
@@ -363,7 +363,7 @@ namespace Tests.Pieces
         [TestCase("E5", "F5", "D5", "F6", "D6")]
         [TestCase("F5", "E5", "G5", "E6", "G6")]
         [TestCase("G5", "F5", "H5", "F6", "H6")]
-        public void Test_WhitePawn_IsValidMove_EnPassant(String whitePawnPos, String blackPawnPosLeft, String blackPawnPosRight, String enPassantPosLeft, String enPassantPosRight)
+        public void WhitePawn_IsValidMove_EnPassant(String whitePawnPos, String blackPawnPosLeft, String blackPawnPosRight, String enPassantPosLeft, String enPassantPosRight)
         {
             // Create White Pawn at {{ whitePawnPos }}
             // ID argument can be mocked as it has no affect on logic here
@@ -397,7 +397,7 @@ namespace Tests.Pieces
         [TestCase("E4", "F4", "D4", "F3", "D3")]
         [TestCase("F4", "E4", "G4", "E3", "G3")]
         [TestCase("G4", "F4", "H4", "F3", "H3")]
-        public void Test_BlackPawn_IsValidMove_EnPassant(String blackPawnPos, String whitePawnPosLeft, String whitePawnPosRight, String enPassantPosLeft, String enPassantPosRight)
+        public void BlackPawn_IsValidMove_EnPassant(String blackPawnPos, String whitePawnPosLeft, String whitePawnPosRight, String enPassantPosLeft, String enPassantPosRight)
         {
             // Create Black Pawn at {{ blackPawnPos }}
             // ID argument can be mocked as it has no affect on logic here

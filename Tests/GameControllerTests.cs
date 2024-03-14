@@ -9,7 +9,7 @@ namespace Tests
     public class GameControllerTests
     {
         [Test]
-        public void Test_ConstructGameController_Success()
+        public void ConstructSuccess()
         {
             ChessBoard chessBoard = new ChessBoard();
             GameController gameController = new GameController(chessBoard);
@@ -18,13 +18,13 @@ namespace Tests
         }
 
         [Test]
-        public void Test_GameController_InterpretCommand1_Success()
+        public void InterpretCommand1_Success()
         {
 
         }
 
         [Test]
-        public void Test_GameController_FindChessPieceFromString_WhiteKnight1_Success()
+        public void FindChessPieceFromString_WhiteKnight1_Success()
         {
             String piece = "WK1";
             List<ChessPiece> chessPieces = ChessPieceFactory.CreateChessPieces();
@@ -44,7 +44,7 @@ namespace Tests
         }
 
         [Test]
-        public void Test_GameController_FindChessPieceFromString_BlackBishop2_Success()
+        public void FindChessPieceFromString_BlackBishop2_Success()
         {
             String piece = "BB2";
             List<ChessPiece> chessPieces = ChessPieceFactory.CreateChessPieces();
@@ -64,7 +64,7 @@ namespace Tests
         }
 
         [Test]
-        public void Test_GameController_FindChessPieceFromString_BlackPawn7_Success()
+        public void FindChessPieceFromString_BlackPawn7_Success()
         {
             String piece = "BP7";
             List<ChessPiece> chessPieces = ChessPieceFactory.CreateChessPieces();
@@ -84,7 +84,7 @@ namespace Tests
         }
 
         [Test]
-        public void Test_GameController_FindChessPieceFromString_WhiteRook2_Success()
+        public void FindChessPieceFromString_WhiteRook2_Success()
         {
             String piece = "WR2";
             List<ChessPiece> chessPieces = ChessPieceFactory.CreateChessPieces();
@@ -104,7 +104,7 @@ namespace Tests
         }
 
         [Test]
-        public void Test_GameController_FindChessPieceFromString_WhiteQueen_Success()
+        public void FindChessPieceFromString_WhiteQueen_Success()
         {
             String piece = "WQ1";
             List<ChessPiece> chessPieces = ChessPieceFactory.CreateChessPieces();
@@ -124,7 +124,7 @@ namespace Tests
         }
 
         [Test]
-        public void Test_GameController_FindChessPieceFromString_BlackKing_Success()
+        public void FindChessPieceFromString_BlackKing_Success()
         {
             String piece = "BK";
             List<ChessPiece> chessPieces = ChessPieceFactory.CreateChessPieces();
@@ -151,7 +151,7 @@ namespace Tests
         [TestCase("A@4")]
         [TestCase("")]
         [TestCase("sriojgwi 4whiu hwu4h woweng")]
-        public void Test_GameController_FindChessPieceFromString_InvalidInput_ReturnsNull(String input)
+        public void FindChessPieceFromString_InvalidInput_ReturnsNull(String input)
         {
             List<ChessPiece> chessPieces = ChessPieceFactory.CreateChessPieces();
 
@@ -181,7 +181,7 @@ namespace Tests
         [TestCase("WP7 G4")]
         [TestCase("WP8 H3")]
         [TestCase("WP8 H4")]
-        public void Test_GameController_GetMoveFromCommand_WhiteTurn1(String input)
+        public void GetMoveFromCommand_WhiteTurn1(String input)
         {
             List<ChessPiece> chessPieces = ChessPieceFactory.CreateChessPieces();
             ChessBoard chessBoard = new();
@@ -226,7 +226,7 @@ namespace Tests
         [TestCase("BP7 G5")]
         [TestCase("BP8 H6")]
         [TestCase("BP8 H5")]
-        public void Test_GameController_GetMoveFromCommand_BlackTurn2(String input)
+        public void GetMoveFromCommand_BlackTurn2(String input)
         {
             List<ChessPiece> chessPieces = ChessPieceFactory.CreateChessPieces();
             ChessBoard chessBoard = new();

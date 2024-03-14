@@ -24,7 +24,7 @@ namespace Tests.Pieces
         }
 
         [Test]
-        public void Test_ConstructWhiteBishop_Success()
+        public void ConstructWhiteBishop_Success()
         {
             BoardPosition boardPosition = whiteBishop1StartPosition;
             ChessPiece piece = new ChessPieceBishop(ChessPiece.Color.WHITE, 1, boardPosition);
@@ -41,7 +41,7 @@ namespace Tests.Pieces
         }
 
         [Test]
-        public void Test_ConstructBlackBishop_Success()
+        public void ConstructBlackBishop_Success()
         {
             BoardPosition boardPosition = blackBishop1StartPosition;
             ChessPiece piece = new ChessPieceBishop(ChessPiece.Color.BLACK, 1, boardPosition);
@@ -58,7 +58,7 @@ namespace Tests.Pieces
         }
 
         [Test]
-        public void Test_CloneWhiteBishop_Success()
+        public void CloneWhiteBishop_Success()
         {
             BoardPosition boardPosition = whiteBishop2StartPosition;
             ChessPiece piece = new ChessPieceBishop(ChessPiece.Color.WHITE, 1, boardPosition);
@@ -77,7 +77,7 @@ namespace Tests.Pieces
         }
 
         [Test]
-        public void Test_CloneBlackBishop_Success()
+        public void CloneBlackBishop_Success()
         {
             BoardPosition boardPosition = blackBishop2StartPosition;
             ChessPiece piece = new ChessPieceBishop(ChessPiece.Color.BLACK, 1, boardPosition);
@@ -97,7 +97,7 @@ namespace Tests.Pieces
         }
 
         [Test(Description = "Tests whether the white bishop 1 can move to C1 from A3 with no other pieces on board")]
-        public void Test_WhiteBishop1_IsValidMove_StartingMove1()
+        public void WhiteBishop1_IsValidMove_StartingMove1()
         {
             ChessPiece piece = new ChessPieceBishop(ChessPiece.Color.WHITE, 1, whiteBishop1StartPosition);
             BoardPosition newPosition = new(RANK.ONE, FILE.C);
@@ -106,7 +106,7 @@ namespace Tests.Pieces
         }
 
         [Test(Description = "Tests whether the white bishop 1 can move to B4 from A3 with no other pieces on board")]
-        public void Test_WhiteBishop1_IsValidMove_StartingMove2()
+        public void WhiteBishop1_IsValidMove_StartingMove2()
         {
             ChessPiece piece = new ChessPieceBishop(ChessPiece.Color.WHITE, 1, whiteBishop1StartPosition);
             BoardPosition newPosition = new(RANK.FOUR, FILE.B);
@@ -115,7 +115,7 @@ namespace Tests.Pieces
         }
 
         [Test(Description = "Tests that white bishop 1 cannot move because there are pieces blocking its path")]
-        public void Test_WhiteBishop1_IsValidMove_CannotMoveBlocked()
+        public void WhiteBishop1_IsValidMove_CannotMoveBlocked()
         {
             ChessPiece piece = new ChessPieceBishop(ChessPiece.Color.WHITE, 1, whiteBishop1StartPosition);
             List<BoardPosition> positions = new()
@@ -144,7 +144,7 @@ namespace Tests.Pieces
         }
 
         [Test(Description = "Tests that white bishop 1 cannot jump over a black piece on a diagonal")]
-        public void Test_WhiteBishop1_IsValidMove_CannotJumpPieces()
+        public void WhiteBishop1_IsValidMove_CannotJumpPieces()
         {
             ChessPiece piece = new ChessPieceBishop(ChessPiece.Color.WHITE, 1, whiteBishop1StartPosition);
             List<BoardPosition> positions = new()
@@ -169,7 +169,7 @@ namespace Tests.Pieces
         }
 
         [Test(Description = "Tests that white bishop 1 can capture")]
-        public void Test_WhiteBishop1_IsValidMove_CanCapture()
+        public void WhiteBishop1_IsValidMove_CanCapture()
         {
             ChessPiece piece = new ChessPieceBishop(ChessPiece.Color.WHITE, 1, whiteBishop1StartPosition);
             BoardPosition d6 = new(RANK.SIX, FILE.D);
@@ -183,7 +183,7 @@ namespace Tests.Pieces
 
 
         [Test(Description = "Tests that white bishop can move to all of these valid locations if starting from D4")]
-        public void Test_WhiteBishop1_IsValidMove_FromD4()
+        public void WhiteBishop1_IsValidMove_FromD4()
         {
             ChessPiece piece = new ChessPieceBishop(ChessPiece.Color.WHITE, 1, new BoardPosition(RANK.FOUR, FILE.D));
 
@@ -216,7 +216,7 @@ namespace Tests.Pieces
         }
 
         [Test(Description = "Tests that white bishop can move from C1 to G5 with pieces on board not in its path")]
-        public void Test_WhiteBishop1_IsValidMove_FromC1ToG5()
+        public void WhiteBishop1_IsValidMove_FromC1ToG5()
         {
             ChessPiece piece = new ChessPieceBishop(ChessPiece.Color.WHITE, 1, new("C1"));
             // TODO: Implement Later
@@ -226,7 +226,7 @@ namespace Tests.Pieces
         }
 
         [Test(Description = "Tests that Black Bishop can move from C8 to D7 with pieces on board not in its path")]
-        public void Test_BlackBishop1_IsValidMove_FromC8ToD7()
+        public void BlackBishop1_IsValidMove_FromC8ToD7()
         {
             List<ChessPiece> chessPieces = ChessPieceFactory.CreateChessPieces();
             board.PopulateBoard(chessPieces);
@@ -247,7 +247,7 @@ namespace Tests.Pieces
         }
 
         [Test(Description = "Tests that White Bishop cannot move from C1 to C3")]
-        public void Test_WhiteBishop1_IsValidMove_FromC1ToC3()
+        public void WhiteBishop1_IsValidMove_FromC1ToC3()
         {
             List<ChessPiece> chessPieces = ChessPieceFactory.CreateChessPieces();
             board.PopulateBoard(chessPieces);

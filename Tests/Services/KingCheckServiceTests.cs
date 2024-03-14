@@ -9,7 +9,7 @@ namespace Tests.Services
     public class KingCheckServiceTests
     {
         [Test]
-        public void Test_ConstructKingCheckService_Success()
+        public void ConstructKingCheckService_Success()
         {
             KingCheckService kingCheckService = new();
 
@@ -17,7 +17,7 @@ namespace Tests.Services
         }
 
         [Test(Description = "Tests that a white king on E3 cannot move to E4 or D4 when there is a black king on D5")]
-        public void Test_IsWhiteKingInCheck_BlackKingChecks()
+        public void IsWhiteKingInCheck_BlackKingChecks()
         {
             // Construct board; set black king on D5 and white king on E3 on chess board object
             ChessBoard chessBoard = new();
@@ -45,7 +45,7 @@ namespace Tests.Services
         }
 
         [Test(Description = "Tests that a black king on D5 cannot move to E4 or D4 when there is a white king on E3")]
-        public void Test_IsBlackKingInCheck_WhiteKingChecks()
+        public void IsBlackKingInCheck_WhiteKingChecks()
         {
             // Construct board; set black king on D5 and white king on E3 on chess board object
             ChessBoard chessBoard = new();
@@ -75,7 +75,7 @@ namespace Tests.Services
         }
 
         [Test(Description = "Test where White Bishop on C1 has Pinned black king on G5 with black knight on F4; Moving Knight to any other position would put King in check from Bishop")]
-        public void Test_IsKingInCheck_WhiteBishopPinsBlackKingAndKnight()
+        public void IsKingInCheck_WhiteBishopPinsBlackKingAndKnight()
         {
             ChessPiece whiteKingPiece = new ChessPieceKing(ChessPiece.Color.WHITE, new("A1"));
             ChessPiece whiteBishopPiece = new ChessPieceBishop(ChessPiece.Color.WHITE, 2, new("C1"));
@@ -121,7 +121,7 @@ namespace Tests.Services
         }
 
         [Test(Description = "Tests that a white king on E1 cannot move to D1 or D2 as there is a black rook on D8 that would put it in check")]
-        public void Test_IsKingInCheck_WouldBeCheckedByBlackRookOnD8()
+        public void IsKingInCheck_WouldBeCheckedByBlackRookOnD8()
         {
             ChessPiece whiteKingPiece = new ChessPieceKing(ChessPiece.Color.WHITE, new("E1"));
             ChessPiece blackKingPiece = new ChessPieceKing(ChessPiece.Color.BLACK, new("H8"));
@@ -153,7 +153,7 @@ namespace Tests.Services
         }
 
         [Test(Description = "Test involving 9 pieces [Black Bishop on A5, Black Rook on A1, Black Knight on F3, White Queen on D1, White King on E1, White Bishop on F1, White Pawns on D2, E2, and F2] where knight has put king in check, only a single valid move is possible")]
-        public void Test_IsKingInCheck_9PieceWhiteKingInCheck()
+        public void IsKingInCheck_9PieceWhiteKingInCheck()
         {
             ChessPiece whiteQueenPiece = new ChessPieceQueen(ChessPiece.Color.WHITE, 1, new("D1"));
             ChessPiece whiteKingPiece = new ChessPieceKing(ChessPiece.Color.WHITE, new("E1"));
@@ -204,7 +204,7 @@ namespace Tests.Services
         }
 
         [Test(Description = "Test involving 8 pieces [Black Bishop on A5, Black Rook on A1, White Queen on D1, White King on E1, White Bishop on F1, White Pawns on D2, E2, and F2] where knight has put king in check, only a single valid move is possible")]
-        public void Test_IsKingInCheck_8PieceWhiteKingPinned()
+        public void IsKingInCheck_8PieceWhiteKingPinned()
         {
             ChessPiece whiteQueenPiece = new ChessPieceQueen(ChessPiece.Color.WHITE, 1, new("D1"));
             ChessPiece whiteKingPiece = new ChessPieceKing(ChessPiece.Color.WHITE, new("E1"));
@@ -271,7 +271,7 @@ namespace Tests.Services
            **|*A*|*B*|*C*|*D*|*E*|*F*|*G*|*H*|**
 */
         [Test(Description = "Test involving 9 pieces [Black Bishop on A5, Black Rook on A1, Black Knight on F3, White Queen on D1, White King on E1, White Bishop on F1, White Pawns on D2, E2, and F2] where knight has put king in check, only a single valid move is possible")]
-        public void Test_IsCheckMate_9PieceWhiteKingInCheck_NotCheckMate()
+        public void IsCheckMate_9PieceWhiteKingInCheck_NotCheckMate()
         {
             ChessPiece whiteQueenPiece = new ChessPieceQueen(ChessPiece.Color.WHITE, 1, new("D1"));
             ChessPiece whiteKingPiece = new ChessPieceKing(ChessPiece.Color.WHITE, new("E1"));
@@ -308,7 +308,7 @@ namespace Tests.Services
         }
 
         [Test(Description = "Test involving 9 pieces [Black Bishop on A5, Black Bishop on A6, Black Rook on A1, Black Knight on F3, White Queen on D1, White King on E1, White Bishop on F1, White Pawns on D2, and F2] where knight has put king in check, no valid moves are possible")]
-        public void Test_IsCheckMate_9PieceWhiteKingInCheck_CheckMate()
+        public void IsCheckMate_9PieceWhiteKingInCheck_CheckMate()
         {
             ChessPiece whiteQueenPiece = new ChessPieceQueen(ChessPiece.Color.WHITE, 1, new("D1"));
             ChessPiece whiteKingPiece = new ChessPieceKing(ChessPiece.Color.WHITE, new("E1"));
@@ -339,7 +339,7 @@ namespace Tests.Services
         }
 
         [Test(Description = "Test Check Mate involving 5 pieces")]
-        public void Test_IsCheckMate_5PieceCheckMateOnBlack()
+        public void IsCheckMate_5PieceCheckMateOnBlack()
         {
             ChessPiece whiteQueenPiece = new ChessPieceQueen(ChessPiece.Color.WHITE, 1, new("B7")); // init queen on its already moved square
             ChessPiece whiteKingPiece = new ChessPieceKing(ChessPiece.Color.WHITE, new("G2"));
@@ -373,7 +373,7 @@ namespace Tests.Services
         }
 
         [Test(Description = "Test Check Mate is false on a full board")]
-        public void Test_IsCheckMate_NoCheckMate_FullBoard()
+        public void IsCheckMate_NoCheckMate_FullBoard()
         {
             List<ChessPiece> chessPieces = ChessPieceFactory.CreateChessPieces();
             ChessBoard chessBoard = new();
@@ -389,7 +389,7 @@ namespace Tests.Services
         }
 
         [Test(Description = "Test Check Mate on black with 2 pieces")]
-        public void Test_IsCheckMate_CheckMateBlack_2PieceMate()
+        public void IsCheckMate_CheckMateBlack_2PieceMate()
         {
             ChessPiece whiteQueenPiece = new ChessPieceQueen(ChessPiece.Color.WHITE, 1, new("B5"));
             ChessPiece whiteKingPiece = new ChessPieceKing(ChessPiece.Color.WHITE, new("D4"));
@@ -484,7 +484,7 @@ namespace Tests.Services
         }
 
         [Test]
-        public void Test_IsKingInCheck_WhiteKingInCheck()
+        public void IsKingInCheck_WhiteKingInCheck()
         {
             // Arrange
             ChessBoard board = new();
@@ -503,7 +503,7 @@ namespace Tests.Services
         }
 
         [Test]
-        public void Test_IsKingInCheck_BlackKingInCheck()
+        public void IsKingInCheck_BlackKingInCheck()
         {
             // Arrange
             ChessBoard board = new();
@@ -522,7 +522,7 @@ namespace Tests.Services
         }
 
         [Test]
-        public void Test_IsKingInCheck_WhiteKingNotInCheck()
+        public void IsKingInCheck_WhiteKingNotInCheck()
         {
             // Arrange
             ChessBoard board = new();
@@ -540,7 +540,7 @@ namespace Tests.Services
         }
 
         [Test]
-        public void Test_IsKingInCheck_BlackKingNotInCheck()
+        public void IsKingInCheck_BlackKingNotInCheck()
         {
             // Arrange
             ChessBoard board = new();

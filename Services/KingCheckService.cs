@@ -103,6 +103,8 @@ namespace Chess.Services
 
             foreach (ChessPiece piece in friendlyPieces)
             {
+                // TODO: Set the PawnPromotion callback function to just return 'Q' each time
+                // Simulated future turns assume a pawn is always promoted to queen
                 // iterate over all board positions
                 for (int i = 0; i < 8; i++)
                 {
@@ -113,6 +115,7 @@ namespace Chess.Services
                             possibleMoves.Add(new(turn.TurnNumber + 1, piece, piece.GetCurrentPosition(), pos, turn.ChessBoard));
                     }
                 }
+                // TODO: change the PawnPromotion callback function back to GameManager.HandlePawnPromotion
             }
 
             foreach (Turn possibleTurn in possibleMoves)

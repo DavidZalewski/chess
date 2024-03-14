@@ -105,6 +105,6 @@ namespace Chess.Pieces
             return Clone(copy);
         }
 
-        internal void Test_SetWasInCheck() { _wasInCheck = true; }
+        internal void SetWasInCheck() { _wasInCheck = true; }
     }
 }

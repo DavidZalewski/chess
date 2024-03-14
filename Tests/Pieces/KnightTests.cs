@@ -18,7 +18,7 @@ namespace Tests.Pieces
         }
 
         [Test]
-        public void Test_ConstructWhiteKnight_Success()
+        public void ConstructWhiteKnight_Success()
         {
             BoardPosition boardPosition = whiteKnight1StartPosition;
             ChessPiece piece = new ChessPieceKnight(ChessPiece.Color.WHITE, 1, boardPosition);
@@ -35,7 +35,7 @@ namespace Tests.Pieces
         }
 
         [Test]
-        public void Test_CloneWhiteKnight_Success()
+        public void CloneWhiteKnight_Success()
         {
             BoardPosition boardPosition = whiteKnight1StartPosition;
             ChessPiece piece = new ChessPieceKnight(ChessPiece.Color.WHITE, 1, boardPosition);
@@ -54,7 +54,7 @@ namespace Tests.Pieces
         }
 
         [Test]
-        public void Test_ConstructBlackKnight_Success()
+        public void ConstructBlackKnight_Success()
         {
             BoardPosition boardPosition = blackKnight1StartPosition;
             ChessPiece piece = new ChessPieceKnight(ChessPiece.Color.BLACK, 1, boardPosition);
@@ -71,7 +71,7 @@ namespace Tests.Pieces
         }
 
         [Test]
-        public void Test_CloneBlackKnight_Success()
+        public void CloneBlackKnight_Success()
         {
             BoardPosition boardPosition = blackKnight1StartPosition;
             ChessPiece piece = new ChessPieceKnight(ChessPiece.Color.BLACK, 1, boardPosition);
@@ -90,7 +90,7 @@ namespace Tests.Pieces
         }
 
         [Test(Description = "Tests whether the white knight 1 can move to C1 on its first move")]
-        public void Test_WhiteKnight1_IsValidMove_StartingMove1()
+        public void WhiteKnight1_IsValidMove_StartingMove1()
         {
             BoardPosition boardPosition = whiteKnight1StartPosition;
             ChessPiece piece = new ChessPieceKnight(ChessPiece.Color.WHITE, 1, boardPosition);
@@ -100,7 +100,7 @@ namespace Tests.Pieces
         }
 
         [Test(Description = "Tests whether the white knight 1 can move to C3 on its first move")]
-        public void Test_WhiteKnight1_IsValidMove_StartingMove2()
+        public void WhiteKnight1_IsValidMove_StartingMove2()
         {
             BoardPosition boardPosition = whiteKnight1StartPosition;
             ChessPiece piece = new ChessPieceKnight(ChessPiece.Color.WHITE, 1, boardPosition);
@@ -110,7 +110,7 @@ namespace Tests.Pieces
         }
 
         [Test(Description = "Tests whether the white knight 2 can move to C6 on its first move")]
-        public void Test_WhiteKnight2_IsValidMove_StartingMove1()
+        public void WhiteKnight2_IsValidMove_StartingMove1()
         {
             BoardPosition boardPosition = whiteKnight2StartPosition;
             ChessPiece piece = new ChessPieceKnight(ChessPiece.Color.WHITE, 2, boardPosition);
@@ -120,7 +120,7 @@ namespace Tests.Pieces
         }
 
         [Test(Description = "Tests whether the white knight 2 can move to C8 on its first move")]
-        public void Test_WhiteKnight2_IsValidMove_StartingMove2()
+        public void WhiteKnight2_IsValidMove_StartingMove2()
         {
             BoardPosition boardPosition = whiteKnight2StartPosition;
             ChessPiece piece = new ChessPieceKnight(ChessPiece.Color.WHITE, 2, boardPosition);
@@ -130,7 +130,7 @@ namespace Tests.Pieces
         }
 
         [Test(Description = "Tests whether the black knight 1 can move to F1 on its first move")]
-        public void Test_BlackKnight1_IsValidMove_StartingMove1()
+        public void BlackKnight1_IsValidMove_StartingMove1()
         {
             BoardPosition boardPosition = blackKnight1StartPosition;
             ChessPiece piece = new ChessPieceKnight(ChessPiece.Color.BLACK, 1, boardPosition);
@@ -140,7 +140,7 @@ namespace Tests.Pieces
         }
 
         [Test(Description = "Tests whether the black knight 1 can move to F3 on its first move")]
-        public void Test_BlackKnight1_IsValidMove_StartingMove2()
+        public void BlackKnight1_IsValidMove_StartingMove2()
         {
             BoardPosition boardPosition = blackKnight1StartPosition;
             ChessPiece piece = new ChessPieceKnight(ChessPiece.Color.BLACK, 1, boardPosition);
@@ -150,7 +150,7 @@ namespace Tests.Pieces
         }
 
         [Test(Description = "Tests whether the black knight 2 can move to F6 on its first move")]
-        public void Test_BlackKnight2_IsValidMove_StartingMove1()
+        public void BlackKnight2_IsValidMove_StartingMove1()
         {
             BoardPosition boardPosition = blackKnight2StartPosition;
             ChessPiece piece = new ChessPieceKnight(ChessPiece.Color.BLACK, 2, boardPosition);
@@ -160,7 +160,7 @@ namespace Tests.Pieces
         }
 
         [Test(Description = "Tests whether the black knight 2 can move to F8 on its first move")]
-        public void Test_BlackKnight2_IsValidMove_StartingMove2()
+        public void BlackKnight2_IsValidMove_StartingMove2()
         {
             BoardPosition boardPosition = blackKnight2StartPosition;
             ChessPiece piece = new ChessPieceKnight(ChessPiece.Color.BLACK, 2, boardPosition);
@@ -170,7 +170,7 @@ namespace Tests.Pieces
         }
 
         [Test(Description = "Tests that white knight cannot capture its own piece")]
-        public void Test_WhiteKnight1_IsValidMove_InvalidCapture()
+        public void WhiteKnight1_IsValidMove_InvalidCapture()
         {
             BoardPosition boardPosition = whiteKnight1StartPosition;
             BoardPosition c3 = new(RANK.THREE, FILE.C);
@@ -181,7 +181,7 @@ namespace Tests.Pieces
         }
 
         [Test(Description = "Tests that black knight cannot capture its own piece")]
-        public void Test_BlackKnight2_IsValidMove_InvalidCapture()
+        public void BlackKnight2_IsValidMove_InvalidCapture()
         {
             BoardPosition boardPosition = blackKnight2StartPosition;
             BoardPosition f3 = new(RANK.THREE, FILE.F);
@@ -193,7 +193,7 @@ namespace Tests.Pieces
         }
 
         [Test(Description = "Tests that white knight can move to all of these valid locations if starting from C3")]
-        public void Test_WhiteKnight1_IsValidMove_FromC3()
+        public void WhiteKnight1_IsValidMove_FromC3()
         {
             ChessPiece piece = new ChessPieceKnight(ChessPiece.Color.WHITE, 1, new BoardPosition(RANK.THREE, FILE.C));
 
@@ -222,7 +222,7 @@ namespace Tests.Pieces
         }
 
         [Test(Description = "Tests that white knight can move to some of these valid locations if starting from C3")]
-        public void Test_WhiteKnight1_IsValidMove_FromC3OnlySome()
+        public void WhiteKnight1_IsValidMove_FromC3OnlySome()
         {
             ChessPiece piece = new ChessPieceKnight(ChessPiece.Color.WHITE, 1, new BoardPosition(RANK.THREE, FILE.C));
 
@@ -265,7 +265,7 @@ namespace Tests.Pieces
         }
 
         [Test(Description = "Tests that black knight can move to some of these valid locations if starting from F3")]
-        public void Test_BlackKnight1_IsValidMove_FromF3OnlySome()
+        public void BlackKnight1_IsValidMove_FromF3OnlySome()
         {
             ChessPiece piece = new ChessPieceKnight(ChessPiece.Color.BLACK, 1, new BoardPosition(RANK.THREE, FILE.F));
 
@@ -308,7 +308,7 @@ namespace Tests.Pieces
         }
 
         [Test(Description = "Tests that these are invalid moves for knight at starting position D4")]
-        public void Test_Knight1_IsValidMove_InvalidMovesFromD4()
+        public void Knight1_IsValidMove_InvalidMovesFromD4()
         {
             ChessPiece piece = new ChessPieceKnight(ChessPiece.Color.BLACK, 1, new BoardPosition(RANK.FOUR, FILE.D));
 

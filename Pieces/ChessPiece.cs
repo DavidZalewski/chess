@@ -1,4 +1,5 @@
 ﻿using Chess.Board;
+using Chess.Callbacks;
 
 namespace Chess.Pieces
 {
@@ -47,8 +48,9 @@ namespace Chess.Pieces
         protected BoardPosition _startingPosition;
         protected BoardPosition _currentPosition;
         protected bool _hasMoved = false;
-        protected static Func<ChessBoard, BoardPosition, ChessPiece, bool>? _castleEventCallBackFunction = null;
-        protected static Func<ChessBoard, BoardPosition, ChessPiece, bool>? _IsEnPassantCallBackFunction = null;
+        protected static Func<ChessBoard, BoardPosition, ChessPiece, bool>? _castleEventCallBackFunction = SpecialMovesHandlers.DoCastleMove;
+        protected static Func<ChessBoard, BoardPosition, ChessPiece, bool>? _IsEnPassantCallBackFunction = SpecialMovesHandlers.IsEnPassantMove;
+        protected static Action<ChessBoard, BoardPosition, ChessPiece> _pawnPromotedCallBackFunction = SpecialMovesHandlers.PawnPromotion;
         protected string _pieceName;
 
         public ChessPiece(Piece piece, Color color, int id, BoardPosition startingPosition)
@@ -111,6 +113,14 @@ namespace Chess.Pieces
                 board.SetPieceAtPosition(previousPosition, NoPiece.Instance);
                 _currentPosition = position;
             }
+
+            if (this is ChessPiecePawn)
+            {
+                if ( (_color == Color.WHITE && _currentPosition.Rank == RANK.EIGHT) ||
+                    (_color == Color.BLACK && _currentPosition.Rank == RANK.ONE) )
+                    _pawnPromotedCallBackFunction.Invoke(board, position, this);
+            }
+
         }
 
         public Piece GetPiece() { return _piece; }

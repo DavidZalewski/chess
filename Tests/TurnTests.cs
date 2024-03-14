@@ -27,7 +27,7 @@ namespace Tests
         }
 
         [Test]
-        public void Test_ConstructTurn_Success()
+        public void ConstructTurn_Success()
         {
             ChessBoard board = new();
             List<ChessPiece> chessPieces = ChessPieceFactory.CreateChessPieces();
@@ -55,7 +55,7 @@ namespace Tests
         }
 
         [Test]
-        public void Test_ConstructTurn_Capture_Piece_Success()
+        public void ConstructTurn_Capture_Piece_Success()
         {
             ChessBoard board = new();
             List<ChessPiece> chessPieces = ChessPieceFactory.CreateChessPieces();
@@ -90,7 +90,7 @@ namespace Tests
         }
 
         [Test]
-        public void Test_ConstructTurn_Capture_Piece_EnPassant_Success()
+        public void ConstructTurn_Capture_Piece_EnPassant_Success()
         {
             ChessBoard board = new();
             List<ChessPiece> chessPieces = ChessPieceFactory.CreateChessPieces();
@@ -133,7 +133,7 @@ namespace Tests
         }
 
         [Test]
-        public void Test_ConstructTurn_Capture_Piece_EnPassant_DifferentPosition_Success()
+        public void ConstructTurn_Capture_Piece_EnPassant_DifferentPosition_Success()
         {
             ChessBoard board = new();
             List<ChessPiece> chessPieces = ChessPieceFactory.CreateChessPieces();

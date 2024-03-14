@@ -46,12 +46,6 @@ namespace Chess.Controller
         public void StartGame()
         {
             _chessBoard.PopulateBoard(_chessPieces);
-            // TODO:
-            // Why is GameController even registering callbacks?
-            // The Turn object is what handles the state of the game
-            // Does this actually need to exist?
-            ChessPiece.SetCastleCallbackFunction(SpecialMovesHandlers.DoCastleMove);
-            ChessPiece.SetIsEnPassantCallbackFunction(SpecialMovesHandlers.IsEnPassantMove);
             _turnNumber = 1;
         }
 
@@ -62,7 +56,7 @@ namespace Chess.Controller
             ChessPiece.Piece piece;
             int id = 0;
 
-            char[] chars = input.ToCharArray();
+            char[] chars = input.ToUpper().ToCharArray();
 
             if (chars.Length != 2 && chars.Length != 3)
                 return null;

@@ -1,4 +1,5 @@
 ﻿using Chess.Board;
+using Chess.Callbacks;
 using Chess.Controller;
 using Chess.GameState;
 using Chess.Interfaces;
@@ -19,6 +20,7 @@ namespace Chess
         {
             _console = console;
             _gameController = gameController;
+            SpecialMovesHandlers.PawnPromotionPromptUser = HandlePawnPromotion;
         }
 
         public void Start()
@@ -214,6 +216,24 @@ namespace Chess
             } // end while
 
             _console.WriteLine("GameManager: Ending Game");
+        }
+
+        private string HandlePawnPromotion()
+        {
+            _console.WriteLine("Pawn Promoted. Choose type: (Q - Queen, R - Rook, K - Knight, B - Bishop)");
+            string choice;
+            while (true)
+            {
+                choice = _console.ReadLine()?.ToLower();
+
+                if (choice != "q" && choice != "r" && choice != "k" && choice != "b")
+                    _console.WriteLine("Invalid choice. Please try again.");
+                else
+                    break;
+            }
+
+            return choice;
+
         }
     }
 }

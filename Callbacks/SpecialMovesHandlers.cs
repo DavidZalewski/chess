@@ -8,6 +8,7 @@ namespace Chess.Callbacks
     internal class SpecialMovesHandlers
     {
         public static Action<string>? GetActionFromResult;
+        public static Func<string>? PawnPromotionPromptUser;
 
         public static bool DoCastleMove(ChessBoard cb, BoardPosition bp, ChessPiece king)
         {
@@ -70,7 +71,6 @@ namespace Chess.Callbacks
 
             return true;
         }
-
 
         public static bool IsEnPassantMove(ChessBoard chessBoard, BoardPosition boardPosition, ChessPiece pawnAttemptingEnPassant)
         {
@@ -142,5 +142,26 @@ namespace Chess.Callbacks
             return false;
         }
 
+        internal static void PawnPromotion(ChessBoard board, BoardPosition position, ChessPiece piece)
+        {
+            string choice = "Q";
+            if (PawnPromotionPromptUser != null)
+                choice = PawnPromotionPromptUser.Invoke();
+
+            Func<string, ChessPiece> switchReturnPiece = (string chosenPiece) =>
+            {
+                return chosenPiece switch
+                {
+                    "Q" => new ChessPieceQueen(piece.GetColor(), 0, position),
+                    "R" => new ChessPieceRook(piece.GetColor(), 0, position),
+                    "K" => new ChessPieceKnight(piece.GetColor(), 0, position),
+                    "B" => new ChessPieceBishop(piece.GetColor(), 0, position),
+                    _ => new ChessPieceQueen(piece.GetColor(), 0, position),
+                };
+            };
+
+            ChessPiece newPiece = switchReturnPiece(choice);
+            board.AddPiece(newPiece);
+        }
     }
 }

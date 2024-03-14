@@ -19,7 +19,7 @@ namespace Tests.Pieces
         }
 
         [Test]
-        public void Test_ConstructBlackPawn_Success()
+        public void ConstructBlackPawn_Success()
         {
             BoardPosition boardPosition = new BoardPosition(RANK.ONE, FILE.A);
             ChessPiece piece = new ChessPieceBlackPawn(1, boardPosition);
@@ -33,7 +33,7 @@ namespace Tests.Pieces
         }
 
         [Test(Description = "Tests whether the black pawn can move a single square down on its first move")]
-        public void Test_BlackPawn_IsValidMove_StartingMove1()
+        public void BlackPawn_IsValidMove_StartingMove1()
         {
             BoardPosition boardPosition = new BoardPosition(RANK.SEVEN, FILE.F);
             ChessPiece piece = new ChessPieceBlackPawn(1, boardPosition);
@@ -43,7 +43,7 @@ namespace Tests.Pieces
         }
 
         [Test(Description = "Tests whether the black pawn can move two squares down on its first move")]
-        public void Test_BlackPawn_IsValidMove_StartingMove2()
+        public void BlackPawn_IsValidMove_StartingMove2()
         {
             BoardPosition boardPosition = new BoardPosition(RANK.SEVEN, FILE.E);
             ChessPiece piece = new ChessPieceBlackPawn(1, boardPosition);
@@ -58,7 +58,7 @@ namespace Tests.Pieces
         }
 
         [Test(Description = "Tests that the black pawn cannot move 2 squares if it has already moved")]
-        public void Test_BlackPawn_IsValidMove_InvalidMove2Squares()
+        public void BlackPawn_IsValidMove_InvalidMove2Squares()
         {
             BoardPosition boardPosition = new("G7");
             ChessPiece piece = new ChessPieceBlackPawn(1, boardPosition);
@@ -73,7 +73,7 @@ namespace Tests.Pieces
         }
 
         [Test(Description = "Tests that the black pawn cannot move horizontally when there is no capture")]
-        public void Test_BlackPawn_IsValidMove_InvalidHorizontalMove1()
+        public void BlackPawn_IsValidMove_InvalidHorizontalMove1()
         {
             BoardPosition boardPosition = new BoardPosition(RANK.FOUR, FILE.G);
             ChessPiece piece = new ChessPieceBlackPawn(1, boardPosition);
@@ -83,7 +83,7 @@ namespace Tests.Pieces
         }
 
         [Test(Description = "Tests that the black pawn cannot move horizontally when there is no capture - another variation")]
-        public void Test_BlackPawn_IsValidMove_InvalidHorizontalMove2()
+        public void BlackPawn_IsValidMove_InvalidHorizontalMove2()
         {
             BoardPosition boardPosition = new BoardPosition(RANK.FOUR, FILE.G);
             ChessPiece piece = new ChessPieceBlackPawn(1, boardPosition);
@@ -93,7 +93,7 @@ namespace Tests.Pieces
         }
 
         [Test(Description = "Tests that the black pawn cannot move horizontally without moving forward")]
-        public void Test_BlackPawn_IsValidMove_InvalidHorizontalMove3()
+        public void BlackPawn_IsValidMove_InvalidHorizontalMove3()
         {
             BoardPosition boardPosition = new BoardPosition(RANK.FOUR, FILE.G);
             ChessPiece piece = new ChessPieceBlackPawn(1, boardPosition);
@@ -103,7 +103,7 @@ namespace Tests.Pieces
         }
 
         [Test(Description = "Tests that the black pawn can move horizontally as there is a capture")]
-        public void Test_BlackPawn_IsValidMove_ValidHorizontalMoveCapture1()
+        public void BlackPawn_IsValidMove_ValidHorizontalMoveCapture1()
         {
             // Create Black Pawn at E4
             BoardPosition boardPosition = new BoardPosition(RANK.FIVE, FILE.E);
@@ -117,7 +117,7 @@ namespace Tests.Pieces
         }
 
         [Test(Description = "Tests that the black pawn can move horizontally as there is a capture (variation)")]
-        public void Test_BlackPawn_IsValidMove_ValidHorizontalMoveCapture2()
+        public void BlackPawn_IsValidMove_ValidHorizontalMoveCapture2()
         {
             // Create Black Pawn at E4
             BoardPosition boardPosition = new BoardPosition(RANK.FOUR, FILE.E);
@@ -131,7 +131,7 @@ namespace Tests.Pieces
         }
 
         [Test(Description = "Tests that the black pawn cannot capture its own piece")]
-        public void Test_BlackPawn_IsValidMove_InvalidCapture1()
+        public void BlackPawn_IsValidMove_InvalidCapture1()
         {
             // Create Black Pawn at E4
             BoardPosition boardPosition = new BoardPosition(RANK.FOUR, FILE.E);
@@ -145,7 +145,7 @@ namespace Tests.Pieces
         }
 
         [Test(Description = "Tests that the black pawn cannot capture a piece parallel to it")]
-        public void Test_BlackPawn_IsValidMove_InvalidCapture2()
+        public void BlackPawn_IsValidMove_InvalidCapture2()
         {
             // Create Black Pawn at E4
             BoardPosition boardPosition = new BoardPosition(RANK.FOUR, FILE.E);
@@ -159,7 +159,7 @@ namespace Tests.Pieces
         }
 
         [Test(Description = "Tests that the black pawn cannot move backwards")]
-        public void Test_BlackPawn_IsValidMove_InvalidMoveBackwards()
+        public void BlackPawn_IsValidMove_InvalidMoveBackwards()
         {
             // Create Black Pawn at E4
             BoardPosition boardPosition = new BoardPosition(RANK.FOUR, FILE.E);
@@ -170,7 +170,7 @@ namespace Tests.Pieces
         }
 
         [Test(Description = "Tests that the black pawn cannot move to erroneous places on board")]
-        public void Test_BlackPawn_IsValidMove_InvalidMove1()
+        public void BlackPawn_IsValidMove_InvalidMove1()
         {
             // Create Black Pawn at E4
             BoardPosition boardPosition = new BoardPosition(RANK.FOUR, FILE.E);
@@ -181,7 +181,7 @@ namespace Tests.Pieces
         }
 
         [Test(Description = "Tests that the black pawn cannot move to erroneous places on board")]
-        public void Test_BlackPawn_IsValidMove_InvalidMove2()
+        public void BlackPawn_IsValidMove_InvalidMove2()
         {
             // Create Black Pawn at E4
             BoardPosition boardPosition = new BoardPosition(RANK.FOUR, FILE.E);
@@ -192,7 +192,7 @@ namespace Tests.Pieces
         }
 
         [Test(Description = "Tests that the black pawn cannot move to erroneous places on board")]
-        public void Test_BlackPawn_IsValidMove_InvalidMove3()
+        public void BlackPawn_IsValidMove_InvalidMove3()
         {
             // Create Black Pawn at E4
             BoardPosition boardPosition = new BoardPosition(RANK.FOUR, FILE.E);
@@ -203,7 +203,7 @@ namespace Tests.Pieces
         }
 
         [Test(Description = "Tests that the black pawn 2 on A7 cannot move to C5")]
-        public void Test_BlackPawn_IsValidMove_InvalidMove4()
+        public void BlackPawn_IsValidMove_InvalidMove4()
         {
             // Create Black Pawn at E4
             BoardPosition boardPosition = new BoardPosition(RANK.SEVEN, FILE.A);

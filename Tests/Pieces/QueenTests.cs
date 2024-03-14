@@ -25,7 +25,7 @@ namespace Tests.Pieces
         }
 
         [Test]
-        public void Test_ConstructWhiteQueen_Success()
+        public void ConstructWhiteQueen_Success()
         {
             BoardPosition boardPosition = a3;
             ChessPiece piece = new ChessPieceQueen(Color.WHITE, 1, boardPosition);
@@ -42,7 +42,7 @@ namespace Tests.Pieces
         }
 
         [Test]
-        public void Test_CloneWhiteQueen_Success()
+        public void CloneWhiteQueen_Success()
         {
             BoardPosition boardPosition = a3;
             ChessPiece piece = new ChessPieceQueen(Color.WHITE, 1, boardPosition);
@@ -61,7 +61,7 @@ namespace Tests.Pieces
         }
 
         [Test]
-        public void Test_ConstructBlackQueen_Success()
+        public void ConstructBlackQueen_Success()
         {
             BoardPosition boardPosition = h3;
             ChessPiece piece = new ChessPieceQueen(Color.BLACK, 1, boardPosition);
@@ -78,7 +78,7 @@ namespace Tests.Pieces
         }
 
         [Test]
-        public void Test_CloneBlackQueen_Success()
+        public void CloneBlackQueen_Success()
         {
             BoardPosition boardPosition = h3;
             ChessPiece piece = new ChessPieceQueen(Color.BLACK, 1, boardPosition);
@@ -97,7 +97,7 @@ namespace Tests.Pieces
         }
 
         [Test(Description = "Tests whether the white queen 1 can move to C1 from A3 with no other pieces on board")]
-        public void Test_WhiteQueen1_IsValidMove_StartingMove1()
+        public void WhiteQueen1_IsValidMove_StartingMove1()
         {
             ChessPiece piece = new ChessPieceQueen(Color.WHITE, 1, a3);
             BoardPosition newPosition = new(RANK.ONE, FILE.C);
@@ -106,7 +106,7 @@ namespace Tests.Pieces
         }
 
         [Test(Description = "Tests whether the black queen 1 can move to B4 from A3 with no other pieces on board")]
-        public void Test_BlackQueen1_IsValidMove_StartingMove2()
+        public void BlackQueen1_IsValidMove_StartingMove2()
         {
             ChessPiece piece = new ChessPieceQueen(Color.BLACK, 1, a3);
             BoardPosition newPosition = new(RANK.FOUR, FILE.B);
@@ -115,7 +115,7 @@ namespace Tests.Pieces
         }
 
         [Test(Description = "Tests that black queen 1 cannot move because there are pieces blocking its path")]
-        public void Test_BlackQueen1_IsValidMove_CannotMoveBlocked()
+        public void BlackQueen1_IsValidMove_CannotMoveBlocked()
         {
             ChessPiece piece = new ChessPieceQueen(Color.BLACK, 1, a3);
             List<BoardPosition> positions = new()
@@ -143,7 +143,7 @@ namespace Tests.Pieces
         }
 
         [Test(Description = "Tests that black queen 1 cannot jump over a black piece on a diagonal")]
-        public void Test_BlackQueen1_IsValidMove_CannotJumpPieces()
+        public void BlackQueen1_IsValidMove_CannotJumpPieces()
         {
             ChessPiece piece = new ChessPieceQueen(Color.BLACK, 1, a3);
             List<BoardPosition> positions = new()
@@ -168,7 +168,7 @@ namespace Tests.Pieces
         }
 
         [Test(Description = "Tests that black queen 1 can capture")]
-        public void Test_WhiteQueen1_IsValidMove_CanCapture()
+        public void WhiteQueen1_IsValidMove_CanCapture()
         {
             ChessPiece piece = new ChessPieceQueen(Color.BLACK, 1, a3);
             BoardPosition d6 = new(RANK.SIX, FILE.D);
@@ -182,7 +182,7 @@ namespace Tests.Pieces
 
 
         [Test(Description = "Tests that white queen can move to all of these valid locations if starting from D4")]
-        public void Test_WhiteQueen1_IsValidMove_FromD4()
+        public void WhiteQueen1_IsValidMove_FromD4()
         {
             ChessPiece piece = new ChessPieceQueen(Color.WHITE, 1, new BoardPosition(RANK.FOUR, FILE.D));
 
@@ -215,7 +215,7 @@ namespace Tests.Pieces
         }
 
         [Test(Description = "Test that black queen 1 on A1 can move horizontally across all A squares")]
-        public void Test_BlackQueen_IsValidMove_HorizontalFromA1()
+        public void BlackQueen_IsValidMove_HorizontalFromA1()
         {
             ChessPiece piece = new ChessPieceQueen(Color.BLACK, 1, a1); // A1
 
@@ -240,7 +240,7 @@ namespace Tests.Pieces
         }
 
         [Test(Description = "Test that black queen 2 on D4 can move horizontally across all D squares")]
-        public void Test_Rook_IsValidMove_HorizontalFromD4()
+        public void Rook_IsValidMove_HorizontalFromD4()
         {
             ChessPiece piece = new ChessPieceQueen(Color.BLACK, 2, new BoardPosition(RANK.FOUR, FILE.D)); // D4
 
@@ -265,7 +265,7 @@ namespace Tests.Pieces
         }
 
         [Test(Description = "Test that black queen 1 on F4 can move vertically across all 4 squares (E4, D4, C4, B4, A4, G4, H4)")]
-        public void Test_BlackQueen_IsValidMove_VerticalFromF4()
+        public void BlackQueen_IsValidMove_VerticalFromF4()
         {
             ChessPiece piece = new ChessPieceQueen(Color.BLACK, 1, new BoardPosition(RANK.FOUR, FILE.F)); // F4
 
@@ -290,7 +290,7 @@ namespace Tests.Pieces
         }
 
         [Test(Description = "Test that black queen 2 on A8 can move vertically across all 8 squares (E8, D8, C8, B8, A8, G8, H8)")]
-        public void Test_BlackQueen_IsValidMove_VerticalFromA8()
+        public void BlackQueen_IsValidMove_VerticalFromA8()
         {
             ChessPiece piece = new ChessPieceQueen(Color.BLACK, 2, new BoardPosition(RANK.EIGHT, FILE.A));
 
@@ -315,7 +315,7 @@ namespace Tests.Pieces
         }
 
         [Test(Description = "Tests that black queen 1 on C2 cannot move to C6, or C5 because there is a white piece on C4 blocking its path")]
-        public void Test_BlackQueen1_IsValidMove_CannotMoveBlockedByFriendly()
+        public void BlackQueen1_IsValidMove_CannotMoveBlockedByFriendly()
         {
             ChessPiece piece = new ChessPieceQueen(Color.BLACK, 1,
                 new BoardPosition(RANK.TWO, FILE.C));
@@ -339,7 +339,7 @@ namespace Tests.Pieces
         }
 
         [Test(Description = "Tests that black queen 1 on C2 cannot move to G2, or H2 because there is a black piece on F2 blocking its path")]
-        public void Test_BlackQueen1_IsValidMove_CannotMoveBlockedByEnemy()
+        public void BlackQueen1_IsValidMove_CannotMoveBlockedByEnemy()
         {
             ChessPiece piece = new ChessPieceRook(Color.BLACK, 1,
                 new BoardPosition(RANK.TWO, FILE.C));
@@ -363,7 +363,7 @@ namespace Tests.Pieces
         }
 
         [Test(Description = "Tests that white queen on C2 cannot move to these squares as they are invalid")]
-        public void Test_WhiteQueen1_IsValidMove_InvalidMoves()
+        public void WhiteQueen1_IsValidMove_InvalidMoves()
         {
             ChessPiece piece = new ChessPieceQueen(Color.WHITE, 1,
                 new BoardPosition(RANK.TWO, FILE.C));
@@ -389,7 +389,7 @@ namespace Tests.Pieces
         }
 
         [Test(Description = "Tests that black queen 1 on B4 can capture a piece on B8")]
-        public void Test_BlackQueen1_IsValidMove_CanCapture()
+        public void BlackQueen1_IsValidMove_CanCapture()
         {
             ChessPiece piece = new ChessPieceQueen(Color.BLACK, 1,
                 new BoardPosition(RANK.FOUR, FILE.B));
@@ -400,7 +400,7 @@ namespace Tests.Pieces
         }
 
         [Test(Description = "Tests that black queen 1 on B4 canotn capture a piece on B8")]
-        public void Test_BlackQueen1_IsValidMove_CannotCapture()
+        public void BlackQueen1_IsValidMove_CannotCapture()
         {
             ChessPiece piece = new ChessPieceQueen(Color.BLACK, 1,
                 new BoardPosition(RANK.FOUR, FILE.B));
@@ -411,7 +411,7 @@ namespace Tests.Pieces
         }
 
         [Test(Description = "Tests that black queen 2 on B4 can capture a piece on B8")]
-        public void Test_BlackQueen2_IsValidMove_CanCapture()
+        public void BlackQueen2_IsValidMove_CanCapture()
         {
             ChessPiece piece = new ChessPieceQueen(Color.BLACK, 2,
                 new BoardPosition(RANK.FOUR, FILE.B));
@@ -422,7 +422,7 @@ namespace Tests.Pieces
         }
 
         [Test(Description = "Tests that black queen 2 on B4 cannot capture a piece on B8")]
-        public void Test_BlackQueen2_IsValidMove_CannotCapture()
+        public void BlackQueen2_IsValidMove_CannotCapture()
         {
             ChessPiece piece = new ChessPieceQueen(Color.BLACK, 2,
                 new BoardPosition(RANK.FOUR, FILE.B));

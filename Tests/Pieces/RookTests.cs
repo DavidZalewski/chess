@@ -32,7 +32,7 @@ namespace Tests.Pieces
         }
 
         [Test]
-        public void Test_ConstructWhiteRook_Success()
+        public void ConstructWhiteRook_Success()
         {
             ChessPiece piece = new ChessPieceRook(Color.WHITE, 1, a1);
 
@@ -48,7 +48,7 @@ namespace Tests.Pieces
         }
 
         [Test]
-        public void Test_CloneWhiteRook_Success()
+        public void CloneWhiteRook_Success()
         {
             ChessPiece piece = new ChessPieceRook(Color.WHITE, 1, a1);
             ChessPiece clone = piece.Clone();
@@ -66,7 +66,7 @@ namespace Tests.Pieces
         }
 
         [Test(Description = "Test that white rook 1 on A1 can move horizontally across all A squares")]
-        public void Test_Rook_IsValidMove_HorizontalFromA1()
+        public void Rook_IsValidMove_HorizontalFromA1()
         {
             ChessPiece piece = new ChessPieceRook(Color.WHITE, 1, a1); // A1
 
@@ -91,7 +91,7 @@ namespace Tests.Pieces
         }
 
         [Test(Description = "Test that black rook 2 on D4 can move horizontally across all D squares")]
-        public void Test_Rook_IsValidMove_HorizontalFromD4()
+        public void Rook_IsValidMove_HorizontalFromD4()
         {
             ChessPiece piece = new ChessPieceRook(Color.BLACK, 2, new BoardPosition(RANK.FOUR, FILE.D)); // D4
 
@@ -116,7 +116,7 @@ namespace Tests.Pieces
         }
 
         [Test(Description = "Test that black rook 1 on F4 can move vertically across all 4 squares (E4, D4, C4, B4, A4, G4, H4)")]
-        public void Test_Rook_IsValidMove_VerticalFromF4()
+        public void Rook_IsValidMove_VerticalFromF4()
         {
             ChessPiece piece = new ChessPieceRook(Color.BLACK, 1, new BoardPosition(RANK.FOUR, FILE.F)); // F4
 
@@ -141,7 +141,7 @@ namespace Tests.Pieces
         }
 
         [Test(Description = "Test that white rook 2 on A8 can move vertically across all 8 squares (E8, D8, C8, B8, A8, G8, H8)")]
-        public void Test_Rook_IsValidMove_VerticalFromA8()
+        public void Rook_IsValidMove_VerticalFromA8()
         {
             ChessPiece piece = new ChessPieceRook(Color.WHITE, 2, new BoardPosition(RANK.EIGHT, FILE.A));
 
@@ -166,7 +166,7 @@ namespace Tests.Pieces
         }
 
         [Test(Description = "Tests that white rook 1 on C2 cannot move to C6, or C5 because there is a white piece on C4 blocking its path")]
-        public void Test_WhiteRook1_IsValidMove_CannotMoveBlockedByFriendly()
+        public void WhiteRook1_IsValidMove_CannotMoveBlockedByFriendly()
         {
             ChessPiece piece = new ChessPieceRook(Color.WHITE, 1,
                 new BoardPosition(RANK.TWO, FILE.C));
@@ -190,7 +190,7 @@ namespace Tests.Pieces
         }
 
         [Test(Description = "Tests that white rook 1 on C2 cannot move to G2, or H2 because there is a black piece on F2 blocking its path")]
-        public void Test_WhiteRook1_IsValidMove_CannotMoveBlockedByEnemy()
+        public void WhiteRook1_IsValidMove_CannotMoveBlockedByEnemy()
         {
             ChessPiece piece = new ChessPieceRook(Color.WHITE, 1,
                 new BoardPosition(RANK.TWO, FILE.C));
@@ -214,7 +214,7 @@ namespace Tests.Pieces
         }
 
         [Test(Description = "Tests that rook on C2 cannot move to these squares as they are invalid")]
-        public void Test_WhiteRook1_IsValidMove_InvalidMoves()
+        public void WhiteRook1_IsValidMove_InvalidMoves()
         {
             ChessPiece piece = new ChessPieceRook(Color.WHITE, 1,
                 new BoardPosition(RANK.TWO, FILE.C));
@@ -240,7 +240,7 @@ namespace Tests.Pieces
         }
 
         [Test(Description = "Tests that white rook 1 on B4 can capture a piece on B8")]
-        public void Test_WhiteRook1_IsValidMove_CanCapture()
+        public void WhiteRook1_IsValidMove_CanCapture()
         {
             ChessPiece piece = new ChessPieceRook(Color.WHITE, 1,
                 new BoardPosition(RANK.FOUR, FILE.B));
@@ -251,7 +251,7 @@ namespace Tests.Pieces
         }
 
         [Test(Description = "Tests that white rook 1 on B4 canotn capture a piece on B8")]
-        public void Test_WhiteRook1_IsValidMove_CannotCapture()
+        public void WhiteRook1_IsValidMove_CannotCapture()
         {
             ChessPiece piece = new ChessPieceRook(Color.WHITE, 1,
                 new BoardPosition(RANK.FOUR, FILE.B));
@@ -262,7 +262,7 @@ namespace Tests.Pieces
         }
 
         [Test(Description = "Tests that blak rook 2 on B4 can capture a piece on B8")]
-        public void Test_BlackRook2_IsValidMove_CanCapture()
+        public void BlackRook2_IsValidMove_CanCapture()
         {
             ChessPiece piece = new ChessPieceRook(Color.BLACK, 2,
                 new BoardPosition(RANK.FOUR, FILE.B));
@@ -273,7 +273,7 @@ namespace Tests.Pieces
         }
 
         [Test(Description = "Tests that black rook 2 on B4 cannot capture a piece on B8")]
-        public void Test_BlackRook2_IsValidMove_CannotCapture()
+        public void BlackRook2_IsValidMove_CannotCapture()
         {
             ChessPiece piece = new ChessPieceRook(Color.BLACK, 2,
                 new BoardPosition(RANK.FOUR, FILE.B));
