@@ -1,5 +1,6 @@
 ﻿using Chess.Pieces;
 using Chess.Services;
+using NUnit.Framework;
 
 namespace Chess.Board
 {
@@ -126,6 +127,63 @@ namespace Chess.Board
         public void AddPiece(ChessPiece piece)
         {
             GetSquare(piece.GetCurrentPosition()).Piece = piece;
+        }
+
+        public string DisplayBoard()
+        {
+            string output = "*|*A*|*B*|*C*|*D*|*E*|*F*|*G*|*H*|*\n";
+            int vertIndex = 8;
+
+            for (int f = 0; f < 8; f++)
+            {
+                output += vertIndex;
+                for (int s = 0; s < 8; s++)
+                {
+                    if (Board[f, s].Piece is not NoPiece) // Check for chess piece
+                    {
+                        ChessPiece chessPiece = Board[f, s].Piece; // Get the piece directly 
+                        Assert.That(chessPiece is not NoPiece);
+                        String c = "", p = "", i = "";
+                        switch (chessPiece.GetColor())
+                        {
+                            case ChessPiece.Color.WHITE: c = "W"; break;
+                            case ChessPiece.Color.BLACK: c = "B"; break;
+                        }
+
+                        switch (chessPiece.GetPiece())
+                        {
+                            case ChessPiece.Piece.PAWN: p = "P"; break;
+                            case ChessPiece.Piece.KNIGHT: p = "K"; break;
+                            case ChessPiece.Piece.BISHOP: p = "B"; break;
+                            case ChessPiece.Piece.ROOK: p = "R"; break;
+                            case ChessPiece.Piece.QUEEN: p = "Q"; break;
+                            case ChessPiece.Piece.KING:
+                                {
+                                    p = "K"; i = ""; break;
+                                }
+                        }
+
+                        if (!chessPiece.GetPiece().Equals(ChessPiece.Piece.KING))
+                        {
+                            i = chessPiece.GetId().ToString();
+                        }
+                        else
+                        {
+                            i = "0";
+                        }
+
+                        output += "|" + c + p + i;
+                    }
+                    else
+                    {
+                        output += "|   ";
+                    }
+                }
+                output += "|" + vertIndex + "\n";
+                vertIndex--;
+            }
+            output += "*|*A*|*B*|*C*|*D*|*E*|*F*|*G*|*H*|*\n";
+            return output;
         }
 
         private void SetSquareValue(BoardPosition position, Square square)

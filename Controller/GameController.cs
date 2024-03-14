@@ -1,12 +1,13 @@
 ﻿using Chess.Board;
 using Chess.Callbacks;
 using Chess.Exceptions;
+using Chess.GameState;
 using Chess.Pieces;
 using Chess.Services;
 using NUnit.Framework;
 using System.Runtime.Serialization.Formatters.Binary;
 
-namespace Chess
+namespace Chess.Controller
 {
     [Serializable]
     public class GameController
@@ -21,16 +22,16 @@ namespace Chess
 
         public GameController(ChessBoard chessBoard)
         {
-            this._chessBoard = chessBoard;
+            _chessBoard = chessBoard;
             _chessPieces = ChessPieceFactory.CreateChessPieces();
-            this._kingCheckService = new KingCheckService();
+            _kingCheckService = new KingCheckService();
         }
 
         public GameController(ChessBoard chessBoard, List<ChessPiece> chessPieces)
         {
-            this._chessBoard = chessBoard;
-            this._chessPieces = chessPieces;
-            this._kingCheckService = new KingCheckService();
+            _chessBoard = chessBoard;
+            _chessPieces = chessPieces;
+            _kingCheckService = new KingCheckService();
         }
 
         public void StartGame()
@@ -45,13 +46,7 @@ namespace Chess
             _turnNumber = 1;
         }
 
-
-
-        public void ParseMove(String consoleInput)
-        {
-
-        }
-
+        // TODO: Encapsulate all string to piece, and piece to string translations in another class
         internal ChessPiece? FindChessPieceFromString(string input)
         {
             ChessPiece.Color color;
@@ -128,8 +123,7 @@ namespace Chess
             return chessPiece;
         }
 
-        // TODO: Refactor this. Why do we have duplicate InCheck methods, one implemented here, other using service?
-        public bool IsKingInCheck(ChessPiece.Color color)
+        public bool IsCheck(ChessPiece.Color color)
         {
             return _kingCheckService.IsKingInCheck(color, _chessBoard);
         }
@@ -146,7 +140,7 @@ namespace Chess
 
         public Turn? GetTurnFromCommand(string input)
         {
-            String[] inputs = input.Split(' ');
+            string[] inputs = input.Split(' ');
             if (inputs.Length != 2) return null;
             try
             {
@@ -228,11 +222,11 @@ namespace Chess
                 GameController gc = (GameController)formatter.Deserialize(stream);
 #pragma warning restore SYSLIB0011 // Type or member is obsolete
 
-                this._chessBoard = gc._chessBoard;
-                this._chessPieces = gc._chessPieces;
-                this._turns = gc._turns;
-                this._turnNumber = gc._turnNumber;
-                this._kingCheckService = new KingCheckService();
+                _chessBoard = gc._chessBoard;
+                _chessPieces = gc._chessPieces;
+                _turns = gc._turns;
+                _turnNumber = gc._turnNumber;
+                _kingCheckService = new KingCheckService();
 
                 ChessPiece.SetCastleCallbackFunction(SpecialMovesHandlers.DoCastleMove);
                 ChessPiece.SetIsEnPassantCallbackFunction(SpecialMovesHandlers.IsEnPassantMove);
@@ -253,131 +247,8 @@ namespace Chess
 
         public string DisplayBoard()
         {
-            return DisplayBoard(_chessBoard);
+            return _chessBoard.DisplayBoard();
         }
-
-        // TODO: Move this method to ChessBoard
-        public string DisplayBoard(ChessBoard chessBoard)
-        {
-            Square[,] boardData = chessBoard.Board; // Use the Square array directly
-            string output = "*|*A*|*B*|*C*|*D*|*E*|*F*|*G*|*H*|*\n";
-            int vertIndex = 8;
-
-            for (int f = 0; f < 8; f++)
-            {
-                output += vertIndex;
-                for (int s = 0; s < 8; s++)
-                {
-                    if (boardData[f, s].Piece is not NoPiece) // Check for chess piece
-                    {
-                        ChessPiece chessPiece = boardData[f, s].Piece; // Get the piece directly 
-                        Assert.That(chessPiece is not NoPiece);
-                        String c = "", p = "", i = "";
-                        switch (chessPiece.GetColor())
-                        {
-                            case ChessPiece.Color.WHITE: c = "W"; break;
-                            case ChessPiece.Color.BLACK: c = "B"; break;
-                        }
-
-                        switch (chessPiece.GetPiece())
-                        {
-                            case ChessPiece.Piece.PAWN: p = "P"; break;
-                            case ChessPiece.Piece.KNIGHT: p = "K"; break;
-                            case ChessPiece.Piece.BISHOP: p = "B"; break;
-                            case ChessPiece.Piece.ROOK: p = "R"; break;
-                            case ChessPiece.Piece.QUEEN: p = "Q"; break;
-                            case ChessPiece.Piece.KING:
-                                {
-                                    p = "K"; i = ""; break;
-                                }
-                        }
-
-                        if (!chessPiece.GetPiece().Equals(ChessPiece.Piece.KING))
-                        {
-                            i = chessPiece.GetId().ToString();
-                        }
-                        else
-                        {
-                            i = "0";
-                        }
-
-                        output += "|" + c + p + i;
-                    }
-                    else
-                    {
-                        output += "|   ";
-                    }
-                }
-                output += "|" + vertIndex + "\n";
-                vertIndex--;
-            }
-            output += "*|*A*|*B*|*C*|*D*|*E*|*F*|*G*|*H*|*\n";
-            return output;
-        }
-        //public string DisplayBoard(ChessBoard chessBoard)
-        //{
-        //    int[,] boardData = chessBoard.Board;
-        //    String output = "*|*A*|*B*|*C*|*D*|*E*|*F*|*G*|*H*|*\n";
-        //    int vertIndex = 8;
-
-        //    for (int f = 0; f < 8; f++)
-        //    {
-        //        output += vertIndex;
-        //        for (int s = 0; s < 8; s++)
-        //        {
-        //            BoardPosition boardPosition = new((RANK)f, (FILE)s);
-        //            if (chessBoard.IsPieceAtPosition(boardPosition))
-        //            {
-        //                ChessPiece chessPiece = _chessPieces.First(p => p.GetCurrentPosition() == boardPosition);
-        //                if (chessPiece == null)
-        //                {
-        //                    throw new Exception("Unexpected! Fix this");
-        //                }
-        //                else
-        //                {
-        //                    String c = "", p = "", i = "";
-        //                    switch (chessPiece.GetColor())
-        //                    {
-        //                        case ChessPiece.Color.WHITE: c = "W"; break;
-        //                        case ChessPiece.Color.BLACK: c = "B"; break;
-        //                    }
-
-        //                    switch (chessPiece.GetPiece())
-        //                    {
-        //                        case ChessPiece.Piece.PAWN: p = "P"; break;
-        //                        case ChessPiece.Piece.KNIGHT: p = "K"; break;
-        //                        case ChessPiece.Piece.BISHOP: p = "B"; break;
-        //                        case ChessPiece.Piece.ROOK: p = "R"; break;
-        //                        case ChessPiece.Piece.QUEEN: p = "Q"; break;
-        //                        case ChessPiece.Piece.KING:
-        //                            {
-        //                                p = "K"; i = ""; break;
-        //                            }
-        //                    }
-
-        //                    if (!chessPiece.GetPiece().Equals(ChessPiece.Piece.KING))
-        //                    {
-        //                        i = chessPiece.GetId().ToString();
-        //                    }
-        //                    else
-        //                    {
-        //                        i = "0";
-        //                    }
-
-        //                    output += "|" + c + p + i;
-        //                }
-        //            }
-        //            else
-        //            {
-        //                output += "|   ";
-        //            }
-        //        }
-        //        output += "|" + vertIndex + "\n";
-        //        vertIndex--;
-        //    }
-        //    output += "*|*A*|*B*|*C*|*D*|*E*|*F*|*G*|*H*|*\n";
-        //    return output;
-        //}
 
         public Turn? GetLastTurn()
         {

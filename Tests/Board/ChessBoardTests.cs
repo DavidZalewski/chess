@@ -1,3 +1,4 @@
+using Chess;
 using Chess.Board;
 using Chess.Pieces;
 using Chess.Services;
@@ -127,32 +128,6 @@ namespace Tests.Board
             });
         }
 
-        //[Test]
-        //public void Test_SetPieceAtPosition_Success()
-        //{
-        //    // Arrange various test cases
-        //    BoardPosition a1 = new BoardPosition(RANK.ONE, FILE.A);
-        //    BoardPosition e4 = new BoardPosition(RANK.FOUR, FILE.E);
-        //    BoardPosition h8 = new BoardPosition(RANK.EIGHT, FILE.H);
-        //    var testCases = new List<(BoardPosition position, ChessPiece piece)>
-        //    {
-        //        (a1, new ChessPieceRook(ChessPiece.Color.WHITE, 1, a1)),
-        //        (e4, new ChessPieceBlackPawn(1, e4)),
-        //        (h8, new ChessPieceKnight(ChessPiece.Color.WHITE, 1, h8))
-        //        // Add more test cases as needed 
-        //    };
-
-        //    // Act & Assert
-        //    foreach (var (position, piece) in testCases)
-        //    {
-        //        chessBoard.SetPieceAtPosition(position, piece);
-        //        Square square = chessBoard.GetSquare(position);
-
-        //        Assert.That(square, Is.Not.Null);
-        //        Assert.That(square.Piece, Is.EqualTo(piece));
-        //    }
-        //}
-
         [Test]
         public void Test_SetPieceAtPosition_PieceExistsInCorrectSquare()
         {
@@ -210,6 +185,20 @@ namespace Tests.Board
 
             // Assert
             Assert.That(activePieces.Count == 29);
+        }
+
+        [Test]
+        public void DisplayBoard_Success()
+        {
+            List<ChessPiece> chessPieces = ChessPieceFactory.CreateChessPieces();
+            ChessBoard chessBoard = new();
+            chessBoard.PopulateBoard(chessPieces);
+
+            String boardAsConsoleOutput = chessBoard.DisplayBoard();
+
+            Assert.That(boardAsConsoleOutput, Is.Not.Null);
+
+            Console.WriteLine(boardAsConsoleOutput);
         }
     }
 }

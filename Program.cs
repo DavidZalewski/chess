@@ -1,4 +1,6 @@
 ﻿using Chess.Board;
+using Chess.Controller;
+using Chess.GameState;
 using Chess.Pieces;
 using Chess.Services;
 using System.Collections.Immutable;
@@ -86,7 +88,7 @@ namespace Chess
                 if (gameController.TurnNumber % 2 == 0)
                 {
                     Console.WriteLine("Turn " + gameController.TurnNumber + " - Black to move. Please enter a command (piece name + position : ie. 'BP4 D5')");
-                    if (gameController.GetLastTurn() != null && gameController.IsKingInCheck(ChessPiece.Color.BLACK))
+                    if (gameController.GetLastTurn() != null && gameController.IsCheck(ChessPiece.Color.BLACK))
                     {
                         Console.WriteLine("Black King is currently in check");
                     }
@@ -94,7 +96,7 @@ namespace Chess
                 else
                 {
                     Console.WriteLine("Turn " + gameController.TurnNumber + " - White to move. Please enter a command (piece name + position : ie. 'WK1 C3')");
-                    if (gameController.GetLastTurn() != null && gameController.IsKingInCheck(ChessPiece.Color.WHITE))
+                    if (gameController.GetLastTurn() != null && gameController.IsCheck(ChessPiece.Color.WHITE))
                     {
                         Console.WriteLine("White King is currently in check");
                     }

@@ -1,5 +1,5 @@
-﻿using Chess;
-using Chess.Board;
+﻿using Chess.Board;
+using Chess.Controller;
 using Chess.Pieces;
 using Chess.Services;
 using System;

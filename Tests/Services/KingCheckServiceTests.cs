@@ -1,5 +1,5 @@
-﻿using Chess;
-using Chess.Board;
+﻿using Chess.Board;
+using Chess.GameState;
 using Chess.Pieces;
 using Chess.Services;
 using System.Collections.Generic;

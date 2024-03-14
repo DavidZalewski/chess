@@ -1,5 +1,6 @@
-﻿using Chess;
-using Chess.Board;
+﻿using Chess.Board;
+using Chess.Controller;
+using Chess.GameState;
 using Chess.Pieces;
 using Chess.Services;
 
@@ -249,21 +250,6 @@ namespace Tests
             gameController.ApplyTurnToGameState(turn); // update the game state
             piece = gameController.FindChessPieceFromString(inputs[0]);
             Assert.That(turn.ChessPiece.Equals(piece), Is.True); // the piece should be updated now with the turn board state
-        }
-
-        [Test]
-        public void Test_GameController_DisplayBoard_Success()
-        {
-            List<ChessPiece> chessPieces = ChessPieceFactory.CreateChessPieces();
-            ChessBoard chessBoard = new();
-            chessBoard.PopulateBoard(chessPieces);
-            GameController gameController = new(chessBoard);
-
-            String boardAsConsoleOutput = gameController.DisplayBoard();
-
-            Assert.That(boardAsConsoleOutput, Is.Not.Null);
-
-            Console.WriteLine(boardAsConsoleOutput);
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using Chess.Board;
+using Chess.GameState;
 using Chess.Pieces;
 
 namespace Chess.Services
