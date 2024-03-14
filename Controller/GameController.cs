@@ -34,6 +34,15 @@ namespace Chess.Controller
             _kingCheckService = new KingCheckService();
         }
 
+        internal void InitPawnsOnly()
+        {
+            List<ChessPiece> pieces = ChessPieceFactory.CreateWhitePawns();
+            pieces.AddRange(ChessPieceFactory.CreateBlackPawns());
+            pieces.Add(new ChessPieceKing(ChessPiece.Color.BLACK, new("E8")));
+            pieces.Add(new ChessPieceKing(ChessPiece.Color.WHITE, new("E1")));
+            _chessPieces = pieces;
+        }
+
         public void StartGame()
         {
             _chessBoard.PopulateBoard(_chessPieces);
