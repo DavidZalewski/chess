@@ -123,6 +123,11 @@ namespace Chess.Board
             piece.SetCurrentPosition(position);
         }
 
+        public void AddPiece(ChessPiece piece)
+        {
+            GetSquare(piece.GetCurrentPosition()).Piece = piece;
+        }
+
         private void SetSquareValue(BoardPosition position, Square square)
         {
             Board[position.RankAsInt, position.FileAsInt] = square;

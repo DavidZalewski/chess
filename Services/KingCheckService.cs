@@ -8,6 +8,25 @@ namespace Chess.Services
     {
         public KingCheckService() { }
 
+        public bool IsKingInCheck(ChessPiece.Color color, ChessBoard chessBoard)
+        {
+            List<ChessPiece> chessPieces = chessBoard.GetActivePieces();
+            if (chessPieces.Count == 0) { return false; }
+            ChessPiece chessPieceKing = chessPieces.First(p => p.GetPiece().Equals(ChessPiece.Piece.KING) && p.GetColor().Equals(color));
+            if (chessPieceKing == null)
+                return false;
+            if (chessPieceKing.GetColor().Equals(ChessPiece.Color.WHITE))
+            {
+                bool IsInCheck = chessPieces.Any(p => p.GetColor().Equals(ChessPiece.Color.BLACK) && p.IsValidMove(chessBoard, chessPieceKing.GetCurrentPosition()));
+                return IsInCheck;
+            }
+            else
+            {
+                bool IsInCheck = chessPieces.Any(p => p.GetColor().Equals(ChessPiece.Color.WHITE) && p.IsValidMove(chessBoard, chessPieceKing.GetCurrentPosition()));
+                return IsInCheck;
+            }
+        }
+
         public bool IsKingInCheck(Turn turnToBeMade)
         {
             ChessPiece chessPieceKing;

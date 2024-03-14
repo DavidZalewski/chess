@@ -1,12 +1,6 @@
 ﻿using Chess.Board;
 using Chess.Pieces;
 using NUnit.Framework;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Chess.Callbacks
 {
@@ -108,8 +102,14 @@ namespace Chess.Callbacks
             // TODO: Provide better constructors for these kinds of operations
             BoardPosition bpl = pawnPos.Left();
             BoardPosition bpr = pawnPos.Right();
+            List<BoardPosition> boardPositionsToCheck = new();
 
-            foreach (BoardPosition bpToCheck in new List<BoardPosition>() { bpl, bpr })
+            if (bpl != null)
+                boardPositionsToCheck.Add(bpl);
+            if (bpr != null)
+                boardPositionsToCheck.Add(bpr);
+
+            foreach (BoardPosition bpToCheck in boardPositionsToCheck)
             {
                 // Is there an opponent piece at this position?
                 if (chessBoard.IsPieceAtPosition(bpToCheck, opponentColor))

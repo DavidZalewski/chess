@@ -131,19 +131,7 @@ namespace Chess
         // TODO: Refactor this. Why do we have duplicate InCheck methods, one implemented here, other using service?
         public bool IsKingInCheck(ChessPiece.Color color)
         {
-            ChessPiece chessPieceKing = _chessPieces.First(p => p.GetPiece().Equals(ChessPiece.Piece.KING) && p.GetColor().Equals(color));
-            if (chessPieceKing == null)
-                return false;
-            if (chessPieceKing.GetColor().Equals(ChessPiece.Color.WHITE))
-            {
-                bool IsInCheck = _chessPieces.Any(p => p.GetColor().Equals(ChessPiece.Color.BLACK) && p.IsValidMove(_chessBoard, chessPieceKing.GetCurrentPosition()));
-                return IsInCheck;
-            }
-            else
-            {
-                bool IsInCheck = _chessPieces.Any(p => p.GetColor().Equals(ChessPiece.Color.WHITE) && p.IsValidMove(_chessBoard, chessPieceKing.GetCurrentPosition()));
-                return IsInCheck;
-            }
+            return _kingCheckService.IsKingInCheck(color, _chessBoard);
         }
 
         public bool IsCheck(Turn turn)

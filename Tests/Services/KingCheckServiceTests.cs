@@ -2,6 +2,7 @@
 using Chess.Board;
 using Chess.Pieces;
 using Chess.Services;
+using System.Collections.Generic;
 
 namespace Tests.Services
 {
@@ -416,6 +417,144 @@ namespace Tests.Services
             Assert.That(kingCheckService.IsCheckMate(turn), Is.True);
         }
 
+        [Test]
+        public void IsKingInCheck_NoPieces_ReturnsFalse()
+        {
+            // Arrange
+            ChessBoard chessBoard = new();
+            KingCheckService kingCheckService = new();
 
+            // Act
+            bool result = kingCheckService.IsKingInCheck(ChessPiece.Color.WHITE, chessBoard);
+
+            // Assert
+            Assert.That(result, Is.False);
+        }
+
+        [Test]
+        public void IsKingInCheck_OnlyKing_ReturnsFalse()
+        {
+            // Arrange
+            ChessBoard chessBoard = new();
+            ChessPiece kingPiece = new ChessPieceKing(ChessPiece.Color.WHITE, new("E1"));
+            chessBoard.AddPiece(kingPiece);
+            KingCheckService kingCheckService = new();
+
+            // Act
+            bool result = kingCheckService.IsKingInCheck(ChessPiece.Color.WHITE, chessBoard);
+
+            // Assert
+            Assert.That(result, Is.False);
+        }
+
+        [Test]
+        public void IsKingInCheck_KingInCheck_ReturnsTrue()
+        {
+            // Arrange
+            ChessBoard chessBoard = new();
+            ChessPiece kingPiece = new ChessPieceKing(ChessPiece.Color.WHITE, new("E1"));
+            ChessPiece queenPiece = new ChessPieceQueen(ChessPiece.Color.BLACK, 1, new("D1"));
+            chessBoard.AddPiece(kingPiece);
+            chessBoard.AddPiece(queenPiece);
+            KingCheckService kingCheckService = new();
+
+            // Act
+            bool result = kingCheckService.IsKingInCheck(ChessPiece.Color.WHITE, chessBoard);
+
+            // Assert
+            Assert.That(result, Is.True);
+        }
+
+        [Test]
+        public void IsKingInCheck_KingNotInCheck_ReturnsFalse()
+        {
+            // Arrange
+            ChessBoard chessBoard = new();
+            ChessPiece kingPiece = new ChessPieceKing(ChessPiece.Color.WHITE, new("E1"));
+            ChessPiece queenPiece = new ChessPieceQueen(ChessPiece.Color.BLACK, 1, new("D3"));
+            chessBoard.AddPiece(kingPiece);
+            chessBoard.AddPiece(queenPiece);
+            KingCheckService kingCheckService = new();
+
+            // Act
+            bool result = kingCheckService.IsKingInCheck(ChessPiece.Color.WHITE, chessBoard);
+
+            // Assert
+            Assert.That(result, Is.False);
+        }
+
+        [Test]
+        public void Test_IsKingInCheck_WhiteKingInCheck()
+        {
+            // Arrange
+            ChessBoard board = new();
+            List<ChessPiece> pieces = new()
+            {
+                new ChessPieceKing(ChessPiece.Color.WHITE, new("E1")),
+                new ChessPieceQueen(ChessPiece.Color.BLACK, 1, new("D1")),
+            };
+            board.PopulateBoard(pieces);
+
+            // Act
+            bool result = new KingCheckService().IsKingInCheck(ChessPiece.Color.WHITE, board);
+
+            // Assert
+            Assert.That(result, Is.True);
+        }
+
+        [Test]
+        public void Test_IsKingInCheck_BlackKingInCheck()
+        {
+            // Arrange
+            ChessBoard board = new();
+            List<ChessPiece> pieces = new()
+            {
+                new ChessPieceKing(ChessPiece.Color.BLACK, new("E8")),
+                new ChessPieceQueen(ChessPiece.Color.WHITE, 1, new("E1")),
+            };
+            board.PopulateBoard(pieces);
+
+            // Act
+            bool result = new KingCheckService().IsKingInCheck(ChessPiece.Color.BLACK, board);
+
+            // Assert
+            Assert.That(result, Is.True);
+        }
+
+        [Test]
+        public void Test_IsKingInCheck_WhiteKingNotInCheck()
+        {
+            // Arrange
+            ChessBoard board = new();
+            List<ChessPiece> pieces = new()
+            {
+                new ChessPieceKing(ChessPiece.Color.WHITE, new("E1")),
+            };
+            board.PopulateBoard(pieces);
+
+            // Act
+            bool result = new KingCheckService().IsKingInCheck(ChessPiece.Color.WHITE, board);
+
+            // Assert
+            Assert.That(result, Is.False);
+        }
+
+        [Test]
+        public void Test_IsKingInCheck_BlackKingNotInCheck()
+        {
+            // Arrange
+            ChessBoard board = new();
+            List<ChessPiece> pieces = new()
+            {
+                new ChessPieceKing(ChessPiece.Color.BLACK, new("E8")),
+            };
+            board.PopulateBoard(pieces);
+
+            // Act
+            bool result = new KingCheckService().IsKingInCheck(ChessPiece.Color.BLACK, board);
+
+            // Assert
+            Assert.That(result, Is.False);
+        }
     }
 }
