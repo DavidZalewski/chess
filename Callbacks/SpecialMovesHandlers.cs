@@ -98,8 +98,6 @@ namespace Chess.Callbacks
                 return false;
 
             // Are there opponent pieces to its immediate left or right?
-
-            // TODO: Provide better constructors for these kinds of operations
             BoardPosition bpl = pawnPos.Left();
             BoardPosition bpr = pawnPos.Right();
             List<BoardPosition> boardPositionsToCheck = new();

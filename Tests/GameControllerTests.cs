@@ -18,12 +18,6 @@ namespace Tests
         }
 
         [Test]
-        public void InterpretCommand1_Success()
-        {
-
-        }
-
-        [Test]
         public void FindChessPieceFromString_WhiteKnight1_Success()
         {
             String piece = "WK1";
@@ -245,11 +239,43 @@ namespace Tests
 
             ChessPiece? piece = gameController.FindChessPieceFromString(inputs[0]);
 
-            Assert.That(piece, Is.Not.Null);
-            Assert.That(turn.ChessPiece.Equals(piece), Is.False); // the copies of this piece have different positions
+            Assert.Multiple(() =>
+            {
+                Assert.That(piece, Is.Not.Null);
+                Assert.That(turn.ChessPiece.Equals(piece), Is.False); // the copies of this piece have different positions
+            });
             gameController.ApplyTurnToGameState(turn); // update the game state
             piece = gameController.FindChessPieceFromString(inputs[0]);
             Assert.That(turn.ChessPiece.Equals(piece), Is.True); // the piece should be updated now with the turn board state
+        }
+
+        [Test]
+        public void SaveGameState_Success()
+        {
+            // Arrange
+            const string testSaveFileName = "test_save.bin"; // Choose a test file name
+            string workingDirectory = Directory.GetCurrentDirectory();
+            string testSaveFilePath = Path.Combine(workingDirectory, testSaveFileName);
+
+            // Ensure the test file doesn't exist initially
+            if (File.Exists(testSaveFilePath))
+            {
+                File.Delete(testSaveFilePath);
+            }
+
+            var chessBoard = new ChessBoard();
+            var gameController = new GameController(chessBoard);
+
+            // Act
+            var saveSuccessful = gameController.SaveGameState(testSaveFileName);
+
+            Assert.Multiple(() =>
+            {
+                // Assert
+                Assert.That(saveSuccessful, Is.True);  // Ensure SaveGameState returned true
+                Assert.That(File.Exists(testSaveFilePath), Is.True); // Check that the file exists
+                Assert.That(new FileInfo(testSaveFilePath).Length, Is.GreaterThan(0)); // Check that the file size is not 0
+            });
         }
     }
 }

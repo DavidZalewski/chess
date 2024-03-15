@@ -8,7 +8,7 @@
     {
         public string StringValue { get; init; } = $"{File}{8 - (int)Rank}";
 
-        public BoardPosition(string pos) : this(GetRank(pos), GetFile(pos)) {}
+        public BoardPosition(string pos) : this(GetRank(pos), GetFile(pos)) { }
 
         private static RANK GetRank(string pos)
         {
@@ -20,7 +20,7 @@
             catch (Exception ex)
             {
                 throw new ArgumentException("Invalid argument provided for pos: " + pos, ex);
-            }  
+            }
         }
 
         public static RANK GetRank(int num)
@@ -37,7 +37,7 @@
             {
                 char alpha = pos[0];
                 return GetFile(alpha);
-            }   
+            }
             catch (Exception ex)
             {
                 throw new ArgumentException("Invalid argument provided for pos: " + pos, ex);

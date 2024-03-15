@@ -8,7 +8,7 @@ namespace Chess.Pieces
         private static NoPiece _instance;
 
         // Private constructor for singleton
-        private NoPiece(): base(Piece.NO_PIECE, Color.WHITE, 0, null)
+        private NoPiece() : base(Piece.NO_PIECE, Color.WHITE, 0, null)
         {
             _pieceName = "No Piece";
         }

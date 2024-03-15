@@ -1,6 +1,5 @@
 ﻿using Chess.Board;
 using Chess.Pieces;
-using System.Diagnostics;
 
 namespace Chess.Services
 {

@@ -116,8 +116,8 @@ namespace Chess.Pieces
 
             if (this is ChessPiecePawn)
             {
-                if ( (_color == Color.WHITE && _currentPosition.Rank == RANK.EIGHT) ||
-                    (_color == Color.BLACK && _currentPosition.Rank == RANK.ONE) )
+                if ((_color == Color.WHITE && _currentPosition.Rank == RANK.EIGHT) ||
+                    (_color == Color.BLACK && _currentPosition.Rank == RANK.ONE))
                     _pawnPromotedCallBackFunction.Invoke(board, position, this);
             }
 

@@ -28,7 +28,7 @@ namespace Chess.Board
 
         public Square[,] Board { get; set; }
 
-        public ChessBoard() 
+        public ChessBoard()
         {
             Board = new Square[8, 8];
             InitializeBoard();

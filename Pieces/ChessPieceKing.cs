@@ -50,7 +50,7 @@ namespace Chess.Pieces
                 BoardPosition H8 = new("H8");
                 if (_color.Equals(Color.WHITE))
                 {
-                    
+
                     // White King's Queen's Side Castle
                     if (position == A1)
                     {

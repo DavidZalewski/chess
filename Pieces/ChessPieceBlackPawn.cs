@@ -67,7 +67,7 @@ namespace Chess.Pieces
                     {
                         MovedTwoSquares = true; // We use this to for En Passant
                         return true;
-                    }                      
+                    }
                 }
                 else
                     return false;

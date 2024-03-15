@@ -4,7 +4,6 @@ using Chess.Exceptions;
 using Chess.GameState;
 using Chess.Pieces;
 using Chess.Services;
-using NUnit.Framework;
 using System.Runtime.Serialization.Formatters.Binary;
 
 namespace Chess.Controller
