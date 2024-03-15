@@ -9,6 +9,7 @@ namespace Chess.Callbacks
     {
         public static Action<string>? GetActionFromResult;
         public static Func<string>? PawnPromotionPromptUser;
+        public static bool ByPassPawnPromotionPromptUser { get; set; } = false;
 
         public static bool DoCastleMove(ChessBoard cb, BoardPosition bp, ChessPiece king)
         {
@@ -143,7 +144,7 @@ namespace Chess.Callbacks
         internal static void PawnPromotion(ChessBoard board, BoardPosition position, ChessPiece piece)
         {
             string choice = "Q";
-            if (PawnPromotionPromptUser != null)
+            if (PawnPromotionPromptUser != null && !ByPassPawnPromotionPromptUser)
                 choice = PawnPromotionPromptUser.Invoke();
 
             Func<string, ChessPiece> switchReturnPiece = (string chosenPiece) =>

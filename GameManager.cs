@@ -216,7 +216,7 @@ namespace Chess
         private string HandlePawnPromotion()
         {
             _console.WriteLine("Pawn Promoted. Choose type: (Q - Queen, R - Rook, K - Knight, B - Bishop)");
-            string choice;
+            string? choice;
             while (true)
             {
                 choice = _console.ReadLine()?.ToLower();

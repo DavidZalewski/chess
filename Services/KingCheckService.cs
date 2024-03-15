@@ -1,4 +1,5 @@
 ﻿using Chess.Board;
+using Chess.Callbacks;
 using Chess.GameState;
 using Chess.Pieces;
 
@@ -106,15 +107,18 @@ namespace Chess.Services
                 // TODO: Set the PawnPromotion callback function to just return 'Q' each time
                 // Simulated future turns assume a pawn is always promoted to queen
                 // iterate over all board positions
+                SpecialMovesHandlers.ByPassPawnPromotionPromptUser = true;
                 for (int i = 0; i < 8; i++)
                 {
                     for (int j = 0; j < 8; j++)
                     {
                         BoardPosition pos = new((RANK)i, (FILE)j);
-                        if (piece.IsValidMove(turn.ChessBoard, pos))
-                            possibleMoves.Add(new(turn.TurnNumber + 1, piece, piece.GetCurrentPosition(), pos, turn.ChessBoard));
+                        Turn possibleTurn = new(turn.TurnNumber + 1, piece, piece.GetCurrentPosition(), pos, turn.ChessBoard);
+                        if (possibleTurn.IsValidTurn)
+                            possibleMoves.Add(possibleTurn);
                     }
                 }
+                SpecialMovesHandlers.ByPassPawnPromotionPromptUser = false;
                 // TODO: change the PawnPromotion callback function back to GameManager.HandlePawnPromotion
             }
 

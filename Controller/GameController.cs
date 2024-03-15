@@ -151,11 +151,11 @@ namespace Chess.Controller
                 if (chessPiece == null) return null;
 
                 Turn turn = new(_turnNumber, chessPiece, new(inputs[1]), _chessBoard);
+                if (!turn.IsValidTurn) throw new InvalidMoveException();
                 return turn;
             }
             catch (InvalidMoveException e)
             {
-                Console.WriteLine("Invalid Move. Please Try Again.");
                 return null;
             }
             catch (Exception e)
