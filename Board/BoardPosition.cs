@@ -8,7 +8,7 @@
     {
         public string StringValue { get; init; } = $"{File}{8 - (int)Rank}";
 
-        public BoardPosition(string pos) : this(GetRank(pos), GetFile(pos)) { }
+        public BoardPosition(string pos) : this(GetRank(pos.ToUpper()), GetFile(pos.ToUpper())) { }
 
         private static RANK GetRank(string pos)
         {

@@ -147,16 +147,10 @@ namespace Chess.Controller
             try
             {
                 ChessPiece? chessPiece = FindChessPieceFromString(inputs[0]);
-
                 if (chessPiece == null) return null;
-
                 Turn turn = new(_turnNumber, chessPiece, new(inputs[1]), _chessBoard);
-                if (!turn.IsValidTurn) throw new InvalidMoveException();
+                if (!turn.IsValidTurn) return null;
                 return turn;
-            }
-            catch (InvalidMoveException e)
-            {
-                return null;
             }
             catch (Exception e)
             {

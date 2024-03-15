@@ -107,107 +107,80 @@ namespace Chess
                 {
                     _console.WriteLine("Turn " + _gameController.TurnNumber + " - Black to move. Please enter a command (piece name + position : ie. 'BP4 D5')");
                     if (_gameController.GetLastTurn() != null && _gameController.IsCheck(ChessPiece.Color.BLACK))
-                    {
                         _console.WriteLine("Black King is currently in check");
-                    }
                 }
                 else
                 {
                     _console.WriteLine("Turn " + _gameController.TurnNumber + " - White to move. Please enter a command (piece name + position : ie. 'WK1 C3')");
                     if (_gameController.GetLastTurn() != null && _gameController.IsCheck(ChessPiece.Color.WHITE))
-                    {
                         _console.WriteLine("White King is currently in check");
-                    }
                 }
 
                 try
                 {
                     input = _console.ReadLine();
-                    if (input != null && input.Length > 0)
+                    (string? command, string? argument) = ParseInput(input);
+
+                    if (command == null || argument == null)
                     {
-                        if (input.ToLower().Contains("save") || input.ToLower().Contains("load"))
-                        {
-                            string[] inputs = input.Split(' ');
-                            if (inputs.Length == 2)
-                            {
-                                string fileName = inputs[1];
-
-                                if (input.ToLower().Contains("save"))
-                                    _gameController.SaveGameState(fileName);
-                                else if (input.ToLower().Contains("load"))
-                                    _gameController.LoadGameState(fileName);
-                                continue;
-                            }
-                            else
-                            {
-                                _console.WriteLine("Invalid Command for Save. ie: Save g1");
-                            }
-
-                        }
-                        else
-                        {
-                            char C = input.ToCharArray()[0];
-
-                            if (C != 'B' && C != 'W')
-                            {
-                                _console.WriteLine("Invalid Color Specified. Use B or W when starting command");
-                                continue;
-                            }
-                            else
-                            {
-                                if ((C == 'W' && _gameController.TurnNumber % 2 != 0) || (C == 'B' && _gameController.TurnNumber % 2 == 0))
-                                {
-                                }
-                                else
-                                {
-                                    _console.WriteLine("Wrong Color Selected. It is not that sides turn yet. Please Try Again");
-                                    continue;
-                                }
-                            }
-                        }
-
-                        Turn? turn = _gameController.GetTurnFromCommand(input);
-
-                        if (turn != null)
-                        {
-                            if (_gameController.IsCheckMate(turn))
-                            {
-                                if (turn.PlayerTurn.Equals(Turn.Color.WHITE))
-                                {
-                                    _console.WriteLine("White wins against Black by CheckMate!");
-                                }
-                                else
-                                {
-                                    _console.WriteLine("Black wins against White by CheckMate!");
-                                }
-                                _console.WriteLine("Game Over.");
-                                _gameController.ApplyTurnToGameState(turn);
-                                _console.WriteLine(_gameController.DisplayBoard());
-                                break;
-                            }
-                            if (_gameController.IsCheck(turn))
-                            {
-                                _console.WriteLine("Invalid Move. King would be in Check. Please Try Again");
-                                continue;
-                            }
-                            else
-                            {
-                                _gameController.ApplyTurnToGameState(turn);
-                            }
-                        }
-                        else
-                        {
-                            _console.WriteLine("Invalid Move. Please Try Again.");
-                            continue;
-                        }
+                        _console.WriteLine("Invalid command. Please enter a command.");
+                        continue;
                     }
+
+                    switch (command)
+                    {
+                        case "save":
+                            _gameController.SaveGameState(argument);
+                            continue;
+                        case "load":
+                            _gameController.LoadGameState(argument);
+                            continue;
+                    };
+
+                    // TODO: Move this logic into GetTurnFromCommand?
+                    if (!command.StartsWith('w') && !command.StartsWith('b'))
+                    {
+                        _console.WriteLine("Invalid Color Specified. Use B or W when starting command.");
+                        continue;
+                    }
+                    if ((command.StartsWith('w') && _gameController.TurnNumber % 2 == 0) || (command.StartsWith('b') && _gameController.TurnNumber % 2 != 0))
+                    {
+                        _console.WriteLine("Wrong Color Selected. It is not that sides turn yet. Please Try Again");
+                        continue;
+                    }
+
+                    // Todo: resolve duplicate input parsing logic here and above
+                    Turn? turn = _gameController.GetTurnFromCommand(input);
+                    if (turn == null)
+                    {
+                        _console.WriteLine("Invalid Move. Please Try Again.");
+                        continue;
+                    }
+
+                    if (_gameController.IsCheckMate(turn))
+                    {
+                        if (turn.PlayerTurn.Equals(Turn.Color.WHITE))
+                            _console.WriteLine("White wins against Black by CheckMate!");
+                        else
+                            _console.WriteLine("Black wins against White by CheckMate!");
+                        _console.WriteLine("Game Over.");
+                        _gameController.ApplyTurnToGameState(turn);
+                        _console.WriteLine(_gameController.DisplayBoard());
+                        break; // break out of game loop
+                    }
+                    else if (_gameController.IsCheck(turn))
+                    {
+                        _console.WriteLine("Invalid Move. King would be in Check. Please Try Again");
+                        continue;
+                    }
+                    else
+                        _gameController.ApplyTurnToGameState(turn);
                 }
                 catch (Exception ex)
                 {
                     _console.WriteLine("Exception encountered.");
                     _console.WriteLine(ex.ToString());
                 }
-
             } // end while
 
             _console.WriteLine("GameManager: Ending Game");
@@ -228,7 +201,14 @@ namespace Chess
             }
 
             return choice;
+        }
 
+        private static (string? command, string? argument) ParseInput(string? input)
+        {
+            if (String.IsNullOrWhiteSpace(input)) return (null, null);
+
+            string[] parts = input.ToLower().Split(' ');
+            return (parts[0], parts.Length > 1 ? parts[1] : null);
         }
     }
 }
