@@ -10,6 +10,9 @@ namespace Chess
     {
         private IConsole _console;
         private GameController _gameController;
+        private ChessStateExplorer _explorer = new ChessStateExplorer();
+        private bool _AIMode = false;
+        private string _AICommand = "";
 
         public GameManager(IConsole console, GameController gameController)
         {
@@ -33,6 +36,27 @@ namespace Chess
                 _gameController.InitPawnsOnly();
             }
 
+            _console.WriteLine("Enabling AI...");
+            _AIMode = true;
+
+            _gameController.SetOnTurnHandler((Turn turn) =>
+            {
+                List<TurnNode> turns = _explorer.GenerateAllPossibleMovesTurnNode(turn, 2);
+
+                // Sort by least number of moves for opponent (Children.Count), then by most number of moves for current player (turns.Count - tn.Children.Count)
+                turns = turns.OrderBy((TurnNode tn) => tn.Children.Count()).ThenByDescending((TurnNode tn) => turns.Count - tn.Children.Count).ToList();
+
+                Console.WriteLine($"The possible number of moves at this current move: {turn.TurnDescription} are: {turns.Count}");
+
+                TurnNode bestTurnToMake = turns.First(); // Select the first turn after sorting
+
+                _console.WriteLine($"*************Best turn to make here is: {bestTurnToMake.Command}");
+
+                if (_AIMode)
+                {
+                    _AICommand = bestTurnToMake.Command;
+                }
+            });
             PlayGame();
         }
 
@@ -118,7 +142,17 @@ namespace Chess
 
                 try
                 {
-                    input = _console.ReadLine();
+                    if (_gameController.TurnNumber % 2 == 0)
+                    {
+                        if (_AIMode)
+                        {
+                            input = _AICommand;
+                        }
+                    }
+                    else
+                    {
+                        input = _console.ReadLine();
+                    }
                     (string? command, string? argument) = ParseInput(input);
 
                     if (command == null || argument == null)
@@ -180,6 +214,7 @@ namespace Chess
                 {
                     _console.WriteLine("Exception encountered.");
                     _console.WriteLine(ex.ToString());
+                    break;
                 }
             } // end while
 

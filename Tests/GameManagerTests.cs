@@ -4,17 +4,44 @@ using Chess;
 using Tests.Services;
 using Chess.Board;
 using Chess.Callbacks;
+using Chess.GameState;
+using System.Data;
+using System.Runtime.InteropServices;
 
 namespace Tests
 {
     internal class GameManagerTests
     {
+        private GameController GetGameController()
+        {
+            ChessBoard chessBoard = new();
+            GameController gameController = new(chessBoard);
+            ChessStateExplorer explorer = new();
+            //gameController.SetOnTurnHandler((Turn turn) =>
+            //{
+            //    List<TurnNode> turns = explorer.GenerateAllPossibleMovesTurnNode(turn, 2);
+            //    turns = turns.OrderBy((TurnNode tn) => tn.Children.Count()).ToList();
+
+            //    Console.WriteLine($"The possible number of moves at this current move: {turn.TurnDescription} are: {turns.Count}");
+            //    //foreach (TurnNode turnNode in turns)
+            //    //{
+            //    //    Console.WriteLine($"Possible moves for {turnNode.TurnDescription} : {turnNode.Children.Count}");
+            //    //}
+
+            //    TurnNode bestTurnToMake = turns.Last();
+
+            //    Console.WriteLine($"*************Best turn to make here is: {bestTurnToMake.Command}");
+            //});
+
+
+
+            return gameController;
+        }
         [Test]
         public void FoolsMate()
         {
+            GameController gameController = GetGameController();
             // Arrange
-            ChessBoard chessBoard = new();
-            GameController gameController = new(chessBoard);
             Queue<string> consoleInputs = new();
             consoleInputs.Enqueue("n"); // no to tutorial
             consoleInputs.Enqueue("all"); // init game with all pieces
@@ -37,18 +64,17 @@ namespace Tests
         public void ScholarsMate()
         {
             // Arrange
-            ChessBoard chessBoard = new();
-            GameController gameController = new(chessBoard);
+            GameController gameController = GetGameController();
             Queue<string> consoleInputs = new();
             consoleInputs.Enqueue("n"); // no to tutorial
             consoleInputs.Enqueue("all"); // init game with all pieces
-            consoleInputs.Enqueue("WP5 E4");
-            consoleInputs.Enqueue("BP5 E5");
-            consoleInputs.Enqueue("WB2 C4");
-            consoleInputs.Enqueue("BK1 C6");
-            consoleInputs.Enqueue("WQ1 H5");
-            consoleInputs.Enqueue("BK2 F6");
-            consoleInputs.Enqueue("WQ1 F7");
+            consoleInputs.Enqueue("WP5 E4"); // 20
+            consoleInputs.Enqueue("BP5 E5"); // 29
+            consoleInputs.Enqueue("WB2 C4"); // 29
+            consoleInputs.Enqueue("BK1 C6"); // 33
+            consoleInputs.Enqueue("WQ1 H5"); // 31
+            consoleInputs.Enqueue("BK2 F6"); // 43
+            consoleInputs.Enqueue("WQ1 F7"); // 30 - wrong - should be zero. Our generateAllPossibleMovesFunction doesnt check if the current turn is in check mate, or even in check. It needs to do different things for different turn states. Are they in check or checkmate?
 
             IConsole consoleService = new MockConsoleService(consoleInputs);
             GameManager game = new(consoleService, gameController);
@@ -64,8 +90,7 @@ namespace Tests
         public void PawnsOnly_KingInCheck_NoPawnPromotion()
         {
             // Arrange
-            ChessBoard chessBoard = new();
-            GameController gameController = new(chessBoard);
+            GameController gameController = GetGameController();
             Queue<string> consoleInputs = new();
             consoleInputs.Enqueue("n"); // no to tutorial
             consoleInputs.Enqueue("pawns"); // no to tutorial
@@ -105,8 +130,7 @@ namespace Tests
         public void FalseEnPassant()
         {
             // Arrange
-            ChessBoard chessBoard = new();
-            GameController gameController = new(chessBoard);
+            GameController gameController = GetGameController();
             Queue<string> consoleInputs = new();
             consoleInputs.Enqueue("n"); // no to tutorial
             consoleInputs.Enqueue("pawns");

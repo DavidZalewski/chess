@@ -16,8 +16,13 @@ namespace Chess.Controller
         private List<ChessPiece> _chessPieces = new();
         private List<Turn> _turns = new();
         private int _turnNumber = 0;
+        private Action<Turn>? OnTurnHandler;
 
         public int TurnNumber { get => _turnNumber; }
+        public void SetOnTurnHandler(Action<Turn> action)
+        {
+            OnTurnHandler = action;
+        }
 
         public GameController(ChessBoard chessBoard)
         {
@@ -150,6 +155,7 @@ namespace Chess.Controller
                 if (chessPiece == null) return null;
                 Turn turn = new(_turnNumber, chessPiece, new(inputs[1]), _chessBoard);
                 if (!turn.IsValidTurn) return null;
+                turn.Command = input;
                 return turn;
             }
             catch (Exception e)
@@ -165,6 +171,7 @@ namespace Chess.Controller
             _chessPieces = turn.ChessPieces;
             _turns.Add(turn);
             _turnNumber++;
+            OnTurnHandler?.Invoke(turn);
         }
 
         public ChessBoard GetChessBoard() { return _chessBoard; }
