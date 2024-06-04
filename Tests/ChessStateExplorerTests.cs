@@ -14,9 +14,11 @@ using Tests.Services;
 
 namespace Tests
 {
+    [Parallelizable(ParallelScope.All)]
     internal class ChessStateExplorerTests
     {
         [Test]
+        [Parallelizable(ParallelScope.Self)]
         public void GenerateAllPossibleMoves_Depth_4_Success()
         {
             // Arrange
@@ -93,6 +95,7 @@ MethodInvoker.Invoke(Object obj, IntPtr* args, BindingFlags invokeAttr)
         }
 
         [Test]
+        [Parallelizable(ParallelScope.Self)]
         public void GenerateAllPossibleMovesTurnNode_Depth_4_Success()
         {
             // Arrange

@@ -2,6 +2,7 @@ using Chess.Board;
 
 namespace Tests.Board
 {
+    
     public class BoardPositionTests
     {
         public int SplitIntegerGetFirstValue(int value)

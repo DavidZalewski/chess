@@ -36,17 +36,26 @@ namespace Chess
                 _gameController.InitPawnsOnly();
             }
 
-            _console.WriteLine("Enabling AI...");
-            _AIMode = true;
+            _console.WriteLine("Use AI for Black? (y, n)?");
+            input = _console.ReadLine();
+
+            if (input?.ToLower() == "y")
+            {
+                _console.WriteLine("Enabling AI...");
+                _AIMode = true;
+            }
 
             _gameController.SetOnTurnHandler((Turn turn) =>
             {
                 List<TurnNode> turns = _explorer.GenerateAllPossibleMovesTurnNode(turn, 2);
 
                 // Sort by least number of moves for opponent (Children.Count), then by most number of moves for current player (turns.Count - tn.Children.Count)
-                turns = turns.OrderBy((TurnNode tn) => tn.Children.Count()).ThenByDescending((TurnNode tn) => turns.Count - tn.Children.Count).ToList();
+                turns = turns.OrderByDescending(tn => tn.TurnDescription.Contains("capture") && tn.TurnNumber % 2 == 0)
+                            .ThenBy(tn => tn.Children.Count())
+                            .ThenByDescending(tn => turns.Count - tn.Children.Count)
+                            .ToList();
 
-                Console.WriteLine($"The possible number of moves at this current move: {turn.TurnDescription} are: {turns.Count}");
+                _console.WriteLine($"The possible number of moves at this current move: {turn.TurnDescription} are: {turns.Count}");
 
                 TurnNode bestTurnToMake = turns.First(); // Select the first turn after sorting
 
@@ -142,12 +151,10 @@ namespace Chess
 
                 try
                 {
-                    if (_gameController.TurnNumber % 2 == 0)
+                    //if (_AIMode && _gameController.TurnNumber % 2 == 0)
+                    if (_AIMode)
                     {
-                        if (_AIMode)
-                        {
-                            input = _AICommand;
-                        }
+                        input = _AICommand;
                     }
                     else
                     {

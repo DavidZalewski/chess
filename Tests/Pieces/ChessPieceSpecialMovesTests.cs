@@ -2,14 +2,10 @@
 using Chess.Controller;
 using Chess.Pieces;
 using Chess.Services;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Tests.Pieces
 {
+    [Parallelizable(ParallelScope.All)]
     public class ChessPieceSpecialMovesTests
     {
 

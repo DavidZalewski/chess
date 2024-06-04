@@ -8,6 +8,7 @@ using System.Collections.Generic;
 
 namespace Tests
 {
+    [Parallelizable(ParallelScope.All)]
     public class TurnTests
     {
 

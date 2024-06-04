@@ -40,7 +40,7 @@ namespace Chess.GameState
                     {
                         BoardPosition pos = new((RANK)i, (FILE)j);
                         Turn possibleTurn = new(turn.TurnNumber + 1, piece, piece.GetCurrentPosition(), pos, turn.ChessBoard);
-                        if (possibleTurn.IsValidTurn)
+                        if (possibleTurn.IsValidTurn && !kingCheckService.IsKingInCheck(possibleTurn))
                         {                       
 
                             possibleMoves.Add(possibleTurn);

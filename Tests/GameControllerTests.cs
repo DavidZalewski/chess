@@ -6,6 +6,7 @@ using Chess.Services;
 
 namespace Tests
 {
+    [Parallelizable(ParallelScope.All)]
     public class GameControllerTests
     {
         [Test]
