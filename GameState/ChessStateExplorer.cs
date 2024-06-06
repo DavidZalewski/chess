@@ -12,17 +12,26 @@ namespace Chess.GameState
 {
     internal class ChessStateExplorer
     {
+        ConcurrentLogger logger = new ConcurrentLogger("ChessStateExplorer.txt");
+        
         public List<Turn> GenerateAllPossibleMoves(Turn turn, int depth)
         {
+            int threadId = Thread.CurrentThread.ManagedThreadId;
+
+            logger.Log($"ChessStateExplorer - BEGIN: Generating all possible moves for turn {turn.TurnDescription} at depth {depth}", threadId);
             KingCheckService kingCheckService = new KingCheckService();
 
             List<Turn> possibleMoves = new();
 
             if (depth == 0) // base case: reached maximum depth
+            {
+                logger.Log($"ChessStateExplorer - END: Turn {turn.TurnDescription} maximum depth reached, count: {possibleMoves.Count}", threadId);
                 return possibleMoves;
+            }
 
             if (kingCheckService.IsCheckMate(turn))
             {
+                logger.Log($"ChessStateExplorer - END: Turn {turn.TurnDescription} at depth {depth} has reached CHECKMATE, count: {possibleMoves.Count} ", threadId);
                 return possibleMoves;
             }
 
@@ -41,12 +50,14 @@ namespace Chess.GameState
                         BoardPosition pos = new((RANK)i, (FILE)j);
                         Turn possibleTurn = new(turn.TurnNumber + 1, piece, piece.GetCurrentPosition(), pos, turn.ChessBoard);
                         if (possibleTurn.IsValidTurn && !kingCheckService.IsKingInCheck(possibleTurn))
-                        {                       
-
+                        {
+                            logger.Log($"ChessStateExplorer - MID: Possible Move Found: {possibleTurn.TurnDescription}, Depth: {depth}, From: {turn.TurnDescription}", threadId);
                             possibleMoves.Add(possibleTurn);
                             // Recursively generate all possible moves from this new turn
                             List<Turn> subMoves = GenerateAllPossibleMoves(possibleTurn, depth - 1);
+                            logger.Log($"ChessStateExplorer - MID: Turn: {possibleTurn.TurnDescription}, Depth: {depth}, From: {turn.TurnDescription}, SubCount: {subMoves.Count},", threadId);
                             possibleMoves.AddRange(subMoves);
+                            logger.Log($"ChessStateExplorer - MID: Turn: {possibleTurn.TurnDescription}, Depth: {depth}, From: {turn.TurnDescription}, MainCount: {possibleMoves.Count},", threadId);
                         }
                     }
                 }
@@ -54,6 +65,7 @@ namespace Chess.GameState
             SpecialMovesHandlers.ByPassPawnPromotionPromptUser = false;
             // TODO: change the PawnPromotion callback function back to GameManager.HandlePawnPromotion
 
+            logger.Log($"ChessStateExplorer - END: Turn: {turn.TurnDescription}, Depth: {depth}, MainCount: {possibleMoves.Count},", threadId);
 
             return possibleMoves;
         }
