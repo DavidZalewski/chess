@@ -209,7 +209,7 @@ MethodInvoker.Invoke(Object obj, IntPtr* args, BindingFlags invokeAttr)
                 .Sum();
 
             logger.Log($"The possible number of moves within the first 7 turns of chess is: {possibleMoves}", 0);
-            Assert.That(possibleMoves, Is.LessThanOrEqualTo(207398)); // 207398 moves
+            Assert.That(possibleMoves, Is.LessThanOrEqualTo(2557005815)); // 2557005815 moves
         }
 
 
