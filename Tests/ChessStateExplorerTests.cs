@@ -171,5 +171,100 @@ MethodInvoker.Invoke(Object obj, IntPtr* args, BindingFlags invokeAttr)
             }
         }
 
+        [Test]
+        [Parallelizable(ParallelScope.Self)]
+        public void GenerateAllPossibleMoves_Depth_7_Success()
+        {
+            // Arrange
+            ChessBoard chessBoard = new();
+            GameController gameController = new(chessBoard);
+            gameController.StartGame();
+            List<string> startingMoves = new List<string>()
+            { "WP1 A3", "WP1 A4", "WP2 B3", "WP2 B4", "WP3 C3", "WP3 C4", "WP4 D3", "WP4 D4",
+              "WP5 E3", "WP5 E4", "WP6 F3", "WP6 F4", "WP7 G3", "WP7 G4", "WP8 H3", "WP8 H4",
+              "WK1 A3", "WK1 C3", "WK2 F3", "WK2 H3"
+            };
+            List<Turn> startingTurns = new List<Turn>();
+            foreach (string move in startingMoves)
+            {
+                Turn? turn = gameController.GetTurnFromCommand(move);
+                Assert.That(turn, Is.Not.Null);
+                startingTurns.Add(turn);
+            }
+
+            ChessStateExplorer stateExplorer = new();
+            List<Thread> threads = new List<Thread>();
+            //long possibleMoves = 0;
+            object mutex = new();
+
+            Console.WriteLine("Beginning Parallel Task Execution");
+            Console.Out.Flush();
+
+            var possibleMoves = startingTurns.AsParallel()
+                                            .Select(turn => stateExplorer.GenerateAllPossibleMoves(turn, 6))
+                                            .Sum(threadPossibleMoves => threadPossibleMoves.Count);
+
+            /*
+            var generateAllPossibleMovesThread = (Turn t) => {
+                lock (mutex)
+                {
+                    Console.WriteLine($"Thread {t.TurnNumber} starting...");
+                    Console.Out.FlushAsync();
+                }
+                int c = stateExplorer.GenerateAllPossibleMoves(t, 6).Count;
+                lock (mutex)
+                {
+                    Console.WriteLine($"Thread Locking Mutex (name: {t.TurnDescription} count: {c})");
+                    Console.Out.FlushAsync();
+                    possibleMoves += c;
+                    Console.WriteLine($"Thread Unlocking Mutex (name: {t.TurnDescription} count: {c}) and exiting");
+                    Console.Out.FlushAsync();
+                }
+
+                return c;
+            };
+
+
+
+            foreach (Turn turn in startingTurns)
+            {
+                Thread thread = new(() => generateAllPossibleMovesThread(turn));
+                threads.Add(thread);
+                thread.Start();
+            }
+
+            foreach (Thread thread in threads)
+            {
+                thread.Join();
+            }*/
+
+            /*
+             * 
+             * 
+Parallel.ForEach(startingTurns, turn =>
+{
+    List<Turn> threadPossibleMoves = generateAllPossibleMovesThread(turn);
+    lock (mutex)
+    {
+        possibleMoves += threadPossibleMoves.Count;
+    }
+});
+
+
+var possibleMoves = startingTurns.AsParallel()
+    .Select(turn => generateAllPossibleMovesThread(turn))
+    .Sum(threadPossibleMoves => threadPossibleMoves.Count);
+             * 
+             * 
+             * 
+             * 
+             */
+
+            Assert.That(possibleMoves, Is.Not.Empty);
+            Console.WriteLine($"The possible number of moves within the first 4 turns of chess is: {possibleMoves}");
+            Assert.That(possibleMoves, Is.LessThanOrEqualTo(207398)); // 207398 moves
+        }
+
+
     }
 }
