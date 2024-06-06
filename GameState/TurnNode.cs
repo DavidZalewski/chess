@@ -1,9 +1,4 @@
 ﻿using Chess.Pieces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Chess.GameState
 {
@@ -14,13 +9,15 @@ namespace Chess.GameState
         public int TurnNumber { get; set; }
         public TurnNode? Parent { get; set; }
         public List<TurnNode> Children { get; set; } = new List<TurnNode>();
+        public ulong Count { get; set; }
         public string Command { get; set; }
+        public string TurnID { get; }
 
         public TurnNode(Turn turn, string optionalText = "")
         {
             TurnDescription = turn.TurnDescription + optionalText;
             TurnNumber = turn.TurnNumber;
-            BoardState = turn.ChessBoard.DisplayBoard();
+            BoardState = "PLACEHOLDER"; // turn.ChessBoard.DisplayBoard();
             //Command = turn.Command;
 
             if (String.IsNullOrEmpty(Command))
@@ -50,6 +47,12 @@ namespace Chess.GameState
                     Command = turn.PlayerTurn.Equals(Turn.Color.WHITE) ? "W" : "B" + "K " + turn.NewPosition.StringValue;
                 }
             }
+
+            TurnID = TurnNumber + ":" 
+                    + (turn.PlayerTurn.Equals(Turn.Color.WHITE) ? "W" : "B") + ":" 
+                    + turn.ChessPiece.GetPieceName() + ":"
+                    + turn.Command + ":FROM:" 
+                    + turn.PreviousPosition.StringValue;
         }
     }
 }

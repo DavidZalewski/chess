@@ -8,6 +8,7 @@ using Chess.Services;
 using Newtonsoft.Json;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.Runtime.Serialization.Formatters.Binary;
 using Tests.Services;
 
@@ -116,8 +117,8 @@ MethodInvoker.Invoke(Object obj, IntPtr* args, BindingFlags invokeAttr)
             }
 
             ChessStateExplorer stateExplorer = new();
-
-            var generateAllPossibleMovesThread = (Turn t) => stateExplorer.GenerateAllPossibleMovesTurnNode(t, 3);
+            ulong count = 0;
+            var generateAllPossibleMovesThread = (Turn t) => stateExplorer.GenerateAllPossibleMovesTurnNode(t, 3, ref count);
 
             List<Thread> threads = new List<Thread>();
             List<TurnNode> possibleMoves = new List<TurnNode>();
@@ -143,8 +144,8 @@ MethodInvoker.Invoke(Object obj, IntPtr* args, BindingFlags invokeAttr)
             }
 
             Assert.That(possibleMoves, Is.Not.Empty);
-            Console.WriteLine($"The possible number of moves within the first 4 turns of chess is: {possibleMoves.Count}");
-            Assert.That(possibleMoves.Count, Is.GreaterThanOrEqualTo(400)); // 207398 moves
+            Console.WriteLine($"The possible number of moves within the first 4 turns of chess is: {count}");
+            Assert.That(count, Is.GreaterThanOrEqualTo(400)); // 207398 moves
 
             /*
 System.OutOfMemoryException : Exception of type 'System.OutOfMemoryException' was thrown.
@@ -173,7 +174,7 @@ MethodInvoker.Invoke(Object obj, IntPtr* args, BindingFlags invokeAttr)
 
         [Test]
         [Parallelizable(ParallelScope.Self)]
-        public void GenerateAllPossibleMoves_Depth_7_Success()
+        public void GenerateAllPossibleMoves_LighterMemory_Depth_7_Success()
         {
             // Arrange
             ChessBoard chessBoard = new();
@@ -193,20 +194,20 @@ MethodInvoker.Invoke(Object obj, IntPtr* args, BindingFlags invokeAttr)
             }
 
             ChessStateExplorer stateExplorer = new();
-            ConcurrentLogger logger = new("GenerateAllPossibleMoves_Depth_7_Success.txt");
+            ConcurrentLogger logger = new("GenerateAllPossibleMoves_LighterMemory_Depth_7_Success.txt");
 
             var possibleMoves = startingTurns.AsParallel()
                 .Select((turn) =>
                 {
                     int threadId = Thread.CurrentThread.ManagedThreadId;
+                    ulong count = 0;
                     logger.Log($"Starting to process turn {turn.TurnDescription}", threadId);
-                    var moves = stateExplorer.GenerateAllPossibleMoves(turn, 6);
-                    logger.Log($"Finished processing turn {turn.TurnDescription} with {moves.Count} possible moves", threadId);
-                    return moves.Count;
+                    List<TurnNode> moves = stateExplorer.GenerateAllPossibleMovesTurnNode(turn, 6, ref count);
+                    logger.Log($"Finished processing turn {turn.TurnDescription} with {count} possible moves", threadId);
+                    return (long)count;
                 })
                 .Sum();
 
-            Assert.That(possibleMoves, Is.Not.Empty);
             logger.Log($"The possible number of moves within the first 7 turns of chess is: {possibleMoves}", 0);
             Assert.That(possibleMoves, Is.LessThanOrEqualTo(207398)); // 207398 moves
         }

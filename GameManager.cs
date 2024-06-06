@@ -47,7 +47,8 @@ namespace Chess
 
             _gameController.SetOnTurnHandler((Turn turn) =>
             {
-                List<TurnNode> turns = _explorer.GenerateAllPossibleMovesTurnNode(turn, 2);
+                ulong _unused = 0;
+                List<TurnNode> turns = _explorer.GenerateAllPossibleMovesTurnNode(turn, 2, ref _unused);
 
                 // Sort by least number of moves for opponent (Children.Count), then by most number of moves for current player (turns.Count - tn.Children.Count)
                 turns = turns.OrderByDescending(tn => tn.TurnDescription.Contains("capture") && tn.TurnNumber % 2 == 0)
