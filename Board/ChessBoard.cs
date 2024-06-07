@@ -1,6 +1,7 @@
 ﻿using Chess.Pieces;
 using Chess.Services;
 using NUnit.Framework;
+using static Chess.Pieces.ChessPiece;
 
 namespace Chess.Board
 {
@@ -27,11 +28,13 @@ namespace Chess.Board
         //};
 
         public Square[,] Board { get; set; }
+        public string BoardID { get; private set; } = string.Empty;
 
         public ChessBoard()
         {
             Board = new Square[8, 8];
             InitializeBoard();
+            GenerateBoardID();
         }
 
         public ChessBoard(ChessBoard? other)
@@ -50,6 +53,50 @@ namespace Chess.Board
                     Board[row, col] = new Square(other.Board[row, col]); // Copy each Square
                 }
             }
+        }
+
+        private void GenerateBoardID()
+        {
+            string id = string.Empty;
+            for (int row = 0; row < 8; row++)
+            {
+                for (int col = 0; col < 8; col++)
+                {
+                    Square square = Board[row, col];
+                    if (square.Piece is NoPiece)
+                    {
+                        id += "0";
+                    }
+                    else
+                    {
+                        ChessPiece piece = square.Piece;
+                        Piece pieceType = piece.GetPiece();
+                        Color pieceColor = piece.GetColor();
+                        switch (pieceType)
+                        {
+                            case Piece.KING:
+                                id += pieceColor == Color.WHITE ? "1" : "2";
+                                break;
+                            case Piece.QUEEN:
+                                id += pieceColor == Color.WHITE ? "3" : "4";
+                                break;
+                            case Piece.ROOK:
+                                id += pieceColor == Color.WHITE ? "5" : "6";
+                                break;
+                            case Piece.BISHOP:
+                                id += pieceColor == Color.WHITE ? "7" : "8";
+                                break;
+                            case Piece.KNIGHT:
+                                id += pieceColor == Color.WHITE ? "9" : "A";
+                                break;
+                            case Piece.PAWN:
+                                id += pieceColor == Color.WHITE ? "B" : "C";
+                                break;
+                        }
+                    }
+                }
+            }
+            BoardID = id;
         }
 
         private void InitializeBoard()
@@ -83,16 +130,16 @@ namespace Chess.Board
             {
                 piece.Move(this, piece.GetStartingPosition());
             }
-
+            GenerateBoardID();
             return true;
         }
 
         public bool SetBoardValue(BoardPosition position, int value)
         {
-            // Quick placeholder logic during the change
             ChessPiece piece = ChessPieceFactory.CreatePieceFromInt(position, value);
             Square square = new() { Position = position, Piece = piece };
             SetSquareValue(position, square);
+            GenerateBoardID();
             return true;
         }
 
@@ -122,12 +169,15 @@ namespace Chess.Board
         {
             GetSquare(position).Piece = piece;
             piece.SetCurrentPosition(position);
+            GenerateBoardID();
         }
 
         public void AddPiece(ChessPiece piece)
         {
             GetSquare(piece.GetCurrentPosition()).Piece = piece;
+            GenerateBoardID();
         }
+
 
         public string DisplayBoard()
         {
@@ -189,6 +239,7 @@ namespace Chess.Board
         private void SetSquareValue(BoardPosition position, Square square)
         {
             Board[position.RankAsInt, position.FileAsInt] = square;
+            GenerateBoardID();
         }
 
         private Square GetSquare(BoardPosition position)

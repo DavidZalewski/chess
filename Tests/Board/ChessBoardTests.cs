@@ -200,5 +200,55 @@ namespace Tests.Board
 
             Console.WriteLine(boardAsConsoleOutput);
         }
+
+        [Test]
+        public void BoardID_InitialValue_EmptyString()
+        {
+            Assert.That(chessBoard.BoardID, Is.Empty);
+        }
+
+        [Test]
+        public void BoardID_AfterPopulateBoard_NotEmptyString()
+        {
+            List<ChessPiece> chessPieces = ChessPieceFactory.CreateChessPieces();
+            chessBoard.PopulateBoard(chessPieces);
+            Console.WriteLine($"initialBoardID: {chessBoard.BoardID}");
+            Assert.That(chessBoard.BoardID, Is.Not.Empty);
+            Assert.That(chessBoard.BoardID.Length, Is.EqualTo(64));
+        }
+
+        [Test]
+        public void BoardID_AfterSetPieceAtPosition_UpdatesBoardID()
+        {
+            BoardPosition position = new BoardPosition(RANK.ONE, FILE.A);
+            ChessPiece piece = new ChessPieceKing(Color.WHITE, position);
+            chessBoard.SetPieceAtPosition(position, piece);
+            string initialBoardID = chessBoard.BoardID;
+
+            Console.WriteLine($"initialBoardID: {initialBoardID}");
+
+            position = new BoardPosition(RANK.ONE, FILE.B);
+            piece = new ChessPieceQueen(Color.WHITE, 1, position);
+            chessBoard.SetPieceAtPosition(position, piece);
+            string updatedBoardID = chessBoard.BoardID;
+
+            Console.WriteLine($"updatedBoardID: {updatedBoardID}");
+
+            Assert.That(initialBoardID, Is.Not.EqualTo(updatedBoardID));   
+        }
+
+        [Test]
+        public void BoardID_DefaultBoard_ReturnsCorrectID()
+        {
+            // Arrange
+            ChessBoard chessBoard = new ChessBoard();
+
+            // Act
+            string boardID = chessBoard.BoardID;
+
+            // Assert
+            Assert.That(boardID.Length, Is.EqualTo(64));
+            Assert.That(boardID, Is.EqualTo(new string('0', 64)));
+        }
     }
 }

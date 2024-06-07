@@ -12,6 +12,7 @@ namespace Chess.GameState
         public ulong Count { get; set; }
         public string Command { get; set; }
         public string TurnID { get; }
+        public string BoardID { get; }
 
         public TurnNode(Turn turn, string optionalText = "")
         {
@@ -53,6 +54,8 @@ namespace Chess.GameState
                     + turn.ChessPiece.GetPieceName() + ":"
                     + turn.Command + ":FROM:" 
                     + turn.PreviousPosition.StringValue;
+
+            BoardID = turn.ChessBoard.BoardID;
         }
     }
 }
