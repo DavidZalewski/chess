@@ -202,14 +202,21 @@ MethodInvoker.Invoke(Object obj, IntPtr* args, BindingFlags invokeAttr)
                     int threadId = Thread.CurrentThread.ManagedThreadId;
                     ulong count = 0;
                     logger.Log($"Starting to process turn {turn.TurnDescription}", threadId);
-                    List<TurnNode> moves = stateExplorer.GenerateAllPossibleMovesTurnNode(turn, 6, ref count);
+                    List<TurnNode> moves = stateExplorer.GenerateAllPossibleMovesTurnNode(turn, 12, ref count);
                     logger.Log($"Finished processing turn {turn.TurnDescription} with {count} possible moves", threadId);
                     return (long)count;
                 })
                 .Sum();
 
             logger.Log($"The possible number of moves within the first 7 turns of chess is: {possibleMoves}", 0);
-            Assert.That(possibleMoves, Is.LessThanOrEqualTo(2557005815)); // 2557005815 moves
+            Assert.That(possibleMoves, Is.LessThanOrEqualTo(2557005815));
+            //           2,557,005,815 moves at turn 7 / 11.6s
+            //          47,702,789,199 moves at turn 8 / 23.7s
+            //       1,347,926,109,040 moves at turn 9 / 27.1s
+            //      24,375,292,174,409 moves at turn 10 / 30.5s
+            //     842,251,828,564,222 moves at turn 11 / 33.4s
+            //  13,152,484,339,525,676 moves at turn 12 / 34.4s
+            // 377,644,534,572,086,014 moves at turn 13 / 38.9s
         }
 
 
