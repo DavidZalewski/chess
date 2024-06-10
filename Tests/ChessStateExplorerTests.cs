@@ -1,17 +1,10 @@
-﻿using Chess;
-using Chess.Board;
+﻿using Chess.Board;
 using Chess.Controller;
 using Chess.GameState;
-using Chess.Interfaces;
-using Chess.Pieces;
 using Chess.Services;
 using Newtonsoft.Json;
-using System.Collections;
+using NUnit.Framework.Internal;
 using System.Collections.Concurrent;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.Serialization.Formatters.Binary;
-using Tests.Services;
 
 
 namespace Tests
@@ -258,16 +251,55 @@ MethodInvoker.Invoke(Object obj, IntPtr* args, BindingFlags invokeAttr)
         {
             // Arrange
             ChessStateExplorer explorer = new ChessStateExplorer();
-            ChessStateExplorer.cache.AddOrUpdate("test_key", (s) => 123, (s, i) => 123);
+            ChessStateExplorer.cache.AddOrUpdate("test_key", (s) => new(123), (s, i) => new(123));
 
             // Act
-            ChessStateExplorer.SaveCache();
-            ChessStateExplorer.cache = new ConcurrentDictionary<string, ulong>(); // Clear the cache
+            //ChessStateExplorer.SaveCache();
+            ChessStateExplorer.cache = new ConcurrentDictionary<string, CacheItem>(); // Clear the cache
             explorer = new ChessStateExplorer(); // Load the cache from file
 
             // Assert
             Assert.That(ChessStateExplorer.cache.ContainsKey("test_key"));
-            Assert.That(ChessStateExplorer.cache["test_key"], Is.EqualTo(123));
+            Assert.That(ChessStateExplorer.cache["test_key"].Value, Is.EqualTo(123));
+        }
+
+        [Test]
+        public void PrintTopCacheItems_Top25_Success()
+        {
+            // Arrange
+            ChessBoard chessBoard = new();
+            GameController gameController = new(chessBoard);
+            gameController.StartGame();
+            List<string> startingMoves = new()
+    {
+      "WP1 A3", "WP1 A4", "WP2 B3", "WP2 B4", "WP3 C3", "WP3 C4", "WP4 D3", "WP4 D4",
+      "WP5 E3", "WP5 E4", "WP6 F3", "WP6 F4", "WP7 G3", "WP7 G4", "WP8 H3", "WP8 H4",
+      "WK1 A3", "WK1 C3", "WK2 F3", "WK2 H3"
+    };
+            List<Turn> startingTurns = new();
+            foreach (string move in startingMoves)
+            {
+                Turn? turn = gameController.GetTurnFromCommand(move);
+                Assert.That(turn, Is.Not.Null);
+                startingTurns.Add(turn);
+            }
+
+            ChessStateExplorer explorer = new ChessStateExplorer();
+            int depth = 4;
+            ulong currentCount = 0;
+
+            // Act
+            List<TurnNode> possibleMoves = explorer.GenerateAllPossibleMovesTurnNode(startingTurns.First(), depth, ref currentCount);
+
+
+            // Act
+            explorer.PrintTopCacheItems(250);
+
+            foreach ((String key, CacheItem cii) ci in explorer.GetTopNCachedItems(25)) 
+                Console.WriteLine($"Cache (Partition: {ci.key}, Cache Value: {ci.cii.Value}, Access Count: {ci.cii.AccessCount}");
+
+            // Assert
+            Assert.That(1 == 1);
         }
 
     }

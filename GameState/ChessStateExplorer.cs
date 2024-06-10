@@ -11,31 +11,61 @@ namespace Chess.GameState
     {
         private static string cacheFilePath = "chess_cache.bin";
         ConcurrentLogger logger = new ConcurrentLogger("ChessStateExplorer_TurnNode.txt");
-        public static ConcurrentDictionary<string, ulong> cache = new(); // TODO: change access later
+        private const int REPARTITION_THRESHOLD = 1000; // adjust this value as needed
+        private const int PARTITION_SIZE = 8; // adjust this value as needed
+        private Dictionary<string, ConcurrentDictionary<string, CacheItem>> partitions = new();
+        public static ConcurrentDictionary<string, CacheItem> cache = new(); // TODO: change access later
+        private static ulong cache_hits = 0; // TODO
 
-        static ChessStateExplorer()
+        //static ChessStateExplorer()
+        //{
+        //    if (File.Exists(cacheFilePath))
+        //    {
+        //        using (FileStream fs = new FileStream(cacheFilePath, FileMode.Open))
+        //        {
+        //            BinaryFormatter formatter = new BinaryFormatter();
+        //            cache = (ConcurrentDictionary<string, ulong>)formatter.Deserialize(fs);
+        //        }
+        //    }
+        //    else
+        //    {
+        //        cache = new ConcurrentDictionary<string, ulong>();
+        //    }
+        //}
+
+        //public static void SaveCache()
+        //{
+        //    using (FileStream fs = new FileStream(cacheFilePath, FileMode.Create))
+        //    {
+        //        BinaryFormatter formatter = new BinaryFormatter();
+        //        formatter.Serialize(fs, cache);
+        //    }
+        //}
+
+        public void RepartitionCache()
         {
-            if (File.Exists(cacheFilePath))
+            if (cache.Count < REPARTITION_THRESHOLD) return;
+
+            int threadId = Thread.CurrentThread.ManagedThreadId;
+
+            var topItems = cache.OrderByDescending(x => x.Value.AccessCount).Take(PARTITION_SIZE);
+            var commonPrefixes = topItems.Select(x => x.Key.Substring(0, PARTITION_SIZE)).Distinct();
+
+            logger.Log($"ChessStateExplorer - RepartitionCache called - {commonPrefixes.Count()} unique prefix partitions found", threadId);
+
+            foreach (var prefix in commonPrefixes)
             {
-                using (FileStream fs = new FileStream(cacheFilePath, FileMode.Open))
+                var partition = new ConcurrentDictionary<string, CacheItem>();
+                foreach (var item in cache.Where(x => x.Key.StartsWith(prefix)))
                 {
-                    BinaryFormatter formatter = new BinaryFormatter();
-                    cache = (ConcurrentDictionary<string, ulong>)formatter.Deserialize(fs);
+                    partition.TryAdd(item.Key, item.Value);
                 }
+                partitions.TryAdd(prefix, partition);
             }
-            else
-            {
-                cache = new ConcurrentDictionary<string, ulong>();
-            }
-        }
 
-        public static void SaveCache()
-        {
-            using (FileStream fs = new FileStream(cacheFilePath, FileMode.Create))
-            {
-                BinaryFormatter formatter = new BinaryFormatter();
-                formatter.Serialize(fs, cache);
-            }
+            logger.Log($"ChessStateExplorer - Repartition Successful - {partitions.Count} partitions generated for cache", threadId);
+
+            cache.Clear();
         }
 
         public List<Turn> GenerateAllPossibleMoves(Turn turn, int depth)
@@ -135,16 +165,17 @@ namespace Chess.GameState
                             ++currentCount;
                             //logger.Log($"ChessStateExplorer - MID: Possible Move Found: {possibleTurn.TurnDescription}, Depth: {depth}, From: {turn.TurnDescription}", threadId);
 
-                            // Recursively generate all possible moves from this new turn
                             if (cache.ContainsKey(turnNode.BoardID))
                             {
-                                logger.Log($"ChessStateExplorer - MID: Hitting Cache for BoardID: {turnNode.BoardID}", threadId);
-                                ulong innerCount = cache.GetOrAdd(turnNode.BoardID, 0);
+                                CacheItem cacheItem = cache[turnNode.BoardID];
+                                cacheItem.InterlockedIncrement();
+                                ulong innerCount = cacheItem.Value;
                                 turnNode.Children = new List<TurnNode>();
                                 turnNode.Count = innerCount;
                                 possibleMoves.Add(turnNode);
                                 currentCount += innerCount;
-                                logger.Log($"ChessStateExplorer - MID: Hitting Cache for BoardID: {turnNode.BoardID}, Depth: {depth}, From: {turn.TurnDescription}, ChildrenCount: {innerCount}, MainCount: {currentCount}", threadId);
+                                RepartitionCache();
+                                logger.Log($"ChessStateExplorer - MID: Hitting Cache for BoardID: {turnNode.BoardID}, Depth: {depth}, From: {turn.ChessBoard.BoardID}, ChildrenCount: {innerCount}, MainCount: {currentCount}", threadId);
                             }
                             else
                             {
@@ -152,9 +183,9 @@ namespace Chess.GameState
                                 turnNode.Children = GenerateAllPossibleMovesTurnNode(possibleTurn, depth - 1, ref innerCount);
                                 turnNode.Count = innerCount;
                                 possibleMoves.Add(turnNode);
-                                cache.AddOrUpdate(turnNode.BoardID, (s) => turnNode.Count, (s, i) => turnNode.Count);
+                                cache.AddOrUpdate(turnNode.BoardID, new CacheItem(turnNode.Count), (s, i) => new CacheItem(turnNode.Count));
                                 currentCount += innerCount;
-                                logger.Log($"ChessStateExplorer - MID: BoardID: {turnNode.BoardID}, Depth: {depth}, From: {turn.TurnDescription}, ChildrenCount: {innerCount}, MainCount: {currentCount} - Added to cache", threadId);
+                                logger.Log($"ChessStateExplorer - MID: BoardID: {turnNode.BoardID}, Depth: {depth}, From: {turn.ChessBoard.BoardID}, ChildrenCount: {innerCount}, MainCount: {currentCount} - Added to cache", threadId);
                             }
                         }
                     }
@@ -163,9 +194,39 @@ namespace Chess.GameState
             SpecialMovesHandlers.ByPassPawnPromotionPromptUser = false;
             // TODO: change the PawnPromotion callback function back to GameManager.HandlePawnPromotion
 
-            logger.Log($"ChessStateExplorer - END: BoardID: {turn.ChessBoard.BoardID}, Depth: {depth}, From: {turn.TurnDescription}, Count: {currentCount}", threadId);
+            logger.Log($"ChessStateExplorer - END: BoardID: {turn.ChessBoard.BoardID}, Depth: {depth}, From: {turn.ChessBoard.BoardID}, Count: {currentCount}", threadId);
 
             return possibleMoves;
+        }
+
+        public List<(string Key, CacheItem AccessCount)> GetTopNCachedItems(int n)
+        {
+            var topItems = new List<(string Key, CacheItem AccessCount)>();
+
+            foreach (var partition in partitions.Values)
+            {
+                topItems.AddRange(partition
+                    .OrderByDescending(x => x.Value.AccessCount)
+                    .Take(n)
+                    .Select(x => (x.Key, x.Value)));
+            }
+
+            return topItems;
+        }
+
+        public void PrintTopCacheItems(int n)
+        {
+            logger.Log($"Cache Size: {cache.Count}", 0);
+            var topItems = cache.OrderByDescending(x => x.Value.AccessCount).Take(n);
+            foreach (var item in topItems)
+            {
+                logger.Log($"BoardID: {item.Key}, AccessCount: {item.Value.AccessCount}, Value: {item.Value.Value}", 0);
+            }
+        }
+
+        public long CacheSize()
+        {
+            return cache.Count;
         }
     }
 }
