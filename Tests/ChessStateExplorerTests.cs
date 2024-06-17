@@ -196,7 +196,7 @@ MethodInvoker.Invoke(Object obj, IntPtr* args, BindingFlags invokeAttr)
                     int threadId = Thread.CurrentThread.ManagedThreadId;
                     ulong count = 0;
                     logger.Log($"Starting to process turn {turn.TurnDescription}", threadId);
-                    List<TurnNode> moves = stateExplorer.GenerateAllPossibleMovesTurnNode(turn, 6, ref count);
+                    List<TurnNode> moves = stateExplorer.GenerateAllPossibleMovesTurnNode(turn, 4, ref count);
                     logger.Log($"Finished processing turn {turn.TurnDescription} with {count} possible moves", threadId);
                     return (long)count;
                 })
@@ -243,7 +243,7 @@ MethodInvoker.Invoke(Object obj, IntPtr* args, BindingFlags invokeAttr)
             List<TurnNode> possibleMoves = explorer.GenerateAllPossibleMovesTurnNode(startingTurns.First(), depth, ref currentCount);
 
             // Assert
-            Assert.That(ChessStateExplorer.cache.ContainsKey(possibleMoves[0].BoardID));
+            Assert.That(explorer.cache.TryGetValue(possibleMoves[0].BoardID, out CacheItem cacheItem));
         }
 
         [Test]
@@ -251,16 +251,16 @@ MethodInvoker.Invoke(Object obj, IntPtr* args, BindingFlags invokeAttr)
         {
             // Arrange
             ChessStateExplorer explorer = new ChessStateExplorer();
-            ChessStateExplorer.cache.AddOrUpdate("test_key", (s) => new(123), (s, i) => new(123));
+            explorer.cache.AddOrUpdate("test_key", new(123));
 
             // Act
             //ChessStateExplorer.SaveCache();
-            ChessStateExplorer.cache = new ConcurrentDictionary<string, CacheItem>(); // Clear the cache
+            explorer.cache = new MultiDimensionalCache<string, CacheItem>(8); // 8 is hardcoded var in chess state explorer
             explorer = new ChessStateExplorer(); // Load the cache from file
 
             // Assert
-            Assert.That(ChessStateExplorer.cache.ContainsKey("test_key"));
-            Assert.That(ChessStateExplorer.cache["test_key"].Value, Is.EqualTo(123));
+            Assert.That(explorer.cache.TryGetValue("test_key", out CacheItem cacheItem));
+            Assert.That(cacheItem.Value, Is.EqualTo(123));
         }
 
         [Test]

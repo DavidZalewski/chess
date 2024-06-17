@@ -4,6 +4,7 @@ using Chess.Pieces;
 using Chess.Services;
 using System.Collections.Concurrent;
 using System.Runtime.Serialization.Formatters.Binary;
+using System.Threading;
 
 namespace Chess.GameState
 {
@@ -13,9 +14,8 @@ namespace Chess.GameState
         ConcurrentLogger logger = new ConcurrentLogger("ChessStateExplorer_TurnNode.txt");
         private const int REPARTITION_THRESHOLD = 1000; // adjust this value as needed
         private const int PARTITION_SIZE = 8; // adjust this value as needed
-        private Dictionary<string, ConcurrentDictionary<string, CacheItem>> partitions = new();
-        public static ConcurrentDictionary<string, CacheItem> cache = new(); // TODO: change access later
-        private static ulong cache_hits = 0; // TODO
+        public MultiDimensionalCache<string, CacheItem> cache = new MultiDimensionalCache<string, CacheItem>(PARTITION_SIZE);
+
 
         //static ChessStateExplorer()
         //{
@@ -41,32 +41,6 @@ namespace Chess.GameState
         //        formatter.Serialize(fs, cache);
         //    }
         //}
-
-        public void RepartitionCache()
-        {
-            if (cache.Count < REPARTITION_THRESHOLD) return;
-
-            int threadId = Thread.CurrentThread.ManagedThreadId;
-
-            var topItems = cache.OrderByDescending(x => x.Value.AccessCount).Take(PARTITION_SIZE);
-            var commonPrefixes = topItems.Select(x => x.Key.Substring(0, PARTITION_SIZE)).Distinct();
-
-            logger.Log($"ChessStateExplorer - RepartitionCache called - {commonPrefixes.Count()} unique prefix partitions found", threadId);
-
-            foreach (var prefix in commonPrefixes)
-            {
-                var partition = new ConcurrentDictionary<string, CacheItem>();
-                foreach (var item in cache.Where(x => x.Key.StartsWith(prefix)))
-                {
-                    partition.TryAdd(item.Key, item.Value);
-                }
-                partitions.TryAdd(prefix, partition);
-            }
-
-            logger.Log($"ChessStateExplorer - Repartition Successful - {partitions.Count} partitions generated for cache", threadId);
-
-            cache.Clear();
-        }
 
         public List<Turn> GenerateAllPossibleMoves(Turn turn, int depth)
         {
@@ -165,16 +139,14 @@ namespace Chess.GameState
                             ++currentCount;
                             //logger.Log($"ChessStateExplorer - MID: Possible Move Found: {possibleTurn.TurnDescription}, Depth: {depth}, From: {turn.TurnDescription}", threadId);
 
-                            if (cache.ContainsKey(turnNode.BoardID))
+                            if (cache.TryGetValue(turnNode.BoardID, out CacheItem cacheItem))
                             {
-                                CacheItem cacheItem = cache[turnNode.BoardID];
                                 cacheItem.InterlockedIncrement();
                                 ulong innerCount = cacheItem.Value;
                                 turnNode.Children = new List<TurnNode>();
                                 turnNode.Count = innerCount;
                                 possibleMoves.Add(turnNode);
                                 currentCount += innerCount;
-                                RepartitionCache();
                                 logger.Log($"ChessStateExplorer - MID: Hitting Cache for BoardID: {turnNode.BoardID}, Depth: {depth}, From: {turn.ChessBoard.BoardID}, ChildrenCount: {innerCount}, MainCount: {currentCount}", threadId);
                             }
                             else
@@ -183,7 +155,7 @@ namespace Chess.GameState
                                 turnNode.Children = GenerateAllPossibleMovesTurnNode(possibleTurn, depth - 1, ref innerCount);
                                 turnNode.Count = innerCount;
                                 possibleMoves.Add(turnNode);
-                                cache.AddOrUpdate(turnNode.BoardID, new CacheItem(turnNode.Count), (s, i) => new CacheItem(turnNode.Count));
+                                cache.AddOrUpdate(turnNode.BoardID, new CacheItem(turnNode.Count));
                                 currentCount += innerCount;
                                 logger.Log($"ChessStateExplorer - MID: BoardID: {turnNode.BoardID}, Depth: {depth}, From: {turn.ChessBoard.BoardID}, ChildrenCount: {innerCount}, MainCount: {currentCount} - Added to cache", threadId);
                             }
@@ -203,30 +175,104 @@ namespace Chess.GameState
         {
             var topItems = new List<(string Key, CacheItem AccessCount)>();
 
-            foreach (var partition in partitions.Values)
+            foreach (var item in cache._mainCache)
             {
-                topItems.AddRange(partition
-                    .OrderByDescending(x => x.Value.AccessCount)
-                    .Take(n)
-                    .Select(x => (x.Key, x.Value)));
+                topItems.Add((item.Key, item.Value));
             }
 
-            return topItems;
+            return topItems.OrderByDescending(x => x.AccessCount.AccessCount).Take(n).ToList();
         }
 
         public void PrintTopCacheItems(int n)
         {
-            logger.Log($"Cache Size: {cache.Count}", 0);
-            var topItems = cache.OrderByDescending(x => x.Value.AccessCount).Take(n);
+            logger.Log($"Cache Size: {cache._mainCache.Count}", 0);
+            var topItems = GetTopNCachedItems(n);
             foreach (var item in topItems)
             {
-                logger.Log($"BoardID: {item.Key}, AccessCount: {item.Value.AccessCount}, Value: {item.Value.Value}", 0);
+                logger.Log($"BoardID: {item.Key}, AccessCount: {item.AccessCount.AccessCount}, Value: {item.AccessCount.Value}", 0);
             }
         }
 
         public long CacheSize()
         {
-            return cache.Count;
+            return cache._mainCache.Count;
+        }
+
+        public List<TurnNode> GenerateAllPossibleMovesTurnNode_NoRecursion(Turn turn, int depth, ref ulong currentCount)
+        {
+            int threadId = Thread.CurrentThread.ManagedThreadId;
+
+            logger.Log($"ChessStateExplorer - BEGIN: Generating all possible moves for BoardID {turn.ChessBoard.BoardID} at depth {depth}", threadId);
+            KingCheckService kingCheckService = new();
+
+            List<TurnNode> possibleMoves = new();
+
+            if (depth == 0) // base case: reached maximum depth
+            {
+                logger.Log($"ChessStateExplorer - END: BoardID {turn.ChessBoard.BoardID} maximum depth reached, count: {possibleMoves.Count}", threadId);
+                return possibleMoves;
+            }
+
+            if (kingCheckService.IsCheckMate(turn))
+            {
+                logger.Log($"ChessStateExplorer - END: BoardID {turn.ChessBoard.BoardID} at depth {depth} has reached CHECKMATE, count: {possibleMoves.Count} ", threadId);
+                return possibleMoves;
+            }
+
+            List<ChessPiece> currentSidePieces = turn.ChessPieces.FindAll(piece => !piece.GetColor().Equals((ChessPiece.Color)turn.PlayerTurn));
+
+            // TODO: Set the PawnPromotion callback function to just return 'Q' each time
+            // Simulated future turns assume a pawn is always promoted to queen
+            // iterate over all board positions
+            SpecialMovesHandlers.ByPassPawnPromotionPromptUser = true;
+
+            var stack = new Stack<(Turn turn, int depth, ulong currentCount)>();
+            stack.Push((turn, depth, currentCount));
+
+            while (stack.Count > 0)
+            {
+                var (currentTurn, currentDepth, currentCurrentCount) = stack.Pop();
+
+                // ... (rest of the method remains the same)
+
+                if (currentDepth > 0)
+                {
+                    foreach (ChessPiece piece in currentSidePieces)
+                    {
+                        for (int i = 0; i < 8; i++)
+                        {
+                            for (int j = 0; j < 8; j++)
+                            {
+                                BoardPosition pos = new((RANK)i, (FILE)j);
+                                Turn possibleTurn = new(currentTurn.TurnNumber + 1, piece, piece.GetCurrentPosition(), pos, currentTurn.ChessBoard);
+                                if (possibleTurn.IsValidTurn && !kingCheckService.IsKingInCheck(possibleTurn))
+                                {
+                                    TurnNode turnNode = new(possibleTurn);
+                                    ++currentCurrentCount;
+                                    //logger.Log($"ChessStateExplorer - MID: Possible Move Found: {possibleTurn.TurnDescription}, Depth: {currentDepth}, From: {currentTurn.TurnDescription}", threadId);
+
+                                    if (cache.TryGetValue(turnNode.BoardID, out CacheItem cacheItem))
+                                    {
+                                        cacheItem.InterlockedIncrement();
+                                        ulong innerCount = cacheItem.Value;
+                                        turnNode.Children = new List<TurnNode>();
+                                        turnNode.Count = innerCount;
+                                        possibleMoves.Add(turnNode);
+                                        currentCurrentCount += innerCount;
+                                        logger.Log($"ChessStateExplorer - MID: Hitting Cache for BoardID: {turnNode.BoardID}, Depth: {currentDepth}, From: {currentTurn.ChessBoard.BoardID}, ChildrenCount: {innerCount}, MainCount: {currentCurrentCount}", threadId);
+                                    }
+                                    else
+                                    {
+                                        stack.Push((possibleTurn, currentDepth - 1, 0));
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            return possibleMoves;
         }
     }
 }
