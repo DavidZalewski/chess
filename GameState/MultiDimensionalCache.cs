@@ -15,10 +15,21 @@ namespace Chess.GameState
             _partitionSize = partitionSize;
         }
 
+        //public void AddOrUpdate(TKey key, TValue value)
+        //{
+        //    _mainCache.AddOrUpdate(key, value, (k, v) => value);
+        //    RepartitionCache();
+        //}
         public void AddOrUpdate(TKey key, TValue value)
         {
             _mainCache.AddOrUpdate(key, value, (k, v) => value);
-            RepartitionCache();
+            var prefix = key.ToString().Substring(0, _partitionSize);
+            if (!_indexCache.TryGetValue((TKey)(object)prefix, out var index))
+            {
+                index = new ConcurrentDictionary<TKey, TValue>();
+                _indexCache.TryAdd((TKey)(object)prefix, index);
+            }
+            index.TryAdd(key, value);
         }
 
         public bool TryGetValue(TKey key, out TValue value)

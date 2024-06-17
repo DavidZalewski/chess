@@ -62,5 +62,21 @@ namespace Tests
             Assert.That(2, Is.EqualTo(value2));
             Assert.That(3, Is.EqualTo(value3));
         }
+
+        [Test]
+        public void IndexCache_DoesNotCreateCopies()
+        {
+            // Arrange
+            var cache = new MultiDimensionalCache<string, int>(2);
+            cache.AddOrUpdate("key1", 1);
+            cache.AddOrUpdate("key2", 2);
+
+            // Act
+            var value1 = cache._mainCache["key1"];
+            var value2 = cache._indexCache["ke"].First().Value;
+
+            // Assert
+            Assert.That(ReferenceEquals(value1, value2));
+        }
     }
 }
