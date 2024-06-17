@@ -21,6 +21,8 @@ namespace Tests
             Assert.That(1, Is.EqualTo(value1));
             Assert.That(cache.TryGetValue("key2", out int value2));
             Assert.That(2, Is.EqualTo(value2));
+            Assert.That(cache.IndexCacheMisses, Is.EqualTo(0));
+            Assert.That(cache.MainCacheAccesses, Is.EqualTo(0));
         }
 
         [Test]
@@ -41,6 +43,8 @@ namespace Tests
             Assert.That(1, Is.EqualTo(value1));
             Assert.That(2, Is.EqualTo(value2));
             Assert.That(3, Is.EqualTo(value3));
+            Assert.That(cache.IndexCacheMisses, Is.EqualTo(0));
+            Assert.That(cache.MainCacheAccesses, Is.EqualTo(0));
         }
 
         [Test]
@@ -61,6 +65,8 @@ namespace Tests
             Assert.That(1, Is.EqualTo(value1));
             Assert.That(2, Is.EqualTo(value2));
             Assert.That(3, Is.EqualTo(value3));
+            Assert.That(cache.IndexCacheMisses, Is.EqualTo(0));
+            Assert.That(cache.MainCacheAccesses, Is.EqualTo(0));
         }
 
         [Test]
@@ -77,6 +83,28 @@ namespace Tests
 
             // Assert
             Assert.That(ReferenceEquals(mainCacheValue, indexCacheValue));
+            Assert.That(cache.IndexCacheMisses, Is.EqualTo(0));
+            Assert.That(cache.MainCacheAccesses, Is.EqualTo(0));
+        }
+
+        [Test]
+        public void PartitioningTest()
+        {
+            // Arrange
+            var cache = new MultiDimensionalCache<string, int>(2);
+
+            // Act
+            for (int i = 0; i < 100; i++)
+            {
+                cache.AddOrUpdate($"key{i}", i);
+            }
+
+            // Assert
+            Assert.That(cache._indexCache.Count, Is.GreaterThan(1));
+            cache.TryGetValue("key50", out int value);
+            Assert.That(50, Is.EqualTo(value));
+            Assert.That(cache.IndexCacheMisses, Is.EqualTo(0));
+            Assert.That(cache.MainCacheAccesses, Is.EqualTo(0));
         }
     }
 }

@@ -7,6 +7,8 @@ namespace Chess.GameState
         public readonly ConcurrentDictionary<TKey, TValue> _mainCache;
         public readonly ConcurrentDictionary<TKey, ConcurrentDictionary<TKey, TValue>> _indexCache;
         private int _partitionSize;
+        public int IndexCacheMisses { get; private set; }
+        public int MainCacheAccesses { get; private set; }
 
         public MultiDimensionalCache(int partitionSize)
         {
@@ -32,11 +34,18 @@ namespace Chess.GameState
             var prefix = key.ToString().Substring(0, _partitionSize);
             if (_indexCache.TryGetValue((TKey)(object)prefix, out var index))
             {
-                return index.TryGetValue(key, out value);
+                if (index.TryGetValue(key, out value))
+                {
+                    return true;
+                }
             }
+
+            // If we reach this point, it means the item was not found in the index cache
+            IndexCacheMisses++;
 
             if (_mainCache.TryGetValue(key, out value))
             {
+                MainCacheAccesses++;
                 return true;
             }
 
