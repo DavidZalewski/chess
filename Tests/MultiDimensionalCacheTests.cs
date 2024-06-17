@@ -67,16 +67,16 @@ namespace Tests
         public void IndexCache_DoesNotCreateCopies()
         {
             // Arrange
-            var cache = new MultiDimensionalCache<string, int>(2);
-            cache.AddOrUpdate("key1", 1);
-            cache.AddOrUpdate("key2", 2);
+            var cache = new MultiDimensionalCache<string, CacheItem>(2);
+            cache.AddOrUpdate("key1", new CacheItem(111));
 
             // Act
-            var value1 = cache._mainCache["key1"];
-            var value2 = cache._indexCache["ke"].First().Value;
+            cache.TryGetValue("key1", out CacheItem value);
+            var mainCacheValue = cache._mainCache["key1"];
+            var indexCacheValue = cache._indexCache[(string)"ke"]["key1"];
 
             // Assert
-            Assert.That(ReferenceEquals(value1, value2));
+            Assert.That(ReferenceEquals(mainCacheValue, indexCacheValue));
         }
     }
 }
