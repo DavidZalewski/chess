@@ -2,37 +2,62 @@
 
 namespace Chess.GameState
 {
-    public class MultiDimensionalCache<TKey, TValue>
+    public class MultiDimensionalCache<TValue>
     {
-        public readonly ConcurrentDictionary<TKey, TValue> _mainCache;
-        public readonly ConcurrentDictionary<TKey, ConcurrentDictionary<TKey, TValue>> _indexCache;
+        /// <summary>
+        /// The main cache that stores all items.
+        /// </summary>
+        public readonly ConcurrentDictionary<string, TValue> _mainCache;
+
+        /// <summary>
+        /// The index cache that stores items by partition.
+        /// </summary>
+        public readonly ConcurrentDictionary<string, ConcurrentDictionary<string, TValue>> _indexCache;
+
+        /// <summary>
+        /// The size of each partition in the index cache.
+        /// </summary>
         private int _partitionSize;
+
+        /// <summary>
+        /// The number of times an item was not found in the index cache.
+        /// </summary>
         public int IndexCacheMisses { get; private set; }
-        public int MainCacheAccesses { get; private set; }
+
+        /// <summary>
+        /// The number of times an item was accessed through the main cache.
+        /// </summary>
+        public int MainCacheHits { get; private set; }
 
         public MultiDimensionalCache(int partitionSize)
         {
-            _mainCache = new ConcurrentDictionary<TKey, TValue>();
-            _indexCache = new ConcurrentDictionary<TKey, ConcurrentDictionary<TKey, TValue>>();
+            _mainCache = new ConcurrentDictionary<string, TValue>();
+            _indexCache = new ConcurrentDictionary<string, ConcurrentDictionary<string, TValue>>();
             _partitionSize = partitionSize;
         }
 
-        public void AddOrUpdate(TKey key, TValue value)
+        /// <summary>
+        /// Adds or updates an item in the cache.
+        /// </summary>
+        public void AddOrUpdate(string key, TValue value)
         {
             _mainCache.AddOrUpdate(key, value, (k, v) => value);
-            var prefix = key.ToString().Substring(0, _partitionSize);
-            if (!_indexCache.TryGetValue((TKey)(object)prefix, out var index))
+            var prefix = key.Substring(0, _partitionSize);
+            if (!_indexCache.TryGetValue(prefix, out var index))
             {
-                index = new ConcurrentDictionary<TKey, TValue>();
-                _indexCache.TryAdd((TKey)(object)prefix, index);
+                index = new ConcurrentDictionary<string, TValue>();
+                _indexCache.TryAdd(prefix, index);
             }
             index.TryAdd(key, _mainCache[key]);
         }
 
-        public bool TryGetValue(TKey key, out TValue value)
+        /// <summary>
+        /// Tries to get a value from the cache.
+        /// </summary>
+        public bool TryGetValue(string key, out TValue value)
         {
-            var prefix = key.ToString().Substring(0, _partitionSize);
-            if (_indexCache.TryGetValue((TKey)(object)prefix, out var index))
+            var prefix = key.Substring(0, _partitionSize);
+            if (_indexCache.TryGetValue(prefix, out var index))
             {
                 if (index.TryGetValue(key, out value))
                 {
@@ -40,12 +65,11 @@ namespace Chess.GameState
                 }
             }
 
-            // If we reach this point, it means the item was not found in the index cache
             IndexCacheMisses++;
 
             if (_mainCache.TryGetValue(key, out value))
             {
-                MainCacheAccesses++;
+                MainCacheHits++;
                 return true;
             }
 

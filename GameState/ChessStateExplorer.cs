@@ -14,7 +14,7 @@ namespace Chess.GameState
         ConcurrentLogger logger = new ConcurrentLogger("ChessStateExplorer_TurnNode.txt");
         private const int REPARTITION_THRESHOLD = 1000; // adjust this value as needed
         private const int PARTITION_SIZE = 8; // adjust this value as needed
-        public MultiDimensionalCache<string, CacheItem> cache = new MultiDimensionalCache<string, CacheItem>(PARTITION_SIZE);
+        public MultiDimensionalCache<CacheItem> cache = new MultiDimensionalCache<CacheItem>(PARTITION_SIZE);
 
 
         //static ChessStateExplorer()
