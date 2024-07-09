@@ -63,27 +63,27 @@
         public int RankAsInt { get { return (int)Rank; } }
         public int FileAsInt { get { return (int)File; } }
 
-        public BoardPosition Left()
+        public BoardPosition? Left()
         {
             if (File == FILE.A) return null; // If the file is already at the leftmost edge, return null
             return new BoardPosition(Rank, (FILE)(FileAsInt - 1)); // Subtract 1 from the file
         }
 
-        public BoardPosition Right()
+        public BoardPosition? Right()
         {
             if (File == FILE.H) return null; // If the file is already at the rightmost edge, return null
             return new BoardPosition(Rank, (FILE)(FileAsInt + 1)); // Add 1 to the file
         }
 
-        public BoardPosition Up()
+        public BoardPosition? Up()
         {
-            if (Rank == RANK.ONE) return null; // If the rank is already at the topmost edge, return null
+            if (Rank == RANK.EIGHT) return null; // If the rank is already at the topmost edge, return null
             return new BoardPosition(Rank - 1, File); // Subtract 1 from the rank
         }
 
-        public BoardPosition Down()
+        public BoardPosition? Down()
         {
-            if (Rank == RANK.EIGHT) return null; // If the rank is already at the bottommost edge, return null
+            if (Rank == RANK.ONE) return null; // If the rank is already at the bottommost edge, return null
             return new BoardPosition(Rank + 1, File); // Add 1 to the rank
         }
 

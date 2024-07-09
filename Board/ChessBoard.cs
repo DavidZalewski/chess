@@ -254,6 +254,7 @@ namespace Chess.Board
 
         public bool IsPositionWithinBounds(BoardPosition position)
         {
+            if (position is null) return false;
             return (position.RankAsInt >= 0 && position.RankAsInt <= 7) || (position.FileAsInt >= 0 && position.FileAsInt <= 7);
         }
     }

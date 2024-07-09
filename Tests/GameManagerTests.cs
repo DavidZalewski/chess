@@ -84,6 +84,33 @@ namespace Tests
         }
 
         [Test]
+        public void NuclearHorseTest()
+        {
+            // Arrange
+            Queue<string> consoleInputs = new();
+            consoleInputs.Enqueue("n"); // no to tutorial
+            consoleInputs.Enqueue("NuclearHorse"); // nuclear horse ruleset
+            consoleInputs.Enqueue("n"); // no to ai
+            consoleInputs.Enqueue("WK1 C3");
+            consoleInputs.Enqueue("BP2 B5");
+            consoleInputs.Enqueue("BP3 C5");
+            consoleInputs.Enqueue("BP4 D5");
+            consoleInputs.Enqueue("quit");
+
+
+            IConsole consoleService = new MockConsoleService(consoleInputs);
+            GameController gameController = GetGameController(consoleService);
+            GameManager game = new(consoleService, gameController);
+
+            // Act
+            game.Start();
+
+            // Assert
+            Assert.That(gameController.GetLastTurn()?.TurnNumber, Is.EqualTo(1), "Expected last turn to be turn 1");
+            Assert.That(((MockConsoleService)consoleService).OutputContainsStringCount("Invalid Move"), Is.EqualTo(3), "Expected 3 Invalid Move messages from Black");
+        }
+
+        [Test]
         public void FoolsMate()
         {
             // Arrange

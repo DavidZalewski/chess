@@ -1,0 +1,86 @@
+  Determining projects to restore...
+  All projects are up-to-date for restore.
+  Chess -> C:\Users\david\OneDrive\Documents\GitHub\chess\bin\Debug\net7.0\Chess.dll
+  Tests -> C:\Users\david\OneDrive\Documents\GitHub\chess\Tests\bin\Debug\net7.0\Tests.dll
+Test run for C:\Users\david\OneDrive\Documents\GitHub\chess\Tests\bin\Debug\net7.0\Tests.dll (.NETCoreApp,Version=v7.0)
+Microsoft (R) Test Execution Command Line Tool Version 17.9.0 (x64)
+Copyright (c) Microsoft Corporation.  All rights reserved.
+
+Starting test execution, please wait...
+A total of 1 test files matched the specified pattern.
+test_save.bin saved successfully
+
+initialBoardID: 6A8428A6CCCCCCCC00000000000000000000000000000000BBBBBBBB59731795
+
+initialBoardID: 0000000000000000000000000000000000000000000000000000000010000000
+updatedBoardID: 0000000000000000000000000000000000000000000000000000000013000000
+
+*|*A*|*B*|*C*|*D*|*E*|*F*|*G*|*H*|*
+8|BR1|BK1|BB1|BQ1|BK |BB2|BK2|BR2|8
+7|BP1|BP2|BP3|BP4|BP5|BP6|BP7|BP8|8
+6|   |   |   |   |   |   |   |   |8
+5|   |   |   |   |   |   |   |   |8
+4|   |   |   |   |   |   |   |   |8
+3|   |   |   |   |   |   |   |   |8
+2|WP1|WP2|WP3|WP4|WP5|WP6|WP7|WP8|8
+1|WR1|WK1|WB1|WQ1|WK |WB2|WK2|WR2|8
+*|*A*|*B*|*C*|*D*|*E*|*F*|*G*|*H*|*
+
+
+  Failed CaesarsMate [111 ms]
+  Error Message:
+     Assert.That(((MockConsoleService)consoleService).OutputContainsString("Black wins against White by CheckMate!"), Is.True)
+  Expected: True
+  But was:  False
+
+  Stack Trace:
+     at Tests.GameManagerTests.CaesarsMate() in C:\Users\david\OneDrive\Documents\GitHub\chess\Tests\GameManagerTests.cs:line 251
+
+1)    at Tests.GameManagerTests.CaesarsMate() in C:\Users\david\OneDrive\Documents\GitHub\chess\Tests\GameManagerTests.cs:line 251
+
+
+  Failed AI_Vs_AI [6 ms]
+  Error Message:
+   Requirements incomplete - the white AI is not implemented yet!
+  Stack Trace:
+     at Tests.GameManagerTests.AI_Vs_AI() in C:\Users\david\OneDrive\Documents\GitHub\chess\Tests\GameManagerTests.cs:line 347
+
+1)    at Tests.GameManagerTests.AI_Vs_AI() in C:\Users\david\OneDrive\Documents\GitHub\chess\Tests\GameManagerTests.cs:line 347
+
+
+  Skipped PiecesCannotMoveToDisabledSquareKnightCannotJumpOver [< 1 ms]
+System.Func`1[System.String]
+
+  Failed NuclearHorseCreatesDisabledSquares [1 ms]
+  Error Message:
+     Square d7 should be disabled.
+Assert.That(chessBoard.GetSquare(new BoardPosition(RANK.SEVEN, FILE.D)).Piece is DisabledSquarePiece, Is.True)
+  Expected: True
+  But was:  False
+
+  Stack Trace:
+     at Tests.Pieces.NuclearHorsePieceTests.NuclearHorseCreatesDisabledSquares() in C:\Users\david\OneDrive\Documents\GitHub\chess\Tests\Pieces\NuclearHorsePieceTests.cs:line 35
+
+1)    at Tests.Pieces.NuclearHorsePieceTests.NuclearHorseCreatesDisabledSquares() in C:\Users\david\OneDrive\Documents\GitHub\chess\Tests\Pieces\NuclearHorsePieceTests.cs:line 35
+
+
+  Standard Output Messages:
+ System.Func`1[System.String]
+
+
+  Failed CreatePieceFromInt_InvalidInput_ThrowsArgumentException [< 1 ms]
+  Error Message:
+     Assert.That(caughtException, expression)
+  Expected: <System.ArgumentException>
+  But was:  null
+
+  Stack Trace:
+     at Tests.Services.ChessPieceFactoryTests.CreatePieceFromInt_InvalidInput_ThrowsArgumentException() in C:\Users\david\OneDrive\Documents\GitHub\chess\Tests\Services\ChessPieceFactoryTests.cs:line 455
+
+1)    at Tests.Services.ChessPieceFactoryTests.CreatePieceFromInt_InvalidInput_ThrowsArgumentException() in C:\Users\david\OneDrive\Documents\GitHub\chess\Tests\Services\ChessPieceFactoryTests.cs:line 455
+
+
+DEBUG
+
+
+Failed!  - Failed:     4, Passed:   362, Skipped:     1, Total:   367, Duration: 1 s - Tests.dll (net7.0)

@@ -12,7 +12,8 @@ namespace Chess.Pieces
 
         public override ChessPiece Clone()
         {
-            return Clone();
+            DisabledSquarePiece copy = new(_startingPosition);
+            return Clone(copy);
         }
 
         public override bool IsValidMove(ChessBoard board, BoardPosition position)

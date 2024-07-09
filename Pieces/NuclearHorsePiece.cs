@@ -7,14 +7,16 @@ namespace Chess.Pieces
     [Serializable]
     public class NuclearHorsePiece : ChessPieceKnight
     {
-        bool _wasSetOnBoard = false;
+        bool _wasSetOnBoard;
         public NuclearHorsePiece(Color color, int id, BoardPosition startingPosition) : base(color, id, startingPosition)
         {
+            _wasSetOnBoard = false;
         }
 
         public override ChessPiece Clone()
         {
             NuclearHorsePiece copy = new(_color, _id, _startingPosition);
+            copy._wasSetOnBoard = this._wasSetOnBoard;
             return Clone(copy);
         }
 
@@ -88,14 +90,26 @@ namespace Chess.Pieces
         {
             List<BoardPosition> adjacentPositions = new List<BoardPosition>
             {
-                new BoardPosition(position.Rank + 1, position.File),
-                new BoardPosition(position.Rank - 1, position.File),
-                new BoardPosition(position.Rank, position.File + 1),
-                new BoardPosition(position.Rank, position.File - 1),
-                new BoardPosition(position.Rank + 1, position.File + 1),
-                new BoardPosition(position.Rank + 1, position.File - 1),
-                new BoardPosition(position.Rank - 1, position.File + 1),
-                new BoardPosition(position.Rank - 1, position.File - 1)
+                position.Left(),
+                position.Left()?.Left(),
+                position.Left()?.Left()?.Up(),
+                position.Left()?.Left()?.Down(),
+                position.Right(),
+                position.Right()?.Right(),
+                position.Right()?.Right()?.Up(),
+                position.Right()?.Right()?.Down(),
+                position.Up(),
+                position.Up()?.Up(),
+                position.Up()?.Up()?.Left(),
+                position.Up()?.Up()?.Right(),
+                position.Down(),
+                position.Down()?.Down(),
+                position.Down()?.Down()?.Left(),
+                position.Down()?.Down()?.Right(),
+                position.Up()?.Left(),
+                position.Up()?.Right(), 
+                position.Down()?.Left(),
+                position.Down()?.Right()
             };
             return adjacentPositions;
         }

@@ -57,5 +57,15 @@ namespace Tests.Services
 
             throw new Exception("Mock Console Service has null for outputs");
         }
+
+        public int OutputContainsStringCount(string? text, StringComparison stringComparison = StringComparison.InvariantCultureIgnoreCase)
+        {
+            if (Outputs != null)
+            {
+                return Outputs.FindAll(o => o.Contains(text, stringComparison)).Count;
+            }
+
+            throw new Exception("Mock Console Service has null for outputs");
+        }
     }
 }

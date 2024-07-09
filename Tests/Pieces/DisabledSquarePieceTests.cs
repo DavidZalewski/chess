@@ -104,6 +104,30 @@ namespace Tests.Pieces
         }
 
         [Test]
+        public void PiecesCannotMoveOverDisabledSquarePawnDoubleJump2()
+        {
+            BoardPosition d2 = new("D2");
+            BoardPosition d4 = new("D4");
+            BoardPosition e7 = new("E7");
+            BoardPosition e5 = new("E5");
+
+            ChessPiece disabledSquarePiece1 = new DisabledSquarePiece(d4);
+            ChessPiece disabledSquarePiece2 = new DisabledSquarePiece(e5);
+            ChessPiece whitePawn = new ChessPieceWhitePawn(1, d2);
+            ChessPiece blackPawn = new ChessPieceBlackPawn(1, e7);
+
+            ChessBoard chessBoard = new();
+            chessBoard.AddPiece(disabledSquarePiece1);
+            chessBoard.AddPiece(disabledSquarePiece2);
+            chessBoard.AddPiece(whitePawn);
+            chessBoard.AddPiece(blackPawn);
+
+            Assert.That(whitePawn.IsValidMove(chessBoard, d4), Is.False, "White Pawn should not be able to double jump over a disabled square.");
+            Assert.That(blackPawn.IsValidMove(chessBoard, new("E5")), Is.False, "Black Pawn should not be able to double jump over a disabled square.");
+        }
+
+
+        [Test]
         public void PiecesCannotMoveOverDisabledSquareRook()
         {
             ChessBoard chessBoard = new ChessBoard();

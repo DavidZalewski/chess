@@ -61,7 +61,7 @@ namespace Chess.Pieces
                 {
                     BoardPosition previousSquare = new BoardPosition((RANK)position.RankAsInt - 1, position.File);
                     // is there a piece in front of it that it is trying to jump over?
-                    if (board.IsPieceAtPosition(previousSquare))
+                    if (board.IsPieceAtPosition(previousSquare) || board.IsPieceAtPosition(position))
                         return false;
                     else
                     {
