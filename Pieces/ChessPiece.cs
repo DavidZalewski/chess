@@ -38,7 +38,8 @@ namespace Chess.Pieces
         public enum Color
         {
             WHITE = 10,
-            BLACK = 20
+            BLACK = 20,
+            NONE = 0
         }
 
         protected Piece _piece;
@@ -139,9 +140,13 @@ namespace Chess.Pieces
             {
                 pieceName += "White ";
             }
-            else
+            else if (_color.Equals(Color.BLACK))
             {
                 pieceName += "Black ";
+            }
+            else
+            {
+                pieceName += "None ";
             }
             switch (_piece)
             {
@@ -151,6 +156,7 @@ namespace Chess.Pieces
                 case Piece.ROOK: pieceName += "Rook "; break;
                 case Piece.QUEEN: pieceName += "Queen "; break;
                 case Piece.KING: pieceName += "King "; break;
+                case Piece.NO_PIECE: pieceName += "Disabled Square "; break;
             }
             pieceName += _id;
 
@@ -184,6 +190,11 @@ namespace Chess.Pieces
                    _piece == other._piece &&
                    _startingPosition == other._startingPosition &&
                    _currentPosition == other._currentPosition;
+        }
+
+        public override int GetHashCode()
+        {
+            return GetHashCode();
         }
     }
 }

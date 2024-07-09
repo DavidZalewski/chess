@@ -39,6 +39,16 @@ namespace Chess.Services
             return whiteKnights;
         }
 
+        public static List<ChessPiece> CreateWhiteNuclearHorses()
+        {
+            List<ChessPiece> whiteKnights = new();
+            BoardPosition b1 = new(RANK.ONE, FILE.B);
+            BoardPosition g1 = new(RANK.ONE, FILE.G);
+            whiteKnights.Add(new NuclearHorsePiece(ChessPiece.Color.WHITE, 1, b1));
+            whiteKnights.Add(new NuclearHorsePiece(ChessPiece.Color.WHITE, 2, g1));
+            return whiteKnights;
+        }
+
         public static List<ChessPiece> CreateBlackKnights()
         {
             List<ChessPiece> blackKnights = new();
@@ -46,6 +56,16 @@ namespace Chess.Services
             BoardPosition g8 = new(RANK.EIGHT, FILE.G);
             blackKnights.Add(new ChessPieceKnight(ChessPiece.Color.BLACK, 1, b8));
             blackKnights.Add(new ChessPieceKnight(ChessPiece.Color.BLACK, 2, g8));
+            return blackKnights;
+        }
+
+        public static List<ChessPiece> CreateBlackNuclearHorses()
+        {
+            List<ChessPiece> blackKnights = new();
+            BoardPosition b8 = new(RANK.EIGHT, FILE.B);
+            BoardPosition g8 = new(RANK.EIGHT, FILE.G);
+            blackKnights.Add(new NuclearHorsePiece(ChessPiece.Color.BLACK, 1, b8));
+            blackKnights.Add(new NuclearHorsePiece(ChessPiece.Color.BLACK, 2, g8));
             return blackKnights;
         }
 
@@ -135,7 +155,7 @@ namespace Chess.Services
             return chessPieces;
         }
 
-        public static List<ChessPiece> CreateChessPieces()
+        public static List<ChessPiece> CreateChessPiecesClassic()
         {
             List<ChessPiece> chessPieces = new();
             chessPieces.AddRange(CreateWhiteChessPieces());
@@ -143,10 +163,29 @@ namespace Chess.Services
             return chessPieces;
         }
 
+        public static List<ChessPiece> CreateChessPiecesNuclearHorse()
+        {
+            List<ChessPiece> chessPieces = new();
+            chessPieces.AddRange(CreateWhitePawns());
+            chessPieces.AddRange(CreateWhiteNuclearHorses());
+            chessPieces.AddRange(CreateWhiteBishops());
+            chessPieces.AddRange(CreateWhiteRooks());
+            chessPieces.AddRange(CreateWhiteQueenAndKing());
+
+            chessPieces.AddRange(CreateBlackPawns());
+            chessPieces.AddRange(CreateBlackNuclearHorses());
+            chessPieces.AddRange(CreateBlackBishops());
+            chessPieces.AddRange(CreateBlackRooks());
+            chessPieces.AddRange(CreateBlackQueenAndKing());
+
+            return chessPieces;
+        }
+
         internal static ChessPiece CreatePieceFromInt(BoardPosition position, int value)
         {
             return value switch
             {
+                -1 => new DisabledSquarePiece(position),
                 0 => NoPiece.Instance,
                 11 => new ChessPieceWhitePawn(1, position),
                 12 => new ChessPieceKnight(ChessPiece.Color.WHITE, 1, position),

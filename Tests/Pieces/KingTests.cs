@@ -4,6 +4,7 @@ using Chess.Services;
 
 namespace Tests.Pieces
 {
+    [Category("CORE")]
     public class KingTests
     {
         private readonly BoardPosition e1 = new(RANK.ONE, FILE.E);
@@ -89,7 +90,7 @@ namespace Tests.Pieces
         [Test(Description = "Tests that the white king has no valid moves it can make at the start of the game")]
         public void WhiteKing_IsValidMove_NoValidMovesFromStart()
         {
-            List<ChessPiece> chessPieces = ChessPieceFactory.CreateChessPieces();
+            List<ChessPiece> chessPieces = ChessPieceFactory.CreateChessPiecesClassic();
             ChessPiece whiteKingPiece = chessPieces.Find((ChessPiece cp) => cp.GetColor().Equals(ChessPiece.Color.WHITE) &&
                                                                             cp.GetPiece().Equals(ChessPiece.Piece.KING));
             ChessBoard chessBoard = new();
@@ -117,7 +118,7 @@ namespace Tests.Pieces
         [Test(Description = "Tests that the black king has no valid moves it can make at the start of the game")]
         public void BlackKing_IsValidMove_NoValidMovesFromStart()
         {
-            List<ChessPiece> chessPieces = ChessPieceFactory.CreateChessPieces();
+            List<ChessPiece> chessPieces = ChessPieceFactory.CreateChessPiecesClassic();
             ChessPiece blackKingPiece = chessPieces.Find((ChessPiece cp) => cp.GetColor().Equals(ChessPiece.Color.BLACK) &&
                                                                             cp.GetPiece().Equals(ChessPiece.Piece.KING));
             ChessBoard chessBoard = new();

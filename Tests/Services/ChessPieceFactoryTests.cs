@@ -5,6 +5,7 @@ using static Chess.Pieces.ChessPiece;
 
 namespace Tests.Services
 {
+    [Category("CORE")]
     public class ChessPieceFactoryTests
     {
         [Test]
@@ -400,7 +401,7 @@ namespace Tests.Services
         [Test]
         public void BuildPieces_Success()
         {
-            List<ChessPiece> pieces = ChessPieceFactory.CreateChessPieces();
+            List<ChessPiece> pieces = ChessPieceFactory.CreateChessPiecesClassic();
 
             Assert.That(pieces, Has.Count.EqualTo(32));
 

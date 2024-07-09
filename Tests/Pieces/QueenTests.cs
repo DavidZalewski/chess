@@ -4,6 +4,7 @@ using static Chess.Pieces.ChessPiece;
 
 namespace Tests.Pieces
 {
+    [Category("CORE")]
     public class QueenTests
     {
         private ChessBoard board = new ChessBoard();

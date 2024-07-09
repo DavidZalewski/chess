@@ -30,7 +30,8 @@ namespace Chess.Pieces
             bool isSquareHorizontalOrVerticalToCurrent = vdistance != 0 && hdistance == 0 || vdistance == 0 && hdistance != 0;
             // a friendly piece cannot be on the destination square
             bool isFriendlyPieceOnSquare = board.IsPieceAtPosition(position, _color);
-            if (!isSquareHorizontalOrVerticalToCurrent || isFriendlyPieceOnSquare) { return false; }
+            bool isDisabledPieceOnSquare = board.IsPieceAtPosition(position, Color.NONE);
+            if (!isSquareHorizontalOrVerticalToCurrent || isFriendlyPieceOnSquare || isDisabledPieceOnSquare) { return false; }
 
             string operation = "";
 

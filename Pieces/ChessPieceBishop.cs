@@ -30,7 +30,8 @@ namespace Chess.Pieces
             bool isSquareAValidDiagonal = v1 + hdistance == v2 || v2 + hdistance == v1;
             // a friendly piece cannot be on the destination square
             bool isFriendlyPieceOnSquare = board.IsPieceAtPosition(position, _color);
-            if (!isSquareAValidDiagonal || isFriendlyPieceOnSquare) { return false; }
+            bool isDisabledPieceOnSquare = board.IsPieceAtPosition(position, Color.NONE); // PART OF NEW RULESETS
+            if (!isSquareAValidDiagonal || isFriendlyPieceOnSquare || isDisabledPieceOnSquare) { return false; }
 
             string operation = "";
 

@@ -5,6 +5,7 @@ using System.Diagnostics;
 namespace Tests
 {
     [TestFixture]
+    [Category("PERFORMANCE")]
     public class MultiDimensionalCacheTests
     {
         [Test]

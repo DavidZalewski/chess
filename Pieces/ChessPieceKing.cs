@@ -16,6 +16,7 @@ namespace Chess.Pieces
             if (position == _currentPosition) return false; // Is the current position the same as where its being asked to move?
             if (IsCastleMove(board, position)) return true; // Are we Castling?
             if (board.IsPieceAtPosition(position, _color)) return false; // Is there a friendly piece blocking us here?
+            if (board.IsPieceAtPosition(position, Color.NONE)) return false; // Disabled square check
 
             int vdistance = Math.Abs(_currentPosition.RankAsInt - position.RankAsInt);
             int hdistance = Math.Abs(_currentPosition.FileAsInt - position.FileAsInt);

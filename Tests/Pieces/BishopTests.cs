@@ -4,6 +4,7 @@ using Chess.Services;
 
 namespace Tests.Pieces
 {
+    [Category("CORE")]
     public class BishopTests
     {
         private ChessBoard board = new ChessBoard();
@@ -228,7 +229,7 @@ namespace Tests.Pieces
         [Test(Description = "Tests that Black Bishop can move from C8 to D7 with pieces on board not in its path")]
         public void BlackBishop1_IsValidMove_FromC8ToD7()
         {
-            List<ChessPiece> chessPieces = ChessPieceFactory.CreateChessPieces();
+            List<ChessPiece> chessPieces = ChessPieceFactory.CreateChessPiecesClassic();
             board.PopulateBoard(chessPieces);
 
             ChessPiece blackPawn4 = chessPieces.First(piece => piece.GetPiece().Equals(ChessPiece.Piece.PAWN) &&
@@ -249,7 +250,7 @@ namespace Tests.Pieces
         [Test(Description = "Tests that White Bishop cannot move from C1 to C3")]
         public void WhiteBishop1_IsValidMove_FromC1ToC3()
         {
-            List<ChessPiece> chessPieces = ChessPieceFactory.CreateChessPieces();
+            List<ChessPiece> chessPieces = ChessPieceFactory.CreateChessPiecesClassic();
             board.PopulateBoard(chessPieces);
 
             ChessPiece whitePawn2 = chessPieces.First(piece => piece.GetPiece().Equals(ChessPiece.Piece.PAWN) &&

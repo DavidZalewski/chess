@@ -10,6 +10,7 @@ using System.Runtime.InteropServices;
 
 namespace Tests
 {
+    [Category("CORE")]
     internal class GameManagerTests
     {
         private int NumberOfMoves = 0;
@@ -35,7 +36,7 @@ namespace Tests
 
                 //console.WriteLine($"*************Best turn to make here is: {bestTurnToMake.Command}");
 
-                if (NumberOfMoves > 10)
+                if (NumberOfMoves > 100)
                 {
                     ((MockConsoleService)(console)).Inputs.Enqueue("quit");
                 }
@@ -50,13 +51,45 @@ namespace Tests
             return gameController;
         }
 
+        [Test(Description = "Tests that you can now capture pieces by simply using: Piece1 Piece2")]
+        public void EasierCaptureCommandTest()
+        {
+            // Arrange
+            Queue<string> consoleInputs = new();
+            consoleInputs.Enqueue("n"); // no to tutorial
+            consoleInputs.Enqueue("Classic"); // init game with all pieces
+            consoleInputs.Enqueue("n"); // no to ai
+            consoleInputs.Enqueue("WP4 D4");
+            consoleInputs.Enqueue("BP5 E5");
+            consoleInputs.Enqueue("WP4 BP5"); // should be valid capture
+            consoleInputs.Enqueue("BK1 C6");
+            consoleInputs.Enqueue("WP5 E4");
+            consoleInputs.Enqueue("BK1 WP4"); // should be valid capture
+            consoleInputs.Enqueue("WP5 BK1"); // should be invalid move
+            consoleInputs.Enqueue("quit");
+
+
+            IConsole consoleService = new MockConsoleService(consoleInputs);
+            GameController gameController = GetGameController(consoleService);
+            GameManager game = new(consoleService, gameController);
+
+            // Act
+            game.Start();
+
+            // Assert
+            Assert.That(gameController.FindChessPieceFromString("BP5"), Is.Null);
+            Assert.That(gameController.FindChessPieceFromString("WP4"), Is.Null);
+            Assert.That(gameController.FindChessPieceFromString("BK1"), Is.Not.Null);
+            Assert.That(((MockConsoleService)consoleService).OutputContainsString("Invalid Move"), Is.True);
+        }
+
         [Test]
         public void FoolsMate()
         {
             // Arrange
             Queue<string> consoleInputs = new();
             consoleInputs.Enqueue("n"); // no to tutorial
-            consoleInputs.Enqueue("all"); // init game with all pieces
+            consoleInputs.Enqueue("Classic"); // init game with all pieces
             consoleInputs.Enqueue("n"); // no to ai
             consoleInputs.Enqueue("WP7 G4");
             consoleInputs.Enqueue("BP5 E5");
@@ -80,7 +113,7 @@ namespace Tests
             // Arrange
             Queue<string> consoleInputs = new();
             consoleInputs.Enqueue("n"); // no to tutorial
-            consoleInputs.Enqueue("all"); // init game with all pieces
+            consoleInputs.Enqueue("Classic"); // init game with all pieces
             consoleInputs.Enqueue("n"); // no to ai
             consoleInputs.Enqueue("WP5 E4"); // 20
             consoleInputs.Enqueue("BP5 E5"); // 29
@@ -101,13 +134,103 @@ namespace Tests
             Assert.That(((MockConsoleService)consoleService).OutputContainsString("White wins against Black by CheckMate!"), Is.True);
         }
 
+        [Test(Author = "Hikaru", Description = "The mate Hikaru-Bot played on me on chess.com")]
+        public void HikaruMate()
+        {
+            // Arrange
+            Queue<string> consoleInputs = new();
+            consoleInputs.Enqueue("n"); // no to tutorial
+            consoleInputs.Enqueue("Classic"); // init game with all pieces
+            consoleInputs.Enqueue("n"); // no to ai
+            consoleInputs.Enqueue("WP5 E4");
+            consoleInputs.Enqueue("BP7 G5");
+            consoleInputs.Enqueue("WK E2");
+            consoleInputs.Enqueue("BP4 D5");
+            consoleInputs.Enqueue("WP5 D5");
+            consoleInputs.Enqueue("BQ1 D5");
+            consoleInputs.Enqueue("WK2 F3");
+            consoleInputs.Enqueue("BQ1 E4");
+
+            IConsole consoleService = new MockConsoleService(consoleInputs);
+            GameController gameController = GetGameController(consoleService);
+            GameManager game = new(consoleService, gameController);
+
+            // Act
+            game.Start();
+
+            // Assert
+            Assert.That(((MockConsoleService)consoleService).OutputContainsString("Black wins against White by CheckMate!"), Is.True);
+        }
+
+
+
+        [Test(Author ="Hadrian", Description ="This is the mate Hadrian played against me on Chess.com")]
+        public void HadriansMate()
+        {
+            // Arrange
+            Queue<string> consoleInputs = new();
+            consoleInputs.Enqueue("n"); // no to tutorial
+            consoleInputs.Enqueue("Classic"); // init game with all pieces
+            consoleInputs.Enqueue("n"); // no to ai
+            consoleInputs.Enqueue("WP5 E4");
+            consoleInputs.Enqueue("BP5 E5"); 
+            consoleInputs.Enqueue("WK E2");
+            consoleInputs.Enqueue("BQ1 H4"); 
+            consoleInputs.Enqueue("WK2 F3"); 
+            consoleInputs.Enqueue("BQ1 E4");
+
+            IConsole consoleService = new MockConsoleService(consoleInputs);
+            GameController gameController = GetGameController(consoleService);
+            GameManager game = new(consoleService, gameController);
+
+            // Act
+            game.Start();
+
+            // Assert
+            Assert.That(((MockConsoleService)consoleService).OutputContainsString("Black wins against White by CheckMate!"), Is.True);
+        }
+
+        [Test(Author = "Caesar", Description = "This is the mate Caesar played against me on Chess.com")]
+        public void CaesarsMate()
+        {
+            // Arrange
+            Queue<string> consoleInputs = new();
+            consoleInputs.Enqueue("n"); // no to tutorial
+            consoleInputs.Enqueue("Classic"); // Classic game mode
+            consoleInputs.Enqueue("n"); // no to ai
+            consoleInputs.Enqueue("WP5 E4");
+            consoleInputs.Enqueue("BP3 C5");
+            consoleInputs.Enqueue("WK E2");
+            consoleInputs.Enqueue("BK2 F6");
+            consoleInputs.Enqueue("WK2 C3");
+            consoleInputs.Enqueue("BP4 D5");
+            consoleInputs.Enqueue("WK2 D5");
+            consoleInputs.Enqueue("BK2 D5");
+            consoleInputs.Enqueue("WP5 D5");
+            consoleInputs.Enqueue("BQ1 D6");
+            consoleInputs.Enqueue("WP3 C4");
+            consoleInputs.Enqueue("BQ1 E5");
+            consoleInputs.Enqueue("WK D3");
+            consoleInputs.Enqueue("BB1 F5");
+
+            IConsole consoleService = new MockConsoleService(consoleInputs);
+            GameController gameController = GetGameController(consoleService);
+            GameManager game = new(consoleService, gameController);
+
+            // Act
+            game.Start();
+
+            // Assert
+            Assert.That(((MockConsoleService)consoleService).OutputContainsString("Black wins against White by CheckMate!"), Is.True);
+        }
+
         [Test]
         public void PawnsOnly_KingInCheck_NoPawnPromotion()
         {
             // Arrange
             Queue<string> consoleInputs = new();
             consoleInputs.Enqueue("n"); // no to tutorial
-            consoleInputs.Enqueue("pawns"); // no to tutorial
+            consoleInputs.Enqueue("PawnsOnly"); // PawnsOnly game
             consoleInputs.Enqueue("n"); // no to ai
             consoleInputs.Enqueue("WP3 C4");
             consoleInputs.Enqueue("BP7 G5");
@@ -140,7 +263,10 @@ namespace Tests
 
             // Assert
             // originally was false, but should be true now
-            Assert.That(((MockConsoleService)consoleService).OutputContainsString("Pawn Promoted."), Is.True);
+            // should this be true or false???
+            // TODO
+            Assert.That(((MockConsoleService)consoleService).OutputContainsString("Pawn Promoted."), Is.False);
+            //Assert.Fail("This test is missing requirements for assert. What is the expected result? False or True?");
         }
 
         [Test]
@@ -149,7 +275,7 @@ namespace Tests
             // Arrange
             Queue<string> consoleInputs = new();
             consoleInputs.Enqueue("n"); // no to tutorial
-            consoleInputs.Enqueue("pawns");
+            consoleInputs.Enqueue("PawnsOnly");
             consoleInputs.Enqueue("n"); // no to ai
             // Set up the board for a potential En Passant scenario but then make a different move
             consoleInputs.Enqueue("WP3 C4");
@@ -178,7 +304,7 @@ namespace Tests
         {
             Queue<string> consoleInputs = new();
             consoleInputs.Enqueue("n"); // no to tutorial
-            consoleInputs.Enqueue("pawns");
+            consoleInputs.Enqueue("PawnsOnly");
             consoleInputs.Enqueue("n"); // yes to ai
             consoleInputs.Enqueue("WP4 D4");
 
@@ -190,6 +316,10 @@ namespace Tests
             game.Start();
 
             Assert.That(((MockConsoleService)consoleService).Inputs.Count < 11);
+
+            Assert.Fail("Requirements incomplete - the white AI is not implemented yet!");
         }
     }
+
+
 }

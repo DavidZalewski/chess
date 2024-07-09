@@ -8,6 +8,7 @@ using System.Collections.Generic;
 
 namespace Tests
 {
+    [Category("CORE")]
     [Parallelizable(ParallelScope.All)]
     public class TurnTests
     {
@@ -31,7 +32,7 @@ namespace Tests
         public void ConstructTurn_Success()
         {
             ChessBoard board = new();
-            List<ChessPiece> chessPieces = ChessPieceFactory.CreateChessPieces();
+            List<ChessPiece> chessPieces = ChessPieceFactory.CreateChessPiecesClassic();
             ChessPiece whitePawn = chessPieces.First(pieces => pieces.GetColor() == ChessPiece.Color.WHITE &&
                                                      pieces.GetPiece() == ChessPiece.Piece.PAWN);
             BoardPosition previousPosition = whitePawn.GetCurrentPosition();
@@ -59,7 +60,7 @@ namespace Tests
         public void ConstructTurn_Capture_Piece_Success()
         {
             ChessBoard board = new();
-            List<ChessPiece> chessPieces = ChessPieceFactory.CreateChessPieces();
+            List<ChessPiece> chessPieces = ChessPieceFactory.CreateChessPiecesClassic();
             // find white pawn 1
             ChessPiece whitePawn = chessPieces.First(pieces => pieces.GetColor() == ChessPiece.Color.WHITE &&
                                                      pieces.GetPiece() == ChessPiece.Piece.PAWN);
@@ -94,7 +95,7 @@ namespace Tests
         public void ConstructTurn_Capture_Piece_EnPassant_Success()
         {
             ChessBoard board = new();
-            List<ChessPiece> chessPieces = ChessPieceFactory.CreateChessPieces();
+            List<ChessPiece> chessPieces = ChessPieceFactory.CreateChessPiecesClassic();
             // find white pawn 1
             ChessPiece whitePawn = chessPieces.First(pieces => pieces.GetColor() == ChessPiece.Color.WHITE &&
                                                      pieces.GetPiece() == ChessPiece.Piece.PAWN);
@@ -137,7 +138,7 @@ namespace Tests
         public void ConstructTurn_Capture_Piece_EnPassant_DifferentPosition_Success()
         {
             ChessBoard board = new();
-            List<ChessPiece> chessPieces = ChessPieceFactory.CreateChessPieces();
+            List<ChessPiece> chessPieces = ChessPieceFactory.CreateChessPiecesClassic();
             // find white pawn 1
             ChessPiece whitePawn = chessPieces.First(pieces => pieces.GetColor() == ChessPiece.Color.WHITE &&
                                                      pieces.GetPiece() == ChessPiece.Piece.PAWN);

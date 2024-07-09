@@ -9,6 +9,7 @@ using System.Collections.Concurrent;
 
 namespace Tests
 {
+    [Category("PERFORMANCE")]
     [Parallelizable(ParallelScope.All)]
     internal class ChessStateExplorerTests
     {

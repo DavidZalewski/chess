@@ -13,6 +13,12 @@ namespace Chess.GameState
         public string Command { get; set; }
         public string TurnID { get; }
         public string BoardID { get; }
+        public bool IsKingInCheck { get; set; }
+        public bool IsCheckMate { get; set; }
+        public float Side()
+        {
+            return TurnNumber % 2 == 0 ? 0 : 1; // black is 0. white is 1;
+        }
 
         public TurnNode(Turn turn, string optionalText = "")
         {
@@ -56,6 +62,9 @@ namespace Chess.GameState
                     + turn.PreviousPosition.StringValue;
 
             BoardID = turn.ChessBoard.BoardID;
+
+            IsKingInCheck = turn.IsKingInCheck;
+            IsCheckMate = turn.IsCheckMate;
         }
     }
 }

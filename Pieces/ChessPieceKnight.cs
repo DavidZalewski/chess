@@ -28,7 +28,7 @@ namespace Chess.Pieces
                 if (horizontalDistance == 2 || horizontalDistance == -2)
                 {
                     // is there a friendly piece on this position that is blocking the knight from moving?
-                    if (board.IsPieceAtPosition(position, _color))
+                    if (board.IsPieceAtPosition(position, _color) || board.IsPieceAtPosition(position, Color.NONE))
                         return false;
                     else
                         return true;
@@ -43,7 +43,7 @@ namespace Chess.Pieces
                 if (horizontalDistance == 1 || horizontalDistance == -1)
                 {
                     // is there a friendly piece on this position that is blocking the knight from moving?
-                    if (board.IsPieceAtPosition(position, _color))
+                    if (board.IsPieceAtPosition(position, _color) || board.IsPieceAtPosition(position, Color.NONE))
                         return false;
                     else
                         return true;

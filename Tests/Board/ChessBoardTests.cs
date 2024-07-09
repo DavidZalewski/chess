@@ -7,6 +7,7 @@ using static Chess.Pieces.ChessPiece;
 
 namespace Tests.Board
 {
+    [Category("CORE")]
     public class ChessBoardTests
     {
         private ChessBoard chessBoard = new();
@@ -100,7 +101,7 @@ namespace Tests.Board
         [Test]
         public void PopulateBoard_Success()
         {
-            List<ChessPiece> chessPieces = ChessPieceFactory.CreateChessPieces();
+            List<ChessPiece> chessPieces = ChessPieceFactory.CreateChessPiecesClassic();
             chessBoard.PopulateBoard(chessPieces);
             Square[,] board = chessBoard.Board;
 
@@ -160,7 +161,7 @@ namespace Tests.Board
         {
             // Arrange
             ChessBoard board = new();
-            board.PopulateBoard(ChessPieceFactory.CreateChessPieces());
+            board.PopulateBoard(ChessPieceFactory.CreateChessPiecesClassic());
 
             // Act
             List<ChessPiece> activePieces = board.GetActivePieces();
@@ -174,7 +175,7 @@ namespace Tests.Board
         {
             // Arrange
             ChessBoard board = new ChessBoard();
-            board.PopulateBoard(ChessPieceFactory.CreateChessPieces());
+            board.PopulateBoard(ChessPieceFactory.CreateChessPiecesClassic());
 
             // Act
             board.SetPieceAtPosition(new ("A1"), NoPiece.Instance);
@@ -190,7 +191,7 @@ namespace Tests.Board
         [Test]
         public void DisplayBoard_Success()
         {
-            List<ChessPiece> chessPieces = ChessPieceFactory.CreateChessPieces();
+            List<ChessPiece> chessPieces = ChessPieceFactory.CreateChessPiecesClassic();
             ChessBoard chessBoard = new();
             chessBoard.PopulateBoard(chessPieces);
 
@@ -204,13 +205,13 @@ namespace Tests.Board
         [Test]
         public void BoardID_InitialValue_EmptyString()
         {
-            Assert.That(chessBoard.BoardID, Is.Empty);
+            Assert.That(chessBoard.BoardID.Equals("0000000000000000000000000000000000000000000000000000000000000000"));
         }
 
         [Test]
         public void BoardID_AfterPopulateBoard_NotEmptyString()
         {
-            List<ChessPiece> chessPieces = ChessPieceFactory.CreateChessPieces();
+            List<ChessPiece> chessPieces = ChessPieceFactory.CreateChessPiecesClassic();
             chessBoard.PopulateBoard(chessPieces);
             Console.WriteLine($"initialBoardID: {chessBoard.BoardID}");
             Assert.That(chessBoard.BoardID, Is.Not.Empty);

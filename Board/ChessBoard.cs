@@ -150,8 +150,7 @@ namespace Chess.Board
 
         public bool IsPieceAtPosition(BoardPosition position, ChessPiece.Color color)
         {
-            if ((position.RankAsInt < 0 || position.RankAsInt > 7) ||
-                (position.FileAsInt < 0 || position.FileAsInt > 7))
+            if (!IsPositionWithinBounds(position))
             {
                 return false; // index out of bounds
             }
@@ -182,12 +181,14 @@ namespace Chess.Board
         public string DisplayBoard()
         {
             string output = "*|*A*|*B*|*C*|*D*|*E*|*F*|*G*|*H*|*\n";
-            int vertIndex = 8;
+            int arraySize = 8;
+            int rankNumber = arraySize;
 
-            for (int f = 0; f < 8; f++)
+            for (int f = 0; f < arraySize; f++)
             {
-                output += vertIndex;
-                for (int s = 0; s < 8; s++)
+                output += rankNumber;
+                rankNumber--;
+                for (int s = 0; s < arraySize; s++)
                 {
                     if (Board[f, s].Piece is not NoPiece) // Check for chess piece
                     {
@@ -198,6 +199,7 @@ namespace Chess.Board
                         {
                             case ChessPiece.Color.WHITE: c = "W"; break;
                             case ChessPiece.Color.BLACK: c = "B"; break;
+                            case ChessPiece.Color.NONE: c = "X"; break;
                         }
 
                         switch (chessPiece.GetPiece())
@@ -211,6 +213,10 @@ namespace Chess.Board
                                 {
                                     p = "K"; i = ""; break;
                                 }
+                            case ChessPiece.Piece.NO_PIECE:
+                                {
+                                    p = "X"; i = "X"; break;
+                                }
                         }
 
                         if (!chessPiece.GetPiece().Equals(ChessPiece.Piece.KING))
@@ -219,7 +225,7 @@ namespace Chess.Board
                         }
                         else
                         {
-                            i = "0";
+                            i = " ";
                         }
 
                         output += "|" + c + p + i;
@@ -229,8 +235,7 @@ namespace Chess.Board
                         output += "|   ";
                     }
                 }
-                output += "|" + vertIndex + "\n";
-                vertIndex--;
+                output += "|" + arraySize + "\n";
             }
             output += "*|*A*|*B*|*C*|*D*|*E*|*F*|*G*|*H*|*\n";
             return output;
@@ -242,9 +247,14 @@ namespace Chess.Board
             GenerateBoardID();
         }
 
-        private Square GetSquare(BoardPosition position)
+        public Square GetSquare(BoardPosition position)
         {
             return Board[position.RankAsInt, position.FileAsInt];
+        }
+
+        public bool IsPositionWithinBounds(BoardPosition position)
+        {
+            return (position.RankAsInt >= 0 && position.RankAsInt <= 7) || (position.FileAsInt >= 0 && position.FileAsInt <= 7);
         }
     }
 }

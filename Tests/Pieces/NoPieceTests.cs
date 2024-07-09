@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 
 namespace Tests.Pieces
 {
+    [Category("CORE")]
     internal class NoPieceTests
     {
         [Test]

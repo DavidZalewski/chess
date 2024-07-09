@@ -3,6 +3,7 @@ using Chess.Pieces;
 
 namespace Tests.Board
 {
+    [Category("CORE")]
     internal class SquareTests
     {
         [Test]

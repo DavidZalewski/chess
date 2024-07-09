@@ -5,6 +5,7 @@ using Chess.Services;
 
 namespace Tests.Pieces
 {
+    [Category("CORE")]
     [Parallelizable(ParallelScope.All)]
     public class ChessPieceSpecialMovesTests
     {
@@ -12,7 +13,7 @@ namespace Tests.Pieces
         [Test]
         public void IsValidMove_Castling_CannotCastleAtStart()
         {
-            List<ChessPiece> chessPieces = ChessPieceFactory.CreateChessPieces();
+            List<ChessPiece> chessPieces = ChessPieceFactory.CreateChessPiecesClassic();
 
             ChessPiece whiteKing = chessPieces.First(piece => piece.GetColor().Equals(ChessPiece.Color.WHITE) &&
                                                               piece.GetPiece().Equals(ChessPiece.Piece.KING));
@@ -27,7 +28,7 @@ namespace Tests.Pieces
         [Test]
         public void IsValidMove_Castling_CannotCastle_WhiteKingMoved()
         {
-            List<ChessPiece> chessPieces = ChessPieceFactory.CreateChessPieces();
+            List<ChessPiece> chessPieces = ChessPieceFactory.CreateChessPiecesClassic();
 
             // remove bishop and knight from the board
             chessPieces = chessPieces.FindAll(p => p.GetPiece().Equals(ChessPiece.Piece.PAWN) ||
@@ -67,7 +68,7 @@ namespace Tests.Pieces
         [Test]
         public void IsValidMove_Castling_CannotCastle_WhiteKingWasChecked()
         {
-            List<ChessPiece> chessPieces = ChessPieceFactory.CreateChessPieces();
+            List<ChessPiece> chessPieces = ChessPieceFactory.CreateChessPiecesClassic();
 
             ChessPiece whiteKing = chessPieces.First(piece => piece.GetColor().Equals(ChessPiece.Color.WHITE) &&
                                                               piece.GetPiece().Equals(ChessPiece.Piece.KING));
@@ -93,7 +94,7 @@ namespace Tests.Pieces
         [Test]
         public void IsValidMove_Castling_Castle_WhiteKingSide()
         {
-            List<ChessPiece> chessPieces = ChessPieceFactory.CreateChessPieces();
+            List<ChessPiece> chessPieces = ChessPieceFactory.CreateChessPiecesClassic();
 
             // remove bishop and knight from the board
             chessPieces = chessPieces.FindAll(p => p.GetPiece().Equals(ChessPiece.Piece.PAWN) ||
@@ -115,7 +116,7 @@ namespace Tests.Pieces
         [Test]
         public void IsValidMove_Castling_Castle_WhiteQueenSide()
         {
-            List<ChessPiece> chessPieces = ChessPieceFactory.CreateChessPieces();
+            List<ChessPiece> chessPieces = ChessPieceFactory.CreateChessPiecesClassic();
 
             // remove bishop, knight, and queen from the board
             chessPieces = chessPieces.FindAll(p => p.GetPiece().Equals(ChessPiece.Piece.PAWN) ||
@@ -136,7 +137,7 @@ namespace Tests.Pieces
         [Test]
         public void Move_Castling_Castle_WhiteQueenSide()
         {
-            List<ChessPiece> chessPieces = ChessPieceFactory.CreateChessPieces();
+            List<ChessPiece> chessPieces = ChessPieceFactory.CreateChessPiecesClassic();
 
             // remove bishop, knight, and queen from the board
             chessPieces = chessPieces.FindAll(p => p.GetPiece().Equals(ChessPiece.Piece.PAWN) ||
@@ -162,7 +163,7 @@ namespace Tests.Pieces
         [Test]
         public void Move_Castling_Castle_WhiteKingSide()
         {
-            List<ChessPiece> chessPieces = ChessPieceFactory.CreateChessPieces();
+            List<ChessPiece> chessPieces = ChessPieceFactory.CreateChessPiecesClassic();
 
             // remove bishop, knight, and queen from the board
             chessPieces = chessPieces.FindAll(p => p.GetPiece().Equals(ChessPiece.Piece.PAWN) ||
@@ -188,7 +189,7 @@ namespace Tests.Pieces
         [Test]
         public void Move_Castling_Castle_BlackQueenSide()
         {
-            List<ChessPiece> chessPieces = ChessPieceFactory.CreateChessPieces();
+            List<ChessPiece> chessPieces = ChessPieceFactory.CreateChessPiecesClassic();
 
             // remove bishop, knight, and queen from the board
             chessPieces = chessPieces.FindAll(p => p.GetPiece().Equals(ChessPiece.Piece.PAWN) ||
@@ -214,7 +215,7 @@ namespace Tests.Pieces
         [Test]
         public void Move_Castling_Castle_BlackKingSide()
         {
-            List<ChessPiece> chessPieces = ChessPieceFactory.CreateChessPieces();
+            List<ChessPiece> chessPieces = ChessPieceFactory.CreateChessPiecesClassic();
 
             // remove bishop, knight, and queen from the board
             chessPieces = chessPieces.FindAll(p => p.GetPiece().Equals(ChessPiece.Piece.PAWN) ||
@@ -240,7 +241,7 @@ namespace Tests.Pieces
         [Test]
         public void IsValidMove_Castling_CannotCastle_BlackKingMoved()
         {
-            List<ChessPiece> chessPieces = ChessPieceFactory.CreateChessPieces();
+            List<ChessPiece> chessPieces = ChessPieceFactory.CreateChessPiecesClassic();
 
             // remove bishop and knight from the board
             chessPieces = chessPieces.FindAll(p => p.GetPiece().Equals(ChessPiece.Piece.PAWN) ||
@@ -280,7 +281,7 @@ namespace Tests.Pieces
         [Test]
         public void IsValidMove_Castling_CannotCastle_BlackKingWasChecked()
         {
-            List<ChessPiece> chessPieces = ChessPieceFactory.CreateChessPieces();
+            List<ChessPiece> chessPieces = ChessPieceFactory.CreateChessPiecesClassic();
 
             ChessPiece blackKing = chessPieces.First(piece => piece.GetColor().Equals(ChessPiece.Color.BLACK) &&
                                                               piece.GetPiece().Equals(ChessPiece.Piece.KING));
@@ -312,7 +313,7 @@ namespace Tests.Pieces
         [Test]
         public void IsValidMove_Castling_Castle_BlackKingSide()
         {
-            List<ChessPiece> chessPieces = ChessPieceFactory.CreateChessPieces();
+            List<ChessPiece> chessPieces = ChessPieceFactory.CreateChessPiecesClassic();
 
             // remove bishop and knight from the board
             chessPieces = chessPieces.FindAll(p => p.GetPiece().Equals(ChessPiece.Piece.PAWN) ||
@@ -334,7 +335,7 @@ namespace Tests.Pieces
         [Test]
         public void IsValidMove_Castling_Castle_BlackQueenSide()
         {
-            List<ChessPiece> chessPieces = ChessPieceFactory.CreateChessPieces();
+            List<ChessPiece> chessPieces = ChessPieceFactory.CreateChessPiecesClassic();
 
             // remove bishop, knight, and queen from the board
             chessPieces = chessPieces.FindAll(p => p.GetPiece().Equals(ChessPiece.Piece.PAWN) ||

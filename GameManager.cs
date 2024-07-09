@@ -3,6 +3,7 @@ using Chess.Controller;
 using Chess.GameState;
 using Chess.Interfaces;
 using Chess.Pieces;
+using System.ComponentModel.Design;
 
 namespace Chess
 {
@@ -27,14 +28,19 @@ namespace Chess
 
             StartTutorial();
 
-            _console.WriteLine("Select init board state (all, pawns)?");
+            _console.WriteLine("Select RuleSet:");
+            _console.WriteLine("*Classic* -- The game we all know and love");
+            _console.WriteLine("*PawnsOnly* -- No knights, bishops, rooks, or queens. Just a king and his pawns");
+            _console.WriteLine("*NuclearHorse* -- The game where the most powerful piece is also the most destructive, can you survive the environment?");
+            _console.WriteLine("*SevenByEight* -- The board is changed to be a 7 x 8 grid instead");
+            _console.WriteLine("*KingsForce* -- A pawn connected to a king can capture in all directions; the king can disable a square");
             string? input = _console.ReadLine();
 
-            if (input == "pawns")
-            {
-                _console.WriteLine("Init Pawns Only");
-                _gameController.InitPawnsOnly();
-            }
+            _console.WriteLine($"*Adding RuleSet: {input}");
+            _gameController.AddRuleSet(input);
+
+            _console.WriteLine("Applying Rule Sets");
+            _gameController.ApplyRuleSet();
 
             _console.WriteLine("Use AI for Black? (y, n)?");
             input = _console.ReadLine();
@@ -47,24 +53,107 @@ namespace Chess
 
             _gameController.SetOnTurnHandler((Turn turn) =>
             {
-                ulong _unused = 0;
-                List<TurnNode> turns = _explorer.GenerateAllPossibleMovesTurnNode(turn, 2, ref _unused);
-
-                // Sort by least number of moves for opponent (Children.Count), then by most number of moves for current player (turns.Count - tn.Children.Count)
-                turns = turns.OrderByDescending(tn => tn.TurnDescription.Contains("capture") && tn.TurnNumber % 2 == 0)
-                            .ThenBy(tn => tn.Children.Count())
-                            .ThenByDescending(tn => turns.Count - tn.Children.Count)
-                            .ToList();
-
-                _console.WriteLine($"The possible number of moves at this current move: {turn.TurnDescription} are: {turns.Count}");
-
-                TurnNode bestTurnToMake = turns.First(); // Select the first turn after sorting
-
-                _console.WriteLine($"*************Best turn to make here is: {bestTurnToMake.Command}");
-
                 if (_AIMode)
                 {
-                    _AICommand = bestTurnToMake.Command;
+                    ulong _unused = 0;
+                    List<TurnNode> turns = _explorer.GenerateAllPossibleMovesTurnNode(turn, 3, ref _unused);
+
+                    //List<TurnNode> turnsLeadingToCheckMateForAI = turns.OrderByDescending(tn1 =>
+                    //{
+                    //    foreach (TurnNode tn2 in tn1.Children)
+                    //    {
+                    //        foreach (TurnNode tn3 in tn2.Children)
+                    //        {
+                    //            if (tn3.IsCheckMate && tn3.Side() == 0)
+                    //            {
+                    //                return true;
+                    //            }
+                    //        }
+                    //        if (tn2.IsCheckMate && tn2.Side() == 0)
+                    //        {
+                    //            return true;
+                    //        }
+                    //    }
+                    //    return tn1.IsCheckMate && tn1.Side() == 0;
+                    //}).ToList();
+
+                    // Sort by least number of moves for opponent (Children.Count), then by most number of moves for current player (turns.Count - tn.Children.Count)
+                    List<TurnNode> goodTurns = turns
+                    .OrderByDescending(tn1 => {
+                        foreach (TurnNode tn2 in tn1.Children)
+                        {
+                            foreach (TurnNode tn3 in tn2.Children)
+                            {
+                                if (tn3.IsCheckMate && tn3.Side() == 1)
+                                {
+                                    return true;
+                                }
+                            }
+                            if (tn2.IsCheckMate && tn2.Side() == 1)
+                            {
+                                return true;
+                            }
+                        }
+                        return tn1.IsCheckMate && tn1.Side() == 1;
+                    })
+                    .ThenBy(tn1 => {
+                        foreach (TurnNode tn2 in tn1.Children)
+                        {
+                            foreach (TurnNode tn3 in tn2.Children)
+                            {
+                                if (tn3.IsKingInCheck && tn3.Side() == 1)
+                                {
+                                    return true;
+                                }
+                            }
+                            if (tn2.IsKingInCheck && tn2.Side() == 1)
+                            {
+                                return true;
+                            }
+                        }
+                        return tn1.IsKingInCheck && tn1.Side() == 1;
+                    })
+                    .ThenBy(tn1 => {
+                        foreach (TurnNode tn2 in tn1.Children)
+                        {
+                            foreach (TurnNode tn3 in tn2.Children)
+                            {
+                                if (tn3.TurnDescription.Contains("capture") && tn3.Side() == 0)
+                                {
+                                    return true;
+                                }
+                            }
+                            if (tn2.TurnDescription.Contains("capture") && tn2.Side() == 0)
+                            {
+                                return true;
+                            }
+                        }
+                        return tn1.TurnDescription.Contains("capture") && tn1.Side() == 0;
+                    })
+                                //.ThenBy(tn => tn.Children.Count())
+                                //.ThenByDescending(tn => turns.Count - tn.Children.Count)
+                    .ToList();
+
+                    _console.WriteLine($"The possible number of moves at this current move: {turn.TurnDescription} are: {turns.Count}");
+                    Random r = new Random();
+                    TurnNode bestTurnToMake = goodTurns.First(); // Select the first turn after sorting
+                    TurnNode randomTurnToMake = goodTurns[r.Next(goodTurns.Count)]; // A random turn
+
+                    _console.WriteLine($"*************Best turn to make here is: {bestTurnToMake.Command}");
+                    _console.WriteLine($"*************Random turn to make here is: {randomTurnToMake.Command}");
+                    _console.WriteLine($"Deciding whether to pick the best move or a random move...");
+
+                    //_AICommand = randomTurnToMake.Command;
+                    if (r.NextDouble() > 0.98710717)
+                    {
+                        _console.WriteLine("I choose random!");
+                        _AICommand = randomTurnToMake.Command;
+                    }
+                    else
+                    {
+                        _console.WriteLine("I choose best move!");
+                        _AICommand = bestTurnToMake.Command;
+                    }
                 }
             });
             PlayGame();
@@ -152,8 +241,9 @@ namespace Chess
 
                 try
                 {
-                    //if (_AIMode && _gameController.TurnNumber % 2 == 0)
-                    if (_AIMode)
+                    // THIS IS A PROGRAMMING MACRO FLAG!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                    if (_AIMode && _gameController.TurnNumber % 2 == 0)
+                    //if (_AIMode)
                     {
                         input = _AICommand;
                     }

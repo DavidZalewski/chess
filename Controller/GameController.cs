@@ -17,6 +17,7 @@ namespace Chess.Controller
         private List<Turn> _turns = new();
         private int _turnNumber = 0;
         private Action<Turn>? OnTurnHandler;
+        private ActionSequence _sequence = new();
 
         public int TurnNumber { get => _turnNumber; }
         public void SetOnTurnHandler(Action<Turn> action)
@@ -27,7 +28,7 @@ namespace Chess.Controller
         public GameController(ChessBoard chessBoard)
         {
             _chessBoard = chessBoard;
-            _chessPieces = ChessPieceFactory.CreateChessPieces();
+            _chessPieces = ChessPieceFactory.CreateChessPiecesClassic();
             _kingCheckService = new KingCheckService();
         }
 
@@ -36,15 +37,6 @@ namespace Chess.Controller
             _chessBoard = chessBoard;
             _chessPieces = chessPieces;
             _kingCheckService = new KingCheckService();
-        }
-
-        internal void InitPawnsOnly()
-        {
-            List<ChessPiece> pieces = ChessPieceFactory.CreateWhitePawns();
-            pieces.AddRange(ChessPieceFactory.CreateBlackPawns());
-            pieces.Add(new ChessPieceKing(ChessPiece.Color.BLACK, new("E8")));
-            pieces.Add(new ChessPieceKing(ChessPiece.Color.WHITE, new("E1")));
-            _chessPieces = pieces;
         }
 
         public void StartGame()
@@ -125,7 +117,7 @@ namespace Chess.Controller
                 if (!int.TryParse(chars[2].ToString(), out id))
                     return null;
 
-            ChessPiece chessPiece = _chessPieces.First(p => p.GetColor().Equals(color) && p.GetPiece().Equals(piece) && p.GetId().Equals(id));
+            ChessPiece? chessPiece = _chessPieces.FirstOrDefault(p => p.GetColor().Equals(color) && p.GetPiece().Equals(piece) && p.GetId().Equals(id), null);
 
             return chessPiece;
         }
@@ -153,7 +145,20 @@ namespace Chess.Controller
             {
                 ChessPiece? chessPiece = FindChessPieceFromString(inputs[0]);
                 if (chessPiece == null) return null;
-                Turn turn = new(_turnNumber, chessPiece, new(inputs[1]), _chessBoard);
+
+                // see if we can find a chess piece from the second argument. If we can, we assume the player is trying to capture this piece
+                ChessPiece? opponentPiece = FindChessPieceFromString(inputs[1]);
+                BoardPosition destinationPosition = null;
+                if (opponentPiece == null)
+                {
+                    destinationPosition = new(inputs[1]);
+                }
+                else
+                {
+                    destinationPosition = opponentPiece.GetCurrentPosition();
+                }
+
+                Turn turn = new(_turnNumber, chessPiece, destinationPosition, _chessBoard);
                 if (!turn.IsValidTurn) return null;
                 turn.Command = input;
                 return turn;
@@ -260,5 +265,76 @@ namespace Chess.Controller
             else
                 return _turns[^1];
         }
+
+
+        /*
+         * 
+         * 
+         * 
+         * RULESETS
+         * 
+         * 
+         * 
+         */
+
+        public void AddRuleSet(Action r)
+        {
+            _sequence.AddActionInSequence(r);
+        }
+
+        public void AddRuleSet(String? r)
+        {
+            switch(r)
+            {
+                case "PawnsOnly":
+                    {
+                        AddRuleSet(RuleSetPawnsOnly); break;
+                    }
+                case "SevenByEight":
+                    {
+                        AddRuleSet(RuleSetSevenByEight); break;
+                    }
+                case "KingsForce":
+                    {
+                        AddRuleSet(RuleSetKingsForce); break;
+                    }
+                case "NuclearHorse":
+                    {
+                        AddRuleSet(RuleSetNuclearHorse); break;
+                    }
+                case "Classic": return;
+                default: return;
+            }
+        }
+
+        public void ApplyRuleSet()
+        {
+            _sequence.PlayActionSequence();
+        }
+
+        internal void RuleSetPawnsOnly()
+        {
+            List<ChessPiece> pieces = ChessPieceFactory.CreateWhitePawns();
+            pieces.AddRange(ChessPieceFactory.CreateBlackPawns());
+            pieces.Add(new ChessPieceKing(ChessPiece.Color.BLACK, new("E8")));
+            pieces.Add(new ChessPieceKing(ChessPiece.Color.WHITE, new("E1")));
+            _chessPieces = pieces;
+        }
+
+        internal void RuleSetSevenByEight()
+        {
+
+        }
+
+        internal void RuleSetKingsForce()
+        {
+
+        }
+
+        internal void RuleSetNuclearHorse()
+        {
+            _chessPieces = ChessPieceFactory.CreateChessPiecesNuclearHorse();
+        }
+
     }
 }

@@ -6,6 +6,7 @@ using System.Collections.Generic;
 
 namespace Tests.Services
 {
+    [Category("CORE")]
     public class KingCheckServiceTests
     {
         [Test]
@@ -375,7 +376,7 @@ namespace Tests.Services
         [Test(Description = "Test Check Mate is false on a full board")]
         public void IsCheckMate_NoCheckMate_FullBoard()
         {
-            List<ChessPiece> chessPieces = ChessPieceFactory.CreateChessPieces();
+            List<ChessPiece> chessPieces = ChessPieceFactory.CreateChessPiecesClassic();
             ChessBoard chessBoard = new();
             chessBoard.PopulateBoard(chessPieces);
 

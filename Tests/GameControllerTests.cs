@@ -6,6 +6,7 @@ using Chess.Services;
 
 namespace Tests
 {
+    [Category("CORE")]
     [Parallelizable(ParallelScope.All)]
     public class GameControllerTests
     {
@@ -22,7 +23,7 @@ namespace Tests
         public void FindChessPieceFromString_WhiteKnight1_Success()
         {
             String piece = "WK1";
-            List<ChessPiece> chessPieces = ChessPieceFactory.CreateChessPieces();
+            List<ChessPiece> chessPieces = ChessPieceFactory.CreateChessPiecesClassic();
 
             ChessPiece whiteKnight1 = chessPieces.First(pieces => {
                 return pieces.GetPiece().Equals(ChessPiece.Piece.KNIGHT) &&
@@ -42,7 +43,7 @@ namespace Tests
         public void FindChessPieceFromString_BlackBishop2_Success()
         {
             String piece = "BB2";
-            List<ChessPiece> chessPieces = ChessPieceFactory.CreateChessPieces();
+            List<ChessPiece> chessPieces = ChessPieceFactory.CreateChessPiecesClassic();
 
             ChessPiece blackBishop2 = chessPieces.First(pieces => {
                 return pieces.GetPiece().Equals(ChessPiece.Piece.BISHOP) &&
@@ -62,7 +63,7 @@ namespace Tests
         public void FindChessPieceFromString_BlackPawn7_Success()
         {
             String piece = "BP7";
-            List<ChessPiece> chessPieces = ChessPieceFactory.CreateChessPieces();
+            List<ChessPiece> chessPieces = ChessPieceFactory.CreateChessPiecesClassic();
 
             ChessPiece blackPawn7 = chessPieces.First(pieces => {
                 return pieces.GetPiece().Equals(ChessPiece.Piece.PAWN) &&
@@ -82,7 +83,7 @@ namespace Tests
         public void FindChessPieceFromString_WhiteRook2_Success()
         {
             String piece = "WR2";
-            List<ChessPiece> chessPieces = ChessPieceFactory.CreateChessPieces();
+            List<ChessPiece> chessPieces = ChessPieceFactory.CreateChessPiecesClassic();
 
             ChessPiece blackPawn7 = chessPieces.First(pieces => {
                 return pieces.GetPiece().Equals(ChessPiece.Piece.ROOK) &&
@@ -102,7 +103,7 @@ namespace Tests
         public void FindChessPieceFromString_WhiteQueen_Success()
         {
             String piece = "WQ1";
-            List<ChessPiece> chessPieces = ChessPieceFactory.CreateChessPieces();
+            List<ChessPiece> chessPieces = ChessPieceFactory.CreateChessPiecesClassic();
 
             ChessPiece whiteQueen1 = chessPieces.First(pieces => {
                 return pieces.GetPiece().Equals(ChessPiece.Piece.QUEEN) &&
@@ -122,7 +123,7 @@ namespace Tests
         public void FindChessPieceFromString_BlackKing_Success()
         {
             String piece = "BK";
-            List<ChessPiece> chessPieces = ChessPieceFactory.CreateChessPieces();
+            List<ChessPiece> chessPieces = ChessPieceFactory.CreateChessPiecesClassic();
 
             ChessPiece blackKing = chessPieces.First(pieces => {
                 return pieces.GetPiece().Equals(ChessPiece.Piece.KING) &&
@@ -148,7 +149,7 @@ namespace Tests
         [TestCase("sriojgwi 4whiu hwu4h woweng")]
         public void FindChessPieceFromString_InvalidInput_ReturnsNull(String input)
         {
-            List<ChessPiece> chessPieces = ChessPieceFactory.CreateChessPieces();
+            List<ChessPiece> chessPieces = ChessPieceFactory.CreateChessPiecesClassic();
 
             ChessBoard chessBoard = new();
             GameController gameController = new(chessBoard);
@@ -178,7 +179,7 @@ namespace Tests
         [TestCase("WP8 H4")]
         public void GetMoveFromCommand_WhiteTurn1(String input)
         {
-            List<ChessPiece> chessPieces = ChessPieceFactory.CreateChessPieces();
+            List<ChessPiece> chessPieces = ChessPieceFactory.CreateChessPiecesClassic();
             ChessBoard chessBoard = new();
             chessBoard.PopulateBoard(chessPieces);
             GameController gameController = new(chessBoard);
@@ -223,7 +224,7 @@ namespace Tests
         [TestCase("BP8 H5")]
         public void GetMoveFromCommand_BlackTurn2(String input)
         {
-            List<ChessPiece> chessPieces = ChessPieceFactory.CreateChessPieces();
+            List<ChessPiece> chessPieces = ChessPieceFactory.CreateChessPiecesClassic();
             ChessBoard chessBoard = new();
             chessBoard.PopulateBoard(chessPieces);
             GameController gameController = new(chessBoard);

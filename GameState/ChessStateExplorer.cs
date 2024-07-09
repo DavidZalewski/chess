@@ -5,10 +5,11 @@ using Chess.Services;
 
 namespace Chess.GameState
 {
+    // TODO: Write your own unit test runner that supports multi process better
     internal class ChessStateExplorer
     {
         private static string cacheFilePath = "chess_cache.bin";
-        ConcurrentLogger logger = new ConcurrentLogger("ChessStateExplorer_TurnNode.txt");
+        ConcurrentLogger logger = new ConcurrentLogger("ChessStateExplorer_TurnNode");
         private const int REPARTITION_THRESHOLD = 1000; // adjust this value as needed
         private const int PARTITION_SIZE = 8; // adjust this value as needed
         public MultiDimensionalCache<CacheItem> cache = new MultiDimensionalCache<CacheItem>(PARTITION_SIZE);
@@ -112,6 +113,7 @@ namespace Chess.GameState
 
             if (kingCheckService.IsCheckMate(turn))
             {
+                turn.IsCheckMate = true;
                 logger.Log($"ChessStateExplorer - END: BoardID {turn.ChessBoard.BoardID} at depth {depth} has reached CHECKMATE, count: {possibleMoves.Count} ", threadId);
                 return possibleMoves;
             }
@@ -130,9 +132,13 @@ namespace Chess.GameState
                     {
                         BoardPosition pos = new((RANK)i, (FILE)j);
                         Turn possibleTurn = new(turn.TurnNumber + 1, piece, piece.GetCurrentPosition(), pos, turn.ChessBoard);
-                        if (possibleTurn.IsValidTurn && !kingCheckService.IsKingInCheck(possibleTurn))
+                        bool isKingInCheck = kingCheckService.IsKingInCheck(possibleTurn);
+                        possibleTurn.IsKingInCheck = isKingInCheck;
+
+                        if (possibleTurn.IsValidTurn && !isKingInCheck)
                         {
                             TurnNode turnNode = new(possibleTurn);
+                            
                             ++currentCount;
                             //logger.Log($"ChessStateExplorer - MID: Possible Move Found: {possibleTurn.TurnDescription}, Depth: {depth}, From: {turn.TurnDescription}", threadId);
 

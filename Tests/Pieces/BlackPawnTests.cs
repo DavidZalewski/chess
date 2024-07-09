@@ -3,6 +3,7 @@ using Chess.Pieces;
 
 namespace Tests.Pieces
 {
+    [Category("CORE")]
     public class BlackPawnTests
     {
         private ChessBoard board = new ChessBoard();
