@@ -34,7 +34,7 @@ namespace Chess.Pieces
             return isValidBishopMove || isValidRookMove;
         }
 
-        protected override bool ImplementMove(ChessBoard board, BoardPosition position)
+        public override bool ImplementMove(ChessBoard board, BoardPosition position)
         {
             // does this need to exist?
             return false;

@@ -79,6 +79,16 @@ namespace Chess.Services
             return whiteBishops;
         }
 
+        public static List<ChessPiece> CreateWhiteNuclearBishops()
+        {
+            List<ChessPiece> whiteBishops = new();
+            BoardPosition c1 = new(RANK.ONE, FILE.C);
+            BoardPosition f1 = new(RANK.ONE, FILE.F);
+            whiteBishops.Add(new NuclearBishopPiece(ChessPiece.Color.WHITE, 1, c1));
+            whiteBishops.Add(new NuclearBishopPiece(ChessPiece.Color.WHITE, 2, f1));
+            return whiteBishops;
+        }
+
         public static List<ChessPiece> CreateBlackBishops()
         {
             List<ChessPiece> blackBishops = new();
@@ -86,6 +96,16 @@ namespace Chess.Services
             BoardPosition f8 = new(RANK.EIGHT, FILE.F);
             blackBishops.Add(new ChessPieceBishop(ChessPiece.Color.BLACK, 1, c8));
             blackBishops.Add(new ChessPieceBishop(ChessPiece.Color.BLACK, 2, f8));
+            return blackBishops;
+        }
+
+        public static List<ChessPiece> CreateBlackNuclearBishops()
+        {
+            List<ChessPiece> blackBishops = new();
+            BoardPosition c8 = new(RANK.EIGHT, FILE.C);
+            BoardPosition f8 = new(RANK.EIGHT, FILE.F);
+            blackBishops.Add(new NuclearBishopPiece(ChessPiece.Color.BLACK, 1, c8));
+            blackBishops.Add(new NuclearBishopPiece(ChessPiece.Color.BLACK, 2, f8));
             return blackBishops;
         }
 
@@ -168,13 +188,13 @@ namespace Chess.Services
             List<ChessPiece> chessPieces = new();
             chessPieces.AddRange(CreateWhitePawns());
             chessPieces.AddRange(CreateWhiteNuclearHorses());
-            chessPieces.AddRange(CreateWhiteBishops());
+            chessPieces.AddRange(CreateWhiteNuclearBishops());
             chessPieces.AddRange(CreateWhiteRooks());
             chessPieces.AddRange(CreateWhiteQueenAndKing());
 
             chessPieces.AddRange(CreateBlackPawns());
             chessPieces.AddRange(CreateBlackNuclearHorses());
-            chessPieces.AddRange(CreateBlackBishops());
+            chessPieces.AddRange(CreateBlackNuclearBishops());
             chessPieces.AddRange(CreateBlackRooks());
             chessPieces.AddRange(CreateBlackQueenAndKing());
 

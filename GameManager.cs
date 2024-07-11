@@ -306,7 +306,26 @@ namespace Chess
                         continue;
                     }
                     else
+                    {
                         _gameController.ApplyTurnToGameState(turn);
+
+                        _console.WriteLine("Applying NuclearHorse After Turn Effects");
+                        List<ChessPiece>? nuclearHorsePieces = _gameController?.GetLastTurn()?
+                            .ChessPieces?.FindAll(cp => cp is NuclearHorsePiece).ToList();
+                        List<ChessPiece>? nuclearBishopPieces = _gameController?.GetLastTurn()?
+                            .ChessPieces?.FindAll(cp => cp is NuclearBishopPiece).ToList();
+
+                        // first do nuclear horses
+                        foreach (NuclearHorsePiece nuclearHorsePiece in nuclearHorsePieces)
+                        {
+                            _ = nuclearHorsePiece.ImplementMove(_gameController?.GetLastTurn()?.ChessBoard, turn.NewPosition);
+                        }
+                        // then do bishop breaking the inaccessible squares
+                        foreach (NuclearBishopPiece nuclearBishopPiece in nuclearBishopPieces)
+                        {
+                            _ = nuclearBishopPiece.ImplementMove(_gameController?.GetLastTurn()?.ChessBoard, turn.NewPosition);
+                        }
+                    }
                 }
                 catch (Exception ex)
                 {

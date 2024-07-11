@@ -21,7 +21,7 @@ namespace Chess.Pieces
             return true; // always produces valid move result
         }
 
-        protected override bool ImplementMove(ChessBoard board, BoardPosition position)
+        public override bool ImplementMove(ChessBoard board, BoardPosition position)
         {
             return false;
         }

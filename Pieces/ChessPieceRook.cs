@@ -112,7 +112,7 @@ namespace Chess.Pieces
             return true;
         }
 
-        protected override bool ImplementMove(ChessBoard board, BoardPosition position)
+        public override bool ImplementMove(ChessBoard board, BoardPosition position)
         {
             // does this need to exist?
             return false;

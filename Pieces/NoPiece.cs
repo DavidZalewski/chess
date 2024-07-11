@@ -35,7 +35,7 @@ namespace Chess.Pieces
             return false;
         }
 
-        protected override bool ImplementMove(ChessBoard board, BoardPosition position)
+        public override bool ImplementMove(ChessBoard board, BoardPosition position)
         {
             return false;
         }

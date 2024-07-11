@@ -1,6 +1,4 @@
 ﻿using Chess.Board;
-using System;
-using System.Collections.Generic;
 
 namespace Chess.Pieces
 {
@@ -32,7 +30,7 @@ namespace Chess.Pieces
             return base.IsValidMove(board, position);
         }
 
-        protected override bool ImplementMove(ChessBoard board, BoardPosition position)
+        public override bool ImplementMove(ChessBoard board, BoardPosition position)
         {
             // when setting the board up, do not invoke the nuclear horse logic
             if (!_wasSetOnBoard)
@@ -86,30 +84,31 @@ namespace Chess.Pieces
             return false;
         }
 
-        private List<BoardPosition> GetAdjacentPositions(BoardPosition position)
+        private List<BoardPosition?> GetAdjacentPositions(BoardPosition position)
         {
-            List<BoardPosition> adjacentPositions = new List<BoardPosition>
+            List<BoardPosition?> adjacentPositions = new List<BoardPosition?>
             {
-                position.Left(),
-                position.Left()?.Left(),
-                position.Left()?.Left()?.Up(),
-                position.Left()?.Left()?.Down(),
-                position.Right(),
-                position.Right()?.Right(),
-                position.Right()?.Right()?.Up(),
-                position.Right()?.Right()?.Down(),
-                position.Up(),
-                position.Up()?.Up(),
-                position.Up()?.Up()?.Left(),
-                position.Up()?.Up()?.Right(),
-                position.Down(),
-                position.Down()?.Down(),
-                position.Down()?.Down()?.Left(),
-                position.Down()?.Down()?.Right(),
-                position.Up()?.Left(),
-                position.Up()?.Right(), 
-                position.Down()?.Left(),
-                position.Down()?.Right()
+                position,
+                position?.Left(),
+                position?.Left()?.Left(),
+                position?.Left()?.Left()?.Up(),
+                position?.Left()?.Left()?.Down(),
+                position?.Right(),
+                position?.Right()?.Right(),
+                position?.Right()?.Right()?.Up(),
+                position?.Right()?.Right()?.Down(),
+                position?.Up(),
+                position?.Up()?.Up(),
+                position?.Up()?.Up()?.Left(),
+                position?.Up()?.Up()?.Right(),
+                position?.Down(),
+                position?.Down()?.Down(),
+                position?.Down()?.Down()?.Left(),
+                position?.Down()?.Down()?.Right(),
+                position?.Up()?.Left(),
+                position?.Up()?.Right(), 
+                position?.Down()?.Left(),
+                position?.Down()?.Right()
             };
             return adjacentPositions;
         }

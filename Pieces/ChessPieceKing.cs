@@ -24,7 +24,7 @@ namespace Chess.Pieces
             return vdistance <= 1 && hdistance <= 1;
         }
 
-        protected override bool ImplementMove(ChessBoard board, BoardPosition position)
+        public override bool ImplementMove(ChessBoard board, BoardPosition position)
         {
             if (IsCastleMove(board, position))
             {

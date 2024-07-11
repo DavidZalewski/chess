@@ -100,7 +100,7 @@ namespace Chess.Pieces
         }
 
         public abstract bool IsValidMove(ChessBoard board, BoardPosition position);
-        protected abstract bool ImplementMove(ChessBoard board, BoardPosition position);
+        public abstract bool ImplementMove(ChessBoard board, BoardPosition position);
 
         public void Move(ChessBoard board, BoardPosition position)
         {
