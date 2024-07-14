@@ -6,7 +6,6 @@ using Chess.Board;
 using Chess.Callbacks;
 using Chess.GameState;
 using System.Data;
-using System.Runtime.InteropServices;
 
 namespace Tests
 {

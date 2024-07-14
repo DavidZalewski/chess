@@ -1,4 +1,5 @@
-﻿using Chess.Board;
+﻿using Chess.Attributes;
+using Chess.Board;
 using Chess.Callbacks;
 using Chess.Exceptions;
 using Chess.GameState;
@@ -331,10 +332,32 @@ namespace Chess.Controller
 
         }
 
+        [TestNeeded]
         internal void RuleSetNuclearHorse()
         {
             _chessPieces = ChessPieceFactory.CreateChessPiecesNuclearHorse();
         }
 
+        [TestNeeded]
+        internal bool ContainsRuleSet(string v)
+        {
+            return v.ToLowerInvariant() switch
+            {
+                "nuclearhorse" => _sequence.IsActionInSequence(RuleSetNuclearHorse),
+                "kingsforce" => _sequence.IsActionInSequence(RuleSetKingsForce),
+                "sevenbyeight" => _sequence.IsActionInSequence(RuleSetSevenByEight),
+                "pawnsonly" => _sequence.IsActionInSequence(RuleSetPawnsOnly),
+                _ => false,
+            };
+        }
+
+        [TestNeeded]
+        internal void NuclearHorseEndTurnHandler()
+        {
+            List<ChessPiece> nuclearBishops = _chessPieces.FindAll(p => p is NuclearBishopPiece).ToList();
+            // yes this duplicates the move, but its the simplest way of ensuring disabled blocks are not in the bishops path
+            foreach (NuclearBishopPiece nuclearBishop in nuclearBishops)
+                nuclearBishop.Move(_chessBoard, nuclearBishop.GetCurrentPosition());
+        }
     }
 }

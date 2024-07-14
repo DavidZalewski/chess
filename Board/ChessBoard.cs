@@ -173,6 +173,7 @@ namespace Chess.Board
 
         public void AddPiece(ChessPiece piece)
         {
+            piece.Move(this, piece.GetStartingPosition());
             GetSquare(piece.GetCurrentPosition()).Piece = piece;
             GenerateBoardID();
         }
@@ -241,7 +242,7 @@ namespace Chess.Board
             return output;
         }
 
-        private void SetSquareValue(BoardPosition position, Square square)
+        public void SetSquareValue(BoardPosition position, Square square)
         {
             Board[position.RankAsInt, position.FileAsInt] = square;
             GenerateBoardID();

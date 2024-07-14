@@ -47,8 +47,8 @@ namespace Chess.Pieces
                 {
                     if (!board.IsPieceAtPosition(adjPos, Color.WHITE) && !board.IsPieceAtPosition(adjPos, Color.BLACK))
                     {
-                        ChessPiece disabledSquare = new DisabledSquarePiece(adjPos);
-                        board.GetSquare(adjPos).Piece = disabledSquare;
+                        Square disabledSquare = new Square(new DisabledSquarePiece(adjPos));
+                        board.SetSquareValue(adjPos, disabledSquare);
                     }
 
                 }
@@ -88,7 +88,6 @@ namespace Chess.Pieces
         {
             List<BoardPosition?> adjacentPositions = new List<BoardPosition?>
             {
-                position,
                 position?.Left(),
                 position?.Left()?.Left(),
                 position?.Left()?.Left()?.Up(),

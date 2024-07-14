@@ -66,17 +66,20 @@ namespace Tests.Pieces
         public void NuclearBishopBlastsDisabledSquaresOnMove()
         {
             // Arrange
-            NuclearBishopPiece nuclearBishop = new NuclearBishopPiece(ChessPiece.Color.WHITE, 1, startingPos);
-            DisabledSquarePiece disabledSquare = new DisabledSquarePiece(disabledPos);
+            NuclearBishopPiece nuclearBishop = new(ChessPiece.Color.WHITE, 1, startingPos); // H8
             chessBoard.AddPiece(nuclearBishop);
-            chessBoard.AddPiece(disabledSquare);
+            chessBoard.AddPiece(new DisabledSquarePiece(new("C7")));
+            chessBoard.AddPiece(new DisabledSquarePiece(new("G3")));
+            chessBoard.AddPiece(new DisabledSquarePiece(new("B2")));
 
             // Act
-            BoardPosition movePos = new BoardPosition(RANK.SIX, FILE.C); // Example move position
+            BoardPosition movePos = new(RANK.FIVE, FILE.E); // E5
             nuclearBishop.Move(chessBoard, movePos);
 
             // Assert
-            Assert.That(chessBoard.GetSquare(disabledPos).Piece is NoPiece, Is.True, "Disabled square should be blasted away after Nuclear Bishop moves.");
+            Assert.That(chessBoard.GetSquare(new BoardPosition("C7")).Piece is NoPiece, Is.True, "Disabled square should be blasted away after Nuclear Bishop moves.");
+            Assert.That(chessBoard.GetSquare(new BoardPosition("G3")).Piece is NoPiece, Is.True, "Disabled square should be blasted away after Nuclear Bishop moves.");
+            Assert.That(chessBoard.GetSquare(new BoardPosition("B2")).Piece is NoPiece, Is.True, "Disabled square should be blasted away after Nuclear Bishop moves.");
         }
     }
 }

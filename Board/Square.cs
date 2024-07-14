@@ -1,4 +1,5 @@
-﻿using Chess.Pieces;
+﻿using Chess.Attributes;
+using Chess.Pieces;
 
 namespace Chess.Board
 {
@@ -18,6 +19,13 @@ namespace Chess.Board
         public Square(BoardPosition position, ChessPiece piece)
         {
             Position = position;
+            Piece = piece;
+        }
+
+        [TestNeeded]
+        public Square(ChessPiece piece)
+        {
+            Position = piece.GetCurrentPosition();
             Piece = piece;
         }
 

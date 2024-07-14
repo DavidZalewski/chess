@@ -3,7 +3,7 @@ using Chess.Controller;
 using Chess.GameState;
 using Chess.Interfaces;
 using Chess.Pieces;
-using System.ComponentModel.Design;
+
 
 namespace Chess
 {
@@ -53,6 +53,11 @@ namespace Chess
 
             _gameController.SetOnTurnHandler((Turn turn) =>
             {
+                if (_gameController.ContainsRuleSet("NuclearHorse"))
+                {
+                    _console.WriteLine("Applying NuclearHorse After Turn Effects");
+                    _gameController.NuclearHorseEndTurnHandler(); // apply the bishop moves again, to ensure that disabled squares cannot pop up in a bishops path
+                }
                 if (_AIMode)
                 {
                     ulong _unused = 0;
@@ -241,16 +246,25 @@ namespace Chess
 
                 try
                 {
-                    // THIS IS A PROGRAMMING MACRO FLAG!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                    bool aiInputSet = false;
+
+#if COMPILE_WITH_AI_FOR_BLACK
                     if (_AIMode && _gameController.TurnNumber % 2 == 0)
-                    //if (_AIMode)
                     {
                         input = _AICommand;
+                        aiInputSet = true;
                     }
-                    else
+#endif
+#if COMPILE_WITH_AI_FOR_BOTH
+                    if (_AIMode)
                     {
-                        input = _console.ReadLine();
+                        input = _AICommand;
+                        aiInputSet = true;
                     }
+#endif
+
+                    if (!aiInputSet) input = _console.ReadLine();
+
                     (string? command, string? argument) = ParseInput(input);
 
                     if (command == null || argument == null)
@@ -289,6 +303,8 @@ namespace Chess
                         continue;
                     }
 
+#if COMPILE_WITH_CHECK_SERVICE
+                    // I think the problem is here. This simulates future moves, so it must be deleting/creating disabled squares unintentionally
                     if (_gameController.IsCheckMate(turn))
                     {
                         if (turn.PlayerTurn.Equals(Turn.Color.WHITE))
@@ -305,27 +321,8 @@ namespace Chess
                         _console.WriteLine("Invalid Move. King would be in Check. Please Try Again");
                         continue;
                     }
-                    else
-                    {
-                        _gameController.ApplyTurnToGameState(turn);
-
-                        _console.WriteLine("Applying NuclearHorse After Turn Effects");
-                        List<ChessPiece>? nuclearHorsePieces = _gameController?.GetLastTurn()?
-                            .ChessPieces?.FindAll(cp => cp is NuclearHorsePiece).ToList();
-                        List<ChessPiece>? nuclearBishopPieces = _gameController?.GetLastTurn()?
-                            .ChessPieces?.FindAll(cp => cp is NuclearBishopPiece).ToList();
-
-                        // first do nuclear horses
-                        foreach (NuclearHorsePiece nuclearHorsePiece in nuclearHorsePieces)
-                        {
-                            _ = nuclearHorsePiece.ImplementMove(_gameController?.GetLastTurn()?.ChessBoard, turn.NewPosition);
-                        }
-                        // then do bishop breaking the inaccessible squares
-                        foreach (NuclearBishopPiece nuclearBishopPiece in nuclearBishopPieces)
-                        {
-                            _ = nuclearBishopPiece.ImplementMove(_gameController?.GetLastTurn()?.ChessBoard, turn.NewPosition);
-                        }
-                    }
+#endif
+                    _gameController.ApplyTurnToGameState(turn);
                 }
                 catch (Exception ex)
                 {

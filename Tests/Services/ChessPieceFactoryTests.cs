@@ -452,7 +452,7 @@ namespace Tests.Services
         public void CreatePieceFromInt_InvalidInput_ThrowsArgumentException()
         {
             var position = new BoardPosition(RANK.ONE, FILE.A);
-            Assert.Throws<ArgumentException>(() => ChessPieceFactory.CreatePieceFromInt(position, -1));
+            Assert.Throws<ArgumentException>(() => ChessPieceFactory.CreatePieceFromInt(position, -999));
         }
     }
 }
