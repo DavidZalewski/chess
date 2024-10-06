@@ -50,6 +50,17 @@ namespace Tests
             return gameController;
         }
 
+        [Test(Description = "Tests that the correct build flags are set")]
+        public void CompileWithCheckServiceEnabled()
+        {
+            bool defined = false;
+#if COMPILE_WITH_CHECK_SERVICE
+            defined = true;
+#endif
+
+            Assert.That(defined, Is.True, "Expected macro COMPILE_WITH_CHECK_SERVICE to be enabled for this build");
+        }
+
         [Test(Description = "Tests that you can now capture pieces by simply using: Piece1 Piece2")]
         public void EasierCaptureCommandTest()
         {
