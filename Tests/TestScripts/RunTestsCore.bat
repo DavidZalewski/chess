@@ -14,7 +14,7 @@ REM echo %TEST_DIR%
 cd %TEST_DIR%
 
 :: Run the tests and output to file
-dotnet test --filter "Category=CORE" /p:DefineConstants="COMPILE_WITH_CHECK_SERVICE"
+dotnet test --filter "Category=CORE" /p:DefineConstants="COMPILE_WITH_CHECK_SERVICE" --logger:"console;verbosity=detailed"
 
 REM Output redirection is commented out, but you can uncomment it to save the log if needed.
 REM > %OUTPUT_FILE% 2>&1

@@ -36,6 +36,7 @@ namespace Tests.Services
         public void WriteLine(string? text)
         {
             Outputs.Add(text);
+            Console.WriteLine(text);
         }
 
         public bool OutputHasExactString(string? text)
