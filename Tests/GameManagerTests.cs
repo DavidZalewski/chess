@@ -239,16 +239,16 @@ namespace Tests
             consoleInputs.Enqueue("BP3 C5");
             consoleInputs.Enqueue("WK E2");
             consoleInputs.Enqueue("BK2 F6");
-            consoleInputs.Enqueue("WK2 C3");
+            consoleInputs.Enqueue("WK1 C3");
             consoleInputs.Enqueue("BP4 D5");
-            consoleInputs.Enqueue("WK2 D5");
+            consoleInputs.Enqueue("WK1 D5");
             consoleInputs.Enqueue("BK2 D5");
             consoleInputs.Enqueue("WP5 D5");
             consoleInputs.Enqueue("BQ1 D6");
             consoleInputs.Enqueue("WP3 C4");
             consoleInputs.Enqueue("BQ1 E5");
             consoleInputs.Enqueue("WK D3");
-            consoleInputs.Enqueue("BB1 F5");
+            consoleInputs.Enqueue("BB1 F5"); // double check that BB1 is the right bishop being referenced
 
             IConsole consoleService = new MockConsoleService(consoleInputs);
             GameController gameController = GetGameController(consoleService);

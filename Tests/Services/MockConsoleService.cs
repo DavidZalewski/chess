@@ -27,6 +27,7 @@ namespace Tests.Services
                     throw new Exception("Mock Console Service has run out of mock inputs to use");
                 }
                 string readOut = Inputs.Dequeue();
+                Console.WriteLine(readOut); // so we can see what the input is supposed to be at this point
                 return readOut;
             }
 
