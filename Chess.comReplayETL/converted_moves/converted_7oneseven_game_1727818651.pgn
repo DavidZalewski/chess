@@ -1,22 +1,22 @@
-Command: WP5 E4
-Command: BP4 D5
-Command: WP5 E5
-Command: BK1 C6
-Command: WP4 D4
-Command: BP6 F6
-Command: WP6 F4
-Command: BP7 G5
-Command: WB1 E3
-Command: BB2 H6
-Command: WB2 B5
-Command: BP1 A6
-Command: WB2 C6
-Command: BP2 C6
-Command: WQ1 H5
-Command: BK D7
-Command: WK1 C3
-Command: BR1 B8
-Command: WK1 A4
-Command: BR1 B6
-Command: WK1 C5
+WP5 from e2 to e4
+BP4 from d7 to d5
+WP5 from e4 to e5
+BK1 from b8 to c6
+WP4 from d2 to d4
+BP6 from f7 to f6
+WP6 from f2 to f4
+BP7 from g7 to g5
+WB1 from c1 to e3
+BB2 from f8 to h6
+WB2 from f1 to b5
+BP1 from a7 to a6
+WB2 from b5 to c6
+BP2 from b7 to c6
+WQ1 from d1 to h5
+BK from e8 to d7
+WK1 from b1 to c3
+BR1 from a8 to b8
+WK1 from c3 to a4
+BR1 from b8 to b6
+WK1 from a4 to c5
 Outcome: White wins against Black by CheckMate!

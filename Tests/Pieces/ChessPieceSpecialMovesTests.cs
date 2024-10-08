@@ -44,6 +44,7 @@ namespace Tests.Pieces
             chessBoard.PopulateBoard(chessPieces);
 
             // in the beginning King's Side Castle should be possible
+            // TODO: These castle signatures are wrong. Queen Side is on H file (Queen is on E, not D square)
             Assert.That(whiteKing.IsValidMove(chessBoard, new("A1")), Is.False); // King moving to A1 is interpreted as Queen's Side Castle
             Assert.That(whiteKing.IsValidMove(chessBoard, new("H1")), Is.True); // King moving to A8 is interpreted as King's Side Castle
 

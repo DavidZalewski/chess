@@ -1,0 +1,7 @@
+{
+  "pgn_directory": "pgn",
+  "converted_moves_directory": "converted_moves",
+  "chess_com_username": "yourusername",
+  "chess_com_year": "2024",
+  "chess_com_month": "01"
+}

@@ -116,6 +116,10 @@ def get_piece_label(piece, move):
         elif piece.piece_type == chess.BISHOP:
             return black_bishops.get(position_index)
         elif piece.piece_type == chess.ROOK:
+            print("DEBUG")
+            print(black_rooks)
+            print(position_index)
+            print(black_rooks.get(position_index))
             return black_rooks.get(position_index)
         elif piece.piece_type == chess.KING:
             return black_king
@@ -152,8 +156,11 @@ def update_piece_tracking(move, piece):
             if position_index in black_bishops:
                 black_bishops[new_position_index] = black_bishops.pop(position_index)
         elif piece.piece_type == chess.ROOK:
+            print(f"Updating black rook position from {position_index} to {new_position_index}")
             if position_index in black_rooks:
                 black_rooks[new_position_index] = black_rooks.pop(position_index)
+            else:
+                print(f"Warning: Black rook not found at {position_index}")
 
 # Function to process and convert a PGN file (remaining the same as your original function)
 def convert_pgn_file(pgn_filepath, output_filepath):
@@ -174,23 +181,36 @@ def convert_pgn_file(pgn_filepath, output_filepath):
     # Extract and convert moves
     for move in game.mainline_moves():
         piece = board.piece_at(move.from_square)  # Get the piece on the from_square
-        piece_name = get_piece_label(piece, move)  # Get the piece's unique label
-        from_square = chess.square_name(move.from_square)  # Convert to standard notation (e.g., e2)
-        to_square = chess.square_name(move.to_square)  # Convert to standard notation (e.g., e4)
-
-        # Handle pawn promotion
-        if piece.piece_type == chess.PAWN and (chess.square_rank(move.to_square) == 0 or chess.square_rank(move.to_square) == 7):
-            if piece.color == chess.WHITE:
-                white_queen = "WQ2"  # Update to the new queen label
-            else:
-                black_queen = "BQ2"  # Update to the new queen label
-
-        # Store the converted move in a structured format
-        converted_moves.append(f"Command: {piece_name} {to_square.upper()}")
-
-        update_piece_tracking(move, piece)  # Update piece tracking for next moves
-        board.push(move)  # Make the move on the board to update the position
-
+        if (piece is None):
+            print(f"piece is NoneType from ({chess.square_rank(move.from_square)},{chess.square_file(move.from_square)})")
+            print(f"move in question: {move}")
+        if board.is_castling(move):
+            print("Handling castling")
+            # Determine if it is kingside or queenside castling and update both the king and rook positions
+            if chess.square_file(move.to_square) == 6:  # Kingside castling
+                rook_position = (chess.square_rank(move.from_square), 7)  # Original rook position (h8 or h1)
+                rook_new_position = (chess.square_rank(move.from_square), 5)  # New rook position (f8 or f1)
+                if piece.color == chess.WHITE:
+                    white_rooks[rook_new_position] = white_rooks.pop(rook_position)
+                else:
+                    black_rooks[rook_new_position] = black_rooks.pop(rook_position)
+            else:  # Queenside castling
+                rook_position = (chess.square_rank(move.from_square), 0)  # Original rook position (a8 or a1)
+                rook_new_position = (chess.square_rank(move.from_square), 3)  # New rook position (d8 or d1)
+                if piece.color == chess.WHITE:
+                    white_rooks[rook_new_position] = white_rooks.pop(rook_position)
+                else:
+                    black_rooks[rook_new_position] = black_rooks.pop(rook_position)
+        else:
+            piece_name = get_piece_label(piece, move)  # Get the piece's unique label
+            from_square = chess.square_name(move.from_square)  # Convert to standard notation (e.g., e2)
+            to_square = chess.square_name(move.to_square)  # Convert to standard notation (e.g., e4)
+            # Store the converted move in a structured format
+            converted_moves.append(f"Original: move: {move}, piece: {piece}, from_square: {from_square}, to_square: {to_square}, piece_name: {piece_name} ")
+            converted_moves.append(f"Command: {piece_name} {to_square.upper()}")
+            update_piece_tracking(move, piece)  # Ensure we track the move
+            board.push(move)  # Update the board after the move
+            
     # Check the final state of the game
     result = game.headers.get("Result", "Unknown")  # Check if the result is stored in the PGN file
     

@@ -1,13 +1,13 @@
-Command: WP5 E4
-Command: BP4 D5
-Command: WP2 B3
-Command: BP6 F5
-Command: WP5 F5
-Command: BB1 F5
-Command: WK1 C3
-Command: BK2 F6
-Command: WQ1 F3
-Command: BP5 E6
-Command: WB1 B2
-Command: BB2 B4
+WP5 from e2 to e4
+BP4 from d7 to d5
+WP2 from b2 to b3
+BP6 from f7 to f5
+WP5 from e4 to f5
+BB1 from c8 to f5
+WK1 from b1 to c3
+BK2 from g8 to f6
+WQ1 from d1 to f3
+BP5 from e7 to e6
+WB1 from c1 to b2
+BB2 from f8 to b4
 Outcome: Black won by resignation or other means
