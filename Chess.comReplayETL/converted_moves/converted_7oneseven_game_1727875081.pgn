@@ -1,46 +1,46 @@
-Piece: WP4, From: d2, To: d4
-Piece: BP4, From: d7, To: d5
-Piece: WK1, From: b1, To: c3
-Piece: BK1, From: b8, To: c6
-Piece: WK2, From: g1, To: f3
-Piece: BP8, From: h7, To: h6
-Piece: WP5, From: e2, To: e3
-Piece: BP1, From: a7, To: a6
-Piece: WP1, From: a2, To: a3
-Piece: BB1, From: c8, To: g4
-Piece: WP2, From: b2, To: b4
-Piece: BK2, From: g8, To: f6
-Piece: WP8, From: h2, To: h3
-Piece: BK2, From: f6, To: e4
-Piece: WK1, From: c3, To: e4
-Piece: BP4, From: d5, To: e4
-Piece: WP8, From: h3, To: g4
-Piece: BP4, From: e4, To: f3
-Piece: WQ1, From: d1, To: f3
-Piece: BP5, From: e7, To: e6
-Piece: WP2, From: b4, To: b5
-Piece: BP1, From: a6, To: b5
-Piece: WB2, From: f1, To: b5
-Piece: BB2, From: f8, To: e7
-Piece: WB2, From: b5, To: c6
-Piece: BK, From: e8, To: f8
-Piece: WB2, From: c6, To: b7
-Piece: BB2, From: e7, To: b4
-Piece: WB1, From: c1, To: d2
-Piece: BB2, From: b4, To: d2
-Piece: WK, From: e1, To: d2
-Piece: BR1, From: a8, To: a4
-Piece: WR2, From: h1, To: b1
-Piece: BQ1, From: d8, To: d7
-Piece: WB2, From: b7, To: c6
-Piece: BQ1, From: d7, To: d6
-Piece: WR2, From: b1, To: b8
-Piece: BK, From: f8, To: e7
-Piece: WR2, From: b8, To: h8
-Piece: BR1, From: a4, To: d4
-Piece: WP5, From: e3, To: d4
-Piece: BQ1, From: d6, To: d4
-Piece: WQ1, From: f3, To: d3
-Piece: BQ1, From: d4, To: a1
-Piece: WQ1, From: d3, To: d8
-Game outcome: White wins by checkmate
+Command: WP4 D4
+Command: BP4 D5
+Command: WK1 C3
+Command: BK1 C6
+Command: WK2 F3
+Command: BP8 H6
+Command: WP5 E3
+Command: BP1 A6
+Command: WP1 A3
+Command: BB1 G4
+Command: WP2 B4
+Command: BK2 F6
+Command: WP8 H3
+Command: BK2 E4
+Command: WK1 E4
+Command: BP4 E4
+Command: WP8 G4
+Command: BP4 F3
+Command: WQ1 F3
+Command: BP5 E6
+Command: WP2 B5
+Command: BP1 B5
+Command: WB2 B5
+Command: BB2 E7
+Command: WB2 C6
+Command: BK F8
+Command: WB2 B7
+Command: BB2 B4
+Command: WB1 D2
+Command: BB2 D2
+Command: WK D2
+Command: BR1 A4
+Command: WR2 B1
+Command: BQ1 D7
+Command: WB2 C6
+Command: BQ1 D6
+Command: WR2 B8
+Command: BK E7
+Command: WR2 H8
+Command: BR1 D4
+Command: WP5 D4
+Command: BQ1 D4
+Command: WQ1 D3
+Command: BQ1 A1
+Command: WQ1 D8
+Outcome: White wins against Black by CheckMate!

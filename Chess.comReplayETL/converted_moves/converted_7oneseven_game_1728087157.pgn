@@ -1,139 +1,139 @@
-Piece: WP5, From: e2, To: e4
-Piece: BP4, From: d7, To: d5
-Piece: WP5, From: e4, To: d5
-Piece: BQ1, From: d8, To: d5
-Piece: WK1, From: b1, To: c3
-Piece: BQ1, From: d5, To: e5
-Piece: WB2, From: f1, To: e2
-Piece: BB1, From: c8, To: g4
-Piece: WP6, From: f2, To: f3
-Piece: BB1, From: g4, To: f5
-Piece: WP4, From: d2, To: d4
-Piece: BQ1, From: e5, To: a5
-Piece: WB1, From: c1, To: d2
-Piece: BQ1, From: a5, To: b4
-Piece: WK1, From: c3, To: d5
-Piece: BQ1, From: b4, To: d6
-Piece: WB2, From: e2, To: b5
-Piece: BP3, From: c7, To: c6
-Piece: WP7, From: g2, To: g4
-Piece: BQ1, From: d6, To: d5
-Piece: WP7, From: g4, To: f5
-Piece: BQ1, From: d5, To: b5
-Piece: WB1, From: d2, To: c3
-Piece: BQ1, From: b5, To: f5
-Piece: WQ1, From: d1, To: e2
-Piece: BQ1, From: f5, To: b5
-Piece: WK, From: e1, To: c1
-Piece: BQ1, From: b5, To: e2
-Piece: WK2, From: g1, To: e2
-Piece: BK2, From: g8, To: f6
-Piece: WK2, From: e2, To: f4
-Piece: BK2, From: f6, To: d5
-Piece: WK2, From: f4, To: d5
-Piece: BP3, From: c6, To: d5
-Piece: WP6, From: f3, To: f4
-Piece: BP5, From: e7, To: e6
-Piece: WR2, From: h1, To: e1
-Piece: BB2, From: f8, To: d6
-Piece: WP6, From: f4, To: f5
-Piece: BB2, From: d6, To: h2
-Piece: WP6, From: f5, To: e6
-Piece: BB2, From: h2, To: g3
-Piece: WR2, From: e1, To: e2
-Piece: BK, From: e8, To: g8
-Piece: WP6, From: e6, To: e7
-Piece: None, From: f8, To: e8
-Piece: WB1, From: c3, To: b4
-Piece: BK1, From: b8, To: c6
-Piece: WB1, From: b4, To: c5
-Piece: BP2, From: b7, To: b6
-Piece: None, From: d1, To: g1
-Piece: BB2, From: g3, To: f4
-Piece: WK, From: c1, To: d1
-Piece: BP2, From: b6, To: c5
-Piece: WP4, From: d4, To: c5
-Piece: None, From: e8, To: e7
-Piece: WR2, From: e2, To: g2
-Piece: BP6, From: f7, To: f5
-Piece: None, From: g1, To: f1
-Piece: None, From: e7, To: e4
-Piece: None, From: f1, To: g1
-Piece: BB2, From: f4, To: h6
-Piece: WR2, From: g2, To: h2
-Piece: None, From: e4, To: e6
-Piece: None, From: g1, To: f1
-Piece: BR1, From: a8, To: f8
-Piece: WR2, From: h2, To: f2
-Piece: BP7, From: g7, To: g6
-Piece: WR2, From: f2, To: f3
-Piece: BK1, From: c6, To: d4
-Piece: WR2, From: f3, To: a3
-Piece: BR1, From: f8, To: f7
-Piece: WR2, From: a3, To: d3
-Piece: None, From: e6, To: e4
-Piece: WP3, From: c2, To: c3
-Piece: BB2, From: h6, To: g7
-Piece: WP4, From: c5, To: c6
-Piece: BP7, From: g6, To: g5
-Piece: WP3, From: c3, To: d4
-Piece: None, From: e4, To: d4
-Piece: WR2, From: d3, To: d4
-Piece: BB2, From: g7, To: d4
-Piece: None, From: f1, To: e1
-Piece: BB2, From: d4, To: b2
-Piece: None, From: e1, To: e8
-Piece: BK, From: g8, To: g7
-Piece: None, From: e8, To: b8
-Piece: BB2, From: b2, To: e5
-Piece: None, From: b8, To: e8
-Piece: BP6, From: f5, To: f4
-Piece: None, From: e8, To: e5
-Piece: BP6, From: f4, To: f3
-Piece: WK, From: d1, To: e1
-Piece: BP7, From: g5, To: g4
-Piece: None, From: e5, To: g5
-Piece: BK, From: g7, To: h6
-Piece: None, From: g5, To: g4
-Piece: BR1, From: f7, To: e7
-Piece: WK, From: e1, To: f2
-Piece: BR1, From: e7, To: c7
-Piece: None, From: g4, To: h4
-Piece: BK, From: h6, To: g6
-Piece: None, From: h4, To: g4
-Piece: BK, From: g6, To: h5
-Piece: None, From: g4, To: a4
-Piece: BR1, From: c7, To: c6
-Piece: None, From: a4, To: a7
-Piece: BR1, From: c6, To: c2
-Piece: WK, From: f2, To: f3
-Piece: BR1, From: c2, To: c3
-Piece: WK, From: f3, To: e2
-Piece: BP3, From: d5, To: d4
-Piece: None, From: a7, To: d7
-Piece: BR1, From: c3, To: c4
-Piece: WK, From: e2, To: d3
-Piece: BR1, From: c4, To: a4
-Piece: None, From: d7, To: h7
-Piece: BK, From: h5, To: g6
-Piece: None, From: h7, To: h4
-Piece: BR1, From: a4, To: a2
-Piece: None, From: h4, To: d4
-Piece: BR1, From: a2, To: a3
-Piece: WK, From: d3, To: e4
-Piece: BR1, From: a3, To: a6
-Piece: WK, From: e4, To: e5
-Piece: BR1, From: a6, To: a5
-Piece: WK, From: e5, To: e6
-Piece: BR1, From: a5, To: a6
-Piece: WK, From: e6, To: e5
-Piece: BR1, From: a6, To: a5
-Piece: WK, From: e5, To: e4
-Piece: BR1, From: a5, To: a6
-Piece: WK, From: e4, To: f4
-Piece: BR1, From: a6, To: f6
-Piece: WK, From: f4, To: e5
-Piece: BR1, From: f6, To: f5
-Piece: WK, From: e5, To: e6
-Piece: BR1, From: f5, To: f6
-Game outcome: Black won by resignation or other means
+Command: WP5 E4
+Command: BP4 D5
+Command: WP5 D5
+Command: BQ1 D5
+Command: WK1 C3
+Command: BQ1 E5
+Command: WB2 E2
+Command: BB1 G4
+Command: WP6 F3
+Command: BB1 F5
+Command: WP4 D4
+Command: BQ1 A5
+Command: WB1 D2
+Command: BQ1 B4
+Command: WK1 D5
+Command: BQ1 D6
+Command: WB2 B5
+Command: BP3 C6
+Command: WP7 G4
+Command: BQ1 D5
+Command: WP7 F5
+Command: BQ1 B5
+Command: WB1 C3
+Command: BQ1 F5
+Command: WQ1 E2
+Command: BQ1 B5
+Command: WK C1
+Command: BQ1 E2
+Command: WK2 E2
+Command: BK2 F6
+Command: WK2 F4
+Command: BK2 D5
+Command: WK2 D5
+Command: BP3 D5
+Command: WP6 F4
+Command: BP5 E6
+Command: WR2 E1
+Command: BB2 D6
+Command: WP6 F5
+Command: BB2 H2
+Command: WP6 E6
+Command: BB2 G3
+Command: WR2 E2
+Command: BK G8
+Command: WP6 E7
+Command: None E8
+Command: WB1 B4
+Command: BK1 C6
+Command: WB1 C5
+Command: BP2 B6
+Command: None G1
+Command: BB2 F4
+Command: WK D1
+Command: BP2 C5
+Command: WP4 C5
+Command: None E7
+Command: WR2 G2
+Command: BP6 F5
+Command: None F1
+Command: None E4
+Command: None G1
+Command: BB2 H6
+Command: WR2 H2
+Command: None E6
+Command: None F1
+Command: BR1 F8
+Command: WR2 F2
+Command: BP7 G6
+Command: WR2 F3
+Command: BK1 D4
+Command: WR2 A3
+Command: BR1 F7
+Command: WR2 D3
+Command: None E4
+Command: WP3 C3
+Command: BB2 G7
+Command: WP4 C6
+Command: BP7 G5
+Command: WP3 D4
+Command: None D4
+Command: WR2 D4
+Command: BB2 D4
+Command: None E1
+Command: BB2 B2
+Command: None E8
+Command: BK G7
+Command: None B8
+Command: BB2 E5
+Command: None E8
+Command: BP6 F4
+Command: None E5
+Command: BP6 F3
+Command: WK E1
+Command: BP7 G4
+Command: None G5
+Command: BK H6
+Command: None G4
+Command: BR1 E7
+Command: WK F2
+Command: BR1 C7
+Command: None H4
+Command: BK G6
+Command: None G4
+Command: BK H5
+Command: None A4
+Command: BR1 C6
+Command: None A7
+Command: BR1 C2
+Command: WK F3
+Command: BR1 C3
+Command: WK E2
+Command: BP3 D4
+Command: None D7
+Command: BR1 C4
+Command: WK D3
+Command: BR1 A4
+Command: None H7
+Command: BK G6
+Command: None H4
+Command: BR1 A2
+Command: None D4
+Command: BR1 A3
+Command: WK E4
+Command: BR1 A6
+Command: WK E5
+Command: BR1 A5
+Command: WK E6
+Command: BR1 A6
+Command: WK E5
+Command: BR1 A5
+Command: WK E4
+Command: BR1 A6
+Command: WK F4
+Command: BR1 F6
+Command: WK E5
+Command: BR1 F5
+Command: WK E6
+Command: BR1 F6
+Outcome: Black won by resignation or other means

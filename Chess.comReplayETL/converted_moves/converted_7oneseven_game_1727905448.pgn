@@ -1,129 +1,129 @@
-Piece: WP4, From: d2, To: d4
-Piece: BP4, From: d7, To: d5
-Piece: WP5, From: e2, To: e3
-Piece: BP3, From: c7, To: c5
-Piece: WP3, From: c2, To: c4
-Piece: BP5, From: e7, To: e6
-Piece: WP7, From: g2, To: g4
-Piece: BB1, From: c8, To: d7
-Piece: WP6, From: f2, To: f4
-Piece: BP7, From: g7, To: g6
-Piece: WB1, From: c1, To: d2
-Piece: BB1, From: d7, To: c6
-Piece: WP2, From: b2, To: b4
-Piece: BP4, From: d5, To: c4
-Piece: WB2, From: f1, To: c4
-Piece: BB1, From: c6, To: h1
-Piece: WP2, From: b4, To: c5
-Piece: BB2, From: f8, To: g7
-Piece: WK2, From: g1, To: e2
-Piece: BQ1, From: d8, To: h4
-Piece: WK2, From: e2, To: g3
-Piece: BQ1, From: h4, To: h2
-Piece: WK2, From: g3, To: f1
-Piece: BQ1, From: h2, To: g1
-Piece: WB2, From: c4, To: b5
-Piece: BB1, From: h1, To: c6
-Piece: WB2, From: b5, To: c6
-Piece: BK1, From: b8, To: c6
-Piece: WK1, From: b1, To: a3
-Piece: BP1, From: a7, To: a6
-Piece: WR1, From: a1, To: b1
-Piece: BR1, From: a8, To: b8
-Piece: WK1, From: a3, To: c4
-Piece: BK2, From: g8, To: e7
-Piece: WK1, From: c4, To: d6
-Piece: BK, From: e8, To: d7
-Piece: WK1, From: d6, To: f7
-Piece: BR2, From: h8, To: f8
-Piece: WK1, From: f7, To: g5
-Piece: BQ1, From: g1, To: h1
-Piece: WB1, From: d2, To: c3
-Piece: BP8, From: h7, To: h6
-Piece: WK1, From: g5, To: h7
-Piece: BR2, From: f8, To: f7
-Piece: WQ1, From: d1, To: d3
-Piece: BK2, From: e7, To: d5
-Piece: WQ1, From: d3, To: g6
-Piece: BK1, From: c6, To: d8
-Piece: WB1, From: c3, To: d2
-Piece: BP2, From: b7, To: b5
-Piece: WP7, From: g4, To: g5
-Piece: BQ1, From: h1, To: h4
-Piece: WK, From: e1, To: e2
-Piece: BQ1, From: h4, To: g4
-Piece: WK, From: e2, To: d3
-Piece: BP8, From: h6, To: h5
-Piece: WB1, From: d2, To: e1
-Piece: BQ1, From: g4, To: f5
-Piece: WQ1, From: g6, To: f5
-Piece: BP5, From: e6, To: f5
-Piece: WP7, From: g5, To: g6
-Piece: BR2, From: f7, To: e7
-Piece: WB1, From: e1, To: h4
-Piece: BR2, From: e7, To: e4
-Piece: WB1, From: h4, To: d8
-Piece: BR1, From: b8, To: d8
-Piece: WK2, From: f1, To: g3
-Piece: BR2, From: e4, To: e3
-Piece: WK, From: d3, To: d2
-Piece: BR2, From: e3, To: g3
-Piece: WK1, From: h7, To: g5
-Piece: BR2, From: g3, To: g5
-Piece: WP6, From: f4, To: g5
-Piece: BR1, From: d8, To: e8
-Piece: WP1, From: a2, To: a3
-Piece: BK2, From: d5, To: f4
-Piece: WR1, From: b1, To: b4
-Piece: BR1, From: e8, To: e4
-Piece: WP1, From: a3, To: a4
-Piece: BK2, From: f4, To: g6
-Piece: WP1, From: a4, To: b5
-Piece: BP1, From: a6, To: a5
-Piece: WP2, From: c5, To: c6
-Piece: BK, From: d7, To: c8
-Piece: WR1, From: b4, To: a4
-Piece: BR1, From: e4, To: d4
-Piece: WR1, From: a4, To: d4
-Piece: BB2, From: g7, To: d4
-Piece: WK, From: d2, To: d3
-Piece: BB2, From: d4, To: b6
-Piece: WK, From: d3, To: c4
-Piece: BK, From: c8, To: c7
-Piece: WK, From: c4, To: d5
-Piece: BP8, From: h5, To: h4
-Piece: WK, From: d5, To: e6
-Piece: BP5, From: f5, To: f4
-Piece: WK, From: e6, To: f6
-Piece: BK2, From: g6, To: f8
-Piece: WP6, From: g5, To: g6
-Piece: BK2, From: f8, To: g6
-Piece: WK, From: f6, To: g6
-Piece: BP5, From: f4, To: f3
-Piece: WK, From: g6, To: g5
-Piece: BP8, From: h4, To: h3
-Piece: WK, From: g5, To: g4
-Piece: BP8, From: h3, To: h2
-Piece: WK, From: g4, To: f3
-Piece: BP8, From: h2, To: h1
-Piece: WK, From: f3, To: f4
-Piece: BQ1, From: h1, To: d5
-Piece: WK, From: f4, To: g4
-Piece: BQ1, From: d5, To: b5
-Piece: WK, From: g4, To: f4
-Piece: BQ1, From: b5, To: c6
-Piece: WK, From: f4, To: f5
-Piece: BK, From: c7, To: d6
-Piece: WK, From: f5, To: f4
-Piece: BK, From: d6, To: d5
-Piece: WK, From: f4, To: f5
-Piece: BQ1, From: c6, To: e6
-Piece: WK, From: f5, To: f4
-Piece: BQ1, From: e6, To: e4
-Piece: WK, From: f4, To: g5
-Piece: BK, From: d5, To: e5
-Piece: WK, From: g5, To: h6
-Piece: BK, From: e5, To: f6
-Piece: WK, From: h6, To: h5
-Piece: BQ1, From: e4, To: f4
-Game outcome: Game ended in stalemate
+Command: WP4 D4
+Command: BP4 D5
+Command: WP5 E3
+Command: BP3 C5
+Command: WP3 C4
+Command: BP5 E6
+Command: WP7 G4
+Command: BB1 D7
+Command: WP6 F4
+Command: BP7 G6
+Command: WB1 D2
+Command: BB1 C6
+Command: WP2 B4
+Command: BP4 C4
+Command: WB2 C4
+Command: BB1 H1
+Command: WP2 C5
+Command: BB2 G7
+Command: WK2 E2
+Command: BQ1 H4
+Command: WK2 G3
+Command: BQ1 H2
+Command: WK2 F1
+Command: BQ1 G1
+Command: WB2 B5
+Command: BB1 C6
+Command: WB2 C6
+Command: BK1 C6
+Command: WK1 A3
+Command: BP1 A6
+Command: WR1 B1
+Command: BR1 B8
+Command: WK1 C4
+Command: BK2 E7
+Command: WK1 D6
+Command: BK D7
+Command: WK1 F7
+Command: BR2 F8
+Command: WK1 G5
+Command: BQ1 H1
+Command: WB1 C3
+Command: BP8 H6
+Command: WK1 H7
+Command: BR2 F7
+Command: WQ1 D3
+Command: BK2 D5
+Command: WQ1 G6
+Command: BK1 D8
+Command: WB1 D2
+Command: BP2 B5
+Command: WP7 G5
+Command: BQ1 H4
+Command: WK E2
+Command: BQ1 G4
+Command: WK D3
+Command: BP8 H5
+Command: WB1 E1
+Command: BQ1 F5
+Command: WQ1 F5
+Command: BP5 F5
+Command: WP7 G6
+Command: BR2 E7
+Command: WB1 H4
+Command: BR2 E4
+Command: WB1 D8
+Command: BR1 D8
+Command: WK2 G3
+Command: BR2 E3
+Command: WK D2
+Command: BR2 G3
+Command: WK1 G5
+Command: BR2 G5
+Command: WP6 G5
+Command: BR1 E8
+Command: WP1 A3
+Command: BK2 F4
+Command: WR1 B4
+Command: BR1 E4
+Command: WP1 A4
+Command: BK2 G6
+Command: WP1 B5
+Command: BP1 A5
+Command: WP2 C6
+Command: BK C8
+Command: WR1 A4
+Command: BR1 D4
+Command: WR1 D4
+Command: BB2 D4
+Command: WK D3
+Command: BB2 B6
+Command: WK C4
+Command: BK C7
+Command: WK D5
+Command: BP8 H4
+Command: WK E6
+Command: BP5 F4
+Command: WK F6
+Command: BK2 F8
+Command: WP6 G6
+Command: BK2 G6
+Command: WK G6
+Command: BP5 F3
+Command: WK G5
+Command: BP8 H3
+Command: WK G4
+Command: BP8 H2
+Command: WK F3
+Command: BP8 H1
+Command: WK F4
+Command: BQ1 D5
+Command: WK G4
+Command: BQ1 B5
+Command: WK F4
+Command: BQ1 C6
+Command: WK F5
+Command: BK D6
+Command: WK F4
+Command: BK D5
+Command: WK F5
+Command: BQ1 E6
+Command: WK F4
+Command: BQ1 E4
+Command: WK G5
+Command: BK E5
+Command: WK H6
+Command: BK F6
+Command: WK H5
+Command: BQ1 F4
+Outcome: Game ended in stalemate

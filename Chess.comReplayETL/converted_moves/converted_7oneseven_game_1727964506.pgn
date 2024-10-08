@@ -1,89 +1,89 @@
-Piece: WP4, From: d2, To: d4
-Piece: BK1, From: b8, To: c6
-Piece: WP4, From: d4, To: d5
-Piece: BK1, From: c6, To: b4
-Piece: WP3, From: c2, To: c3
-Piece: BK1, From: b4, To: a6
-Piece: WP2, From: b2, To: b4
-Piece: BP5, From: e7, To: e5
-Piece: WP5, From: e2, To: e4
-Piece: BP4, From: d7, To: d6
-Piece: WB2, From: f1, To: a6
-Piece: BP2, From: b7, To: a6
-Piece: WQ1, From: d1, To: g4
-Piece: BB1, From: c8, To: g4
-Piece: WP6, From: f2, To: f3
-Piece: BB1, From: g4, To: d7
-Piece: WP1, From: a2, To: a4
-Piece: BQ1, From: d8, To: h4
-Piece: WP7, From: g2, To: g3
-Piece: BQ1, From: h4, To: f6
-Piece: WP6, From: f3, To: f4
-Piece: BP5, From: e5, To: f4
-Piece: WP7, From: g3, To: f4
-Piece: BQ1, From: f6, To: h4
-Piece: WK, From: e1, To: f1
-Piece: BK2, From: g8, To: h6
-Piece: WR1, From: a1, To: a2
-Piece: BK2, From: h6, To: g4
-Piece: WP7, From: f4, To: f5
-Piece: BB1, From: d7, To: a4
-Piece: WK2, From: g1, To: f3
-Piece: BK2, From: g4, To: e3
-Piece: WB1, From: c1, To: e3
-Piece: BQ1, From: h4, To: e4
-Piece: WK, From: f1, To: f2
-Piece: BP7, From: g7, To: g5
-Piece: WP7, From: f5, To: g6
-Piece: BP8, From: h7, To: g6
-Piece: WR1, From: a2, To: a4
-Piece: BR2, From: h8, To: h3
-Piece: WK1, From: b1, To: d2
-Piece: BQ1, From: e4, To: c2
-Piece: WR1, From: a4, To: a6
-Piece: BQ1, From: c2, To: c3
-Piece: WK2, From: f3, To: g5
-Piece: BQ1, From: c3, To: e3
-Piece: WK, From: f2, To: f1
-Piece: BQ1, From: e3, To: d2
-Piece: WK2, From: g5, To: h3
-Piece: BQ1, From: d2, To: d3
-Piece: WK, From: f1, To: g2
-Piece: BQ1, From: d3, To: a6
-Piece: WR2, From: h1, To: e1
-Piece: BK, From: e8, To: d8
-Piece: WK2, From: h3, To: f4
-Piece: BQ1, From: a6, To: a2
-Piece: WR2, From: e1, To: e2
-Piece: BQ1, From: a2, To: c4
-Piece: WK, From: g2, To: f3
-Piece: BQ1, From: c4, To: b4
-Piece: WR2, From: e2, To: e4
-Piece: BQ1, From: b4, To: c3
-Piece: WK, From: f3, To: g4
-Piece: BR1, From: a8, To: b8
-Piece: WP8, From: h2, To: h4
-Piece: BR1, From: b8, To: b3
-Piece: WK, From: g4, To: g5
-Piece: BQ1, From: c3, To: g3
-Piece: WK, From: g5, To: f6
-Piece: BQ1, From: g3, To: f3
-Piece: WR2, From: e4, To: c4
-Piece: BB2, From: f8, To: h6
-Piece: WK, From: f6, To: f7
-Piece: BB2, From: h6, To: f4
-Piece: WR2, From: c4, To: f4
-Piece: BQ1, From: f3, To: f4
-Piece: WK, From: f7, To: g6
-Piece: BR1, From: b3, To: f3
-Piece: WP8, From: h4, To: h5
-Piece: BQ1, From: f4, To: f5
-Piece: WK, From: g6, To: h6
-Piece: BQ1, From: f5, To: f6
-Piece: WK, From: h6, To: h7
-Piece: BR1, From: f3, To: g3
-Piece: WP8, From: h5, To: h6
-Piece: BQ1, From: f6, To: f7
-Piece: WK, From: h7, To: h8
-Piece: BQ1, From: f7, To: g8
-Game outcome: Black wins by checkmate
+Command: WP4 D4
+Command: BK1 C6
+Command: WP4 D5
+Command: BK1 B4
+Command: WP3 C3
+Command: BK1 A6
+Command: WP2 B4
+Command: BP5 E5
+Command: WP5 E4
+Command: BP4 D6
+Command: WB2 A6
+Command: BP2 A6
+Command: WQ1 G4
+Command: BB1 G4
+Command: WP6 F3
+Command: BB1 D7
+Command: WP1 A4
+Command: BQ1 H4
+Command: WP7 G3
+Command: BQ1 F6
+Command: WP6 F4
+Command: BP5 F4
+Command: WP7 F4
+Command: BQ1 H4
+Command: WK F1
+Command: BK2 H6
+Command: WR1 A2
+Command: BK2 G4
+Command: WP7 F5
+Command: BB1 A4
+Command: WK2 F3
+Command: BK2 E3
+Command: WB1 E3
+Command: BQ1 E4
+Command: WK F2
+Command: BP7 G5
+Command: WP7 G6
+Command: BP8 G6
+Command: WR1 A4
+Command: BR2 H3
+Command: WK1 D2
+Command: BQ1 C2
+Command: WR1 A6
+Command: BQ1 C3
+Command: WK2 G5
+Command: BQ1 E3
+Command: WK F1
+Command: BQ1 D2
+Command: WK2 H3
+Command: BQ1 D3
+Command: WK G2
+Command: BQ1 A6
+Command: WR2 E1
+Command: BK D8
+Command: WK2 F4
+Command: BQ1 A2
+Command: WR2 E2
+Command: BQ1 C4
+Command: WK F3
+Command: BQ1 B4
+Command: WR2 E4
+Command: BQ1 C3
+Command: WK G4
+Command: BR1 B8
+Command: WP8 H4
+Command: BR1 B3
+Command: WK G5
+Command: BQ1 G3
+Command: WK F6
+Command: BQ1 F3
+Command: WR2 C4
+Command: BB2 H6
+Command: WK F7
+Command: BB2 F4
+Command: WR2 F4
+Command: BQ1 F4
+Command: WK G6
+Command: BR1 F3
+Command: WP8 H5
+Command: BQ1 F5
+Command: WK H6
+Command: BQ1 F6
+Command: WK H7
+Command: BR1 G3
+Command: WP8 H6
+Command: BQ1 F7
+Command: WK H8
+Command: BQ1 G8
+Outcome: Black wins against White by CheckMate!

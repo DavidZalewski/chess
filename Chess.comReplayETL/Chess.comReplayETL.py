@@ -186,7 +186,7 @@ def convert_pgn_file(pgn_filepath, output_filepath):
                 black_queen = "BQ2"  # Update to the new queen label
 
         # Store the converted move in a structured format
-        converted_moves.append(f"Piece: {piece_name}, From: {from_square}, To: {to_square}")
+        converted_moves.append(f"Command: {piece_name} {to_square.upper()}")
 
         update_piece_tracking(move, piece)  # Update piece tracking for next moves
         board.push(move)  # Make the move on the board to update the position
@@ -196,9 +196,9 @@ def convert_pgn_file(pgn_filepath, output_filepath):
     
     if board.is_checkmate():
         if board.turn:  # If it's White's turn, that means Black delivered checkmate
-            outcome = "Black wins by checkmate"
+            outcome = "Black wins against White by CheckMate!"
         else:
-            outcome = "White wins by checkmate"
+            outcome = "White wins against Black by CheckMate!"
     elif board.is_stalemate():
         outcome = "Game ended in stalemate"
     elif result == "1-0":
@@ -211,7 +211,7 @@ def convert_pgn_file(pgn_filepath, output_filepath):
         outcome = "Unknown outcome"
 
     # Append the game outcome to the converted moves
-    converted_moves.append(f"Game outcome: {outcome}")
+    converted_moves.append(f"Outcome: {outcome}")
 
     # Write the converted moves to the output file
     with open(output_filepath, "w") as output_file:

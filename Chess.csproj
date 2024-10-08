@@ -8,6 +8,7 @@
 	<GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     <GenerateTargetFrameworkAttribute>false</GenerateTargetFrameworkAttribute>
     <StartupObject></StartupObject> 
+	<DefineConstants>COMPILE_WITH_CHECK_SERVICE</DefineConstants>
   </PropertyGroup>
 
   <ItemGroup>

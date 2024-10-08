@@ -1,43 +1,43 @@
-Piece: WP4, From: d2, To: d4
-Piece: BP5, From: e7, To: e6
-Piece: WP5, From: e2, To: e4
-Piece: BP4, From: d7, To: d5
-Piece: WP6, From: f2, To: f3
-Piece: BP3, From: c7, To: c5
-Piece: WP3, From: c2, To: c4
-Piece: BP4, From: d5, To: c4
-Piece: WB2, From: f1, To: c4
-Piece: BP3, From: c5, To: d4
-Piece: WK2, From: g1, To: e2
-Piece: BK1, From: b8, To: c6
-Piece: WB2, From: c4, To: b5
-Piece: BB2, From: f8, To: b4
-Piece: WK, From: e1, To: f2
-Piece: BP1, From: a7, To: a6
-Piece: WQ1, From: d1, To: d4
-Piece: BB2, From: b4, To: c5
-Piece: WQ1, From: d4, To: c5
-Piece: BP1, From: a6, To: b5
-Piece: WQ1, From: c5, To: b5
-Piece: BR1, From: a8, To: a5
-Piece: WQ1, From: b5, To: c4
-Piece: BP6, From: f7, To: f5
-Piece: WK1, From: b1, To: d2
-Piece: BQ1, From: d8, To: b6
-Piece: WK, From: f2, To: g3
-Piece: BP6, From: f5, To: f4
-Piece: WK2, From: e2, To: f4
-Piece: BR1, From: a5, To: g5
-Piece: WK, From: g3, To: h4
-Piece: BR1, From: g5, To: g6
-Piece: WP7, From: g2, To: g4
-Piece: BQ1, From: b6, To: f2
-Piece: WK, From: h4, To: h3
-Piece: BR1, From: g6, To: h6
-Piece: WK2, From: f4, To: h5
-Piece: BR1, From: h6, To: h5
-Piece: WP7, From: g4, To: h5
-Piece: BP5, From: e6, To: e5
-Piece: WQ1, From: c4, To: e6
-Piece: BB1, From: c8, To: e6
-Game outcome: Black wins by checkmate
+Command: WP4 D4
+Command: BP5 E6
+Command: WP5 E4
+Command: BP4 D5
+Command: WP6 F3
+Command: BP3 C5
+Command: WP3 C4
+Command: BP4 C4
+Command: WB2 C4
+Command: BP3 D4
+Command: WK2 E2
+Command: BK1 C6
+Command: WB2 B5
+Command: BB2 B4
+Command: WK F2
+Command: BP1 A6
+Command: WQ1 D4
+Command: BB2 C5
+Command: WQ1 C5
+Command: BP1 B5
+Command: WQ1 B5
+Command: BR1 A5
+Command: WQ1 C4
+Command: BP6 F5
+Command: WK1 D2
+Command: BQ1 B6
+Command: WK G3
+Command: BP6 F4
+Command: WK2 F4
+Command: BR1 G5
+Command: WK H4
+Command: BR1 G6
+Command: WP7 G4
+Command: BQ1 F2
+Command: WK H3
+Command: BR1 H6
+Command: WK2 H5
+Command: BR1 H5
+Command: WP7 H5
+Command: BP5 E5
+Command: WQ1 E6
+Command: BB1 E6
+Outcome: Black wins against White by CheckMate!

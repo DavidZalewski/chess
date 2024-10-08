@@ -1,55 +1,55 @@
-Piece: WP5, From: e2, To: e4
-Piece: BP4, From: d7, To: d5
-Piece: WQ1, From: d1, To: e2
-Piece: BP6, From: f7, To: f5
-Piece: WQ1, From: e2, To: b5
-Piece: BP3, From: c7, To: c6
-Piece: WQ1, From: b5, To: b3
-Piece: BP6, From: f5, To: e4
-Piece: WB2, From: f1, To: e2
-Piece: BP8, From: h7, To: h5
-Piece: WP4, From: d2, To: d3
-Piece: BK2, From: g8, To: f6
-Piece: WP4, From: d3, To: d4
-Piece: BP2, From: b7, To: b5
-Piece: WQ1, From: b3, To: g3
-Piece: BB1, From: c8, To: g4
-Piece: WP8, From: h2, To: h3
-Piece: BB1, From: g4, To: e2
-Piece: WK2, From: g1, To: e2
-Piece: BP5, From: e7, To: e6
-Piece: WQ1, From: g3, To: g5
-Piece: BQ1, From: d8, To: a5
-Piece: WB1, From: c1, To: d2
-Piece: BP2, From: b5, To: b4
-Piece: WQ1, From: g5, To: g6
-Piece: BK, From: e8, To: e7
-Piece: WP2, From: b2, To: b3
-Piece: BK1, From: b8, To: d7
-Piece: WB1, From: d2, To: g5
-Piece: BP5, From: e6, To: e5
-Piece: WK, From: e1, To: g1
-Piece: BQ1, From: a5, To: b5
-Piece: None, From: f1, To: e1
-Piece: BP5, From: e5, To: d4
-Piece: WK2, From: e2, To: d4
-Piece: BQ1, From: b5, To: c5
-Piece: WB1, From: g5, To: e3
-Piece: BR2, From: h8, To: h6
-Piece: WK2, From: d4, To: f5
-Piece: BK, From: e7, To: e6
-Piece: WK2, From: f5, To: h6
-Piece: BQ1, From: c5, To: c2
-Piece: WQ1, From: g6, To: f5
-Piece: BK, From: e6, To: e7
-Piece: WB1, From: e3, To: g5
-Piece: BP7, From: g7, To: h6
-Piece: WB1, From: g5, To: f6
-Piece: BK1, From: d7, To: f6
-Piece: WQ1, From: f5, To: e5
-Piece: BK, From: e7, To: f7
-Piece: WQ1, From: e5, To: c7
-Piece: BB2, From: f8, To: e7
-Piece: None, From: e1, To: c1
-Piece: BQ1, From: c2, To: c1
-Game outcome: Black won by resignation or other means
+Command: WP5 E4
+Command: BP4 D5
+Command: WQ1 E2
+Command: BP6 F5
+Command: WQ1 B5
+Command: BP3 C6
+Command: WQ1 B3
+Command: BP6 E4
+Command: WB2 E2
+Command: BP8 H5
+Command: WP4 D3
+Command: BK2 F6
+Command: WP4 D4
+Command: BP2 B5
+Command: WQ1 G3
+Command: BB1 G4
+Command: WP8 H3
+Command: BB1 E2
+Command: WK2 E2
+Command: BP5 E6
+Command: WQ1 G5
+Command: BQ1 A5
+Command: WB1 D2
+Command: BP2 B4
+Command: WQ1 G6
+Command: BK E7
+Command: WP2 B3
+Command: BK1 D7
+Command: WB1 G5
+Command: BP5 E5
+Command: WK G1
+Command: BQ1 B5
+Command: None E1
+Command: BP5 D4
+Command: WK2 D4
+Command: BQ1 C5
+Command: WB1 E3
+Command: BR2 H6
+Command: WK2 F5
+Command: BK E6
+Command: WK2 H6
+Command: BQ1 C2
+Command: WQ1 F5
+Command: BK E7
+Command: WB1 G5
+Command: BP7 H6
+Command: WB1 F6
+Command: BK1 F6
+Command: WQ1 E5
+Command: BK F7
+Command: WQ1 C7
+Command: BB2 E7
+Command: None C1
+Command: BQ1 C1
+Outcome: Black won by resignation or other means
