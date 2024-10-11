@@ -28,24 +28,24 @@ headers = {
     "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/85.0.4183.121 Safari/537.36"
 }
 
-# Send the GET request with headers
-response = requests.get(url, headers=headers)
+# # Send the GET request with headers
+# response = requests.get(url, headers=headers)
 
-# Check if the request was successful
-if response.status_code == 200:
-    games_data = response.json()
+# # Check if the request was successful
+# if response.status_code == 200:
+#     games_data = response.json()
     
-    # Loop through all games
-    for game in games_data['games']:
-        if 'pgn' in game:
-            pgn_data = game['pgn']
+#     # Loop through all games
+#     for game in games_data['games']:
+#         if 'pgn' in game:
+#             pgn_data = game['pgn']
             
-            # Save the PGN to the pgn directory
-            with open(os.path.join(pgn_directory, f"{username}_game_{game['end_time']}.pgn"), "w") as pgn_file:
-                pgn_file.write(pgn_data)
-else:
-    print(f"Failed to retrieve games. Status code: {response.status_code}")
-    exit(-1)
+#             # Save the PGN to the pgn directory
+#             with open(os.path.join(pgn_directory, f"{username}_game_{game['end_time']}.pgn"), "w") as pgn_file:
+#                 pgn_file.write(pgn_data)
+# else:
+#     print(f"Failed to retrieve games. Status code: {response.status_code}")
+#     exit(-1)
 
 
 # Initialize piece trackers for white and black
@@ -57,15 +57,18 @@ white_bishops = {}
 black_bishops = {}
 white_rooks = {}
 black_rooks = {}
-white_king = "WK"
-black_king = "BK"
-white_queen = "WQ1"
-black_queen = "BQ1"
+white_queens = {}
+black_queens = {}
+white_kings = {}
+black_kings = {}
+num_white_promotions = 0
+num_black_promotions = 0
 
 # Initialize piece tracking based on starting positions
 def initialize_piece_tracking():
     global white_pawns, black_pawns, white_knights, black_knights
     global white_bishops, black_bishops, white_rooks, black_rooks
+    global white_queens, black_queens, white_kings, black_kings
 
     # Initialize white pawns on rank 2 (files a-h)
     white_pawns = {(1, i): f"WP{i+1}" for i in range(8)}  # Pawns at a2, b2, ..., h2
@@ -91,6 +94,12 @@ def initialize_piece_tracking():
     # Initialize black rooks at a8 (7, 0) and h8 (7, 7)
     black_rooks = {(7, 0): "BR1", (7, 7): "BR2"}  # Rooks at a8, h8
     
+    white_kings = {(0, 4): "WK"}
+    white_queens = {(0, 3): "WQ1"}
+    
+    black_kings = {(7, 4): "BK"}
+    black_queens = {(7, 3): "BQ1"}
+    
 # Get the piece identifier based on its original position
 def get_piece_label(piece, move):
     # Rank first, then File
@@ -105,9 +114,9 @@ def get_piece_label(piece, move):
         elif piece.piece_type == chess.ROOK:
             return white_rooks.get(position_index)
         elif piece.piece_type == chess.KING:
-            return white_king
+            return white_kings.get(position_index)
         elif piece.piece_type == chess.QUEEN:
-            return white_queen if white_queen == "WQ1" else "WQ2"
+            return white_queens.get(position_index)
     else:  # Black pieces
         if piece.piece_type == chess.PAWN:
             return black_pawns.get(position_index)
@@ -117,25 +126,39 @@ def get_piece_label(piece, move):
             return black_bishops.get(position_index)
         elif piece.piece_type == chess.ROOK:
             print("DEBUG")
-            print(black_rooks)
-            print(position_index)
-            print(black_rooks.get(position_index))
+            print(f"BLACK ROOKS OUTPUT: {black_rooks.get(position_index)}")
+            print("END_DEBUG")
             return black_rooks.get(position_index)
         elif piece.piece_type == chess.KING:
-            return black_king
+            print("DEBUG")
+            print(f"BLACK KINGS OUTPUT: {black_kings.get(position_index)}")
+            print("END_DEBUG")
+            return black_kings.get(position_index)
         elif piece.piece_type == chess.QUEEN:
-            return black_queen if black_queen == "BQ1" else "BQ2"
+            print("DEBUG")
+            print(f"BLACK QUEENS OUTPUT: {black_queens.get(position_index)}")
+            print("END_DEBUG")
+
+            print(f"BLACK QUEEN is expected to be at {position_index}")
+            return black_queens.get(position_index)
     return None  # Return None if the piece label cannot be found
 
 # Update the piece tracker when a piece moves
 def update_piece_tracking(move, piece):
     position_index = (chess.square_rank(move.from_square), chess.square_file(move.from_square))
     new_position_index = (chess.square_rank(move.to_square), chess.square_file(move.to_square))
-
+    print(f"update_piece_tracking: Updating Piece {piece} from {position_index} to {new_position_index}")
     if piece.color == chess.WHITE:
         if piece.piece_type == chess.PAWN:
             if position_index in white_pawns:
                 white_pawns[new_position_index] = white_pawns.pop(position_index)
+                # is promotion?
+                # TODO: Handle multiple promotions
+                if new_position_index[0] == 7:
+                    # TODO: Ask AI for help determining which piece was chosen to promote the pawn to
+                    ++num_white_promotions
+                    print(f"Pawn Promotion White: always assume pawn is promoting to queen, even though some replays dont do this")
+                    white_queens[new_position_index] = f"WQ{(num_white_promotions + 1)}"
         elif piece.piece_type == chess.KNIGHT:
             if position_index in white_knights:
                 white_knights[new_position_index] = white_knights.pop(position_index)
@@ -145,10 +168,24 @@ def update_piece_tracking(move, piece):
         elif piece.piece_type == chess.ROOK:
             if position_index in white_rooks:
                 white_rooks[new_position_index] = white_rooks.pop(position_index)
+        elif piece.piece_type == chess.QUEEN:
+            if position_index in white_queens:
+                white_queens[new_position_index] = white_queens.pop(position_index)
+        elif piece.piece_type == chess.KING:
+            if position_index in white_kings:
+                white_kings[new_position_index] = white_kings.pop(position_index)
     else:  # Black pieces
         if piece.piece_type == chess.PAWN:
             if position_index in black_pawns:
                 black_pawns[new_position_index] = black_pawns.pop(position_index)
+                # is promotion?
+                # TODO: Handle multiple promotions
+                if new_position_index[0] == 0:
+                    # TODO: Ask AI for help determining which piece was chosen to promote the pawn to
+                    ++num_black_promotions
+                    print(f"Pawn Promotion Black: always assume pawn is promoting to queen, even though some replays dont do this")
+                    black_queens[new_position_index] = f"BQ{(num_black_promotions + 1)}"
+
         elif piece.piece_type == chess.KNIGHT:
             if position_index in black_knights:
                 black_knights[new_position_index] = black_knights.pop(position_index)
@@ -161,6 +198,12 @@ def update_piece_tracking(move, piece):
                 black_rooks[new_position_index] = black_rooks.pop(position_index)
             else:
                 print(f"Warning: Black rook not found at {position_index}")
+        elif piece.piece_type == chess.QUEEN:
+            if position_index in black_queens:
+                black_queens[new_position_index] = black_queens.pop(position_index)
+        elif piece.piece_type == chess.KING:
+            if position_index in black_kings:
+                black_kings[new_position_index] = black_kings.pop(position_index)
 
 # Function to process and convert a PGN file (remaining the same as your original function)
 def convert_pgn_file(pgn_filepath, output_filepath):
@@ -186,22 +229,38 @@ def convert_pgn_file(pgn_filepath, output_filepath):
             print(f"move in question: {move}")
         if board.is_castling(move):
             print("Handling castling")
+            converted_moves.append(f"Original: move: {move}, piece: {piece}, from_square: {move.from_square}, to_square: {move.to_square}")
+
             # Determine if it is kingside or queenside castling and update both the king and rook positions
             if chess.square_file(move.to_square) == 6:  # Kingside castling
+                print("Kingside Castling")
                 rook_position = (chess.square_rank(move.from_square), 7)  # Original rook position (h8 or h1)
                 rook_new_position = (chess.square_rank(move.from_square), 5)  # New rook position (f8 or f1)
+                king_new_position = (chess.square_rank(move.from_square), 6)
+                
                 if piece.color == chess.WHITE:
                     white_rooks[rook_new_position] = white_rooks.pop(rook_position)
+                    white_kings[king_new_position] = white_kings.pop((0, 4))
+                    converted_moves.append("Command: WK H1")
                 else:
                     black_rooks[rook_new_position] = black_rooks.pop(rook_position)
+                    black_kings[king_new_position] = black_kings.pop((7, 4))
+                    converted_moves.append("Command: BK H8")
             else:  # Queenside castling
+                print("Queenside Castling")
                 rook_position = (chess.square_rank(move.from_square), 0)  # Original rook position (a8 or a1)
                 rook_new_position = (chess.square_rank(move.from_square), 3)  # New rook position (d8 or d1)
+                king_new_position = (chess.square_rank(move.from_square), 2)
                 if piece.color == chess.WHITE:
                     white_rooks[rook_new_position] = white_rooks.pop(rook_position)
+                    white_kings[king_new_position] = white_kings.pop((0, 4))
+                    converted_moves.append("Command: WK A1")
                 else:
                     black_rooks[rook_new_position] = black_rooks.pop(rook_position)
+                    black_kings[king_new_position] = black_kings.pop((7, 4))
+                    converted_moves.append("Command: BK A8")
         else:
+            # TODO: HANDLE PAWN PROMOTION
             piece_name = get_piece_label(piece, move)  # Get the piece's unique label
             from_square = chess.square_name(move.from_square)  # Convert to standard notation (e.g., e2)
             to_square = chess.square_name(move.to_square)  # Convert to standard notation (e.g., e4)
@@ -209,7 +268,8 @@ def convert_pgn_file(pgn_filepath, output_filepath):
             converted_moves.append(f"Original: move: {move}, piece: {piece}, from_square: {from_square}, to_square: {to_square}, piece_name: {piece_name} ")
             converted_moves.append(f"Command: {piece_name} {to_square.upper()}")
             update_piece_tracking(move, piece)  # Ensure we track the move
-            board.push(move)  # Update the board after the move
+            
+        board.push(move)  # Update the board after the move
             
     # Check the final state of the game
     result = game.headers.get("Result", "Unknown")  # Check if the result is stored in the PGN file

@@ -61,11 +61,8 @@ namespace Chess.Callbacks
                 cb.SetBoardValue(kingLastPosition, 0);
                 cb.SetBoardValue(rookLastPosition, 0);
 
-                king.SetCurrentPosition(new(v, kh));
-                rook.SetCurrentPosition(new(v, rh));
-
-                cb.SetBoardValue(king.GetCurrentPosition(), king.GetRealValue());
-                cb.SetBoardValue(rook.GetCurrentPosition(), rook.GetRealValue());
+                cb.SetPieceAtPosition(new(v, kh), king);
+                cb.SetPieceAtPosition(new(v, rh), rook);
             }
 
             GetActionFromResult?.Invoke(action);

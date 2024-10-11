@@ -6,6 +6,7 @@ using Chess.Board;
 using Chess.Callbacks;
 using Chess.GameState;
 using System.Data;
+using Chess.Services;
 
 namespace Tests
 {
@@ -364,40 +365,54 @@ namespace Tests
             Queue<string> consoleInputs = new Queue<string>();
             string expectedOutcome = "";
 
+            string testReport = "";
             // Read moves from the file
             // TODO: Change this path so that its not a fully hardcoded path, and have it iterate over a series of replays
-            string filePath = "C:\\Users\\david\\OneDrive\\Documents\\GitHub\\chess\\Tests\\TestInputs\\converted_7oneseven_game_1728231649.pgn"; // Specify your converted_moves file path
-            var lines = File.ReadAllLines(filePath);
-
-            // Initialize game setup (simulating responses for game setup questions)
-            consoleInputs.Enqueue("n"); // no to tutorial
-            consoleInputs.Enqueue("Classic"); // init game with all pieces
-            consoleInputs.Enqueue("n"); // no to ai
-
-            // Enqueue all the moves from the file
-            foreach (var line in lines)
+            string filePath = "C:\\Users\\david\\OneDrive\\Documents\\GitHub\\chess\\Tests\\TestInputs"; // Specify your converted_moves file path
+            foreach (var file in Directory.GetFiles(filePath))
             {
-                if (line.StartsWith("Command:"))
+                Console.WriteLine(file);
+                var lines = File.ReadAllLines(file);
+
+                // Initialize game setup (simulating responses for game setup questions)
+                consoleInputs.Enqueue("n"); // no to tutorial
+                consoleInputs.Enqueue("Classic"); // init game with all pieces
+                consoleInputs.Enqueue("n"); // no to ai
+
+                // Enqueue all the moves from the file
+                foreach (var line in lines)
                 {
-                    var moveCommand = line.Replace("Command: ", "").Trim();
-                    consoleInputs.Enqueue(moveCommand);
+                    if (line.StartsWith("Command:"))
+                    {
+                        var moveCommand = line.Replace("Command: ", "").Trim();
+                        consoleInputs.Enqueue(moveCommand);
+                    }
+                    else if (line.StartsWith("Outcome:"))
+                    {
+                        expectedOutcome = line.Replace("Outcome: ", "").Trim();
+                    }
                 }
-                else if (line.StartsWith("Outcome:"))
+
+                // Set up the mock console service and game controller
+                IConsole consoleService = new MockConsoleService(consoleInputs);
+                GameController gameController = GetGameController(consoleService);  // Assuming you have a method to get the game controller
+                GameManager game = new GameManager(consoleService, gameController);  // Assuming this is how your game manager is initialized
+
+                // Act
+                game.Start();  // Start the game which will play through all the moves
+
+                // Assert
+                if (((MockConsoleService)consoleService).OutputContainsString(expectedOutcome))
                 {
-                    expectedOutcome = line.Replace("Outcome: ", "").Trim();
+                }
+                else
+                {
+                    testReport += ("The game outcome did not match the expected checkmate. (Expected Outcome: " + expectedOutcome + ", File: " + file + ")");
                 }
             }
 
-            // Set up the mock console service and game controller
-            IConsole consoleService = new MockConsoleService(consoleInputs);
-            GameController gameController = GetGameController(consoleService);  // Assuming you have a method to get the game controller
-            GameManager game = new GameManager(consoleService, gameController);  // Assuming this is how your game manager is initialized
+            Assert.That(String.IsNullOrEmpty(testReport), Is.True, "One of the files failed to verify against chess engine");
 
-            // Act
-            game.Start();  // Start the game which will play through all the moves
-
-            // Assert
-            Assert.That(((MockConsoleService)consoleService).OutputContainsString(expectedOutcome), Is.True, "The game outcome did not match the expected checkmate.");
         }
     }
 
