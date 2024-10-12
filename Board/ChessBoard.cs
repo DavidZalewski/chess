@@ -55,7 +55,117 @@ namespace Chess.Board
             }
         }
 
-        private void GenerateBoardID()
+        public ChessBoard(string boardID)
+        {
+            Board = new Square[8, 8];
+            InitializeBoard();
+            int row = 0, file = 0;
+            int whiteQueenID = 1;
+            int blackQueenID = 1;
+            int whiteRookID = 1;
+            int blackRookID = 1;
+            int whiteBishopID = 1;
+            int blackBishopID = 1;
+            int whiteKnightID = 1;
+            int blackKnightID = 1;
+            int whitePawnID = 1;
+            int blackPawnID = 1;
+            foreach(char c in boardID)
+            {
+                ChessPiece piece = NoPiece.Instance;
+                Square square = Board[row, file];
+                switch(c)
+                {
+                    case '1':
+                        {
+                            piece = new ChessPieceKing(Color.WHITE, square.Position);
+
+                            break;
+                        }
+                    case '2':
+                        {
+                            piece = new ChessPieceKing(Color.BLACK, square.Position);
+                            break;
+                        }
+                    case '3':
+                        {
+                            piece = new ChessPieceQueen(Color.WHITE, whiteQueenID, square.Position);
+                            ++whiteQueenID;
+                            break;
+                        }
+                    case '4':
+                        {
+                            piece = new ChessPieceQueen(Color.BLACK, blackQueenID, square.Position);
+                            ++blackQueenID;
+                            break;
+                        }
+                    case '5':
+                        {
+                            piece = new ChessPieceRook(Color.WHITE, whiteRookID, square.Position);
+                            ++whiteRookID;
+                            break;
+                        }
+                    case '6':
+                        {
+                            piece = new ChessPieceRook(Color.BLACK, blackRookID, square.Position);
+                            ++blackRookID;
+                            break;
+                        }
+                    case '7':
+                        {
+                            piece = new ChessPieceBishop(Color.WHITE, whiteBishopID, square.Position);
+                            ++whiteBishopID;
+                            break;
+                        }
+                    case '8':
+                        {
+                            piece = new ChessPieceBishop(Color.BLACK, blackBishopID, square.Position);
+                            ++blackBishopID;
+                            break;
+                        }
+                    case '9':
+                        {
+                            piece = new ChessPieceKnight(Color.WHITE, whiteKnightID, square.Position);
+                            ++whiteKnightID;
+                            break;
+                        }
+                    case 'A':
+                        {
+                            piece = new ChessPieceKnight(Color.BLACK, blackKnightID, square.Position);
+                            ++blackKnightID;
+                            break;
+                        }
+                    case 'B':
+                        {
+                            piece = new ChessPieceWhitePawn(whitePawnID, square.Position);
+                            ++whitePawnID;
+                            break;
+                        }
+                    case 'C':
+                        {
+                            piece = new ChessPieceBlackPawn(blackPawnID, square.Position);
+                            ++blackPawnID;
+                            break;
+                        }
+                }
+
+                if (piece is not NoPiece)
+                    piece.Move(this, piece.GetStartingPosition());
+
+                if (file == 7)
+                {
+                    file = 0;
+                    row++;
+                }
+                else
+                {
+                    file++;
+                }
+            }
+        }
+
+        // TODO: Change this back to private later
+        public void GenerateBoardID()
         {
             string id = string.Empty;
             for (int row = 0; row < 8; row++)

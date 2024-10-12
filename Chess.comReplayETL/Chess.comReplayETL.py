@@ -144,7 +144,7 @@ def get_piece_label(piece, move):
     return None  # Return None if the piece label cannot be found
 
 # Update the piece tracker when a piece moves
-def update_piece_tracking(move, piece):
+def update_piece_tracking(move: [chess.Move], piece):
     position_index = (chess.square_rank(move.from_square), chess.square_file(move.from_square))
     new_position_index = (chess.square_rank(move.to_square), chess.square_file(move.to_square))
     print(f"update_piece_tracking: Updating Piece {piece} from {position_index} to {new_position_index}")
@@ -153,7 +153,6 @@ def update_piece_tracking(move, piece):
             if position_index in white_pawns:
                 white_pawns[new_position_index] = white_pawns.pop(position_index)
                 # is promotion?
-                # TODO: Handle multiple promotions
                 if new_position_index[0] == 7:
                     # TODO: Ask AI for help determining which piece was chosen to promote the pawn to
                     ++num_white_promotions
@@ -267,6 +266,7 @@ def convert_pgn_file(pgn_filepath, output_filepath):
             # Store the converted move in a structured format
             converted_moves.append(f"Original: move: {move}, piece: {piece}, from_square: {from_square}, to_square: {to_square}, piece_name: {piece_name} ")
             converted_moves.append(f"Command: {piece_name} {to_square.upper()}")
+            
             update_piece_tracking(move, piece)  # Ensure we track the move
             
         board.push(move)  # Update the board after the move

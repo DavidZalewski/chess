@@ -42,7 +42,15 @@ namespace Tests.Board
         [Test]
         public void ChessBoardCopyConstructor_NullArgument_ThrowsArgumentNullException()
         {
-            Assert.That(() => new ChessBoard(null), Throws.ArgumentNullException);
+            Assert.That(() => new ChessBoard((ChessBoard)null), Throws.ArgumentNullException);
+        }
+
+        [Test]
+        public void ChessBoardConstructorBoardID_Constructs_Proper_Board_State()
+        {
+            string BoardID = "0A00200060000CCC00080A00C0C00000000C000B9B0B00B0B7B00B7050000010";
+            ChessBoard board = new(BoardID);
+            Console.WriteLine(board.DisplayBoard());
         }
 
         [Test]

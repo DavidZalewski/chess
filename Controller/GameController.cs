@@ -16,11 +16,11 @@ namespace Chess.Controller
         private KingCheckService _kingCheckService;
         private List<ChessPiece> _chessPieces = new();
         private List<Turn> _turns = new();
-        private int _turnNumber = 0;
+        private int _turnNumber = 1;
         private Action<Turn>? OnTurnHandler;
         private ActionSequence _sequence = new();
 
-        public int TurnNumber { get => _turnNumber; }
+        public int TurnNumber { get => _turnNumber; set => _turnNumber = value; }
         public void SetOnTurnHandler(Action<Turn> action)
         {
             OnTurnHandler = action;
@@ -43,7 +43,7 @@ namespace Chess.Controller
         public void StartGame()
         {
             _chessBoard.PopulateBoard(_chessPieces);
-            _turnNumber = 1;
+            //_turnNumber = 1;
         }
 
         // TODO: Encapsulate all string to piece, and piece to string translations in another class

@@ -49,6 +49,9 @@ namespace Chess.Pieces
                 BoardPosition A8 = new("A8");
                 BoardPosition H1 = new("H1");
                 BoardPosition H8 = new("H8");
+                if (!(_currentPosition.Equals(new("E1")) || _currentPosition.Equals(new("E8"))))
+                    return false;
+
                 if (_color.Equals(Color.WHITE))
                 {
 

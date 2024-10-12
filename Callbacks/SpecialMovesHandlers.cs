@@ -51,7 +51,8 @@ namespace Chess.Callbacks
                 }
                 else
                 {
-                    throw new Exception("Unexpected Horizontal Distance Found when castling. Are you sure this is a valid castle?");
+                    cb.GenerateBoardID();
+                    throw new Exception("Unexpected Horizontal Distance Found when castling. Are you sure this is a valid castle? BoardID: " + cb.BoardID);
                 }
 
                 BoardPosition kingLastPosition = king.GetCurrentPosition();

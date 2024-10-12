@@ -113,6 +113,7 @@ namespace Chess.Services
                     for (int j = 0; j < 8; j++)
                     {
                         BoardPosition pos = new((RANK)i, (FILE)j);
+                        // TODO: A pawn doesnt need to iterate 64 squares to determine if it can make a valid move
                         Turn possibleTurn = new(turn.TurnNumber + 1, piece, piece.GetCurrentPosition(), pos, turn.ChessBoard);
                         if (possibleTurn.IsValidTurn)
                             possibleMoves.Add(possibleTurn);

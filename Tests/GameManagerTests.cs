@@ -358,6 +358,26 @@ namespace Tests
             Assert.Fail("Requirements incomplete - the white AI is not implemented yet!");
         }
 
+        [Test]
+        public void DebugBadCastleException()
+        {
+            Queue<string> consoleInputs = new();
+            consoleInputs.Enqueue("n"); // no to tutorial
+            consoleInputs.Enqueue("Classic");
+            consoleInputs.Enqueue("n"); // no to ai
+            consoleInputs.Enqueue("BR1 E7");
+
+            IConsole consoleService = new MockConsoleService(consoleInputs);
+            string BoardID = "0A00200060000CCC00080A00C0C00000000C000B9B0B00B0B7B00B7050000010";
+            ChessBoard cb = new(BoardID);
+            GameController gc = new(cb, cb.GetActivePieces());
+            gc.TurnNumber = 38;
+            GameManager game = new(consoleService, gc);
+
+            // Act
+            game.Start();
+        }
+
         [Test(Author = "7OneSeven", Description = "Loads a converted replay from chess.com and plays it out in this engine")]
         public void ReplayChessDotComMatch()
         {
