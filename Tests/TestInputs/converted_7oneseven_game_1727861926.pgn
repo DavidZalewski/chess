@@ -158,20 +158,21 @@ Original: move: c7f7, piece: R, from_square: c7, to_square: f7, piece_name: WR1
 Command: WR1 F7
 Original: move: f4e5, piece: k, from_square: f4, to_square: e5, piece_name: BK 
 Command: BK E5
-Original: move: b7b8q, piece: P, from_square: b7, to_square: b8, piece_name: WP2 
+Original: move: b7b8q, piece: P, from_square: b7, to_square: b8, promotion: Q
 Command: WP2 B8
+Command: Q
 Original: move: e5d4, piece: k, from_square: e5, to_square: d4, piece_name: BK 
 Command: BK D4
-Original: move: b8d8, piece: Q, from_square: b8, to_square: d8, piece_name: WQ1 
-Command: WQ1 D8
+Original: move: b8d8, piece: Q, from_square: b8, to_square: d8, piece_name: WQ2 
+Command: WQ2 D8
 Original: move: d4c5, piece: k, from_square: d4, to_square: c5, piece_name: BK 
 Command: BK C5
 Original: move: f7c7, piece: R, from_square: f7, to_square: c7, piece_name: WR1 
 Command: WR1 C7
 Original: move: c5b5, piece: k, from_square: c5, to_square: b5, piece_name: BK 
 Command: BK B5
-Original: move: d8b8, piece: Q, from_square: d8, to_square: b8, piece_name: WQ1 
-Command: WQ1 B8
+Original: move: d8b8, piece: Q, from_square: d8, to_square: b8, piece_name: WQ2 
+Command: WQ2 B8
 Original: move: b5a5, piece: k, from_square: b5, to_square: a5, piece_name: BK 
 Command: BK A5
 Original: move: c7a7, piece: R, from_square: c7, to_square: a7, piece_name: WR1 

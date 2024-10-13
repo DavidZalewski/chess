@@ -196,14 +196,16 @@ Original: move: g2e2, piece: q, from_square: g2, to_square: e2, piece_name: BQ1
 Command: BQ1 E2
 Original: move: d1e2, piece: K, from_square: d1, to_square: e2, piece_name: WK 
 Command: WK E2
-Original: move: h2h1q, piece: p, from_square: h2, to_square: h1, piece_name: BP8 
+Original: move: h2h1q, piece: p, from_square: h2, to_square: h1, promotion: Q
 Command: BP8 H1
+Command: Q
 Original: move: e2d2, piece: K, from_square: e2, to_square: d2, piece_name: WK 
 Command: WK D2
-Original: move: b2b1q, piece: p, from_square: b2, to_square: b1, piece_name: BP2 
+Original: move: b2b1q, piece: p, from_square: b2, to_square: b1, promotion: Q
 Command: BP2 B1
+Command: Q
 Original: move: d2e2, piece: K, from_square: d2, to_square: e2, piece_name: WK 
 Command: WK E2
-Original: move: b1c2, piece: q, from_square: b1, to_square: c2, piece_name: BQ1 
-Command: BQ1 C2
+Original: move: b1c2, piece: q, from_square: b1, to_square: c2, piece_name: BQ2 
+Command: BQ2 C2
 Outcome: Black wins against White by CheckMate!

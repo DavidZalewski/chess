@@ -431,8 +431,13 @@ namespace Tests
                 }
             }
 
-            Assert.That(String.IsNullOrEmpty(testReport), Is.True, "One of the files failed to verify against chess engine");
+            if (!String.IsNullOrEmpty(testReport))
+            {
+                Console.WriteLine(testReport);
+                Assert.Fail("One of the files failed to verify against chess engine");
+            }
 
+            Assert.That(true, Is.True);
         }
     }
 

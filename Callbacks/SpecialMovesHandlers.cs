@@ -1,4 +1,6 @@
-﻿using Chess.Board;
+﻿using Chess.Attributes;
+using Chess.Board;
+using Chess.GameState;
 using Chess.Pieces;
 using NUnit.Framework;
 
@@ -10,6 +12,7 @@ namespace Chess.Callbacks
         public static Action<string>? GetActionFromResult;
         public static Func<string>? PawnPromotionPromptUser;
         public static bool ByPassPawnPromotionPromptUser { get; set; } = false;
+        public static PromotionTracker promotionTracker = new PromotionTracker();
 
         public static bool DoCastleMove(ChessBoard cb, BoardPosition bp, ChessPiece king)
         {
@@ -117,8 +120,11 @@ namespace Chess.Callbacks
                     // Is the opponent piece a pawn?
                     if (opponentPiece is ChessPiecePawn)
                     {
+                        // is the en passant expired?
+                        int enPassantTurnDiff = (opponentPiece as ChessPiecePawn).TurnNumberWhenMovedTwoSquares - chessBoard.TurnNumber;
+                        // Console.WriteLine($"TurnNumberWhenMovedTwoSquares: {(opponentPiece as ChessPiecePawn).TurnNumberWhenMovedTwoSquares} , chessBoard.TurnNumber: {chessBoard.TurnNumber} , enPassantTurnDiff: {enPassantTurnDiff}");
                         // Did that pawn move 2 squares?
-                        if ((opponentPiece as ChessPiecePawn).MovedTwoSquares)
+                        if ((opponentPiece as ChessPiecePawn).MovedTwoSquares && enPassantTurnDiff == 0)
                         {
                             // is the position a capture position?
                             // Get the opponent pawn position, and get the position that is 1 square behind it
@@ -139,6 +145,7 @@ namespace Chess.Callbacks
             return false;
         }
 
+        [TestNeeded]
         internal static void PawnPromotion(ChessBoard board, BoardPosition position, ChessPiece piece)
         {
             string choice = "Q";
@@ -147,13 +154,26 @@ namespace Chess.Callbacks
 
             Func<string, ChessPiece> switchReturnPiece = (string chosenPiece) =>
             {
+                int newPieceID;
+                // This fixes the issue with KingCheckService incrementing this counter with potential future moves
+                if (ByPassPawnPromotionPromptUser)
+                {
+                    Console.WriteLine($"PawnPromotion: ByPassPawnPromotionPromptUser set - use 0 for newPieceID");
+                    newPieceID = 0;
+                }
+                else
+                {
+                    newPieceID = promotionTracker.GetNextID(piece.GetColor(), chosenPiece.ToUpper());
+                }
+                // TODO: CheckMate Service when creating potential future moves, inadvertently creates pawn promotions, incrementing this counter unexpectedly
+                Console.WriteLine($"PawnPromotion: newPieceID = {newPieceID} , choice: {choice}");
                 return chosenPiece switch
                 {
-                    "Q" => new ChessPieceQueen(piece.GetColor(), 0, position),
-                    "R" => new ChessPieceRook(piece.GetColor(), 0, position),
-                    "K" => new ChessPieceKnight(piece.GetColor(), 0, position),
-                    "B" => new ChessPieceBishop(piece.GetColor(), 0, position),
-                    _ => new ChessPieceQueen(piece.GetColor(), 0, position),
+                    "q" => new ChessPieceQueen(piece.GetColor(), newPieceID, position),
+                    "r" => new ChessPieceRook(piece.GetColor(), newPieceID, position),
+                    "k" => new ChessPieceKnight(piece.GetColor(), newPieceID, position),
+                    "b" => new ChessPieceBishop(piece.GetColor(), newPieceID, position),
+                    _ => new ChessPieceQueen(piece.GetColor(), newPieceID, position),
                 };
             };
 

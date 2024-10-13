@@ -120,8 +120,9 @@ Original: move: g1b1, piece: r, from_square: g1, to_square: b1, piece_name: BR2
 Command: BR2 B1
 Original: move: b4c5, piece: K, from_square: b4, to_square: c5, piece_name: WK 
 Command: WK C5
-Original: move: g2g1b, piece: p, from_square: g2, to_square: g1, piece_name: BP8 
+Original: move: g2g1b, piece: p, from_square: g2, to_square: g1, promotion: B
 Command: BP8 G1
+Command: B
 Original: move: c5d5, piece: K, from_square: c5, to_square: d5, piece_name: WK 
 Command: WK D5
 Original: move: f8d8, piece: r, from_square: f8, to_square: d8, piece_name: BR1 
@@ -168,26 +169,28 @@ Original: move: e3e2, piece: p, from_square: e3, to_square: e2, piece_name: BP5
 Command: BP5 E2
 Original: move: f7g7, piece: K, from_square: f7, to_square: g7, piece_name: WK 
 Command: WK G7
-Original: move: e2e1q, piece: p, from_square: e2, to_square: e1, piece_name: BP5 
+Original: move: e2e1q, piece: p, from_square: e2, to_square: e1, promotion: Q
 Command: BP5 E1
+Command: Q
 Original: move: b6a7, piece: P, from_square: b6, to_square: a7, piece_name: WP2 
 Command: WP2 A7
-Original: move: e1g3, piece: q, from_square: e1, to_square: g3, piece_name: BQ1 
-Command: BQ1 G3
+Original: move: e1g3, piece: q, from_square: e1, to_square: g3, piece_name: BQ2 
+Command: BQ2 G3
 Original: move: g7f7, piece: K, from_square: g7, to_square: f7, piece_name: WK 
 Command: WK F7
 Original: move: c4e5, piece: n, from_square: c4, to_square: e5, piece_name: BK1 
 Command: BK1 E5
 Original: move: f7e7, piece: K, from_square: f7, to_square: e7, piece_name: WK 
 Command: WK E7
-Original: move: g3g7, piece: q, from_square: g3, to_square: g7, piece_name: BQ1 
-Command: BQ1 G7
+Original: move: g3g7, piece: q, from_square: g3, to_square: g7, piece_name: BQ2 
+Command: BQ2 G7
 Original: move: e7e8, piece: K, from_square: e7, to_square: e8, piece_name: WK 
 Command: WK E8
 Original: move: d6d8, piece: r, from_square: d6, to_square: d8, piece_name: BR1 
 Command: BR1 D8
-Original: move: c7d8q, piece: P, from_square: c7, to_square: d8, piece_name: WP4 
+Original: move: c7d8q, piece: P, from_square: c7, to_square: d8, promotion: Q
 Command: WP4 D8
+Command: Q
 Original: move: d2d8, piece: r, from_square: d2, to_square: d8, piece_name: BR2 
 Command: BR2 D8
 Outcome: Black wins against White by CheckMate!

@@ -15,6 +15,7 @@ namespace Chess.Pieces
             ChessPieceBlackPawn copy = new(_id, _startingPosition);
             copy.IsEnPassantTarget = this.IsEnPassantTarget;
             copy.MovedTwoSquares = this.MovedTwoSquares;
+            copy.TurnNumberWhenMovedTwoSquares = this.TurnNumberWhenMovedTwoSquares;
             return Clone(copy);
         }
 
@@ -66,6 +67,7 @@ namespace Chess.Pieces
                     else
                     {
                         MovedTwoSquares = true; // We use this to for En Passant
+                        TurnNumberWhenMovedTwoSquares = board.TurnNumber;
                         return true;
                     }
                 }

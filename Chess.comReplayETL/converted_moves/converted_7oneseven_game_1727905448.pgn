@@ -212,20 +212,21 @@ Original: move: h3h2, piece: p, from_square: h3, to_square: h2, piece_name: BP8
 Command: BP8 H2
 Original: move: g4f3, piece: K, from_square: g4, to_square: f3, piece_name: WK 
 Command: WK F3
-Original: move: h2h1q, piece: p, from_square: h2, to_square: h1, piece_name: BP8 
+Original: move: h2h1q, piece: p, from_square: h2, to_square: h1, promotion: Q
 Command: BP8 H1
+Command: Q
 Original: move: f3f4, piece: K, from_square: f3, to_square: f4, piece_name: WK 
 Command: WK F4
-Original: move: h1d5, piece: q, from_square: h1, to_square: d5, piece_name: BQ1 
-Command: BQ1 D5
+Original: move: h1d5, piece: q, from_square: h1, to_square: d5, piece_name: BQ2 
+Command: BQ2 D5
 Original: move: f4g4, piece: K, from_square: f4, to_square: g4, piece_name: WK 
 Command: WK G4
-Original: move: d5b5, piece: q, from_square: d5, to_square: b5, piece_name: BQ1 
-Command: BQ1 B5
+Original: move: d5b5, piece: q, from_square: d5, to_square: b5, piece_name: BQ2 
+Command: BQ2 B5
 Original: move: g4f4, piece: K, from_square: g4, to_square: f4, piece_name: WK 
 Command: WK F4
-Original: move: b5c6, piece: q, from_square: b5, to_square: c6, piece_name: BQ1 
-Command: BQ1 C6
+Original: move: b5c6, piece: q, from_square: b5, to_square: c6, piece_name: BQ2 
+Command: BQ2 C6
 Original: move: f4f5, piece: K, from_square: f4, to_square: f5, piece_name: WK 
 Command: WK F5
 Original: move: c7d6, piece: k, from_square: c7, to_square: d6, piece_name: BK 
@@ -236,12 +237,12 @@ Original: move: d6d5, piece: k, from_square: d6, to_square: d5, piece_name: BK
 Command: BK D5
 Original: move: f4f5, piece: K, from_square: f4, to_square: f5, piece_name: WK 
 Command: WK F5
-Original: move: c6e6, piece: q, from_square: c6, to_square: e6, piece_name: BQ1 
-Command: BQ1 E6
+Original: move: c6e6, piece: q, from_square: c6, to_square: e6, piece_name: BQ2 
+Command: BQ2 E6
 Original: move: f5f4, piece: K, from_square: f5, to_square: f4, piece_name: WK 
 Command: WK F4
-Original: move: e6e4, piece: q, from_square: e6, to_square: e4, piece_name: BQ1 
-Command: BQ1 E4
+Original: move: e6e4, piece: q, from_square: e6, to_square: e4, piece_name: BQ2 
+Command: BQ2 E4
 Original: move: f4g5, piece: K, from_square: f4, to_square: g5, piece_name: WK 
 Command: WK G5
 Original: move: d5e5, piece: k, from_square: d5, to_square: e5, piece_name: BK 
@@ -252,6 +253,6 @@ Original: move: e5f6, piece: k, from_square: e5, to_square: f6, piece_name: BK
 Command: BK F6
 Original: move: h6h5, piece: K, from_square: h6, to_square: h5, piece_name: WK 
 Command: WK H5
-Original: move: e4f4, piece: q, from_square: e4, to_square: f4, piece_name: BQ1 
-Command: BQ1 F4
+Original: move: e4f4, piece: q, from_square: e4, to_square: f4, piece_name: BQ2 
+Command: BQ2 F4
 Outcome: Game ended in stalemate

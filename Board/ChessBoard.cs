@@ -29,10 +29,12 @@ namespace Chess.Board
 
         public Square[,] Board { get; set; }
         public string BoardID { get; private set; } = string.Empty;
+        public int TurnNumber { get; set; } // TODO: We need this here so we can identify when en passant is no longer possible... but it duplicates information that GameController already has
 
         public ChessBoard()
         {
             Board = new Square[8, 8];
+            TurnNumber = 1;
             InitializeBoard();
             GenerateBoardID();
         }
@@ -44,6 +46,7 @@ namespace Chess.Board
                 throw new ArgumentNullException(nameof(other));
             }
 
+            TurnNumber = other.TurnNumber;
             Board = new Square[8, 8]; // Create a new array
 
             for (int row = 0; row < 8; row++)

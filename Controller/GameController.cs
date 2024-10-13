@@ -43,6 +43,7 @@ namespace Chess.Controller
         public void StartGame()
         {
             _chessBoard.PopulateBoard(_chessPieces);
+            SpecialMovesHandlers.promotionTracker = new PromotionTracker();
             //_turnNumber = 1;
         }
 
@@ -177,6 +178,9 @@ namespace Chess.Controller
             _chessPieces = turn.ChessPieces;
             _turns.Add(turn);
             _turnNumber++;
+            // TODO: is there a better way?
+            _chessBoard.TurnNumber = _turnNumber;
+            turn.ChessBoard.TurnNumber = _turnNumber;
             OnTurnHandler?.Invoke(turn);
         }
 
@@ -212,6 +216,7 @@ namespace Chess.Controller
             }
         }
 
+        [TestNeeded]
         public bool LoadGameState(string saveFileName)
         {
             Stream? stream = null;

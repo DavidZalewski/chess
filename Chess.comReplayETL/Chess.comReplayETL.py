@@ -28,24 +28,24 @@ headers = {
     "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/85.0.4183.121 Safari/537.36"
 }
 
-# # Send the GET request with headers
-# response = requests.get(url, headers=headers)
+# Send the GET request with headers
+response = requests.get(url, headers=headers)
 
-# # Check if the request was successful
-# if response.status_code == 200:
-#     games_data = response.json()
+# Check if the request was successful
+if response.status_code == 200:
+    games_data = response.json()
     
-#     # Loop through all games
-#     for game in games_data['games']:
-#         if 'pgn' in game:
-#             pgn_data = game['pgn']
+    # Loop through all games
+    for game in games_data['games']:
+        if 'pgn' in game:
+            pgn_data = game['pgn']
             
-#             # Save the PGN to the pgn directory
-#             with open(os.path.join(pgn_directory, f"{username}_game_{game['end_time']}.pgn"), "w") as pgn_file:
-#                 pgn_file.write(pgn_data)
-# else:
-#     print(f"Failed to retrieve games. Status code: {response.status_code}")
-#     exit(-1)
+            # Save the PGN to the pgn directory
+            with open(os.path.join(pgn_directory, f"{username}_game_{game['end_time']}.pgn"), "w") as pgn_file:
+                pgn_file.write(pgn_data)
+else:
+    print(f"Failed to retrieve games. Status code: {response.status_code}")
+    exit(-1)
 
 
 # Initialize piece trackers for white and black
@@ -61,14 +61,25 @@ white_queens = {}
 black_queens = {}
 white_kings = {}
 black_kings = {}
-num_white_promotions = 0
-num_black_promotions = 0
+
+# Promotion ID counters
+white_queen_id = 2
+white_bishop_id = 3
+white_knight_id = 3
+white_rook_id = 3
+
+black_queen_id = 2
+black_bishop_id = 3
+black_knight_id = 3
+black_rook_id = 3
 
 # Initialize piece tracking based on starting positions
 def initialize_piece_tracking():
     global white_pawns, black_pawns, white_knights, black_knights
     global white_bishops, black_bishops, white_rooks, black_rooks
     global white_queens, black_queens, white_kings, black_kings
+    global white_queen_id, white_bishop_id, white_knight_id, white_rook_id
+    global black_queen_id, black_bishop_id, black_knight_id, black_rook_id
 
     # Initialize white pawns on rank 2 (files a-h)
     white_pawns = {(1, i): f"WP{i+1}" for i in range(8)}  # Pawns at a2, b2, ..., h2
@@ -125,21 +136,10 @@ def get_piece_label(piece, move):
         elif piece.piece_type == chess.BISHOP:
             return black_bishops.get(position_index)
         elif piece.piece_type == chess.ROOK:
-            print("DEBUG")
-            print(f"BLACK ROOKS OUTPUT: {black_rooks.get(position_index)}")
-            print("END_DEBUG")
             return black_rooks.get(position_index)
         elif piece.piece_type == chess.KING:
-            print("DEBUG")
-            print(f"BLACK KINGS OUTPUT: {black_kings.get(position_index)}")
-            print("END_DEBUG")
             return black_kings.get(position_index)
         elif piece.piece_type == chess.QUEEN:
-            print("DEBUG")
-            print(f"BLACK QUEENS OUTPUT: {black_queens.get(position_index)}")
-            print("END_DEBUG")
-
-            print(f"BLACK QUEEN is expected to be at {position_index}")
             return black_queens.get(position_index)
     return None  # Return None if the piece label cannot be found
 
@@ -152,12 +152,27 @@ def update_piece_tracking(move: [chess.Move], piece):
         if piece.piece_type == chess.PAWN:
             if position_index in white_pawns:
                 white_pawns[new_position_index] = white_pawns.pop(position_index)
-                # is promotion?
-                if new_position_index[0] == 7:
-                    # TODO: Ask AI for help determining which piece was chosen to promote the pawn to
-                    ++num_white_promotions
-                    print(f"Pawn Promotion White: always assume pawn is promoting to queen, even though some replays dont do this")
-                    white_queens[new_position_index] = f"WQ{(num_white_promotions + 1)}"
+                # Check if the pawn is promoting
+                if move.promotion:
+                    print(f"Pawn Promotion White")
+
+                    # Handle the promotion based on the promotion piece type
+                    if move.promotion == chess.QUEEN:
+                        white_queens[new_position_index] = f"WQ{white_queen_id}"
+                        print(f"pawn promoted to: {white_queens[new_position_index]}")
+                        ++white_queen_id
+                    elif move.promotion == chess.ROOK:
+                        white_rooks[new_position_index] = f"WR{white_rook_id}"
+                        print(f"pawn promoted to: {white_rooks[new_position_index]}")
+                        ++white_rook_id
+                    elif move.promotion == chess.BISHOP:
+                        white_bishops[new_position_index] = f"WB{white_bishop_id}"
+                        print(f"pawn promoted to: {white_bishops[new_position_index]}")
+                        ++white_bishop_id
+                    elif move.promotion == chess.KNIGHT:
+                        white_knights[new_position_index] = f"WK{white_knight_id}"
+                        print(f"pawn promoted to: {white_knights[new_position_index]}")
+                        ++white_knight_id
         elif piece.piece_type == chess.KNIGHT:
             if position_index in white_knights:
                 white_knights[new_position_index] = white_knights.pop(position_index)
@@ -177,13 +192,27 @@ def update_piece_tracking(move: [chess.Move], piece):
         if piece.piece_type == chess.PAWN:
             if position_index in black_pawns:
                 black_pawns[new_position_index] = black_pawns.pop(position_index)
-                # is promotion?
-                # TODO: Handle multiple promotions
-                if new_position_index[0] == 0:
-                    # TODO: Ask AI for help determining which piece was chosen to promote the pawn to
-                    ++num_black_promotions
-                    print(f"Pawn Promotion Black: always assume pawn is promoting to queen, even though some replays dont do this")
-                    black_queens[new_position_index] = f"BQ{(num_black_promotions + 1)}"
+                # Check if the pawn is promoting
+                if move.promotion:
+                    print(f"Pawn Promotion Black")
+
+                    # Handle the promotion based on the promotion piece type
+                    if move.promotion == chess.QUEEN:
+                        black_queens[new_position_index] = f"BQ{black_queen_id}"
+                        print(f"pawn promoted to: {black_queens[new_position_index]}")
+                        ++black_queen_id
+                    elif move.promotion == chess.ROOK:
+                        black_rooks[new_position_index] = f"BR{black_rook_id}"
+                        print(f"pawn promoted to: {black_rooks[new_position_index]}")
+                        ++black_rook_id
+                    elif move.promotion == chess.BISHOP:
+                        black_bishops[new_position_index] = f"BB{black_bishop_id}"
+                        print(f"pawn promoted to: {black_bishops[new_position_index]}")
+                        ++black_bishop_id
+                    elif move.promotion == chess.KNIGHT:
+                        black_knights[new_position_index] = f"BK{black_knight_id}"
+                        print(f"pawn promoted to: {black_knights[new_position_index]}")
+                        ++black_knight_id
 
         elif piece.piece_type == chess.KNIGHT:
             if position_index in black_knights:
@@ -192,11 +221,8 @@ def update_piece_tracking(move: [chess.Move], piece):
             if position_index in black_bishops:
                 black_bishops[new_position_index] = black_bishops.pop(position_index)
         elif piece.piece_type == chess.ROOK:
-            print(f"Updating black rook position from {position_index} to {new_position_index}")
             if position_index in black_rooks:
                 black_rooks[new_position_index] = black_rooks.pop(position_index)
-            else:
-                print(f"Warning: Black rook not found at {position_index}")
         elif piece.piece_type == chess.QUEEN:
             if position_index in black_queens:
                 black_queens[new_position_index] = black_queens.pop(position_index)
@@ -259,15 +285,26 @@ def convert_pgn_file(pgn_filepath, output_filepath):
                     black_kings[king_new_position] = black_kings.pop((7, 4))
                     converted_moves.append("Command: BK A8")
         else:
-            # TODO: HANDLE PAWN PROMOTION
-            piece_name = get_piece_label(piece, move)  # Get the piece's unique label
+                    
             from_square = chess.square_name(move.from_square)  # Convert to standard notation (e.g., e2)
             to_square = chess.square_name(move.to_square)  # Convert to standard notation (e.g., e4)
-            # Store the converted move in a structured format
-            converted_moves.append(f"Original: move: {move}, piece: {piece}, from_square: {from_square}, to_square: {to_square}, piece_name: {piece_name} ")
-            converted_moves.append(f"Command: {piece_name} {to_square.upper()}")
+        
+            # Check if the move is a pawn promotion
+            if move.promotion:
+                promoted_piece = chess.piece_name(move.promotion).capitalize()[0]  # Get the promoted piece name (e.g., "Queen")
+                converted_moves.append(f"Original: move: {move}, piece: {piece}, from_square: {from_square}, to_square: {to_square}, promotion: {promoted_piece}")
+                converted_moves.append(f"Command: {get_piece_label(piece, move)} {to_square.upper()}")
+                converted_moves.append(f"Command: {promoted_piece.upper()}")
             
-            update_piece_tracking(move, piece)  # Ensure we track the move
+                # Update piece tracking to reflect promotion
+                #update_piece_tracking(move, chess.Piece(move.promotion, piece.color))  # Update with the promoted piece
+            else:
+                # Normal move, no promotion
+                piece_name = get_piece_label(piece, move)  # Get the piece's unique label
+                converted_moves.append(f"Original: move: {move}, piece: {piece}, from_square: {from_square}, to_square: {to_square}, piece_name: {piece_name} ")
+                converted_moves.append(f"Command: {piece_name} {to_square.upper()}")
+            
+            update_piece_tracking(move, piece)  # Ensure we track the move    
             
         board.push(move)  # Update the board after the move
             

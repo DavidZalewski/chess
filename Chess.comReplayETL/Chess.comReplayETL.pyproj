@@ -4,7 +4,8 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>8761f6ef-53f0-4f00-bb16-7d24c0830e4f</ProjectGuid>
     <ProjectHome>.</ProjectHome>
-    <StartupFile>Chess.comReplayETL.py</StartupFile>
+    <StartupFile>
+    </StartupFile>
     <SearchPath>
     </SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
