@@ -1,4 +1,5 @@
 ﻿using Chess.Board;
+using Chess.Globals;
 using Chess.Pieces;
 
 namespace Chess.Services
@@ -177,6 +178,7 @@ namespace Chess.Services
 
         public static List<ChessPiece> CreateChessPiecesClassic()
         {
+            StaticLogger.Log("ChessPieceFactory.CreateChessPiecesClassic called");
             List<ChessPiece> chessPieces = new();
             chessPieces.AddRange(CreateWhiteChessPieces());
             chessPieces.AddRange(CreateBlackChessPieces());

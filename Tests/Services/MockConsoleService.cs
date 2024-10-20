@@ -10,8 +10,11 @@ namespace Tests.Services
 {
     public class MockConsoleService : IConsole
     {
-        public Queue<string> Inputs { get; set; }
+        public Queue<string> Inputs { get; set; } = new Queue<string>();
         public List<string> Outputs { get; } = new List<string>();
+
+        public MockConsoleService() { 
+        }
 
         public MockConsoleService(Queue<string> inputs) 
         {

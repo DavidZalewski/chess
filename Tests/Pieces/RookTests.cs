@@ -178,7 +178,7 @@ namespace Tests.Pieces
             };
 
             // Set White Pawn on c4
-            // TODO: Implement Later
+
             board.SetBoardValue(new(RANK.FOUR, FILE.C), 11);
 
             Assert.Multiple(() =>
@@ -202,7 +202,7 @@ namespace Tests.Pieces
             };
 
             // Set White Pawn on c4
-            // TODO: Implement Later
+
             board.SetBoardValue(new(RANK.TWO, FILE.F), 21);
 
             Assert.Multiple(() =>
@@ -246,7 +246,7 @@ namespace Tests.Pieces
             ChessPiece piece = new ChessPieceRook(Color.WHITE, 1,
                 new BoardPosition(RANK.FOUR, FILE.B));
             BoardPosition b8 = new(RANK.EIGHT, FILE.B);
-            // TODO: Implement Later
+
             board.SetBoardValue(b8, 22); // black knight on B8
             Assert.That(piece.IsValidMove(board, b8), Is.True);
         }
@@ -257,7 +257,7 @@ namespace Tests.Pieces
             ChessPiece piece = new ChessPieceRook(Color.WHITE, 1,
                 new BoardPosition(RANK.FOUR, FILE.B));
             BoardPosition b8 = new(RANK.EIGHT, FILE.B);
-            // TODO: Implement Later
+
             board.SetBoardValue(b8, 12); // white knight on B8
             Assert.That(piece.IsValidMove(board, b8), Is.False);
         }
@@ -268,7 +268,7 @@ namespace Tests.Pieces
             ChessPiece piece = new ChessPieceRook(Color.BLACK, 2,
                 new BoardPosition(RANK.FOUR, FILE.B));
             BoardPosition b8 = new(RANK.EIGHT, FILE.B);
-            // TODO: Implement Later
+
             board.SetBoardValue(b8, 12); // white knight on B8
             Assert.That(piece.IsValidMove(board, b8), Is.True);
         }
@@ -279,7 +279,7 @@ namespace Tests.Pieces
             ChessPiece piece = new ChessPieceRook(Color.BLACK, 2,
                 new BoardPosition(RANK.FOUR, FILE.B));
             BoardPosition b8 = new(RANK.EIGHT, FILE.B);
-            // TODO: Implement Later
+
             board.SetBoardValue(b8, 22); // black knight on B8
             Assert.That(piece.IsValidMove(board, b8), Is.False);
         }

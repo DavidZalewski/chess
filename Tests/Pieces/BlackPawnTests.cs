@@ -112,7 +112,7 @@ namespace Tests.Pieces
 
             BoardPosition capturePosition = new BoardPosition(RANK.FOUR, FILE.D);
             // Set white pawn at D5
-            // TODO: Implement Later
+
             board.SetBoardValue(capturePosition, 11);
             Assert.That(piece.IsValidMove(board, capturePosition), Is.True);
         }
@@ -126,7 +126,7 @@ namespace Tests.Pieces
 
             BoardPosition capturePosition = new BoardPosition(RANK.THREE, FILE.D);
             // Set white pawn at D3
-            // TODO: Implement Later
+
             board.SetBoardValue(capturePosition, 11);
             Assert.That(piece.IsValidMove(board, capturePosition), Is.True);
         }
@@ -140,7 +140,7 @@ namespace Tests.Pieces
 
             BoardPosition capturePosition = new BoardPosition(RANK.THREE, FILE.D);
             // Set black pawn at D3
-            // TODO: Implement Later
+
             board.SetBoardValue(capturePosition, 21);
             Assert.That(piece.IsValidMove(board, capturePosition), Is.False);
         }
@@ -154,7 +154,7 @@ namespace Tests.Pieces
 
             BoardPosition capturePosition = new BoardPosition(RANK.THREE, FILE.E);
             // Set white pawn at E3
-            // TODO: Implement Later
+
             board.SetBoardValue(capturePosition, 11);
             Assert.That(piece.IsValidMove(board, capturePosition), Is.False);
         }

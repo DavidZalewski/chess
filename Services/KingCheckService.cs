@@ -104,10 +104,13 @@ namespace Chess.Services
 
             foreach (ChessPiece piece in friendlyPieces)
             {
-                // TODO: Set the PawnPromotion callback function to just return 'Q' each time
                 // Simulated future turns assume a pawn is always promoted to queen
                 // iterate over all board positions
                 SpecialMovesHandlers.ByPassPawnPromotionPromptUser = true;
+                // TODO: This For Loop makes debugging a nightmare
+                // Replace this later with foreach (Square sq in piece.GetPossibleSquares())
+                // Or have the ChessPiece.GetPossibleTurns() and do this logic in ChessPiece
+                // Then write unit tests for it
                 for (int i = 0; i < 8; i++)
                 {
                     for (int j = 0; j < 8; j++)

@@ -134,7 +134,6 @@ namespace Tests.Pieces
 
             BoardPosition capturePosition = new BoardPosition(RANK.FIVE, FILE.E);
             // Set black pawn at E5
-            // TODO: Implement Later
             board.SetBoardValue(capturePosition, 21);
             Assert.That(piece.IsValidMove(board, capturePosition), Is.True);
         }
@@ -148,7 +147,7 @@ namespace Tests.Pieces
 
             BoardPosition capturePosition = new BoardPosition(RANK.FOUR, FILE.E);
             // Set black pawn at E4
-            // TODO: Implement Later
+
             board.SetBoardValue(capturePosition, 21);
             Assert.That(piece.IsValidMove(board, capturePosition), Is.True);
         }
@@ -162,7 +161,7 @@ namespace Tests.Pieces
 
             BoardPosition capturePosition = new BoardPosition(RANK.THREE, FILE.E);
             // Set white pawn at E3
-            // TODO: Implement Later
+
             board.SetBoardValue(capturePosition, 11);
             Assert.That(piece.IsValidMove(board, capturePosition), Is.False);
         }
@@ -176,7 +175,7 @@ namespace Tests.Pieces
 
             BoardPosition capturePosition = new BoardPosition(RANK.THREE, FILE.D);
             // Set black pawn at D3
-            // TODO: Implement Later
+
             board.SetBoardValue(capturePosition, 21);
             Assert.That(piece.IsValidMove(board, capturePosition), Is.False);
         }
@@ -233,7 +232,7 @@ namespace Tests.Pieces
             ChessPiece piece = new ChessPieceWhitePawn(1, boardPosition);
             BoardPosition F4 = new(RANK.FOUR, FILE.F);
             // set white bishop at F4, directly in front of white pawn at E4
-            // TODO: Implement Later
+
             board.SetBoardValue(F4, 13);
             Assert.That(piece.IsValidMove(board, F4), Is.False);
         }
@@ -246,7 +245,6 @@ namespace Tests.Pieces
             ChessPiece piece = new ChessPieceWhitePawn(1, boardPosition);
             BoardPosition F4 = new(RANK.FOUR, FILE.F);
             // set black bishop at F4, directly in front of white pawn at E4
-            // TODO: Implement Later
             board.SetBoardValue(F4, 23);
             Assert.That(piece.IsValidMove(board, F4), Is.False);
         }

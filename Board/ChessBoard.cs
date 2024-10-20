@@ -1,4 +1,5 @@
-﻿using Chess.Pieces;
+﻿using Chess.Globals;
+using Chess.Pieces;
 using Chess.Services;
 using NUnit.Framework;
 using static Chess.Pieces.ChessPiece;
@@ -29,14 +30,19 @@ namespace Chess.Board
 
         public Square[,] Board { get; set; }
         public string BoardID { get; private set; } = string.Empty;
-        public int TurnNumber { get; set; } // TODO: We need this here so we can identify when en passant is no longer possible... but it duplicates information that GameController already has
+        // TODO: We need this here so we can identify when en passant is no longer possible... but it duplicates information that GameController already has
+        // Use the StaticLambdaQueue design pattern to queue up a call to reset a pawns EnPassantTarget property back to false if the next turn
+        // is not En Passant. Or something like that
+        public int TurnNumber { get; set; } 
 
         public ChessBoard()
         {
+            StaticLogger.Log("ChessBoard default constructor begin");
             Board = new Square[8, 8];
             TurnNumber = 1;
             InitializeBoard();
             GenerateBoardID();
+            StaticLogger.Log("ChessBoard default constructor end");
         }
 
         public ChessBoard(ChessBoard? other)
