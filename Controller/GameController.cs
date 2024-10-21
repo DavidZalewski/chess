@@ -193,7 +193,7 @@ namespace Chess.Controller
             _turnNumber++;
             StaticLogger.Log($"Applying Turn To Game State (TurnNumber: {_turnNumber})", LogLevel.Debug);
             OnTurnHandler?.Invoke(turn);
-            LambdaQueue.Drain(); // Used for EnPassant to expire the window where this move can still be made
+            LambdaQueue.Drain(this); // Used for EnPassant to expire the window where this move can still be made
         }
 
         public ChessBoard GetChessBoard() 

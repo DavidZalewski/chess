@@ -72,9 +72,17 @@ namespace Chess.Pieces
                         if (!SimulationService.IsSimulation)
                         {
                             MovedTwoSquares = true; // We use this to for En Passant
-                            LambdaQueue.Enqueue(() => {
-                                StaticLogger.Log($"Closing window of opportunity for En Passant for Pawn {this.GetPieceName()}", LogLevel.Debug);
-                                this.MovedTwoSquares = false;
+                            LambdaQueue.Enqueue((Chess.Controller.GameController gc) => {
+                                ChessPieceWhitePawn? pawn = (ChessPieceWhitePawn?)gc.GetChessBoard().GetActivePieces().Find((p) => p.GetPieceName().Equals(this._pieceName));
+                                if (pawn != null)
+                                {
+                                    StaticLogger.Log($"Closing window of opportunity for En Passant for Pawn {pawn.GetPieceName()}", LogLevel.Debug);
+                                    pawn.MovedTwoSquares = false;
+                                }
+                                else
+                                {
+                                    StaticLogger.Log($"Error - could not find Pawn {this._pieceName} from GameController Active Pieces!", LogLevel.Error);
+                                }
                             }); // Load the LambdaQueue
                         }
                         return true;

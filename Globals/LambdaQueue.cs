@@ -2,32 +2,31 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Chess.Globals
 {
     public static class LambdaQueue
     {
+        // New LambdaAction delegate that accepts a GameController
         private class LambdaAction
         {
-            public Action Action { get; }
+            public Action<Chess.Controller.GameController> Action { get; }
             public int Threshold { get; }
             public int CurrentCount { get; set; }
 
-            public LambdaAction(Action action, int threshold)
+            public LambdaAction(Action<Chess.Controller.GameController> action, int threshold)
             {
                 Action = action;
                 Threshold = threshold;
                 CurrentCount = 0;
             }
         }
+
         private static List<LambdaAction> _actions = new();
         private const int DrainThreshold = 2;
 
-
-        [TestNeeded]
-        public static void Enqueue(Action action)
+        // Modified Enqueue method to accept Action with GameController parameter
+        public static void Enqueue(Action<Chess.Controller.GameController> action)
         {
             StaticLogger.Trace();
             StaticLogger.Log("Enqueuing action", LogLevel.Debug);
@@ -39,9 +38,8 @@ namespace Chess.Globals
             }
         }
 
-        [TestNeeded]
-        // Drain method to increment counters and invoke actions when ready
-        public static void Drain()
+        // Modified Drain method to pass the GameController when invoking the lambda
+        public static void Drain(Chess.Controller.GameController gc)
         {
             StaticLogger.Trace();
             StaticLogger.Log("Drain invoked", LogLevel.Debug);
@@ -54,7 +52,7 @@ namespace Chess.Globals
                 if (lambdaAction.CurrentCount >= lambdaAction.Threshold)
                 {
                     StaticLogger.Log("An action has reached the threshold count - invoking and removing from queue", LogLevel.Debug);
-                    lambdaAction.Action.Invoke();
+                    lambdaAction.Action.Invoke(gc);  // Pass the GameController here
                     toRemove.Add(lambdaAction); // Mark for removal after invocation
                 }
             }
@@ -62,8 +60,7 @@ namespace Chess.Globals
             // Remove the invoked actions from the list
             foreach (var action in toRemove)
             {
-                // needs to be thread safe since tests are running in parallel and this is a global state being modified
-                lock(_actions)
+                lock (_actions)
                 {
                     StaticLogger.Log("Removing action", LogLevel.Debug);
                     _actions.Remove(action);
