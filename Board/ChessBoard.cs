@@ -30,19 +30,14 @@ namespace Chess.Board
 
         public Square[,] Board { get; set; }
         public string BoardID { get; private set; } = string.Empty;
-        // TODO: We need this here so we can identify when en passant is no longer possible... but it duplicates information that GameController already has
-        // Use the StaticLambdaQueue design pattern to queue up a call to reset a pawns EnPassantTarget property back to false if the next turn
-        // is not En Passant. Or something like that
-        public int TurnNumber { get; set; } 
 
         public ChessBoard()
         {
             StaticLogger.Trace();
             Board = new Square[8, 8];
-            TurnNumber = 1;
             InitializeBoard();
             GenerateBoardID();
-            StaticLogger.Log(this.ToDetailedString(), LogLevel.Debug, LogCategory.ObjectDump);
+            StaticLogger.LogObject(this);
         }
 
         public ChessBoard(ChessBoard? other)
@@ -54,8 +49,7 @@ namespace Chess.Board
                 throw new ArgumentNullException(nameof(other));
             }
 
-            StaticLogger.Log($"Dumping other: {other.ToDetailedString()}", LogLevel.Debug, LogCategory.ObjectDump);
-            TurnNumber = other.TurnNumber;
+            StaticLogger.LogObject(other, "Dumping other");
             Board = new Square[8, 8]; // Create a new array
 
             for (int row = 0; row < 8; row++)
@@ -65,7 +59,7 @@ namespace Chess.Board
                     Board[row, col] = new Square(other.Board[row, col]); // Copy each Square
                 }
             }
-            StaticLogger.Log($"Copy Construct Complete: {this.ToDetailedString()}", LogLevel.Debug, LogCategory.ObjectDump);
+            StaticLogger.LogObject(this, "Copy Construct Complete");
         }
 
         public ChessBoard(string boardID)
@@ -222,7 +216,7 @@ namespace Chess.Board
                 }
             }
             BoardID = id;
-            StaticLogger.Log($"BoardID: {BoardID}", LogLevel.Info);
+            StaticLogger.Log($"BoardID: {BoardID}", LogLevel.Debug);
         }
 
         private void InitializeBoard()
@@ -382,7 +376,7 @@ namespace Chess.Board
             StaticLogger.Trace();
             StaticLogger.LogMethod(position, square);
             Board[position.RankAsInt, position.FileAsInt] = square;
-            StaticLogger.Log(square.ToDetailedString(), LogLevel.Debug, LogCategory.ObjectDump);
+            StaticLogger.LogObject(square);
             GenerateBoardID();
         }
 

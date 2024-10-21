@@ -126,7 +126,7 @@ namespace Chess.Controller
                     return null;
 
             ChessPiece? chessPiece = _chessPieces.FirstOrDefault(p => p.GetColor().Equals(color) && p.GetPiece().Equals(piece) && p.GetId().Equals(id), null);
-            StaticLogger.Log(chessPiece?.ToDetailedString(), LogLevel.Debug, LogCategory.ObjectDump);
+            StaticLogger.LogObject(chessPiece);
             return chessPiece;
         }
 
@@ -191,10 +191,9 @@ namespace Chess.Controller
             _chessPieces = turn.ChessPieces;
             _turns.Add(turn);
             _turnNumber++;
-            // TODO: is there a better way?
-            _chessBoard.TurnNumber = _turnNumber;
-            turn.ChessBoard.TurnNumber = _turnNumber;
+            StaticLogger.Log($"Applying Turn To Game State (TurnNumber: {_turnNumber})", LogLevel.Debug);
             OnTurnHandler?.Invoke(turn);
+            LambdaQueue.Drain(); // Used for EnPassant to expire the window where this move can still be made
         }
 
         public ChessBoard GetChessBoard() 

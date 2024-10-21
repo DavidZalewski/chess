@@ -198,7 +198,7 @@ namespace Chess.Services
             List<ChessPiece> chessPieces = new();
             chessPieces.AddRange(CreateWhiteChessPieces());
             chessPieces.AddRange(CreateBlackChessPieces());
-            StaticLogger.Log(chessPieces.ToDetailedString(), LogLevel.Debug, LogCategory.ObjectDump);
+            StaticLogger.LogObject(chessPieces);
             return chessPieces;
         }
 
@@ -218,7 +218,7 @@ namespace Chess.Services
             chessPieces.AddRange(CreateBlackRooks());
             chessPieces.AddRange(CreateBlackQueenAndKing());
 
-            StaticLogger.Log(chessPieces.ToDetailedString(), LogLevel.Debug, LogCategory.ObjectDump);
+            StaticLogger.LogObject(chessPieces);
 
             return chessPieces;
         }

@@ -6,6 +6,7 @@ using System.Collections.Generic;
 
 namespace Tests.Services
 {
+    // CANNOT BE RUN ASYNC OR IN PARALLEL
     [Category("CORE")]
     public class KingCheckServiceTests : TestBase
     {

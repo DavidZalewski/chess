@@ -72,13 +72,18 @@ namespace Chess.Services
 
             // iterate over all Opponent Pieces and call IsValidMove(position) 
             // if one of these pieces returns true (this is a valid move that piece can make)
-            // then the king would be put in check if it moved to this position
+            // then the king would be put in check if it moved to this position        
             foreach (ChessPiece piece in opponentPieces)
             {
+                SimulationService.BeginSimulation();
                 if (piece.IsValidMove(turnToBeMade.ChessBoard, positionToCheck))
+                {
+                    SimulationService.EndSimulation();
                     return true; // The King is in check from something
+                }
+                SimulationService.EndSimulation();
             }
-
+            
             return false; // The king is not in check
         }
 
@@ -106,11 +111,13 @@ namespace Chess.Services
 
             List<Turn> possibleMoves = new();
 
+            
             foreach (ChessPiece piece in friendlyPieces)
             {
                 // Simulated future turns assume a pawn is always promoted to queen
                 // iterate over all board positions
                 SpecialMovesHandlers.ByPassPawnPromotionPromptUser = true;
+                SimulationService.BeginSimulation();
                 // TODO: This For Loop makes debugging a nightmare
                 // Replace this later with foreach (Square sq in piece.GetPossibleSquares())
                 // Or have the ChessPiece.GetPossibleTurns() and do this logic in ChessPiece
@@ -127,15 +134,17 @@ namespace Chess.Services
                     }
                 }
                 SpecialMovesHandlers.ByPassPawnPromotionPromptUser = false;
+                SimulationService.EndSimulation();
                 // TODO: change the PawnPromotion callback function back to GameManager.HandlePawnPromotion
             }
 
             foreach (Turn possibleTurn in possibleMoves)
             {
                 if (!IsKingInCheck(possibleTurn))
-                    return false;
+                {
+                    return false;              
+                }           
             }
-
             return true; // Check Mate
         }
     }

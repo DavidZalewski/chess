@@ -7,9 +7,11 @@ using Chess.Callbacks;
 using Chess.GameState;
 using System.Data;
 using Chess.Services;
+using Chess.Globals;
 
 namespace Tests
 {
+    // CANNOT BE RUN ASYNC OR IN PARALLEL
     [Category("CORE")]
     internal class GameManagerTests : TestBase
     {
@@ -337,7 +339,7 @@ namespace Tests
         }
 
         [Test]
-        [Parallelizable(ParallelScope.Self)]
+        //[Parallelizable(ParallelScope.Self)]
         public void AI_Vs_AI()
         {
             Queue<string> consoleInputs = new();
@@ -414,27 +416,24 @@ namespace Tests
                 }
 
                 // Set up the mock console service and game controller
-                IConsole consoleService = new MockConsoleService(consoleInputs);
-                GameController gameController = GetGameController(consoleService);  // Assuming you have a method to get the game controller
-                GameManager game = new GameManager(consoleService, gameController);  // Assuming this is how your game manager is initialized
+                IConsole consoleService = new ChessDotComReplayMockConsoleService(consoleInputs, file, expectedOutcome);
+                StaticLogger.SetMetaData(file);
+                GameController gameController = GetGameController(consoleService);  
+                GameManager game = new GameManager(consoleService, gameController); 
 
                 // Act
                 game.Start();  // Start the game which will play through all the moves
 
                 // Assert
-                if (((MockConsoleService)consoleService).OutputContainsString(expectedOutcome))
-                {
-                }
-                else
-                {
-                    testReport += ("The game outcome did not match the expected checkmate. (Expected Outcome: " + expectedOutcome + ", File: " + file + ")");
+                if (!((ChessDotComReplayMockConsoleService)consoleService).VerifyReplayAndLogIfFailed()) {
+                    testReport += ("The game outcome did not match the expected checkmate. (Expected Outcome: " + expectedOutcome + ", File: " + file + ")\n");
                 }
             }
 
             if (!String.IsNullOrEmpty(testReport))
             {
                 Console.WriteLine(testReport);
-                Assert.Fail("One of the files failed to verify against chess engine");
+                Assert.Fail($"One of the files failed to verify against chess engine: {testReport}");
             }
 
             Assert.That(true, Is.True);

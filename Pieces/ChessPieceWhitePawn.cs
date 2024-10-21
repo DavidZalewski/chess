@@ -1,5 +1,6 @@
 ﻿using Chess.Board;
 using Chess.Globals;
+using Chess.Services;
 
 namespace Chess.Pieces
 {
@@ -18,7 +19,6 @@ namespace Chess.Pieces
             ChessPieceWhitePawn copy = new(_id, _startingPosition);
             copy.IsEnPassantTarget = this.IsEnPassantTarget;
             copy.MovedTwoSquares = this.MovedTwoSquares;
-            copy.TurnNumberWhenMovedTwoSquares = this.TurnNumberWhenMovedTwoSquares;
             return Clone(copy);
         }
 
@@ -69,8 +69,14 @@ namespace Chess.Pieces
                         return false;
                     else
                     {
-                        MovedTwoSquares = true; // We use this to for En Passant
-                        TurnNumberWhenMovedTwoSquares = board.TurnNumber;
+                        if (!SimulationService.IsSimulation)
+                        {
+                            MovedTwoSquares = true; // We use this to for En Passant
+                            LambdaQueue.Enqueue(() => {
+                                StaticLogger.Log($"Closing window of opportunity for En Passant for Pawn {this.GetPieceName()}", LogLevel.Debug);
+                                this.MovedTwoSquares = false;
+                            }); // Load the LambdaQueue
+                        }
                         return true;
                     }
                 }

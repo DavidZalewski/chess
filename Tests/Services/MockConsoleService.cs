@@ -1,4 +1,5 @@
-﻿using Chess.Interfaces;
+﻿using Chess.Globals;
+using Chess.Interfaces;
 using Chess.Services;
 using System;
 using System.Collections.Generic;
@@ -21,7 +22,7 @@ namespace Tests.Services
             Inputs = inputs;
         }
 
-        public string? ReadLine()
+        public virtual string? ReadLine()
         {
             if (Inputs != null)
             {
@@ -31,16 +32,20 @@ namespace Tests.Services
                 }
                 string readOut = Inputs.Dequeue();
                 Console.WriteLine(readOut); // so we can see what the input is supposed to be at this point
+                //StaticLogger.Log(readOut); // TODO: Figure out what we are doing here
                 return readOut;
             }
 
-            throw new Exception("Mock Console Service has run out of mock inputs to use");
+            Exception e = new Exception("Mock Console Service has run out of mock inputs to use");
+            //StaticLogger.Log($"{e}", LogLevel.Error);
+            throw e;
         }
 
-        public void WriteLine(string? text)
+        public virtual void WriteLine(string? text)
         {
             Outputs.Add(text);
             Console.WriteLine(text);
+            //StaticLogger.Log(text);
         }
 
         public bool OutputHasExactString(string? text)

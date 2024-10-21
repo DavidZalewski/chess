@@ -7,7 +7,7 @@ using Chess.Services;
 namespace Tests
 {
     [Category("CORE")]
-    [Parallelizable(ParallelScope.All)]
+    //[Parallelizable(ParallelScope.All)] // YOU CANNOT RUN THESE ASYNC ANYMORE
     public class GameControllerTests : TestBase
     {
         [Test]

@@ -333,6 +333,7 @@ namespace Chess
                 }
                 catch (Exception ex)
                 {
+                    StaticLogger.Log($"Fatal Exception: {ex.ToString()}", LogLevel.Fatal, LogCategory.General);
                     _console.WriteLine("Exception encountered.");
                     _console.WriteLine(ex.ToString());
                     break;

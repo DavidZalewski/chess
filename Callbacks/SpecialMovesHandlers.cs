@@ -123,11 +123,8 @@ namespace Chess.Callbacks
                     // Is the opponent piece a pawn?
                     if (opponentPiece is ChessPiecePawn)
                     {
-                        // is the en passant expired?
-                        int enPassantTurnDiff = (opponentPiece as ChessPiecePawn).TurnNumberWhenMovedTwoSquares - chessBoard.TurnNumber;
-                        // Console.WriteLine($"TurnNumberWhenMovedTwoSquares: {(opponentPiece as ChessPiecePawn).TurnNumberWhenMovedTwoSquares} , chessBoard.TurnNumber: {chessBoard.TurnNumber} , enPassantTurnDiff: {enPassantTurnDiff}");
                         // Did that pawn move 2 squares?
-                        if ((opponentPiece as ChessPiecePawn).MovedTwoSquares && enPassantTurnDiff == 0)
+                        if ((opponentPiece as ChessPiecePawn).MovedTwoSquares)
                         {
                             // is the position a capture position?
                             // Get the opponent pawn position, and get the position that is 1 square behind it
