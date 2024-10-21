@@ -1,4 +1,5 @@
 ﻿using Chess.Board;
+using Chess.Globals;
 
 namespace Chess.Pieces
 {
@@ -8,11 +9,13 @@ namespace Chess.Pieces
         protected bool _wasInCheck = false;
         public ChessPieceKing(Color color, BoardPosition startingPosition) : base(Piece.KING, color, 1, startingPosition)
         {
+            StaticLogger.Trace();
             _realValue = (int)_piece + (int)_color; // could also calculate this in base class by adding the two enums together
         }
 
         public override bool IsValidMove(ChessBoard board, BoardPosition position)
         {
+            StaticLogger.Trace();
             if (position == _currentPosition) return false; // Is the current position the same as where its being asked to move?
             if (IsCastleMove(board, position)) return true; // Are we Castling?
             if (board.IsPieceAtPosition(position, _color)) return false; // Is there a friendly piece blocking us here?
@@ -26,6 +29,7 @@ namespace Chess.Pieces
 
         public override bool ImplementMove(ChessBoard board, BoardPosition position)
         {
+            StaticLogger.Trace();
             if (IsCastleMove(board, position))
             {
                 // Find the rook that is at this position
@@ -40,6 +44,7 @@ namespace Chess.Pieces
 
         private bool IsCastleMove(ChessBoard board, BoardPosition position)
         {
+            StaticLogger.Trace();
             // Castling Logic
             if (!_hasMoved && !_wasInCheck)
             {
@@ -105,10 +110,11 @@ namespace Chess.Pieces
 
         public override ChessPiece Clone()
         {
+            StaticLogger.Trace();
             ChessPieceKing copy = new(_color, _startingPosition);
             return Clone(copy);
         }
 
-        internal void SetWasInCheck() { _wasInCheck = true; }
+        internal void SetWasInCheck() { StaticLogger.Trace(); _wasInCheck = true; }
     }
 }

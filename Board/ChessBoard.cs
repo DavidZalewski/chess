@@ -37,21 +37,24 @@ namespace Chess.Board
 
         public ChessBoard()
         {
-            StaticLogger.Log("ChessBoard default constructor begin");
+            StaticLogger.Trace();
             Board = new Square[8, 8];
             TurnNumber = 1;
             InitializeBoard();
             GenerateBoardID();
-            StaticLogger.Log("ChessBoard default constructor end");
+            StaticLogger.Log(this.ToDetailedString(), LogLevel.Debug, LogCategory.ObjectDump);
         }
 
         public ChessBoard(ChessBoard? other)
         {
+            StaticLogger.Trace();
             if (other == null || other.Board == null)
             {
+                StaticLogger.Log("other argument is null for copy constructor - throwing ArgumentNullException", LogLevel.Error);
                 throw new ArgumentNullException(nameof(other));
             }
 
+            StaticLogger.Log($"Dumping other: {other.ToDetailedString()}", LogLevel.Debug, LogCategory.ObjectDump);
             TurnNumber = other.TurnNumber;
             Board = new Square[8, 8]; // Create a new array
 
@@ -62,10 +65,12 @@ namespace Chess.Board
                     Board[row, col] = new Square(other.Board[row, col]); // Copy each Square
                 }
             }
+            StaticLogger.Log($"Copy Construct Complete: {this.ToDetailedString()}", LogLevel.Debug, LogCategory.ObjectDump);
         }
 
         public ChessBoard(string boardID)
         {
+            StaticLogger.Trace();
             Board = new Square[8, 8];
             InitializeBoard();
             int row = 0, file = 0;
@@ -176,6 +181,7 @@ namespace Chess.Board
         // TODO: Change this back to private later
         public void GenerateBoardID()
         {
+            StaticLogger.Trace();
             string id = string.Empty;
             for (int row = 0; row < 8; row++)
             {
@@ -216,10 +222,12 @@ namespace Chess.Board
                 }
             }
             BoardID = id;
+            StaticLogger.Log($"BoardID: {BoardID}", LogLevel.Info);
         }
 
         private void InitializeBoard()
         {
+            StaticLogger.Trace();
             for (int row = 0; row < 8; row++)
             {
                 for (int col = 0; col < 8; col++)
@@ -235,16 +243,17 @@ namespace Chess.Board
 
         public List<ChessPiece> GetActivePieces()
         {
+            StaticLogger.Trace();
             return Board
                 .Cast<Square>()
                 .Select(square => square.Piece)
                 .Where(piece => piece is not NoPiece)
-                .ToArray()
                 .ToList();
         }
 
         public bool PopulateBoard(List<ChessPiece> chessPieces)
         {
+            StaticLogger.Trace();
             foreach (ChessPiece piece in chessPieces)
             {
                 piece.Move(this, piece.GetStartingPosition());
@@ -255,6 +264,7 @@ namespace Chess.Board
 
         public bool SetBoardValue(BoardPosition position, int value)
         {
+            StaticLogger.Trace();
             ChessPiece piece = ChessPieceFactory.CreatePieceFromInt(position, value);
             Square square = new() { Position = position, Piece = piece };
             SetSquareValue(position, square);
@@ -264,11 +274,13 @@ namespace Chess.Board
 
         public bool IsPieceAtPosition(BoardPosition position)
         {
+            StaticLogger.Trace();
             return GetSquare(position).Piece is not NoPiece;
         }
 
         public bool IsPieceAtPosition(BoardPosition position, ChessPiece.Color color)
         {
+            StaticLogger.Trace();
             if (!IsPositionWithinBounds(position))
             {
                 return false; // index out of bounds
@@ -279,12 +291,14 @@ namespace Chess.Board
 
         public bool IsPieceAtPosition(BoardPosition position, ChessPiece.Color color, ChessPiece.Piece pieceType)
         {
+            StaticLogger.Trace();
             ChessPiece piece = GetSquare(position).Piece;
             return (piece is not NoPiece && piece.GetColor() == color && piece.GetPiece() == pieceType);
         }
 
         public void SetPieceAtPosition(BoardPosition position, ChessPiece piece)
         {
+            StaticLogger.Trace();
             GetSquare(position).Piece = piece;
             piece.SetCurrentPosition(position);
             GenerateBoardID();
@@ -292,6 +306,7 @@ namespace Chess.Board
 
         public void AddPiece(ChessPiece piece)
         {
+            StaticLogger.Trace();
             piece.Move(this, piece.GetStartingPosition());
             GetSquare(piece.GetCurrentPosition()).Piece = piece;
             GenerateBoardID();
@@ -300,6 +315,7 @@ namespace Chess.Board
 
         public string DisplayBoard()
         {
+            StaticLogger.Trace();
             string output = "*|*A*|*B*|*C*|*D*|*E*|*F*|*G*|*H*|*\n";
             int arraySize = 8;
             int rankNumber = arraySize;
@@ -363,17 +379,22 @@ namespace Chess.Board
 
         public void SetSquareValue(BoardPosition position, Square square)
         {
+            StaticLogger.Trace();
+            StaticLogger.LogMethod(position, square);
             Board[position.RankAsInt, position.FileAsInt] = square;
+            StaticLogger.Log(square.ToDetailedString(), LogLevel.Debug, LogCategory.ObjectDump);
             GenerateBoardID();
         }
 
         public Square GetSquare(BoardPosition position)
         {
+            StaticLogger.Trace();
             return Board[position.RankAsInt, position.FileAsInt];
         }
 
         public bool IsPositionWithinBounds(BoardPosition position)
         {
+            StaticLogger.Trace();
             if (position is null) return false;
             return (position.RankAsInt >= 0 && position.RankAsInt <= 7) || (position.FileAsInt >= 0 && position.FileAsInt <= 7);
         }

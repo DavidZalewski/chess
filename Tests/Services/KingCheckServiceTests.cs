@@ -7,7 +7,7 @@ using System.Collections.Generic;
 namespace Tests.Services
 {
     [Category("CORE")]
-    public class KingCheckServiceTests
+    public class KingCheckServiceTests : TestBase
     {
         [Test]
         public void ConstructKingCheckService_Success()

@@ -1,5 +1,6 @@
 ﻿using Chess.Board;
 using Chess.Callbacks;
+using Chess.Globals;
 using Chess.Pieces;
 using Chess.Services;
 
@@ -42,6 +43,7 @@ namespace Chess.GameState
 
         public List<Turn> GenerateAllPossibleMoves(Turn turn, int depth)
         {
+            StaticLogger.Trace();
             int threadId = Thread.CurrentThread.ManagedThreadId;
 
             logger.Log($"ChessStateExplorer - BEGIN: Generating all possible moves for turn {turn.TurnDescription} at depth {depth}", threadId);
@@ -98,6 +100,7 @@ namespace Chess.GameState
 
         public List<TurnNode> GenerateAllPossibleMovesTurnNode(Turn turn, int depth, ref ulong currentCount)
         {
+            StaticLogger.Trace();
             int threadId = Thread.CurrentThread.ManagedThreadId;
 
             logger.Log($"ChessStateExplorer - BEGIN: Generating all possible moves for BoardID {turn.ChessBoard.BoardID} at depth {depth}", threadId);
@@ -176,6 +179,7 @@ namespace Chess.GameState
 
         public List<(string Key, CacheItem AccessCount)> GetTopNCachedItems(int n)
         {
+            StaticLogger.Trace();
             var topItems = new List<(string Key, CacheItem AccessCount)>();
 
             foreach (var item in cache._mainCache)
@@ -188,6 +192,7 @@ namespace Chess.GameState
 
         public void PrintTopCacheItems(int n)
         {
+            StaticLogger.Trace();
             logger.Log($"Cache Size: {cache._mainCache.Count}", 0);
             var topItems = GetTopNCachedItems(n);
             foreach (var item in topItems)
@@ -198,11 +203,13 @@ namespace Chess.GameState
 
         public long CacheSize()
         {
+            StaticLogger.Trace();
             return cache._mainCache.Count;
         }
 
         public List<TurnNode> GenerateAllPossibleMovesTurnNode_NoRecursion(Turn turn, int depth, ref ulong currentCount)
         {
+            StaticLogger.Trace();
             int threadId = Thread.CurrentThread.ManagedThreadId;
 
             logger.Log($"ChessStateExplorer - BEGIN: Generating all possible moves for BoardID {turn.ChessBoard.BoardID} at depth {depth}", threadId);

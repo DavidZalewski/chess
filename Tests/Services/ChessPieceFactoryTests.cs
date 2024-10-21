@@ -6,7 +6,7 @@ using static Chess.Pieces.ChessPiece;
 namespace Tests.Services
 {
     [Category("CORE")]
-    public class ChessPieceFactoryTests
+    public class ChessPieceFactoryTests : TestBase
     {
         [Test]
         public void BuildWhitePawns_Success()

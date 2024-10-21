@@ -5,7 +5,7 @@ using NUnit.Framework;
 namespace Tests.Pieces
 {
     [Category("CORE")]
-    public class NuclearBishopPieceTests
+    public class NuclearBishopPieceTests : TestBase
     {
         private readonly BoardPosition startingPos = new BoardPosition(RANK.EIGHT, FILE.H);
         private readonly BoardPosition disabledPos = new BoardPosition(RANK.SIX, FILE.F); // Example disabled square position
@@ -28,8 +28,9 @@ namespace Tests.Pieces
         private NuclearBishopPiece? blackNuclearBishop = null;
 
         [SetUp]
-        public void Setup()
+        public override void Setup()
         {
+            base.Setup();
             whiteNuclearHorse = new(ChessPiece.Color.WHITE, 1, knightStartingPosC3);
             blackNuclearHorse = new(ChessPiece.Color.BLACK, 1, knightStartingPosC6);
             whiteNuclearBishop = new(ChessPiece.Color.WHITE, 1, whiteBishopStartingPosH3);

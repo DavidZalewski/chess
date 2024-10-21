@@ -1,4 +1,5 @@
-﻿using Chess.Pieces;
+﻿using Chess.Globals;
+using Chess.Pieces;
 
 namespace Chess.GameState
 {
@@ -17,14 +18,16 @@ namespace Chess.GameState
         public bool IsCheckMate { get; set; }
         public float Side()
         {
+            StaticLogger.Trace();
             return TurnNumber % 2 == 0 ? 0 : 1; // black is 0. white is 1;
         }
 
         public TurnNode(Turn turn, string optionalText = "")
         {
+            StaticLogger.Trace();
             TurnDescription = turn.TurnDescription + optionalText;
             TurnNumber = turn.TurnNumber;
-            BoardState = "PLACEHOLDER"; // turn.ChessBoard.DisplayBoard();
+            BoardState = "PLACEHOLDER"; // turn.ChessBoard.DisplayBoard(); // TODO: Use BoardID here
             //Command = turn.Command;
 
             if (String.IsNullOrEmpty(Command))

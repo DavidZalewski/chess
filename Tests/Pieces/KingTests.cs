@@ -5,16 +5,10 @@ using Chess.Services;
 namespace Tests.Pieces
 {
     [Category("CORE")]
-    public class KingTests
+    public class KingTests : TestBase
     {
         private readonly BoardPosition e1 = new(RANK.ONE, FILE.E);
         private readonly BoardPosition e8 = new(RANK.EIGHT, FILE.E);
-
-        [SetUp]
-        public void Setup()
-        {
-
-        }
 
         [Test]
         public void ConstructWhiteKing_Success()

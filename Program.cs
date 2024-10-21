@@ -1,5 +1,6 @@
 ﻿using Chess.Board;
 using Chess.Controller;
+using Chess.Globals;
 using Chess.Interfaces;
 using Chess.Services;
 
@@ -15,6 +16,7 @@ namespace Chess
     {
         static void Main(string[] args)
         {
+            StaticLogger.Trace();
             ChessBoard chessBoard = new();
             GameController gameController = new GameController(chessBoard);
             IConsole consoleService = new ConsoleService();

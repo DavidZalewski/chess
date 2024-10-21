@@ -1,6 +1,7 @@
 ﻿using Chess.Board;
 using Chess.Callbacks;
 using Chess.GameState;
+using Chess.Globals;
 using Chess.Pieces;
 
 namespace Chess.Services
@@ -12,6 +13,7 @@ namespace Chess.Services
 
         public bool IsKingInCheck(ChessPiece.Color color, ChessBoard chessBoard)
         {
+            StaticLogger.Trace();
             List<ChessPiece> chessPieces = chessBoard.GetActivePieces();
             if (chessPieces.Count == 0) { return false; }
             ChessPiece chessPieceKing = chessPieces.First(p => p.GetPiece().Equals(ChessPiece.Piece.KING) && p.GetColor().Equals(color));
@@ -31,6 +33,7 @@ namespace Chess.Services
 
         public bool IsKingInCheck(Turn turnToBeMade)
         {
+            StaticLogger.Trace();
             ChessPiece chessPieceKing;
             List<ChessPiece> opponentPieces = new();
 
@@ -91,6 +94,7 @@ namespace Chess.Services
         // 8000~ iterations is not super heavy performance wise given it can be checked per turn
         public bool IsCheckMate(Turn turn)
         {
+            StaticLogger.Trace();
             List<ChessPiece> friendlyPieces = new();
             // if the turn passed in was blacks turn, then we should check if its checkmate for white king
             // otherwise if the turn passed in was whites turn, then we should check if its checkmate for black king

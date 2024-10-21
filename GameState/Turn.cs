@@ -1,5 +1,6 @@
 ﻿using Chess.Board;
 using Chess.Callbacks;
+using Chess.Globals;
 using Chess.Pieces;
 
 namespace Chess.GameState
@@ -28,6 +29,8 @@ namespace Chess.GameState
 
         public Turn(int turnNumber, ChessPiece piece, BoardPosition previousPosition, BoardPosition newPosition, ChessBoard chessBoard)
         {
+            StaticLogger.Trace();
+            StaticLogger.LogMethod(turnNumber, piece, previousPosition, newPosition, chessBoard);
             TurnNumber = turnNumber;
             ChessPiece = piece;
             PreviousPosition = previousPosition;

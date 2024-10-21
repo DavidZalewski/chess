@@ -5,7 +5,7 @@ using static Chess.Pieces.ChessPiece;
 namespace Tests.Pieces
 {
     [Category("CORE")]
-    public class RookTests
+    public class RookTests : TestBase
     {
         private ChessBoard board;
         private BoardPosition a1;
@@ -23,8 +23,9 @@ namespace Tests.Pieces
         }
 
         [SetUp]
-        public void Setup()
+        public override void Setup()
         {
+            base.Setup();
             board = new ChessBoard();
             a1 = new(RANK.ONE, FILE.A);
             whiteRook2StartPosition = new(RANK.EIGHT, FILE.A);

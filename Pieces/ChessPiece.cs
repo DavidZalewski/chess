@@ -1,5 +1,6 @@
 ﻿using Chess.Board;
 using Chess.Callbacks;
+using Chess.Globals;
 
 namespace Chess.Pieces
 {
@@ -56,6 +57,8 @@ namespace Chess.Pieces
 
         public ChessPiece(Piece piece, Color color, int id, BoardPosition startingPosition)
         {
+            StaticLogger.Trace();
+            StaticLogger.LogMethod(piece, color, id, startingPosition);
             _piece = piece;
             _color = color;
             _id = id;
@@ -68,6 +71,8 @@ namespace Chess.Pieces
 
         protected ChessPiece Clone(ChessPiece copy)
         {
+            StaticLogger.Trace();
+            StaticLogger.LogMethod(copy);
             copy._piece = _piece;
             copy._color = _color;
             copy._id = _id;
@@ -82,6 +87,7 @@ namespace Chess.Pieces
 
         public override bool Equals(object? obj)
         {
+            StaticLogger.Trace();
             var item = obj as ChessPiece;
 
             if (item == null)
@@ -104,6 +110,7 @@ namespace Chess.Pieces
 
         public void Move(ChessBoard board, BoardPosition position)
         {
+            StaticLogger.Trace();
             if (ImplementMove(board, position)) return;
 
             BoardPosition previousPosition = _currentPosition;
@@ -124,17 +131,18 @@ namespace Chess.Pieces
 
         }
 
-        public Piece GetPiece() { return _piece; }
-        public Color GetColor() { return _color; }
-        public int GetId() { return _id; }
-        public int GetRealValue() { return _realValue; }
-        public BoardPosition GetStartingPosition() { return _startingPosition; }
-        public BoardPosition GetCurrentPosition() { return _currentPosition; }
-        public bool HasMoved() { return _hasMoved; }
+        public Piece GetPiece() { StaticLogger.Trace(); return _piece; }
+        public Color GetColor() { StaticLogger.Trace(); return _color; }
+        public int GetId() { StaticLogger.Trace(); return _id; }
+        public int GetRealValue() { StaticLogger.Trace(); return _realValue; }
+        public BoardPosition GetStartingPosition() { StaticLogger.Trace(); return _startingPosition; }
+        public BoardPosition GetCurrentPosition() { StaticLogger.Trace(); return _currentPosition; }
+        public bool HasMoved() { StaticLogger.Trace(); return _hasMoved; }
 
-        public string GetPieceName() { return _pieceName; }
+        public string GetPieceName() { StaticLogger.Trace(); return _pieceName; }
         private string GetPieceName(string dummyArgument)
         {
+            StaticLogger.Trace();
             string pieceName = "";
             if (_color.Equals(Color.WHITE))
             {
@@ -166,16 +174,19 @@ namespace Chess.Pieces
         // used by ghost pieces
         public void SetCurrentPosition(BoardPosition boardPosition)
         {
+            StaticLogger.Trace();
             _currentPosition = boardPosition;
         }
 
         public static void SetCastleCallbackFunction(Func<ChessBoard, BoardPosition, ChessPiece, bool> callback)
         {
+            StaticLogger.Trace();
             _castleEventCallBackFunction = callback;
         }
 
         public static void SetIsEnPassantCallbackFunction(Func<ChessBoard, BoardPosition, ChessPiece, bool> callback)
         {
+            StaticLogger.Trace();
             _IsEnPassantCallBackFunction = callback;
         }
 
@@ -184,10 +195,11 @@ namespace Chess.Pieces
         // Use this to replace the brute force for loop in KingCheckService
 
         // used by tests to setup the state of King Piece for certain unit tests
-        internal void SetHasMoved() { _hasMoved = true; }
+        internal void SetHasMoved() { StaticLogger.Trace(); _hasMoved = true; }
 
         public bool Equals(ChessPiece other)
         {
+            StaticLogger.Trace();
             return _color.Equals(other._color) &&
                    _id == other._id &&
                    _realValue == other._realValue &&
@@ -198,6 +210,7 @@ namespace Chess.Pieces
 
         public override int GetHashCode()
         {
+            StaticLogger.Trace();
             return GetHashCode();
         }
     }

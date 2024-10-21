@@ -1,4 +1,5 @@
-﻿using System.Collections.Concurrent;
+﻿using Chess.Globals;
+using System.Collections.Concurrent;
 
 namespace Chess.GameState
 {
@@ -31,6 +32,7 @@ namespace Chess.GameState
 
         public MultiDimensionalCache(int partitionSize)
         {
+            StaticLogger.Trace();
             _mainCache = new ConcurrentDictionary<string, TValue>();
             _indexCache = new ConcurrentDictionary<string, ConcurrentDictionary<string, TValue>>();
             _partitionSize = partitionSize;
@@ -41,6 +43,7 @@ namespace Chess.GameState
         /// </summary>
         public void AddOrUpdate(string key, TValue value)
         {
+            StaticLogger.Trace();
             _mainCache.AddOrUpdate(key, value, (k, v) => value);
             var prefix = key.Substring(0, _partitionSize);
             if (!_indexCache.TryGetValue(prefix, out var index))
@@ -56,6 +59,7 @@ namespace Chess.GameState
         /// </summary>
         public bool TryGetValue(string key, out TValue value)
         {
+            StaticLogger.Trace();
             var prefix = key.Substring(0, _partitionSize);
             if (_indexCache.TryGetValue(prefix, out var index))
             {

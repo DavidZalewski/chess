@@ -6,10 +6,11 @@ namespace Chess.Services
 {
     public class ChessPieceFactory
     {
-        public ChessPieceFactory() { }
+        public ChessPieceFactory() { StaticLogger.Trace(); }
 
         public static List<ChessPiece> CreateWhitePawns()
         {
+            StaticLogger.Trace();
             List<ChessPiece> whitePawns = new();
             for (int i = 0; i < 8; i++)
             {
@@ -21,6 +22,7 @@ namespace Chess.Services
 
         public static List<ChessPiece> CreateBlackPawns()
         {
+            StaticLogger.Trace();
             List<ChessPiece> blackPawns = new();
             for (int i = 0; i < 8; i++)
             {
@@ -32,6 +34,7 @@ namespace Chess.Services
 
         public static List<ChessPiece> CreateWhiteKnights()
         {
+            StaticLogger.Trace();
             List<ChessPiece> whiteKnights = new();
             BoardPosition b1 = new(RANK.ONE, FILE.B);
             BoardPosition g1 = new(RANK.ONE, FILE.G);
@@ -42,6 +45,7 @@ namespace Chess.Services
 
         public static List<ChessPiece> CreateWhiteNuclearHorses()
         {
+            StaticLogger.Trace();
             List<ChessPiece> whiteKnights = new();
             BoardPosition b1 = new(RANK.ONE, FILE.B);
             BoardPosition g1 = new(RANK.ONE, FILE.G);
@@ -52,6 +56,7 @@ namespace Chess.Services
 
         public static List<ChessPiece> CreateBlackKnights()
         {
+            StaticLogger.Trace();
             List<ChessPiece> blackKnights = new();
             BoardPosition b8 = new(RANK.EIGHT, FILE.B);
             BoardPosition g8 = new(RANK.EIGHT, FILE.G);
@@ -62,6 +67,7 @@ namespace Chess.Services
 
         public static List<ChessPiece> CreateBlackNuclearHorses()
         {
+            StaticLogger.Trace();
             List<ChessPiece> blackKnights = new();
             BoardPosition b8 = new(RANK.EIGHT, FILE.B);
             BoardPosition g8 = new(RANK.EIGHT, FILE.G);
@@ -72,6 +78,7 @@ namespace Chess.Services
 
         public static List<ChessPiece> CreateWhiteBishops()
         {
+            StaticLogger.Trace();
             List<ChessPiece> whiteBishops = new();
             BoardPosition c1 = new(RANK.ONE, FILE.C);
             BoardPosition f1 = new(RANK.ONE, FILE.F);
@@ -82,6 +89,7 @@ namespace Chess.Services
 
         public static List<ChessPiece> CreateWhiteNuclearBishops()
         {
+            StaticLogger.Trace();
             List<ChessPiece> whiteBishops = new();
             BoardPosition c1 = new(RANK.ONE, FILE.C);
             BoardPosition f1 = new(RANK.ONE, FILE.F);
@@ -92,6 +100,7 @@ namespace Chess.Services
 
         public static List<ChessPiece> CreateBlackBishops()
         {
+            StaticLogger.Trace();
             List<ChessPiece> blackBishops = new();
             BoardPosition c8 = new(RANK.EIGHT, FILE.C);
             BoardPosition f8 = new(RANK.EIGHT, FILE.F);
@@ -102,6 +111,7 @@ namespace Chess.Services
 
         public static List<ChessPiece> CreateBlackNuclearBishops()
         {
+            StaticLogger.Trace();
             List<ChessPiece> blackBishops = new();
             BoardPosition c8 = new(RANK.EIGHT, FILE.C);
             BoardPosition f8 = new(RANK.EIGHT, FILE.F);
@@ -112,6 +122,7 @@ namespace Chess.Services
 
         public static List<ChessPiece> CreateWhiteRooks()
         {
+            StaticLogger.Trace();
             List<ChessPiece> whiteRooks = new();
             BoardPosition a1 = new(RANK.ONE, FILE.A);
             BoardPosition h1 = new(RANK.ONE, FILE.H);
@@ -122,6 +133,7 @@ namespace Chess.Services
 
         public static List<ChessPiece> CreateBlackRooks()
         {
+            StaticLogger.Trace();
             List<ChessPiece> blackRooks = new();
             BoardPosition a8 = new(RANK.EIGHT, FILE.A);
             BoardPosition h8 = new(RANK.EIGHT, FILE.H);
@@ -132,6 +144,7 @@ namespace Chess.Services
 
         public static List<ChessPiece> CreateWhiteQueenAndKing()
         {
+            StaticLogger.Trace();
             List<ChessPiece> chessPieces = new();
             BoardPosition d1 = new(RANK.ONE, FILE.D);
             BoardPosition e1 = new(RANK.ONE, FILE.E);
@@ -142,6 +155,7 @@ namespace Chess.Services
 
         public static List<ChessPiece> CreateBlackQueenAndKing()
         {
+            StaticLogger.Trace();
             List<ChessPiece> chessPieces = new();
             BoardPosition d8 = new(RANK.EIGHT, FILE.D);
             BoardPosition e8 = new(RANK.EIGHT, FILE.E);
@@ -152,6 +166,7 @@ namespace Chess.Services
 
         public static List<ChessPiece> CreateWhiteChessPieces()
         {
+            StaticLogger.Trace();
             List<ChessPiece> chessPieces = new();
 
             chessPieces.AddRange(CreateWhitePawns());
@@ -165,6 +180,7 @@ namespace Chess.Services
 
         public static List<ChessPiece> CreateBlackChessPieces()
         {
+            StaticLogger.Trace();
             List<ChessPiece> chessPieces = new();
 
             chessPieces.AddRange(CreateBlackPawns());
@@ -178,15 +194,17 @@ namespace Chess.Services
 
         public static List<ChessPiece> CreateChessPiecesClassic()
         {
-            StaticLogger.Log("ChessPieceFactory.CreateChessPiecesClassic called");
+            StaticLogger.Trace();
             List<ChessPiece> chessPieces = new();
             chessPieces.AddRange(CreateWhiteChessPieces());
             chessPieces.AddRange(CreateBlackChessPieces());
+            StaticLogger.Log(chessPieces.ToDetailedString(), LogLevel.Debug, LogCategory.ObjectDump);
             return chessPieces;
         }
 
         public static List<ChessPiece> CreateChessPiecesNuclearHorse()
         {
+            StaticLogger.Trace();
             List<ChessPiece> chessPieces = new();
             chessPieces.AddRange(CreateWhitePawns());
             chessPieces.AddRange(CreateWhiteNuclearHorses());
@@ -200,11 +218,15 @@ namespace Chess.Services
             chessPieces.AddRange(CreateBlackRooks());
             chessPieces.AddRange(CreateBlackQueenAndKing());
 
+            StaticLogger.Log(chessPieces.ToDetailedString(), LogLevel.Debug, LogCategory.ObjectDump);
+
             return chessPieces;
         }
 
         internal static ChessPiece CreatePieceFromInt(BoardPosition position, int value)
         {
+            StaticLogger.Trace();
+            StaticLogger.LogMethod(position, value);
             return value switch
             {
                 -1 => new DisabledSquarePiece(position),

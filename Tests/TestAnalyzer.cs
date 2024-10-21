@@ -1,31 +1,34 @@
 ﻿using Chess.Attributes;
-using Microsoft.VisualBasic;
-using System;
-using System.Linq;
 using System.Reflection;
 
 namespace Tests
 {
-    public class TestAnalyzer
+    public class TestAnalyzer : TestBase
     {
-        public static List<string> FindMethodsNeedingTests()
+        private static List<string> FindMethodsNeedingTests()
         {
             List<string> strings = new();
-            var types = Assembly.GetExecutingAssembly().GetTypes();
-            foreach (var type in types)
+            var assemblies = AppDomain.CurrentDomain.GetAssemblies();
+            foreach (var assembly in assemblies)
             {
-                // TODO: Figure out why this isn't returning anything
-                // It should return at least 6 different cases of this attribute marking a method as needing a test
-                var methods = type.GetMethods(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Static)
-                  .Where(m => m.GetCustomAttribute(typeof(TestNeededAttribute), false) is not null)
-                  .ToList();
-                if (methods.Count > 0)
+                var types = assembly.GetTypes();
+                foreach (var type in types)
                 {
-                    Console.WriteLine("Breakpoint");
-                }
-                foreach (var method in methods)
-                {
-                    strings.Add($"Method {method.Name} needs a unit test in Class {method.DeclaringType?.FullName}.");
+                    try
+                    {
+                        var methods = type.GetMethods(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Static)
+                                          .Where(m => m.GetCustomAttribute(typeof(TestNeededAttribute), false) is not null)
+                                          .ToList();
+                        foreach (var method in methods)
+                        {
+                            strings.Add($"Method {method.Name} needs a unit test in Class {method.DeclaringType?.FullName}.");
+                        }
+
+                    }
+                    catch (TypeLoadException e)
+                    {
+                        Console.WriteLine("TypeLoadException encountered. Ignoring");
+                    }
                 }
             }
 

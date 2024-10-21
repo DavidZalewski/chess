@@ -1,6 +1,7 @@
 ﻿using Chess.Callbacks;
 using Chess.Controller;
 using Chess.GameState;
+using Chess.Globals;
 using Chess.Interfaces;
 using Chess.Pieces;
 
@@ -17,6 +18,7 @@ namespace Chess
 
         public GameManager(IConsole console, GameController gameController)
         {
+            StaticLogger.Trace();
             _console = console;
             _gameController = gameController;
             SpecialMovesHandlers.PawnPromotionPromptUser = HandlePawnPromotion;
@@ -24,6 +26,7 @@ namespace Chess
 
         public void Start()
         {
+            StaticLogger.Trace();
             _console.WriteLine("Chess Application Starting");
 
             StartTutorial();
@@ -53,6 +56,7 @@ namespace Chess
 
             _gameController.SetOnTurnHandler((Turn turn) =>
             {
+                StaticLogger.Trace();
                 if (_gameController.ContainsRuleSet("NuclearHorse"))
                 {
                     _console.WriteLine("Applying NuclearHorse After Turn Effects");
@@ -166,6 +170,7 @@ namespace Chess
 
         private void StartTutorial()
         {
+            StaticLogger.Trace();
             _console.WriteLine("Would you like to play the tutorial? (y/n):");
             string? input = "";
 
@@ -191,6 +196,7 @@ namespace Chess
 
         private void TutorialLoop()
         {
+            StaticLogger.Trace();
             string? input = "";
 
             while (input != null)
@@ -223,6 +229,7 @@ namespace Chess
 
         private void PlayGame()
         {
+            StaticLogger.Trace();
             _gameController.StartGame();
 
             string? input = "";
@@ -337,6 +344,7 @@ namespace Chess
 
         private string HandlePawnPromotion()
         {
+            StaticLogger.Trace();
             _console.WriteLine("Pawn Promoted. Choose type: (Q - Queen, R - Rook, K - Knight, B - Bishop)");
             string? choice;
             while (true)
@@ -354,6 +362,7 @@ namespace Chess
 
         private static (string? command, string? argument) ParseInput(string? input)
         {
+            StaticLogger.Trace();
             if (String.IsNullOrWhiteSpace(input)) return (null, null);
 
             string[] parts = input.ToLower().Split(' ');

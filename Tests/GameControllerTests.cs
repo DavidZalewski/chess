@@ -8,7 +8,7 @@ namespace Tests
 {
     [Category("CORE")]
     [Parallelizable(ParallelScope.All)]
-    public class GameControllerTests
+    public class GameControllerTests : TestBase
     {
         [Test]
         public void ConstructSuccess()

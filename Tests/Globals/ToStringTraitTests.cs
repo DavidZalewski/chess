@@ -16,6 +16,8 @@ namespace Tests
         [Test]
         public void TestDetailedStringDump()
         {
+            // exclude Square from dump
+            // ToStringTrait.AddTypeToSkip(typeof(Square)); // ONLY ENABLE THIS IF RUNNING THIS TEST BY ITSELF. WILL BREAK SUITE IF UNCOMMENTED
             // Arrange
             ChessBoard chessBoard = new();
             GameController gameController = new(chessBoard);

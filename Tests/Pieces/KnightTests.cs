@@ -4,7 +4,7 @@ using Chess.Pieces;
 namespace Tests.Pieces
 {
     [Category("CORE")]
-    public class KnightTests
+    public class KnightTests : TestBase
     {
         private ChessBoard board = new ChessBoard();
         private BoardPosition whiteKnight1StartPosition = new(RANK.TWO, FILE.A);
@@ -13,8 +13,9 @@ namespace Tests.Pieces
         private BoardPosition blackKnight2StartPosition = new(RANK.SEVEN, FILE.H);
 
         [SetUp]
-        public void Setup()
+        public override void Setup()
         {
+            base.Setup();
             board = new ChessBoard();
         }
 

@@ -5,7 +5,7 @@ using Chess.Services;
 namespace Tests.Pieces
 {
     [Category("CORE")]
-    public class BishopTests
+    public class BishopTests : TestBase
     {
         private ChessBoard board = new ChessBoard();
         private BoardPosition whiteBishop1StartPosition = new(RANK.THREE, FILE.A);
@@ -19,8 +19,9 @@ namespace Tests.Pieces
         }
 
         [SetUp]
-        public void Setup()
+        public override void Setup()
         {
+            base.Setup();
             board = new ChessBoard();
         }
 

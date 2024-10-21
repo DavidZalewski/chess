@@ -5,7 +5,7 @@ using static Chess.Pieces.ChessPiece;
 namespace Tests.Pieces
 {
     [Category("CORE")]
-    public class QueenTests
+    public class QueenTests : TestBase
     {
         private ChessBoard board = new ChessBoard();
         private BoardPosition a3 = new(RANK.THREE, FILE.A);
@@ -20,8 +20,9 @@ namespace Tests.Pieces
         }
 
         [SetUp]
-        public void Setup()
+        public override void Setup()
         {
+            base.Setup();
             board = new ChessBoard();
         }
 

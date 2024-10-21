@@ -1,6 +1,7 @@
 ﻿using Chess.Attributes;
 using Chess.Board;
 using Chess.GameState;
+using Chess.Globals;
 using Chess.Pieces;
 using NUnit.Framework;
 
@@ -16,6 +17,7 @@ namespace Chess.Callbacks
 
         public static bool DoCastleMove(ChessBoard cb, BoardPosition bp, ChessPiece king)
         {
+            StaticLogger.Trace();
             string action = "";
             int hv = bp.FileAsInt;
             int vv = bp.RankAsInt;
@@ -76,6 +78,7 @@ namespace Chess.Callbacks
 
         public static bool IsEnPassantMove(ChessBoard chessBoard, BoardPosition boardPosition, ChessPiece pawnAttemptingEnPassant)
         {
+            StaticLogger.Trace();
             RANK enPassantRow;
             ChessPiece.Color opponentColor;
             int enPassantOffSet = 0;
@@ -148,6 +151,7 @@ namespace Chess.Callbacks
         [TestNeeded]
         internal static void PawnPromotion(ChessBoard board, BoardPosition position, ChessPiece piece)
         {
+            StaticLogger.Trace();
             string choice = "Q";
             if (PawnPromotionPromptUser != null && !ByPassPawnPromotionPromptUser)
                 choice = PawnPromotionPromptUser.Invoke();

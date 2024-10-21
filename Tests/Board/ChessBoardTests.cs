@@ -8,13 +8,14 @@ using static Chess.Pieces.ChessPiece;
 namespace Tests.Board
 {
     [Category("CORE")]
-    public class ChessBoardTests
+    public class ChessBoardTests : TestBase
     {
         private ChessBoard chessBoard = new();
 
         [SetUp]
-        public void Setup()
+        public override void Setup()
         {
+            base.Setup();
             chessBoard = new ChessBoard();
         }
 

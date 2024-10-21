@@ -1,4 +1,5 @@
 ﻿using Chess.Board;
+using Chess.Globals;
 
 namespace Chess.Pieces
 {
@@ -7,17 +8,20 @@ namespace Chess.Pieces
     {
         public ChessPieceKnight(Color color, int id, BoardPosition startingPosition) : base(Piece.KNIGHT, color, id, startingPosition)
         {
+            StaticLogger.Trace();
             _realValue = (int)_piece + (int)_color; // could also calculate this in base class by adding the two enums together
         }
 
         public override ChessPiece Clone()
         {
+            StaticLogger.Trace();
             ChessPieceKnight copy = new(_color, _id, _startingPosition);
             return Clone(copy);
         }
 
         public override bool IsValidMove(ChessBoard board, BoardPosition position)
         {
+            StaticLogger.Trace();
             // get the distance
             //   2       =                                  7                             5
             int verticalDistance = _currentPosition.RankAsInt - position.RankAsInt;
@@ -59,6 +63,7 @@ namespace Chess.Pieces
 
         public override bool ImplementMove(ChessBoard board, BoardPosition position)
         {
+            StaticLogger.Trace();
             // does this need to exist?
             return false;
         }

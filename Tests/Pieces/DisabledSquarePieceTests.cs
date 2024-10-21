@@ -4,16 +4,11 @@ using Chess.Pieces;
 namespace Tests.Pieces
 {
     [Category("CORE")]
-    public class DisabledSquarePieceTests
+    public class DisabledSquarePieceTests : TestBase
     {
         private readonly BoardPosition d4 = new(RANK.FOUR, FILE.D);
         private readonly BoardPosition e4 = new(RANK.FOUR, FILE.E);
         private readonly BoardPosition c4 = new(RANK.FOUR, FILE.C);
-
-        [SetUp]
-        public void Setup()
-        {
-        }
 
         [Test]
         public void ConstructDisabledSquarePiece_Success()

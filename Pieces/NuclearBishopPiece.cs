@@ -1,4 +1,5 @@
 ﻿using Chess.Board;
+using Chess.Globals;
 using System;
 using System.Collections.Generic;
 
@@ -10,11 +11,13 @@ namespace Chess.Pieces
         bool _wasSetOnBoard;
         public NuclearBishopPiece(Color color, int id, BoardPosition startingPosition) : base(color, id, startingPosition)
         {
+            StaticLogger.Trace();
             _wasSetOnBoard = false;
         }
 
         public override ChessPiece Clone()
         {
+            StaticLogger.Trace();
             NuclearBishopPiece copy = new(_color, _id, _startingPosition);
             copy._wasSetOnBoard = this._wasSetOnBoard;
             return Clone(copy);
@@ -22,12 +25,14 @@ namespace Chess.Pieces
 
         public override bool IsValidMove(ChessBoard board, BoardPosition position)
         {
+            StaticLogger.Trace();
             // Call the base class's IsValidMove method
             return base.IsValidMove(board, position);
         }
 
         public override bool ImplementMove(ChessBoard board, BoardPosition position)
         {
+            StaticLogger.Trace();
             // when setting the board up, do not invoke the nuclear horse logic
             if (!_wasSetOnBoard)
             {

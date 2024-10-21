@@ -16,29 +16,19 @@ namespace Tests.Globals
     // This is where a collection of sub loggers would be useful. because then that way each thread has its own logger
     // the Logger can collect all the log lines, and print them out in a nice order at the end, reducing the difficulty of trying to read 
     // a log file with multiple threads interweaving together
-    //[Parallelizable(ParallelScope.All)]
-    public class TestStaticLogger
+    [Parallelizable(ParallelScope.All)]
+    public class TestStaticLogger : TestBase
     {
-        private string _currentTestName;
         [SetUp]
-        public void SetUp()
+        public override void Setup()
         {
-            IConsole mockConsole = new MockConsoleService();
-            StaticLogger.Console = mockConsole;
-
-            _currentTestName = TestContext.CurrentContext.Test.MethodName;
-
-            StaticLogger.TestName = _currentTestName;
-
-            Console.WriteLine($"Starting test {_currentTestName}");
+            base.Setup();
         }
 
         [TearDown]
-        public void TearDown()
+        public override void TearDown()
         {
-            Console.WriteLine($"Ending test {_currentTestName}");
-            StaticLogger.TestName = "";
-            _currentTestName = "";
+            base.TearDown();
         }
 
         [Test]

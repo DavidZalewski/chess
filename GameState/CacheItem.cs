@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Chess.Globals;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,12 +15,15 @@ namespace Chess.GameState
 
         public CacheItem(ulong value)
         {
+            StaticLogger.Trace();
+            StaticLogger.LogMethod(value);
             Value = value;
             _accessCount = 1;
         }
 
         public ulong InterlockedIncrement()
         {
+            StaticLogger.Trace();
             return Interlocked.Increment(ref _accessCount);
         }
     }

@@ -1,5 +1,8 @@
-﻿namespace Chess.Services
+﻿using Chess.Globals;
+
+namespace Chess.Services
 {
+    // TODO: Move this out of Services namespace/folder and put into Logger namespace/folder
     public class ConcurrentLogger
     {
         private static int _counter = 0;
@@ -8,12 +11,14 @@
 
         public ConcurrentLogger(string filePath)
         {
+            StaticLogger.Trace();
             _filePath = filePath + _counter + ".log";
             ++_counter;
         }
 
         public void Log(string message, int threadId)
         {
+            StaticLogger.Trace();
             lock (_lock)
             {
                 using (StreamWriter writer = File.AppendText(_filePath))

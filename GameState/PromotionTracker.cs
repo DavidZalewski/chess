@@ -1,4 +1,5 @@
 ﻿using Chess.Attributes;
+using Chess.Globals;
 using Chess.Pieces;
 using System;
 using System.Collections.Generic;
@@ -14,6 +15,7 @@ namespace Chess.GameState
 
         public PromotionTracker()
         {
+            StaticLogger.Trace();
             promotionCounters = new Dictionary<string, int>
             {
                 { "WQ", 2 }, { "BQ", 2 }, // Queens start at 2 for both White and Black
@@ -27,6 +29,7 @@ namespace Chess.GameState
         [TestNeeded]
         public int GetNextID(ChessPiece.Color color, string pieceType)
         {
+            StaticLogger.Trace();
             string key = $"{(color == ChessPiece.Color.WHITE ? "W" : "B")}{pieceType}";
             int id = promotionCounters[key];
             promotionCounters[key]++;

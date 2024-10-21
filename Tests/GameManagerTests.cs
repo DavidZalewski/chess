@@ -11,7 +11,7 @@ using Chess.Services;
 namespace Tests
 {
     [Category("CORE")]
-    internal class GameManagerTests
+    internal class GameManagerTests : TestBase
     {
         private int NumberOfMoves = 0;
         private GameController GetGameController(IConsole console)

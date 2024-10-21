@@ -4,7 +4,7 @@ using Chess.Pieces;
 namespace Tests.Pieces
 {
     [Category("CORE")]
-    public class BlackPawnTests
+    public class BlackPawnTests : TestBase
     {
         private ChessBoard board = new ChessBoard();
 
@@ -14,8 +14,9 @@ namespace Tests.Pieces
         }
 
         [SetUp]
-        public void Setup()
+        public override void Setup()
         {
+            base.Setup();
             board = new ChessBoard();
         }
 

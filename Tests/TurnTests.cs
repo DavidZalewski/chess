@@ -10,7 +10,7 @@ namespace Tests
 {
     [Category("CORE")]
     [Parallelizable(ParallelScope.All)]
-    public class TurnTests
+    public class TurnTests : TestBase
     {
 
         private List<ChessPiece> GetDifferenceBetweenLists(List<ChessPiece> chessPiecesList1, List<ChessPiece> chessPiecesList2)

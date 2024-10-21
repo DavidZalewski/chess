@@ -1,4 +1,5 @@
 ﻿using Chess.Board;
+using Chess.Globals;
 
 namespace Chess.Pieces
 {
@@ -8,11 +9,13 @@ namespace Chess.Pieces
         bool _wasSetOnBoard;
         public NuclearHorsePiece(Color color, int id, BoardPosition startingPosition) : base(color, id, startingPosition)
         {
+            StaticLogger.Trace();
             _wasSetOnBoard = false;
         }
 
         public override ChessPiece Clone()
         {
+            StaticLogger.Trace();
             NuclearHorsePiece copy = new(_color, _id, _startingPosition);
             copy._wasSetOnBoard = this._wasSetOnBoard;
             return Clone(copy);
@@ -20,6 +23,7 @@ namespace Chess.Pieces
 
         public override bool IsValidMove(ChessBoard board, BoardPosition position)
         {
+            StaticLogger.Trace();
             // Check if there are any disabled squares in the path
             if (IsPathBlockedByDisabledSquares(board, position))
             {
@@ -32,6 +36,7 @@ namespace Chess.Pieces
 
         public override bool ImplementMove(ChessBoard board, BoardPosition position)
         {
+            StaticLogger.Trace();
             // when setting the board up, do not invoke the nuclear horse logic
             if (!_wasSetOnBoard)
             {
@@ -58,6 +63,7 @@ namespace Chess.Pieces
 
         private bool IsPathBlockedByDisabledSquares(ChessBoard board, BoardPosition position)
         {
+            StaticLogger.Trace();
             // Calculate the positions the knight would jump over
             int verticalDistance = Math.Abs(_currentPosition.RankAsInt - position.RankAsInt);
             int horizontalDistance = Math.Abs(_currentPosition.FileAsInt - position.FileAsInt);
@@ -86,6 +92,7 @@ namespace Chess.Pieces
 
         private List<BoardPosition?> GetAdjacentPositions(BoardPosition position)
         {
+            StaticLogger.Trace();
             List<BoardPosition?> adjacentPositions = new List<BoardPosition?>
             {
                 position?.Left(),

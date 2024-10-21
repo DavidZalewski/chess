@@ -3,6 +3,7 @@ using Chess.Board;
 using Chess.Callbacks;
 using Chess.Exceptions;
 using Chess.GameState;
+using Chess.Globals;
 using Chess.Pieces;
 using Chess.Services;
 using System.Runtime.Serialization.Formatters.Binary;
@@ -23,11 +24,13 @@ namespace Chess.Controller
         public int TurnNumber { get => _turnNumber; set => _turnNumber = value; }
         public void SetOnTurnHandler(Action<Turn> action)
         {
+            StaticLogger.Trace();
             OnTurnHandler = action;
         }
 
         public GameController(ChessBoard chessBoard)
         {
+            StaticLogger.Trace();
             _chessBoard = chessBoard;
             _chessPieces = ChessPieceFactory.CreateChessPiecesClassic();
             _kingCheckService = new KingCheckService();
@@ -35,6 +38,7 @@ namespace Chess.Controller
 
         public GameController(ChessBoard chessBoard, List<ChessPiece> chessPieces)
         {
+            StaticLogger.Trace();
             _chessBoard = chessBoard;
             _chessPieces = chessPieces;
             _kingCheckService = new KingCheckService();
@@ -42,6 +46,7 @@ namespace Chess.Controller
 
         public void StartGame()
         {
+            StaticLogger.Trace();
             _chessBoard.PopulateBoard(_chessPieces);
             SpecialMovesHandlers.promotionTracker = new PromotionTracker();
             //_turnNumber = 1;
@@ -50,6 +55,7 @@ namespace Chess.Controller
         // TODO: Encapsulate all string to piece, and piece to string translations in another class
         internal ChessPiece? FindChessPieceFromString(string input)
         {
+            StaticLogger.Trace();
             ChessPiece.Color color;
             ChessPiece.Piece piece;
             int id = 0;
@@ -120,27 +126,31 @@ namespace Chess.Controller
                     return null;
 
             ChessPiece? chessPiece = _chessPieces.FirstOrDefault(p => p.GetColor().Equals(color) && p.GetPiece().Equals(piece) && p.GetId().Equals(id), null);
-
+            StaticLogger.Log(chessPiece?.ToDetailedString(), LogLevel.Debug, LogCategory.ObjectDump);
             return chessPiece;
         }
 
         public bool IsCheck(ChessPiece.Color color)
         {
+            StaticLogger.Trace();
             return _kingCheckService.IsKingInCheck(color, _chessBoard);
         }
 
         public bool IsCheck(Turn turn)
         {
+            StaticLogger.Trace();
             return _kingCheckService.IsKingInCheck(turn);
         }
 
         public bool IsCheckMate(Turn turn)
         {
+            StaticLogger.Trace();
             return _kingCheckService.IsCheckMate(turn);
         }
 
         public Turn? GetTurnFromCommand(string input)
         {
+            StaticLogger.Trace();
             string[] inputs = input.Split(' ');
             if (inputs.Length != 2) return null;
             try
@@ -167,6 +177,7 @@ namespace Chess.Controller
             }
             catch (Exception e)
             {
+                StaticLogger.Log($"Exception: {e.Message}", LogLevel.Error, LogCategory.General);
                 Console.WriteLine(e.Message);
                 return null;
             }
@@ -174,6 +185,8 @@ namespace Chess.Controller
 
         public void ApplyTurnToGameState(Turn turn)
         {
+            StaticLogger.Trace();
+            StaticLogger.LogMethod(turn);
             _chessBoard = turn.ChessBoard;
             _chessPieces = turn.ChessPieces;
             _turns.Add(turn);
@@ -184,10 +197,15 @@ namespace Chess.Controller
             OnTurnHandler?.Invoke(turn);
         }
 
-        public ChessBoard GetChessBoard() { return _chessBoard; }
+        public ChessBoard GetChessBoard() 
+        {
+            StaticLogger.Trace();
+            return _chessBoard; 
+        }
 
         public bool SaveGameState(string saveFileName)
         {
+            StaticLogger.Trace();
             string dir = Directory.GetCurrentDirectory();
 
             string saveFile = Path.Combine(dir, saveFileName);
@@ -207,6 +225,7 @@ namespace Chess.Controller
             }
             catch (Exception e)
             {
+                StaticLogger.Log($"Failed to save game state due to exception: {e.Message}", LogLevel.Error, LogCategory.General);
                 Console.WriteLine("Failed to save game state due to exception: " + e.Message);
                 return false;
             }
@@ -219,6 +238,7 @@ namespace Chess.Controller
         [TestNeeded]
         public bool LoadGameState(string saveFileName)
         {
+            StaticLogger.Trace();
             Stream? stream = null;
             try
             {
@@ -245,10 +265,12 @@ namespace Chess.Controller
                 ChessPiece.SetCastleCallbackFunction(SpecialMovesHandlers.DoCastleMove);
                 ChessPiece.SetIsEnPassantCallbackFunction(SpecialMovesHandlers.IsEnPassantMove);
 
+                StaticLogger.Log($"Successfully loaded {saveFileName}");
                 Console.WriteLine("Successfully loaded " + saveFileName);
             }
             catch (Exception e)
             {
+                StaticLogger.Log($"Failed to load game state due to exception: {e.Message}");
                 Console.WriteLine("Failed to load game state due to exception: " + e.Message);
                 return false;
             }
@@ -261,11 +283,13 @@ namespace Chess.Controller
 
         public string DisplayBoard()
         {
+            StaticLogger.Trace();
             return _chessBoard.DisplayBoard();
         }
 
         public Turn? GetLastTurn()
         {
+            StaticLogger.Trace();
             if (_turns.Count == 0)
                 return null;
             else
@@ -285,12 +309,14 @@ namespace Chess.Controller
 
         public void AddRuleSet(Action r)
         {
+            StaticLogger.Trace();
             _sequence.AddActionInSequence(r);
         }
 
         public void AddRuleSet(String? r)
         {
-            switch(r)
+            StaticLogger.Trace();
+            switch (r)
             {
                 case "PawnsOnly":
                     {
@@ -315,11 +341,13 @@ namespace Chess.Controller
 
         public void ApplyRuleSet()
         {
+            StaticLogger.Trace();
             _sequence.PlayActionSequence();
         }
 
         internal void RuleSetPawnsOnly()
         {
+            StaticLogger.Trace();
             List<ChessPiece> pieces = ChessPieceFactory.CreateWhitePawns();
             pieces.AddRange(ChessPieceFactory.CreateBlackPawns());
             pieces.Add(new ChessPieceKing(ChessPiece.Color.BLACK, new("E8")));
@@ -329,23 +357,25 @@ namespace Chess.Controller
 
         internal void RuleSetSevenByEight()
         {
-
+            StaticLogger.Trace();
         }
 
         internal void RuleSetKingsForce()
         {
-
+            StaticLogger.Trace();
         }
 
         [TestNeeded]
         internal void RuleSetNuclearHorse()
         {
+            StaticLogger.Trace();
             _chessPieces = ChessPieceFactory.CreateChessPiecesNuclearHorse();
         }
 
         [TestNeeded]
         internal bool ContainsRuleSet(string v)
         {
+            StaticLogger.Trace();
             return v.ToLowerInvariant() switch
             {
                 "nuclearhorse" => _sequence.IsActionInSequence(RuleSetNuclearHorse),
@@ -359,6 +389,7 @@ namespace Chess.Controller
         [TestNeeded]
         internal void NuclearHorseEndTurnHandler()
         {
+            StaticLogger.Trace();
             List<ChessPiece> nuclearBishops = _chessPieces.FindAll(p => p is NuclearBishopPiece).ToList();
             // yes this duplicates the move, but its the simplest way of ensuring disabled blocks are not in the bishops path
             foreach (NuclearBishopPiece nuclearBishop in nuclearBishops)

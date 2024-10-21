@@ -1,4 +1,5 @@
 ﻿using Chess.Attributes;
+using Chess.Globals;
 using Chess.Pieces;
 
 namespace Chess.Board
@@ -13,11 +14,13 @@ namespace Chess.Board
 
         public Square()
         {
+            StaticLogger.Trace();
             Piece = NoPiece.Instance;
         }
 
         public Square(BoardPosition position, ChessPiece piece)
         {
+            StaticLogger.Trace();
             Position = position;
             Piece = piece;
         }
@@ -25,12 +28,14 @@ namespace Chess.Board
         [TestNeeded]
         public Square(ChessPiece piece)
         {
+            StaticLogger.Trace();
             Position = piece.GetCurrentPosition();
             Piece = piece;
         }
 
         public Square(Square? other)
         {
+            StaticLogger.Trace();
             if (other != null)
             {
                 this.Position = other.Position;

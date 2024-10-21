@@ -6,16 +6,12 @@ using NUnit.Framework;
 namespace Tests.Pieces
 {
     [Category("CORE")]
-    public class NuclearHorsePieceTests
+    public class NuclearHorsePieceTests : TestBase
     {
         private readonly BoardPosition d4 = new(RANK.FOUR, FILE.D);
         private readonly BoardPosition e4 = new(RANK.FOUR, FILE.E);
         private readonly BoardPosition c4 = new(RANK.FOUR, FILE.C);
 
-        [SetUp]
-        public void Setup()
-        {
-        }
 
         [Test]
         public void NuclearHorseCreatesDisabledSquaresEmptyBoard()

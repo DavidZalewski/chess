@@ -11,7 +11,7 @@ namespace Tests
 {
     [Category("PERFORMANCE")]
     [Parallelizable(ParallelScope.All)]
-    internal class ChessStateExplorerTests
+    internal class ChessStateExplorerTests : TestBase
     {
         [Test]
         [Parallelizable(ParallelScope.Self)]

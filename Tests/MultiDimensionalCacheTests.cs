@@ -6,7 +6,7 @@ namespace Tests
 {
     [TestFixture]
     [Category("PERFORMANCE")]
-    public class MultiDimensionalCacheTests
+    public class MultiDimensionalCacheTests : TestBase
     {
         [Test]
         public void AddOrUpdate_MainCache_Success()

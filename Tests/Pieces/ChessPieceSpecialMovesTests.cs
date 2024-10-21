@@ -7,7 +7,7 @@ namespace Tests.Pieces
 {
     [Category("CORE")]
     [Parallelizable(ParallelScope.All)]
-    public class ChessPieceSpecialMovesTests
+    public class ChessPieceSpecialMovesTests : TestBase
     {
 
         [Test]
