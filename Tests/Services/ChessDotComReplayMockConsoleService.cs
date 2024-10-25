@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.VisualStudio.TestPlatform.Utilities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,11 +11,13 @@ namespace Tests.Services
     {
         private string _fileName;
         private string _expectedOutcome;
+        private bool _showOutputOfWinningGames = false;
 
-        public ChessDotComReplayMockConsoleService(Queue<string> inputs, string file, string expectedOutcome) : base(inputs)
+        public ChessDotComReplayMockConsoleService(Queue<string> inputs, string file, string expectedOutcome, bool showOutputOfWinningGames) : base(inputs)
         {
             _fileName = file;
             _expectedOutcome = expectedOutcome;
+            _showOutputOfWinningGames = showOutputOfWinningGames;
         }
         public override string? ReadLine()
         {
@@ -40,6 +43,7 @@ namespace Tests.Services
 
         public bool VerifyReplayAndLogIfFailed()
         {
+            // FAILED TEST CASE MATCH
             if (!OutputContainsString(_expectedOutcome))
             {
                 //Outputs.Add($"The game outcome did not match the expected checkmate. (Expected Outcome: {_expectedOutcome}, File: {_fileName})");
@@ -49,11 +53,15 @@ namespace Tests.Services
                 }
                 return false;
             }
-            else
+            else // SUCCESSFUL VALIDATION OF MATCH
             {
                 Console.WriteLine($"Successfully verified replay {_fileName}");
-            }
-            return true;
+                //Outputs.Add($"The game outcome did not match the expected checkmate. (Expected Outcome: {_expectedOutcome}, File: {_fileName})");
+                if (_showOutputOfWinningGames)
+                    foreach (var output in Outputs)
+                        Console.WriteLine(output);
+                return true;
+            }  
         }
     }
 }

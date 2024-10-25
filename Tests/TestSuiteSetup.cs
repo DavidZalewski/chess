@@ -18,16 +18,16 @@ namespace Tests
             StaticLogger.LoggerConfig.EnableMethodDumps = false;
             StaticLogger.LoggerConfig.EnableObjectDumps = false;
             StaticLogger.LoggerConfig.EnableStateChanges = false;
-            StaticLogger.LoggerConfig.MinimumLogLevel = LogLevel.Debug;
-            StaticLogger.LoggerConfig.AddTypeToWhiteList(typeof(SpecialMovesHandlers));
-            StaticLogger.LoggerConfig.AddTypeToWhiteList(typeof(GameController));
-            StaticLogger.LoggerConfig.AddTypeToWhiteList(typeof(ChessPieceWhitePawn));
-            StaticLogger.LoggerConfig.AddTypeToWhiteList(typeof(ChessPieceBlackPawn));
-            StaticLogger.LoggerConfig.AddTypeToWhiteList(typeof(LambdaQueue));
-            StaticLogger.LoggerConfig.AddTypeToSkipObjectDumps(typeof(Square));
-            StaticLogger.LoggerConfig.AddTypeToSkipObjectDumps(typeof(ChessPiece));
-            StaticLogger.LoggerConfig.AddTypeToSkipObjectDumps(typeof(ChessBoard));
-            StaticLogger.LoggerConfig.AddTypeToSkipForLogging(typeof(Square));
+            StaticLogger.LoggerConfig.MinimumLogLevel = LogLevel.Info;
+            //StaticLogger.LoggerConfig.AddTypeToWhiteList(typeof(SpecialMovesHandlers));
+            //StaticLogger.LoggerConfig.AddTypeToWhiteList(typeof(GameController));
+            //StaticLogger.LoggerConfig.AddTypeToWhiteList(typeof(ChessPieceWhitePawn));
+            //StaticLogger.LoggerConfig.AddTypeToWhiteList(typeof(ChessPieceBlackPawn));
+            //StaticLogger.LoggerConfig.AddTypeToWhiteList(typeof(LambdaQueue));
+            //StaticLogger.LoggerConfig.AddTypeToSkipObjectDumps(typeof(Square));
+            //StaticLogger.LoggerConfig.AddTypeToSkipObjectDumps(typeof(ChessPiece));
+            //StaticLogger.LoggerConfig.AddTypeToSkipObjectDumps(typeof(ChessBoard));
+            //StaticLogger.LoggerConfig.AddTypeToSkipForLogging(typeof(Square));
             //StaticLogger.LoggerConfig.AddTypeToSkipForLogging(typeof(ChessBoard));
             //StaticLogger.LoggerConfig.AddTypeToSkipForLogging(typeof(BoardPosition));
 

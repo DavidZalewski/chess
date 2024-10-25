@@ -236,6 +236,9 @@ namespace Chess
 
             while (input != "quit")
             {
+                // TEMP DEBUG CODE
+                //if (_gameController.TurnNumber == 42)
+                //    System.Diagnostics.Debugger.Break();
                 _console.WriteLine(_gameController.DisplayBoard());
 
                 if (_gameController.TurnNumber % 2 == 0)

@@ -111,6 +111,17 @@ def initialize_piece_tracking():
     black_kings = {(7, 4): "BK"}
     black_queens = {(7, 3): "BQ1"}
     
+    white_queen_id = 2
+    white_bishop_id = 3
+    white_knight_id = 3
+    white_rook_id = 3
+
+    black_queen_id = 2
+    black_bishop_id = 3
+    black_knight_id = 3
+    black_rook_id = 3
+
+    
 # Get the piece identifier based on its original position
 def get_piece_label(piece, move):
     # Rank first, then File
@@ -145,6 +156,9 @@ def get_piece_label(piece, move):
 
 # Update the piece tracker when a piece moves
 def update_piece_tracking(move: [chess.Move], piece):
+    global white_queen_id, white_bishop_id, white_knight_id, white_rook_id
+    global black_queen_id, black_bishop_id, black_knight_id, black_rook_id
+
     position_index = (chess.square_rank(move.from_square), chess.square_file(move.from_square))
     new_position_index = (chess.square_rank(move.to_square), chess.square_file(move.to_square))
     print(f"update_piece_tracking: Updating Piece {piece} from {position_index} to {new_position_index}")
@@ -160,19 +174,19 @@ def update_piece_tracking(move: [chess.Move], piece):
                     if move.promotion == chess.QUEEN:
                         white_queens[new_position_index] = f"WQ{white_queen_id}"
                         print(f"pawn promoted to: {white_queens[new_position_index]}")
-                        ++white_queen_id
+                        white_queen_id += 1
                     elif move.promotion == chess.ROOK:
                         white_rooks[new_position_index] = f"WR{white_rook_id}"
                         print(f"pawn promoted to: {white_rooks[new_position_index]}")
-                        ++white_rook_id
+                        white_rook_id += 1
                     elif move.promotion == chess.BISHOP:
                         white_bishops[new_position_index] = f"WB{white_bishop_id}"
                         print(f"pawn promoted to: {white_bishops[new_position_index]}")
-                        ++white_bishop_id
+                        white_bishop_id += 1
                     elif move.promotion == chess.KNIGHT:
                         white_knights[new_position_index] = f"WK{white_knight_id}"
                         print(f"pawn promoted to: {white_knights[new_position_index]}")
-                        ++white_knight_id
+                        white_knight_id += 1
         elif piece.piece_type == chess.KNIGHT:
             if position_index in white_knights:
                 white_knights[new_position_index] = white_knights.pop(position_index)
@@ -200,20 +214,19 @@ def update_piece_tracking(move: [chess.Move], piece):
                     if move.promotion == chess.QUEEN:
                         black_queens[new_position_index] = f"BQ{black_queen_id}"
                         print(f"pawn promoted to: {black_queens[new_position_index]}")
-                        ++black_queen_id
+                        black_queen_id += 1  # Correctly increment the counter
                     elif move.promotion == chess.ROOK:
                         black_rooks[new_position_index] = f"BR{black_rook_id}"
                         print(f"pawn promoted to: {black_rooks[new_position_index]}")
-                        ++black_rook_id
+                        black_rook_id += 1
                     elif move.promotion == chess.BISHOP:
                         black_bishops[new_position_index] = f"BB{black_bishop_id}"
                         print(f"pawn promoted to: {black_bishops[new_position_index]}")
-                        ++black_bishop_id
+                        black_bishop_id += 1
                     elif move.promotion == chess.KNIGHT:
                         black_knights[new_position_index] = f"BK{black_knight_id}"
                         print(f"pawn promoted to: {black_knights[new_position_index]}")
-                        ++black_knight_id
-
+                        black_knight_id += 1
         elif piece.piece_type == chess.KNIGHT:
             if position_index in black_knights:
                 black_knights[new_position_index] = black_knights.pop(position_index)

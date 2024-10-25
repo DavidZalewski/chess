@@ -383,6 +383,7 @@ namespace Tests
         [Test(Author = "7OneSeven", Description = "Loads a converted replay from chess.com and plays it out in this engine")]
         public void ReplayChessDotComMatch()
         {
+            bool SHOW_OUTPUT_OF_WINNING_GAMES = false;
             // Arrange
             Queue<string> consoleInputs = new Queue<string>();
             string expectedOutcome = "";
@@ -416,11 +417,13 @@ namespace Tests
                 }
 
                 // Set up the mock console service and game controller
-                IConsole consoleService = new ChessDotComReplayMockConsoleService(consoleInputs, file, expectedOutcome);
+                IConsole consoleService = new ChessDotComReplayMockConsoleService(consoleInputs, file, expectedOutcome, SHOW_OUTPUT_OF_WINNING_GAMES);
                 StaticLogger.SetMetaData(file);
                 GameController gameController = GetGameController(consoleService);  
                 GameManager game = new GameManager(consoleService, gameController); 
 
+                //if (file.Contains("6302"))
+                //    System.Diagnostics.Debugger.Break();
                 // Act
                 game.Start();  // Start the game which will play through all the moves
 

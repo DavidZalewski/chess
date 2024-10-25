@@ -206,6 +206,6 @@ Command: BP2 B1
 Command: Q
 Original: move: d2e2, piece: K, from_square: d2, to_square: e2, piece_name: WK 
 Command: WK E2
-Original: move: b1c2, piece: q, from_square: b1, to_square: c2, piece_name: BQ2 
-Command: BQ2 C2
+Original: move: b1c2, piece: q, from_square: b1, to_square: c2, piece_name: BQ3 
+Command: BQ3 C2
 Outcome: Black wins against White by CheckMate!
