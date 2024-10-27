@@ -81,7 +81,7 @@ namespace Chess.Pieces
                                 }
                                 else
                                 {
-                                    StaticLogger.Log($"Error - could not find Pawn {this._pieceName} from GameController Active Pieces!", LogLevel.Error);
+                                    StaticLogger.Log($"Warning - could not find Pawn {this._pieceName} from GameController Active Pieces - looks like it was captured - ignoring", LogLevel.Warn);
                                 }
                             }); // Load the LambdaQueue
                         }

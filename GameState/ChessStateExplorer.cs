@@ -65,7 +65,6 @@ namespace Chess.GameState
 
             List<ChessPiece> currentSidePieces = turn.ChessPieces.FindAll(piece => !piece.GetColor().Equals((ChessPiece.Color)turn.PlayerTurn));
 
-            // TODO: Set the PawnPromotion callback function to just return 'Q' each time
             // Simulated future turns assume a pawn is always promoted to queen
             // iterate over all board positions
             SpecialMovesHandlers.ByPassPawnPromotionPromptUser = true;
@@ -91,7 +90,6 @@ namespace Chess.GameState
                 }
             }
             SpecialMovesHandlers.ByPassPawnPromotionPromptUser = false;
-            // TODO: change the PawnPromotion callback function back to GameManager.HandlePawnPromotion
 
             logger.Log($"ChessStateExplorer - END: Turn: {turn.TurnDescription}, Depth: {depth}, MainCount: {possibleMoves.Count},", threadId);
 
@@ -123,7 +121,6 @@ namespace Chess.GameState
 
             List<ChessPiece> currentSidePieces = turn.ChessPieces.FindAll(piece => !piece.GetColor().Equals((ChessPiece.Color)turn.PlayerTurn));
 
-            // TODO: Set the PawnPromotion callback function to just return 'Q' each time
             // Simulated future turns assume a pawn is always promoted to queen
             // iterate over all board positions
             SpecialMovesHandlers.ByPassPawnPromotionPromptUser = true;
@@ -170,7 +167,6 @@ namespace Chess.GameState
                 }
             }
             SpecialMovesHandlers.ByPassPawnPromotionPromptUser = false;
-            // TODO: change the PawnPromotion callback function back to GameManager.HandlePawnPromotion
 
             logger.Log($"ChessStateExplorer - END: BoardID: {turn.ChessBoard.BoardID}, Depth: {depth}, From: {turn.ChessBoard.BoardID}, Count: {currentCount}", threadId);
 
@@ -231,7 +227,6 @@ namespace Chess.GameState
 
             List<ChessPiece> currentSidePieces = turn.ChessPieces.FindAll(piece => !piece.GetColor().Equals((ChessPiece.Color)turn.PlayerTurn));
 
-            // TODO: Set the PawnPromotion callback function to just return 'Q' each time
             // Simulated future turns assume a pawn is always promoted to queen
             // iterate over all board positions
             SpecialMovesHandlers.ByPassPawnPromotionPromptUser = true;

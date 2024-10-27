@@ -34,7 +34,6 @@ namespace Chess.Pieces
                 bool IsValidEnPassant = _IsEnPassantCallBackFunction.Invoke(board, position, this);
                 if (IsValidEnPassant) { return true; }
             }
-            // TODO: handle promotions
 
             if (verticalDistance == -1)
             {
@@ -82,7 +81,8 @@ namespace Chess.Pieces
                                 }
                                 else
                                 {
-                                    StaticLogger.Log($"Error - could not find Pawn {this._pieceName} from GameController Active Pieces!", LogLevel.Error);
+                                    //System.Diagnostics.Debugger.Break(); // TEMP
+                                    StaticLogger.Log($"Warning - could not find Pawn {this._pieceName} from GameController Active Pieces - looks like it was captured - ignoring", LogLevel.Warn);
                                 }
                             }); // Load the LambdaQueue
                         }

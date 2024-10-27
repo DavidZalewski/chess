@@ -27,7 +27,7 @@ namespace Chess.GameState
             StaticLogger.Trace();
             TurnDescription = turn.TurnDescription + optionalText;
             TurnNumber = turn.TurnNumber;
-            BoardState = "PLACEHOLDER"; // turn.ChessBoard.DisplayBoard(); // TODO: Use BoardID here
+            BoardState = turn.ChessBoard.BoardID;
             //Command = turn.Command;
 
             if (String.IsNullOrEmpty(Command))

@@ -32,7 +32,7 @@ namespace Tests.Globals
         }
 
         [Test]
-        public void Example_TestName_ConstructTurn_Success()
+        public void Example_TestName_ConstructTurn_Logging()
         {
             ChessBoard board = new();
             List<ChessPiece> chessPieces = ChessPieceFactory.CreateChessPiecesClassic();
@@ -47,7 +47,7 @@ namespace Tests.Globals
         }
 
         [Test]
-        public void Example_TestName_ChessPieceFactoryWorksAsExpected()
+        public void Example_TestName_ChessPieceFactoryWorksAsExpected_Logging()
         {
             ChessBoard board = new();
             List<ChessPiece> chessPieces = ChessPieceFactory.CreateChessPiecesClassic();

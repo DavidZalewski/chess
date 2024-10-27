@@ -23,7 +23,6 @@ namespace Tests.Services
         {
             // Construct board; set black king on D5 and white king on E3 on chess board object
             ChessBoard chessBoard = new();
-            // TODO: Refactor this to pass in piece objects
             chessBoard.SetBoardValue(new BoardPosition("E3"), 16);
             chessBoard.SetBoardValue(new BoardPosition("D5"), 26);
 
@@ -32,7 +31,7 @@ namespace Tests.Services
             ChessPiece blackKingPiece = new ChessPieceKing(ChessPiece.Color.BLACK, new BoardPosition("D5"));
             List<ChessPiece> chessPieces = new() { whiteKingPiece, blackKingPiece };
 
-            // Construct Turn objects - this doesnt seem right - the board state doesnt match the turn description
+            // Construct Turn objects
             Turn whiteKingTurnD4 = new(9, whiteKingPiece, new BoardPosition("E3"), new BoardPosition("D4"), chessBoard);
             Turn whiteKingTurnE4 = new(9, whiteKingPiece, new BoardPosition("E3"), new BoardPosition("E4"), chessBoard);
 
@@ -51,7 +50,6 @@ namespace Tests.Services
         {
             // Construct board; set black king on D5 and white king on E3 on chess board object
             ChessBoard chessBoard = new();
-            // TODO: Implement Later
             chessBoard.SetBoardValue(new BoardPosition("E3"), 16);
             chessBoard.SetBoardValue(new BoardPosition("D5"), 26);
 

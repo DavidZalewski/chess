@@ -333,8 +333,12 @@ def convert_pgn_file(pgn_filepath, output_filepath):
         outcome = "Game ended in stalemate"
     elif result == "1-0":
         outcome = "White won by resignation or other means"
+        converted_moves.append(f"Command: resign")
+        converted_moves.append(f"Command: y")
     elif result == "0-1":
         outcome = "Black won by resignation or other means"
+        converted_moves.append(f"Command: resign")
+        converted_moves.append(f"Command: y")
     elif result == "1/2-1/2":
         outcome = "Game ended in a draw"
     else:

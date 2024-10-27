@@ -166,7 +166,6 @@ namespace Chess.Callbacks
                 {
                     newPieceID = promotionTracker.GetNextID(piece.GetColor(), chosenPiece.ToUpper());
                 }
-                // TODO: CheckMate Service when creating potential future moves, inadvertently creates pawn promotions, incrementing this counter unexpectedly
                 Console.WriteLine($"PawnPromotion: newPieceID = {newPieceID} , choice: {choice}");
                 return chosenPiece switch
                 {

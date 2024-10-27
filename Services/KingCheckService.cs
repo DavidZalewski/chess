@@ -135,7 +135,6 @@ namespace Chess.Services
                 }
                 SpecialMovesHandlers.ByPassPawnPromotionPromptUser = false;
                 SimulationService.EndSimulation();
-                // TODO: change the PawnPromotion callback function back to GameManager.HandlePawnPromotion
             }
 
             foreach (Turn possibleTurn in possibleMoves)

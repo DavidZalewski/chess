@@ -273,7 +273,32 @@ namespace Chess
                     }
 #endif
 
-                    if (!aiInputSet) input = _console.ReadLine();
+                    if (!aiInputSet)
+                    {
+                        input = _console.ReadLine();
+                        if (input != null && input.ToLower().Equals("resign"))
+                        {
+                            _console.WriteLine("Are you sure you wish to resign? (y = yes, n = no)");
+                            input = _console.ReadLine();
+
+                            if (input != null && input.ToLower().Equals("y"))
+                            {
+                                // Black Resigns
+                                if (_gameController.TurnNumber % 2 == 0)
+                                {
+                                    _console.WriteLine("White wins against Black by Resignation!");
+                                }
+                                else
+                                {
+                                    _console.WriteLine("Black wins against White by Resignation!");
+                                }
+                            }
+                            else
+                            {
+                                continue;
+                            }
+                        }
+                    }
 
                     (string? command, string? argument) = ParseInput(input);
 

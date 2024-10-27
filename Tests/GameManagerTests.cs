@@ -124,6 +124,53 @@ namespace Tests
         }
 
         [Test]
+        public void WhiteResignTest()
+        {
+            // Arrange
+            Queue<string> consoleInputs = new();
+            consoleInputs.Enqueue("n"); // no to tutorial
+            consoleInputs.Enqueue("Classic"); // init game with all pieces
+            consoleInputs.Enqueue("n"); // no to ai
+            consoleInputs.Enqueue("WP7 G4");
+            consoleInputs.Enqueue("BP5 E5");
+            consoleInputs.Enqueue("resign");
+            consoleInputs.Enqueue("y");
+
+            IConsole consoleService = new MockConsoleService(consoleInputs);
+            GameController gameController = GetGameController(consoleService);
+            GameManager game = new(consoleService, gameController);
+
+            // Act
+            game.Start();
+
+            // Assert
+            Assert.That(((MockConsoleService)consoleService).OutputContainsString("Black wins against White by Resignation!"), Is.True);
+        }
+
+        [Test]
+        public void BlackResignTest()
+        {
+            // Arrange
+            Queue<string> consoleInputs = new();
+            consoleInputs.Enqueue("n"); // no to tutorial
+            consoleInputs.Enqueue("Classic"); // init game with all pieces
+            consoleInputs.Enqueue("n"); // no to ai
+            consoleInputs.Enqueue("WP7 G4");
+            consoleInputs.Enqueue("resign");
+            consoleInputs.Enqueue("y");
+
+            IConsole consoleService = new MockConsoleService(consoleInputs);
+            GameController gameController = GetGameController(consoleService);
+            GameManager game = new(consoleService, gameController);
+
+            // Act
+            game.Start();
+
+            // Assert
+            Assert.That(((MockConsoleService)consoleService).OutputContainsString("White wins against Black by Resignation!"), Is.True);
+        }
+
+        [Test]
         public void FoolsMate()
         {
             // Arrange
@@ -302,11 +349,7 @@ namespace Tests
             game.Start();
 
             // Assert
-            // originally was false, but should be true now
-            // should this be true or false???
-            // TODO
             Assert.That(((MockConsoleService)consoleService).OutputContainsString("Pawn Promoted."), Is.False);
-            //Assert.Fail("This test is missing requirements for assert. What is the expected result? False or True?");
         }
 
         [Test]
@@ -390,8 +433,15 @@ namespace Tests
 
             string testReport = "";
             // Read moves from the file
-            // TODO: Change this path so that its not a fully hardcoded path, and have it iterate over a series of replays
-            string filePath = "C:\\Users\\david\\OneDrive\\Documents\\GitHub\\chess\\Tests\\TestInputs"; // Specify your converted_moves file path
+            // Get the project directory path
+            string? projectDirectory = Directory.GetParent(Environment.CurrentDirectory)?.Parent?.Parent?.FullName;
+
+            Assert.That(projectDirectory, Is.Not.Null, "Directory.GetParent(Environment.CurrentDirectory)?.Parent?.Parent?.FullName should not be null");
+
+            // Define the relative path to the TestInputs directory
+            string filePath = Path.Combine(projectDirectory, "TestInputs");
+
+            //string filePath2 = "C:\\Users\\david\\OneDrive\\Documents\\GitHub\\chess\\Tests\\TestInputs"; // Specify your converted_moves file path
             foreach (var file in Directory.GetFiles(filePath))
             {
                 Console.WriteLine(file);
