@@ -12,6 +12,10 @@ namespace Tests.Services
         private string _fileName;
         private string _expectedOutcome;
         private bool _showOutputOfWinningGames = false;
+        private static int _totalFiles = 0;
+        private static int _successfulValidationFiles = 0;
+        private static int _failedValidationFiles = 0;
+
 
         public ChessDotComReplayMockConsoleService(Queue<string> inputs, string file, string expectedOutcome, bool showOutputOfWinningGames) : base(inputs)
         {
@@ -43,6 +47,7 @@ namespace Tests.Services
 
         public bool VerifyReplayAndLogIfFailed()
         {
+            _totalFiles += 1;
             // FAILED TEST CASE MATCH
             if (!OutputContainsString(_expectedOutcome))
             {
@@ -51,6 +56,7 @@ namespace Tests.Services
                 {
                     Console.WriteLine(output);
                 }
+                _failedValidationFiles += 1;
                 return false;
             }
             else // SUCCESSFUL VALIDATION OF MATCH
@@ -60,8 +66,15 @@ namespace Tests.Services
                 if (_showOutputOfWinningGames)
                     foreach (var output in Outputs)
                         Console.WriteLine(output);
+                _successfulValidationFiles += 1;
                 return true;
             }  
+        }
+
+        public static void OutputTotals()
+        {
+            Console.WriteLine($"Successfully verified {_successfulValidationFiles} out of {_totalFiles} replays");
+            Console.WriteLine($"{_failedValidationFiles} replays failed to verify.");
         }
     }
 }
