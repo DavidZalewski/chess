@@ -62,7 +62,10 @@ namespace Chess.GameState
 
                 ChessPieces = ChessBoard.GetActivePieces();
                 TurnDescription = ChessPiece.GetPieceName() + " " + PreviousPosition.StringValue + Action + NewPosition.StringValue;
+                // TEMP
+                //Console.WriteLine(ChessBoard.DisplayBoard());
             }
+
         }
 
         public Turn(int turnNumber, ChessPiece piece, BoardPosition newPosition, ChessBoard chessBoard)

@@ -22,6 +22,10 @@ namespace Chess.Controller
         private ActionSequence _sequence = new();
 
         public int TurnNumber { get => _turnNumber; set => _turnNumber = value; }
+        public bool IsStaleMate { get; private set; } = false;
+        public bool IsCheckMateForWhite { get; private set; } = false;
+        public bool IsCheckMateForBlack { get; private set; } = false;
+
         public void SetOnTurnHandler(Action<Turn> action)
         {
             StaticLogger.Trace();
@@ -145,7 +149,15 @@ namespace Chess.Controller
         public bool IsCheckMate(Turn turn)
         {
             StaticLogger.Trace();
-            return _kingCheckService.IsCheckMate(turn);
+            bool isStalemate = false;
+            bool result = _kingCheckService.IsCheckMate(turn, out isStalemate);
+            IsStaleMate = isStalemate;
+            if (turn.PlayerTurn.Equals(Turn.Color.BLACK))
+                IsCheckMateForBlack = true;
+            else
+                IsCheckMateForWhite = true;
+
+            return result;
         }
 
         public Turn? GetTurnFromCommand(string input)

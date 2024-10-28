@@ -78,6 +78,6 @@ Original: move: b1d2, piece: N, from_square: b1, to_square: d2, piece_name: WK1
 Command: WK1 D2
 Original: move: a4c3, piece: n, from_square: a4, to_square: c3, piece_name: BK1 
 Command: BK1 C3
-Command: resign
+Command: resign white
 Command: y
 Outcome: Black wins against White by Resignation!

@@ -207,6 +207,6 @@ Command: WK D5
 Original: move: d2d1q, piece: p, from_square: d2, to_square: d1, promotion: Q
 Command: BP4 D1
 Command: Q
-Command: resign
+Command: resign white
 Command: y
 Outcome: Black wins against White by Resignation!

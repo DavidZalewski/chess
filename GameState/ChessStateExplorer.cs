@@ -57,9 +57,15 @@ namespace Chess.GameState
                 return possibleMoves;
             }
 
-            if (kingCheckService.IsCheckMate(turn))
+            bool isStaleMate = false;
+            if (kingCheckService.IsCheckMate(turn, out isStaleMate))
             {
                 logger.Log($"ChessStateExplorer - END: Turn {turn.TurnDescription} at depth {depth} has reached CHECKMATE, count: {possibleMoves.Count} ", threadId);
+                return possibleMoves;
+            }
+            else if (isStaleMate)
+            {
+                logger.Log($"ChessStateExplorer - END: Turn {turn.TurnDescription} at depth {depth} has reached STALEMATE, count: {possibleMoves.Count} ", threadId);
                 return possibleMoves;
             }
 
@@ -112,10 +118,16 @@ namespace Chess.GameState
                 return possibleMoves;
             }
 
-            if (kingCheckService.IsCheckMate(turn))
+            bool isStaleMate = false;
+            if (kingCheckService.IsCheckMate(turn, out isStaleMate))
             {
-                turn.IsCheckMate = true;
+                turn.IsCheckMate = true; // TODO: Do we need this?
                 logger.Log($"ChessStateExplorer - END: BoardID {turn.ChessBoard.BoardID} at depth {depth} has reached CHECKMATE, count: {possibleMoves.Count} ", threadId);
+                return possibleMoves;
+            }
+            else if (isStaleMate)
+            {
+                logger.Log($"ChessStateExplorer - END: BoardID {turn.ChessBoard.BoardID} at depth {depth} has reached STALEMATE, count: {possibleMoves.Count} ", threadId);
                 return possibleMoves;
             }
 
@@ -219,9 +231,16 @@ namespace Chess.GameState
                 return possibleMoves;
             }
 
-            if (kingCheckService.IsCheckMate(turn))
+            bool isStaleMate = false;
+
+            if (kingCheckService.IsCheckMate(turn, out isStaleMate))
             {
                 logger.Log($"ChessStateExplorer - END: BoardID {turn.ChessBoard.BoardID} at depth {depth} has reached CHECKMATE, count: {possibleMoves.Count} ", threadId);
+                return possibleMoves;
+            }
+            else if (isStaleMate)
+            {
+                logger.Log($"ChessStateExplorer - END: BoardID {turn.ChessBoard.BoardID} at depth {depth} has reached STALEMATE, count: {possibleMoves.Count} ", threadId);
                 return possibleMoves;
             }
 

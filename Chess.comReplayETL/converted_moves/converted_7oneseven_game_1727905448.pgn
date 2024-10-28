@@ -255,4 +255,4 @@ Original: move: h6h5, piece: K, from_square: h6, to_square: h5, piece_name: WK
 Command: WK H5
 Original: move: e4f4, piece: q, from_square: e4, to_square: f4, piece_name: BQ2 
 Command: BQ2 F4
-Outcome: Game ended in stalemate
+Outcome: Game Ends in Stalemate!

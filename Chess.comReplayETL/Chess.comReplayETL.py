@@ -3,6 +3,8 @@ import os
 import requests
 import chess.pgn
 
+SKIP_API_CALL = True
+
 # Load the configuration from the JSON file
 with open("etl_config.json") as config_file:
     config = json.load(config_file)
@@ -28,24 +30,28 @@ headers = {
     "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/85.0.4183.121 Safari/537.36"
 }
 
-# Send the GET request with headers
-response = requests.get(url, headers=headers)
+if not SKIP_API_CALL:
+    print("Making API Call to chess.com")
+    # Send the GET request with headers
+    response = requests.get(url, headers=headers)
 
-# Check if the request was successful
-if response.status_code == 200:
-    games_data = response.json()
+    # Check if the request was successful
+    if response.status_code == 200:
+        games_data = response.json()
     
-    # Loop through all games
-    for game in games_data['games']:
-        if 'pgn' in game:
-            pgn_data = game['pgn']
+        # Loop through all games
+        for game in games_data['games']:
+            if 'pgn' in game:
+                pgn_data = game['pgn']
             
-            # Save the PGN to the pgn directory
-            with open(os.path.join(pgn_directory, f"{username}_game_{game['end_time']}.pgn"), "w") as pgn_file:
-                pgn_file.write(pgn_data)
+                # Save the PGN to the pgn directory
+                with open(os.path.join(pgn_directory, f"{username}_game_{game['end_time']}.pgn"), "w") as pgn_file:
+                    pgn_file.write(pgn_data)
+    else:
+        print(f"Failed to retrieve games. Status code: {response.status_code}")
+        exit(-1)
 else:
-    print(f"Failed to retrieve games. Status code: {response.status_code}")
-    exit(-1)
+    print("Skipping API Call to chess.com")
 
 
 # Initialize piece trackers for white and black
@@ -330,14 +336,14 @@ def convert_pgn_file(pgn_filepath, output_filepath):
         else:
             outcome = "White wins against Black by CheckMate!"
     elif board.is_stalemate():
-        outcome = "Game ended in stalemate"
+        outcome = "Game Ends in Stalemate!"
     elif result == "1-0":
         outcome = "White wins against Black by Resignation!"
-        converted_moves.append(f"Command: resign")
+        converted_moves.append(f"Command: resign black")
         converted_moves.append(f"Command: y")
     elif result == "0-1":
         outcome = "Black wins against White by Resignation!"
-        converted_moves.append(f"Command: resign")
+        converted_moves.append(f"Command: resign white")
         converted_moves.append(f"Command: y")
     elif result == "1/2-1/2":
         outcome = "Game ended in a draw"

@@ -133,7 +133,7 @@ namespace Tests
             consoleInputs.Enqueue("n"); // no to ai
             consoleInputs.Enqueue("WP7 G4");
             consoleInputs.Enqueue("BP5 E5");
-            consoleInputs.Enqueue("resign");
+            consoleInputs.Enqueue("resign white");
             consoleInputs.Enqueue("y");
 
             IConsole consoleService = new MockConsoleService(consoleInputs);
@@ -156,7 +156,7 @@ namespace Tests
             consoleInputs.Enqueue("Classic"); // init game with all pieces
             consoleInputs.Enqueue("n"); // no to ai
             consoleInputs.Enqueue("WP7 G4");
-            consoleInputs.Enqueue("resign");
+            consoleInputs.Enqueue("resign black");
             consoleInputs.Enqueue("y");
 
             IConsole consoleService = new MockConsoleService(consoleInputs);
@@ -489,6 +489,7 @@ namespace Tests
                 ChessDotComReplayMockConsoleService.OutputTotals();
                 Assert.Fail($"One of the files failed to verify against chess engine: {testReport}");
             }
+            ChessDotComReplayMockConsoleService.OutputTotals();
 
             Assert.That(true, Is.True);
         }

@@ -97,7 +97,7 @@ namespace Chess.Services
         // at its highest load - 64 * 16 pieces * 8 iterations (bishop/rook) = 8192 iterations (ChessBoard Copy Constructs, IsValidMove(), etc)
         // at 6 pieces left - 64 * 6 pieces = 384 iterations
         // 8000~ iterations is not super heavy performance wise given it can be checked per turn
-        public bool IsCheckMate(Turn turn)
+        public bool IsCheckMate(Turn turn, out bool isStaleMate)
         {
             StaticLogger.Trace();
             List<ChessPiece> friendlyPieces = new();
@@ -141,10 +141,25 @@ namespace Chess.Services
             {
                 if (!IsKingInCheck(possibleTurn))
                 {
+                    isStaleMate = false;
                     return false;              
                 }           
             }
-            return true; // Check Mate
+
+            // If the king cannot make any moves (would be in check) but is not in check currently, we consider this a stalemate
+            // TODO: Refactor the duplicate COLOR enums into a single enum
+            ChessPiece.Color colorToCheck = turn.PlayerTurn.Equals(Turn.Color.WHITE)? ChessPiece.Color.BLACK : ChessPiece.Color.WHITE;
+            if (!IsKingInCheck(colorToCheck, turn.ChessBoard))
+            {
+                //Console.WriteLine("Its not in check??\n" + turn.ChessBoard.DisplayBoard());
+                isStaleMate = true;
+                return false;
+            }
+            else
+            {
+                isStaleMate = false;
+                return true; // Check Mate
+            }
         }
     }
 }

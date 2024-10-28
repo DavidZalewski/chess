@@ -272,32 +272,9 @@ namespace Chess
                         aiInputSet = true;
                     }
 #endif
-
                     if (!aiInputSet)
                     {
                         input = _console.ReadLine();
-                        if (input != null && input.ToLower().Equals("resign"))
-                        {
-                            _console.WriteLine("Are you sure you wish to resign? (y = yes, n = no)");
-                            input = _console.ReadLine();
-
-                            if (input != null && input.ToLower().Equals("y"))
-                            {
-                                // Black Resigns
-                                if (_gameController.TurnNumber % 2 == 0)
-                                {
-                                    _console.WriteLine("White wins against Black by Resignation!");
-                                }
-                                else
-                                {
-                                    _console.WriteLine("Black wins against White by Resignation!");
-                                }
-                            }
-                            else
-                            {
-                                continue;
-                            }
-                        }
                     }
 
                     (string? command, string? argument) = ParseInput(input);
@@ -316,7 +293,42 @@ namespace Chess
                         case "load":
                             _gameController.LoadGameState(argument);
                             continue;
-                    };
+                        case "resign":
+                        {
+                            if (argument != "black" && argument != "white")
+                            {
+                                _console.WriteLine("Invalid command. Please enter a command.");
+                                continue;
+                            }
+                            else
+                            {
+                                _console.WriteLine("Are you sure you wish to resign? (y = yes, n = no)");
+                                input = _console.ReadLine();
+
+                                if (input != null && input.ToLower().Equals("y"))
+                                {
+                                    // Black Resigns
+                                    if (argument == "black")
+                                    {
+                                        _console.WriteLine("White wins against Black by Resignation!");
+                                        input = "quit";
+                                        break;
+                                    }
+                                    else
+                                    {
+                                        _console.WriteLine("Black wins against White by Resignation!");
+                                        input = "quit";
+                                        break;
+                                    }
+                                }
+                                else
+                                {
+                                    // If they do not confirm resignation... ignore and try to read input again
+                                    continue;
+                                }
+                            }
+                        }
+                    }    
 
                     // TODO: Move this logic into GetTurnFromCommand?
                     if (!command.StartsWith('w') && !command.StartsWith('b'))
@@ -346,6 +358,14 @@ namespace Chess
                             _console.WriteLine("White wins against Black by CheckMate!");
                         else
                             _console.WriteLine("Black wins against White by CheckMate!");
+                        _console.WriteLine("Game Over.");
+                        _gameController.ApplyTurnToGameState(turn);
+                        _console.WriteLine(_gameController.DisplayBoard());
+                        break; // break out of game loop
+                    }
+                    else if (_gameController.IsStaleMate)
+                    {
+                        _console.WriteLine("Game Ends in Stalemate!");
                         _console.WriteLine("Game Over.");
                         _gameController.ApplyTurnToGameState(turn);
                         _console.WriteLine(_gameController.DisplayBoard());

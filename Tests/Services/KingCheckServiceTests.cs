@@ -304,7 +304,9 @@ namespace Tests.Services
             // The captured piece would still appear on the board. This made the service think it was checkmate, because the knight
             // that was supposed to be captured, was still on the field according to the pieces the service was looking at.
             // But now this broke 4 other tests...
-            Assert.That(kingCheckService.IsCheckMate(turn), Is.False);
+            bool isStaleMate = false;
+            Assert.That(kingCheckService.IsCheckMate(turn, out isStaleMate), Is.False);
+            Assert.That(isStaleMate, Is.False);
         }
 
         [Test(Description = "Test involving 9 pieces [Black Bishop on A5, Black Bishop on A6, Black Rook on A1, Black Knight on F3, White Queen on D1, White King on E1, White Bishop on F1, White Pawns on D2, and F2] where knight has put king in check, no valid moves are possible")]
@@ -334,8 +336,10 @@ namespace Tests.Services
 
             // Construct kingCheckService
             KingCheckService kingCheckService = new();
+            bool isStaleMate = false;
 
-            Assert.That(kingCheckService.IsCheckMate(turn), Is.True);
+            Assert.That(kingCheckService.IsCheckMate(turn, out isStaleMate), Is.True);
+            Assert.That(isStaleMate, Is.False);
         }
 
         [Test(Description = "Test Check Mate involving 5 pieces")]
@@ -368,8 +372,9 @@ namespace Tests.Services
 
             // Construct kingCheckService
             KingCheckService kingCheckService = new();
-
-            Assert.That(kingCheckService.IsCheckMate(turn), Is.True);
+            bool isStaleMate = false;
+            Assert.That(kingCheckService.IsCheckMate(turn, out isStaleMate), Is.True);
+            Assert.That(isStaleMate, Is.False);
         }
 
         [Test(Description = "Test Check Mate is false on a full board")]
@@ -384,8 +389,9 @@ namespace Tests.Services
 
             // Construct kingCheckService
             KingCheckService kingCheckService = new();
-
-            Assert.That(kingCheckService.IsCheckMate(turn), Is.False);
+            bool isStaleMate = false;
+            Assert.That(kingCheckService.IsCheckMate(turn, out isStaleMate), Is.False);
+            Assert.That(isStaleMate, Is.False);
         }
 
         [Test(Description = "Test Check Mate on black with 2 pieces")]
@@ -413,8 +419,9 @@ namespace Tests.Services
 
             // Construct kingCheckService
             KingCheckService kingCheckService = new();
-
-            Assert.That(kingCheckService.IsCheckMate(turn), Is.True);
+            bool isStaleMate = false;
+            Assert.That(kingCheckService.IsCheckMate(turn, out isStaleMate), Is.True);
+            Assert.That(isStaleMate, Is.False);
         }
 
         [Test]
@@ -562,23 +569,30 @@ namespace Tests.Services
         {
             // Arrange
             ChessBoard board = new();
+            ChessPiece promotedBlackQueen2 = new ChessPieceQueen(ChessPiece.Color.BLACK, 2, new("E4"));
+
             List<ChessPiece> pieces = new()
             {
                 new ChessPieceKing(ChessPiece.Color.BLACK, new("F6")),
-                new ChessPieceQueen(ChessPiece.Color.BLACK, 2, new("F4")),
                 new ChessPieceBishop(ChessPiece.Color.BLACK, 2, new("B6")),
                 new ChessPieceBlackPawn(1, new("A5")),
+                promotedBlackQueen2,
                 new ChessPieceKing(ChessPiece.Color.WHITE, new("H5"))
             };
             board.PopulateBoard(pieces);
+            KingCheckService kingCheckService = new KingCheckService();
+            Turn turn = new(128, promotedBlackQueen2, new("F4"), board);
 
             // Act
-            bool result = new KingCheckService().IsKingInCheck(ChessPiece.Color.WHITE, board);
+            bool kingInCheckResult = kingCheckService.IsKingInCheck(ChessPiece.Color.WHITE, board);
+            bool isStaleMate = false;
+            bool kingInCheckMateResult = kingCheckService.IsCheckMate(turn, out isStaleMate);
             Console.WriteLine(board.DisplayBoard());
 
             // Assert
-            Assert.That(result, Is.False);
-
+            Assert.That(kingInCheckResult, Is.False, "Expected white king to not be in check in this position");
+            Assert.That(kingInCheckMateResult, Is.False, "Expected white king to not be in check mate");
+            Assert.That(isStaleMate, Is.True);
         }
     }
 }
