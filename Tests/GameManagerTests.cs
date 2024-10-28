@@ -426,7 +426,7 @@ namespace Tests
         [Test(Author = "7OneSeven", Description = "Loads a converted replay from chess.com and plays it out in this engine")]
         public void ReplayChessDotComMatch()
         {
-            bool SHOW_OUTPUT_OF_WINNING_GAMES = false;
+            bool SHOW_OUTPUT_OF_WINNING_GAMES = true;
             // Arrange
             Queue<string> consoleInputs = new Queue<string>();
             string expectedOutcome = "";
