@@ -335,7 +335,7 @@ namespace Chess.Board
                         switch (chessPiece.GetPiece())
                         {
                             case ChessPiece.Piece.PAWN: p = "P"; break;
-                            case ChessPiece.Piece.KNIGHT: p = "K"; break;
+                            case ChessPiece.Piece.KNIGHT: p = "N"; break;
                             case ChessPiece.Piece.BISHOP: p = "B"; break;
                             case ChessPiece.Piece.ROOK: p = "R"; break;
                             case ChessPiece.Piece.QUEEN: p = "Q"; break;
