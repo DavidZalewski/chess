@@ -1,4 +1,5 @@
-﻿using Chess.Interfaces;
+﻿using Chess.Globals;
+using Chess.Interfaces;
 using Chess.Services;
 using System;
 using System.Collections.Generic;
@@ -10,15 +11,18 @@ namespace Tests.Services
 {
     public class MockConsoleService : IConsole
     {
-        public Queue<string> Inputs { get; set; }
+        public Queue<string> Inputs { get; set; } = new Queue<string>();
         public List<string> Outputs { get; } = new List<string>();
+
+        public MockConsoleService() { 
+        }
 
         public MockConsoleService(Queue<string> inputs) 
         {
             Inputs = inputs;
         }
 
-        public string? ReadLine()
+        public virtual string? ReadLine()
         {
             if (Inputs != null)
             {
@@ -26,15 +30,22 @@ namespace Tests.Services
                 {
                     throw new Exception("Mock Console Service has run out of mock inputs to use");
                 }
-                return Inputs.Dequeue();
+                string readOut = Inputs.Dequeue();
+                Console.WriteLine(readOut); // so we can see what the input is supposed to be at this point
+                //StaticLogger.Log(readOut); // TODO: Figure out what we are doing here
+                return readOut;
             }
 
-            throw new Exception("Mock Console Service has run out of mock inputs to use");
+            Exception e = new Exception("Mock Console Service has run out of mock inputs to use");
+            //StaticLogger.Log($"{e}", LogLevel.Error);
+            throw e;
         }
 
-        public void WriteLine(string? text)
+        public virtual void WriteLine(string? text)
         {
             Outputs.Add(text);
+            Console.WriteLine(text);
+            //StaticLogger.Log(text);
         }
 
         public bool OutputHasExactString(string? text)
@@ -52,6 +63,16 @@ namespace Tests.Services
             if (Outputs != null)
             {
                 return Outputs.Any(o => o.Contains(text, stringComparison));
+            }
+
+            throw new Exception("Mock Console Service has null for outputs");
+        }
+
+        public int OutputContainsStringCount(string? text, StringComparison stringComparison = StringComparison.InvariantCultureIgnoreCase)
+        {
+            if (Outputs != null)
+            {
+                return Outputs.FindAll(o => o.Contains(text, stringComparison)).Count;
             }
 
             throw new Exception("Mock Console Service has null for outputs");

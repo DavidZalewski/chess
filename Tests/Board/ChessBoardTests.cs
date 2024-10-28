@@ -7,13 +7,15 @@ using static Chess.Pieces.ChessPiece;
 
 namespace Tests.Board
 {
-    public class ChessBoardTests
+    [Category("CORE")]
+    public class ChessBoardTests : TestBase
     {
         private ChessBoard chessBoard = new();
 
         [SetUp]
-        public void Setup()
+        public override void Setup()
         {
+            base.Setup();
             chessBoard = new ChessBoard();
         }
 
@@ -41,7 +43,15 @@ namespace Tests.Board
         [Test]
         public void ChessBoardCopyConstructor_NullArgument_ThrowsArgumentNullException()
         {
-            Assert.That(() => new ChessBoard(null), Throws.ArgumentNullException);
+            Assert.That(() => new ChessBoard((ChessBoard)null), Throws.ArgumentNullException);
+        }
+
+        [Test]
+        public void ChessBoardConstructorBoardID_Constructs_Proper_Board_State()
+        {
+            string BoardID = "0A00200060000CCC00080A00C0C00000000C000B9B0B00B0B7B00B7050000010";
+            ChessBoard board = new(BoardID);
+            Console.WriteLine(board.DisplayBoard());
         }
 
         [Test]
@@ -100,7 +110,7 @@ namespace Tests.Board
         [Test]
         public void PopulateBoard_Success()
         {
-            List<ChessPiece> chessPieces = ChessPieceFactory.CreateChessPieces();
+            List<ChessPiece> chessPieces = ChessPieceFactory.CreateChessPiecesClassic();
             chessBoard.PopulateBoard(chessPieces);
             Square[,] board = chessBoard.Board;
 
@@ -160,7 +170,7 @@ namespace Tests.Board
         {
             // Arrange
             ChessBoard board = new();
-            board.PopulateBoard(ChessPieceFactory.CreateChessPieces());
+            board.PopulateBoard(ChessPieceFactory.CreateChessPiecesClassic());
 
             // Act
             List<ChessPiece> activePieces = board.GetActivePieces();
@@ -174,7 +184,7 @@ namespace Tests.Board
         {
             // Arrange
             ChessBoard board = new ChessBoard();
-            board.PopulateBoard(ChessPieceFactory.CreateChessPieces());
+            board.PopulateBoard(ChessPieceFactory.CreateChessPiecesClassic());
 
             // Act
             board.SetPieceAtPosition(new ("A1"), NoPiece.Instance);
@@ -190,7 +200,7 @@ namespace Tests.Board
         [Test]
         public void DisplayBoard_Success()
         {
-            List<ChessPiece> chessPieces = ChessPieceFactory.CreateChessPieces();
+            List<ChessPiece> chessPieces = ChessPieceFactory.CreateChessPiecesClassic();
             ChessBoard chessBoard = new();
             chessBoard.PopulateBoard(chessPieces);
 
@@ -199,6 +209,56 @@ namespace Tests.Board
             Assert.That(boardAsConsoleOutput, Is.Not.Null);
 
             Console.WriteLine(boardAsConsoleOutput);
+        }
+
+        [Test]
+        public void BoardID_InitialValue_EmptyString()
+        {
+            Assert.That(chessBoard.BoardID.Equals("0000000000000000000000000000000000000000000000000000000000000000"));
+        }
+
+        [Test]
+        public void BoardID_AfterPopulateBoard_NotEmptyString()
+        {
+            List<ChessPiece> chessPieces = ChessPieceFactory.CreateChessPiecesClassic();
+            chessBoard.PopulateBoard(chessPieces);
+            Console.WriteLine($"initialBoardID: {chessBoard.BoardID}");
+            Assert.That(chessBoard.BoardID, Is.Not.Empty);
+            Assert.That(chessBoard.BoardID.Length, Is.EqualTo(64));
+        }
+
+        [Test]
+        public void BoardID_AfterSetPieceAtPosition_UpdatesBoardID()
+        {
+            BoardPosition position = new BoardPosition(RANK.ONE, FILE.A);
+            ChessPiece piece = new ChessPieceKing(Color.WHITE, position);
+            chessBoard.SetPieceAtPosition(position, piece);
+            string initialBoardID = chessBoard.BoardID;
+
+            Console.WriteLine($"initialBoardID: {initialBoardID}");
+
+            position = new BoardPosition(RANK.ONE, FILE.B);
+            piece = new ChessPieceQueen(Color.WHITE, 1, position);
+            chessBoard.SetPieceAtPosition(position, piece);
+            string updatedBoardID = chessBoard.BoardID;
+
+            Console.WriteLine($"updatedBoardID: {updatedBoardID}");
+
+            Assert.That(initialBoardID, Is.Not.EqualTo(updatedBoardID));   
+        }
+
+        [Test]
+        public void BoardID_DefaultBoard_ReturnsCorrectID()
+        {
+            // Arrange
+            ChessBoard chessBoard = new ChessBoard();
+
+            // Act
+            string boardID = chessBoard.BoardID;
+
+            // Assert
+            Assert.That(boardID.Length, Is.EqualTo(64));
+            Assert.That(boardID, Is.EqualTo(new string('0', 64)));
         }
     }
 }

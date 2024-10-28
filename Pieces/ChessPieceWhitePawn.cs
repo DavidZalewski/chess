@@ -1,4 +1,6 @@
 ﻿using Chess.Board;
+using Chess.Globals;
+using Chess.Services;
 
 namespace Chess.Pieces
 {
@@ -7,11 +9,13 @@ namespace Chess.Pieces
     {
         public ChessPieceWhitePawn(int id, BoardPosition startingPosition) : base(Color.WHITE, id, startingPosition)
         {
+            StaticLogger.Trace();
             _realValue = 11; // could also calculate this in base class by adding the two enums together
         }
 
         public override ChessPiece Clone()
         {
+            StaticLogger.Trace();
             ChessPieceWhitePawn copy = new(_id, _startingPosition);
             copy.IsEnPassantTarget = this.IsEnPassantTarget;
             copy.MovedTwoSquares = this.MovedTwoSquares;
@@ -20,6 +24,7 @@ namespace Chess.Pieces
 
         public override bool IsValidMove(ChessBoard board, BoardPosition position)
         {
+            StaticLogger.Trace();
             // get the distance
             //   2       =                    6                        4
             int verticalDistance = _currentPosition.RankAsInt - position.RankAsInt;
@@ -29,7 +34,6 @@ namespace Chess.Pieces
                 bool IsValidEnPassant = _IsEnPassantCallBackFunction.Invoke(board, position, this);
                 if (IsValidEnPassant) { return true; }
             }
-            // TODO: handle promotions
 
             if (verticalDistance == 1)
             {
@@ -65,7 +69,22 @@ namespace Chess.Pieces
                         return false;
                     else
                     {
-                        MovedTwoSquares = true; // We use this to for En Passant
+                        if (!SimulationService.IsSimulation)
+                        {
+                            MovedTwoSquares = true; // We use this to for En Passant
+                            LambdaQueue.Enqueue((Chess.Controller.GameController gc) => {
+                                ChessPieceWhitePawn? pawn = (ChessPieceWhitePawn?)gc.GetChessBoard().GetActivePieces().Find((p) => p.GetPieceName().Equals(this._pieceName));
+                                if (pawn != null)
+                                {
+                                    StaticLogger.Log($"Closing window of opportunity for En Passant for Pawn {pawn.GetPieceName()}", LogLevel.Debug);
+                                    pawn.MovedTwoSquares = false;
+                                }
+                                else
+                                {
+                                    StaticLogger.Log($"Warning - could not find Pawn {this._pieceName} from GameController Active Pieces - looks like it was captured - ignoring", LogLevel.Warn);
+                                }
+                            }); // Load the LambdaQueue
+                        }
                         return true;
                     }
                 }
@@ -78,8 +97,9 @@ namespace Chess.Pieces
             }
         }
 
-        protected override bool ImplementMove(ChessBoard board, BoardPosition position)
+        public override bool ImplementMove(ChessBoard board, BoardPosition position)
         {
+            StaticLogger.Trace();
             // does this need to exist?
             return false;
         }

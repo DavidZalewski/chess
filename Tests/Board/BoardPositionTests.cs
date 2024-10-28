@@ -2,7 +2,8 @@ using Chess.Board;
 
 namespace Tests.Board
 {
-    public class BoardPositionTests
+    [Category("CORE")]
+    public class BoardPositionTests : TestBase
     {
         public int SplitIntegerGetFirstValue(int value)
         {

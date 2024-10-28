@@ -3,7 +3,8 @@ using Chess.Pieces;
 
 namespace Tests.Pieces
 {
-    public class KnightTests
+    [Category("CORE")]
+    public class KnightTests : TestBase
     {
         private ChessBoard board = new ChessBoard();
         private BoardPosition whiteKnight1StartPosition = new(RANK.TWO, FILE.A);
@@ -12,8 +13,9 @@ namespace Tests.Pieces
         private BoardPosition blackKnight2StartPosition = new(RANK.SEVEN, FILE.H);
 
         [SetUp]
-        public void Setup()
+        public override void Setup()
         {
+            base.Setup();
             board = new ChessBoard();
         }
 
@@ -187,7 +189,7 @@ namespace Tests.Pieces
             BoardPosition f3 = new(RANK.THREE, FILE.F);
             ChessPiece piece = new ChessPieceKnight(ChessPiece.Color.BLACK, 2, boardPosition);
             // Set Black Pawn on F3
-            // TODO: Implement Later
+
             board.SetBoardValue(f3, 21);
             Assert.That(piece.IsValidMove(board, f3), Is.False);
         }
@@ -241,7 +243,7 @@ namespace Tests.Pieces
             BoardPosition e4 = new(RANK.FOUR, FILE.E);
 
             // Set White Pawn at B1 and B5, and D5
-            // TODO: Implement Later
+
             board.SetBoardValue(b1, 11);
             board.SetBoardValue(b5, 11);
             board.SetBoardValue(d5, 11);
@@ -284,7 +286,7 @@ namespace Tests.Pieces
             BoardPosition d4 = new(RANK.FOUR, FILE.D);
 
             // Set Black Pawn at G1 and G5, and E5
-            // TODO: Implement Later
+
             board.SetBoardValue(g1, 21);
             board.SetBoardValue(g5, 21);
             board.SetBoardValue(e5, 21);

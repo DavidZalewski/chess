@@ -6,7 +6,9 @@ using System.Collections.Generic;
 
 namespace Tests.Services
 {
-    public class KingCheckServiceTests
+    // CANNOT BE RUN ASYNC OR IN PARALLEL
+    [Category("CORE")]
+    public class KingCheckServiceTests : TestBase
     {
         [Test]
         public void ConstructKingCheckService_Success()
@@ -21,7 +23,6 @@ namespace Tests.Services
         {
             // Construct board; set black king on D5 and white king on E3 on chess board object
             ChessBoard chessBoard = new();
-            // TODO: Refactor this to pass in piece objects
             chessBoard.SetBoardValue(new BoardPosition("E3"), 16);
             chessBoard.SetBoardValue(new BoardPosition("D5"), 26);
 
@@ -30,7 +31,7 @@ namespace Tests.Services
             ChessPiece blackKingPiece = new ChessPieceKing(ChessPiece.Color.BLACK, new BoardPosition("D5"));
             List<ChessPiece> chessPieces = new() { whiteKingPiece, blackKingPiece };
 
-            // Construct Turn objects - this doesnt seem right - the board state doesnt match the turn description
+            // Construct Turn objects
             Turn whiteKingTurnD4 = new(9, whiteKingPiece, new BoardPosition("E3"), new BoardPosition("D4"), chessBoard);
             Turn whiteKingTurnE4 = new(9, whiteKingPiece, new BoardPosition("E3"), new BoardPosition("E4"), chessBoard);
 
@@ -49,7 +50,6 @@ namespace Tests.Services
         {
             // Construct board; set black king on D5 and white king on E3 on chess board object
             ChessBoard chessBoard = new();
-            // TODO: Implement Later
             chessBoard.SetBoardValue(new BoardPosition("E3"), 16);
             chessBoard.SetBoardValue(new BoardPosition("D5"), 26);
 
@@ -375,7 +375,7 @@ namespace Tests.Services
         [Test(Description = "Test Check Mate is false on a full board")]
         public void IsCheckMate_NoCheckMate_FullBoard()
         {
-            List<ChessPiece> chessPieces = ChessPieceFactory.CreateChessPieces();
+            List<ChessPiece> chessPieces = ChessPieceFactory.CreateChessPiecesClassic();
             ChessBoard chessBoard = new();
             chessBoard.PopulateBoard(chessPieces);
 

@@ -4,7 +4,8 @@ using Chess.Services;
 
 namespace Tests.Pieces
 {
-    public class BishopTests
+    [Category("CORE")]
+    public class BishopTests : TestBase
     {
         private ChessBoard board = new ChessBoard();
         private BoardPosition whiteBishop1StartPosition = new(RANK.THREE, FILE.A);
@@ -18,8 +19,9 @@ namespace Tests.Pieces
         }
 
         [SetUp]
-        public void Setup()
+        public override void Setup()
         {
+            base.Setup();
             board = new ChessBoard();
         }
 
@@ -130,7 +132,7 @@ namespace Tests.Pieces
             };
 
             // Set White Pawns on B2 and B4 which block Bishop from moving
-            // TODO: Implement Later
+
             board.SetBoardValue(new(RANK.TWO, FILE.B), 11);
             board.SetBoardValue(new(RANK.FOUR, FILE.B), 11);
 
@@ -156,7 +158,7 @@ namespace Tests.Pieces
             };
 
             // Set Black Pawn on B4 which block Bishop
-            // TODO: Implement Later
+
             board.SetBoardValue(new(RANK.FOUR, FILE.B), 21);
 
             Assert.Multiple(() =>
@@ -175,7 +177,7 @@ namespace Tests.Pieces
             BoardPosition d6 = new(RANK.SIX, FILE.D);
 
             // Set Black Pawn on D6
-            // TODO: Implement Later
+
             board.SetBoardValue(d6, 21);
 
             Assert.That(piece.IsValidMove(board, d6), Is.True);
@@ -219,7 +221,7 @@ namespace Tests.Pieces
         public void WhiteBishop1_IsValidMove_FromC1ToG5()
         {
             ChessPiece piece = new ChessPieceBishop(ChessPiece.Color.WHITE, 1, new("C1"));
-            // TODO: Implement Later
+
             board.SetBoardValue(new("D3"), 22);
             board.SetBoardValue(new("E2"), 23);
             Assert.That(piece.IsValidMove(board, new("G5")), Is.True);
@@ -228,7 +230,7 @@ namespace Tests.Pieces
         [Test(Description = "Tests that Black Bishop can move from C8 to D7 with pieces on board not in its path")]
         public void BlackBishop1_IsValidMove_FromC8ToD7()
         {
-            List<ChessPiece> chessPieces = ChessPieceFactory.CreateChessPieces();
+            List<ChessPiece> chessPieces = ChessPieceFactory.CreateChessPiecesClassic();
             board.PopulateBoard(chessPieces);
 
             ChessPiece blackPawn4 = chessPieces.First(piece => piece.GetPiece().Equals(ChessPiece.Piece.PAWN) &&
@@ -249,7 +251,7 @@ namespace Tests.Pieces
         [Test(Description = "Tests that White Bishop cannot move from C1 to C3")]
         public void WhiteBishop1_IsValidMove_FromC1ToC3()
         {
-            List<ChessPiece> chessPieces = ChessPieceFactory.CreateChessPieces();
+            List<ChessPiece> chessPieces = ChessPieceFactory.CreateChessPiecesClassic();
             board.PopulateBoard(chessPieces);
 
             ChessPiece whitePawn2 = chessPieces.First(piece => piece.GetPiece().Equals(ChessPiece.Piece.PAWN) &&

@@ -1,0 +1,277 @@
+Original: move: e2e4, piece: P, from_square: e2, to_square: e4, piece_name: WP5 
+Command: WP5 E4
+Original: move: d7d5, piece: p, from_square: d7, to_square: d5, piece_name: BP4 
+Command: BP4 D5
+Original: move: e4d5, piece: P, from_square: e4, to_square: d5, piece_name: WP5 
+Command: WP5 D5
+Original: move: d8d5, piece: q, from_square: d8, to_square: d5, piece_name: BQ1 
+Command: BQ1 D5
+Original: move: b1c3, piece: N, from_square: b1, to_square: c3, piece_name: WK1 
+Command: WK1 C3
+Original: move: d5e5, piece: q, from_square: d5, to_square: e5, piece_name: BQ1 
+Command: BQ1 E5
+Original: move: f1e2, piece: B, from_square: f1, to_square: e2, piece_name: WB2 
+Command: WB2 E2
+Original: move: c8g4, piece: b, from_square: c8, to_square: g4, piece_name: BB1 
+Command: BB1 G4
+Original: move: f2f3, piece: P, from_square: f2, to_square: f3, piece_name: WP6 
+Command: WP6 F3
+Original: move: g4f5, piece: b, from_square: g4, to_square: f5, piece_name: BB1 
+Command: BB1 F5
+Original: move: d2d4, piece: P, from_square: d2, to_square: d4, piece_name: WP4 
+Command: WP4 D4
+Original: move: e5a5, piece: q, from_square: e5, to_square: a5, piece_name: BQ1 
+Command: BQ1 A5
+Original: move: c1d2, piece: B, from_square: c1, to_square: d2, piece_name: WB1 
+Command: WB1 D2
+Original: move: a5b4, piece: q, from_square: a5, to_square: b4, piece_name: BQ1 
+Command: BQ1 B4
+Original: move: c3d5, piece: N, from_square: c3, to_square: d5, piece_name: WK1 
+Command: WK1 D5
+Original: move: b4d6, piece: q, from_square: b4, to_square: d6, piece_name: BQ1 
+Command: BQ1 D6
+Original: move: e2b5, piece: B, from_square: e2, to_square: b5, piece_name: WB2 
+Command: WB2 B5
+Original: move: c7c6, piece: p, from_square: c7, to_square: c6, piece_name: BP3 
+Command: BP3 C6
+Original: move: g2g4, piece: P, from_square: g2, to_square: g4, piece_name: WP7 
+Command: WP7 G4
+Original: move: d6d5, piece: q, from_square: d6, to_square: d5, piece_name: BQ1 
+Command: BQ1 D5
+Original: move: g4f5, piece: P, from_square: g4, to_square: f5, piece_name: WP7 
+Command: WP7 F5
+Original: move: d5b5, piece: q, from_square: d5, to_square: b5, piece_name: BQ1 
+Command: BQ1 B5
+Original: move: d2c3, piece: B, from_square: d2, to_square: c3, piece_name: WB1 
+Command: WB1 C3
+Original: move: b5f5, piece: q, from_square: b5, to_square: f5, piece_name: BQ1 
+Command: BQ1 F5
+Original: move: d1e2, piece: Q, from_square: d1, to_square: e2, piece_name: WQ1 
+Command: WQ1 E2
+Original: move: f5b5, piece: q, from_square: f5, to_square: b5, piece_name: BQ1 
+Command: BQ1 B5
+Original: move: e1c1, piece: K, from_square: 4, to_square: 2
+Command: WK A1
+Original: move: b5e2, piece: q, from_square: b5, to_square: e2, piece_name: BQ1 
+Command: BQ1 E2
+Original: move: g1e2, piece: N, from_square: g1, to_square: e2, piece_name: WK2 
+Command: WK2 E2
+Original: move: g8f6, piece: n, from_square: g8, to_square: f6, piece_name: BK2 
+Command: BK2 F6
+Original: move: e2f4, piece: N, from_square: e2, to_square: f4, piece_name: WK2 
+Command: WK2 F4
+Original: move: f6d5, piece: n, from_square: f6, to_square: d5, piece_name: BK2 
+Command: BK2 D5
+Original: move: f4d5, piece: N, from_square: f4, to_square: d5, piece_name: WK2 
+Command: WK2 D5
+Original: move: c6d5, piece: p, from_square: c6, to_square: d5, piece_name: BP3 
+Command: BP3 D5
+Original: move: f3f4, piece: P, from_square: f3, to_square: f4, piece_name: WP6 
+Command: WP6 F4
+Original: move: e7e6, piece: p, from_square: e7, to_square: e6, piece_name: BP5 
+Command: BP5 E6
+Original: move: h1e1, piece: R, from_square: h1, to_square: e1, piece_name: WR2 
+Command: WR2 E1
+Original: move: f8d6, piece: b, from_square: f8, to_square: d6, piece_name: BB2 
+Command: BB2 D6
+Original: move: f4f5, piece: P, from_square: f4, to_square: f5, piece_name: WP6 
+Command: WP6 F5
+Original: move: d6h2, piece: b, from_square: d6, to_square: h2, piece_name: BB2 
+Command: BB2 H2
+Original: move: f5e6, piece: P, from_square: f5, to_square: e6, piece_name: WP6 
+Command: WP6 E6
+Original: move: h2g3, piece: b, from_square: h2, to_square: g3, piece_name: BB2 
+Command: BB2 G3
+Original: move: e1e2, piece: R, from_square: e1, to_square: e2, piece_name: WR2 
+Command: WR2 E2
+Original: move: e8g8, piece: k, from_square: 60, to_square: 62
+Command: BK H8
+Original: move: e6e7, piece: P, from_square: e6, to_square: e7, piece_name: WP6 
+Command: WP6 E7
+Original: move: f8e8, piece: r, from_square: f8, to_square: e8, piece_name: BR2 
+Command: BR2 E8
+Original: move: c3b4, piece: B, from_square: c3, to_square: b4, piece_name: WB1 
+Command: WB1 B4
+Original: move: b8c6, piece: n, from_square: b8, to_square: c6, piece_name: BK1 
+Command: BK1 C6
+Original: move: b4c5, piece: B, from_square: b4, to_square: c5, piece_name: WB1 
+Command: WB1 C5
+Original: move: b7b6, piece: p, from_square: b7, to_square: b6, piece_name: BP2 
+Command: BP2 B6
+Original: move: d1g1, piece: R, from_square: d1, to_square: g1, piece_name: WR1 
+Command: WR1 G1
+Original: move: g3f4, piece: b, from_square: g3, to_square: f4, piece_name: BB2 
+Command: BB2 F4
+Original: move: c1d1, piece: K, from_square: c1, to_square: d1, piece_name: WK 
+Command: WK D1
+Original: move: b6c5, piece: p, from_square: b6, to_square: c5, piece_name: BP2 
+Command: BP2 C5
+Original: move: d4c5, piece: P, from_square: d4, to_square: c5, piece_name: WP4 
+Command: WP4 C5
+Original: move: e8e7, piece: r, from_square: e8, to_square: e7, piece_name: BR2 
+Command: BR2 E7
+Original: move: e2g2, piece: R, from_square: e2, to_square: g2, piece_name: WR2 
+Command: WR2 G2
+Original: move: f7f5, piece: p, from_square: f7, to_square: f5, piece_name: BP6 
+Command: BP6 F5
+Original: move: g1f1, piece: R, from_square: g1, to_square: f1, piece_name: WR1 
+Command: WR1 F1
+Original: move: e7e4, piece: r, from_square: e7, to_square: e4, piece_name: BR2 
+Command: BR2 E4
+Original: move: f1g1, piece: R, from_square: f1, to_square: g1, piece_name: WR1 
+Command: WR1 G1
+Original: move: f4h6, piece: b, from_square: f4, to_square: h6, piece_name: BB2 
+Command: BB2 H6
+Original: move: g2h2, piece: R, from_square: g2, to_square: h2, piece_name: WR2 
+Command: WR2 H2
+Original: move: e4e6, piece: r, from_square: e4, to_square: e6, piece_name: BR2 
+Command: BR2 E6
+Original: move: g1f1, piece: R, from_square: g1, to_square: f1, piece_name: WR1 
+Command: WR1 F1
+Original: move: a8f8, piece: r, from_square: a8, to_square: f8, piece_name: BR1 
+Command: BR1 F8
+Original: move: h2f2, piece: R, from_square: h2, to_square: f2, piece_name: WR2 
+Command: WR2 F2
+Original: move: g7g6, piece: p, from_square: g7, to_square: g6, piece_name: BP7 
+Command: BP7 G6
+Original: move: f2f3, piece: R, from_square: f2, to_square: f3, piece_name: WR2 
+Command: WR2 F3
+Original: move: c6d4, piece: n, from_square: c6, to_square: d4, piece_name: BK1 
+Command: BK1 D4
+Original: move: f3a3, piece: R, from_square: f3, to_square: a3, piece_name: WR2 
+Command: WR2 A3
+Original: move: f8f7, piece: r, from_square: f8, to_square: f7, piece_name: BR1 
+Command: BR1 F7
+Original: move: a3d3, piece: R, from_square: a3, to_square: d3, piece_name: WR2 
+Command: WR2 D3
+Original: move: e6e4, piece: r, from_square: e6, to_square: e4, piece_name: BR2 
+Command: BR2 E4
+Original: move: c2c3, piece: P, from_square: c2, to_square: c3, piece_name: WP3 
+Command: WP3 C3
+Original: move: h6g7, piece: b, from_square: h6, to_square: g7, piece_name: BB2 
+Command: BB2 G7
+Original: move: c5c6, piece: P, from_square: c5, to_square: c6, piece_name: WP4 
+Command: WP4 C6
+Original: move: g6g5, piece: p, from_square: g6, to_square: g5, piece_name: BP7 
+Command: BP7 G5
+Original: move: c3d4, piece: P, from_square: c3, to_square: d4, piece_name: WP3 
+Command: WP3 D4
+Original: move: e4d4, piece: r, from_square: e4, to_square: d4, piece_name: BR2 
+Command: BR2 D4
+Original: move: d3d4, piece: R, from_square: d3, to_square: d4, piece_name: WR2 
+Command: WR2 D4
+Original: move: g7d4, piece: b, from_square: g7, to_square: d4, piece_name: BB2 
+Command: BB2 D4
+Original: move: f1e1, piece: R, from_square: f1, to_square: e1, piece_name: WR1 
+Command: WR1 E1
+Original: move: d4b2, piece: b, from_square: d4, to_square: b2, piece_name: BB2 
+Command: BB2 B2
+Original: move: e1e8, piece: R, from_square: e1, to_square: e8, piece_name: WR1 
+Command: WR1 E8
+Original: move: g8g7, piece: k, from_square: g8, to_square: g7, piece_name: BK 
+Command: BK G7
+Original: move: e8b8, piece: R, from_square: e8, to_square: b8, piece_name: WR1 
+Command: WR1 B8
+Original: move: b2e5, piece: b, from_square: b2, to_square: e5, piece_name: BB2 
+Command: BB2 E5
+Original: move: b8e8, piece: R, from_square: b8, to_square: e8, piece_name: WR1 
+Command: WR1 E8
+Original: move: f5f4, piece: p, from_square: f5, to_square: f4, piece_name: BP6 
+Command: BP6 F4
+Original: move: e8e5, piece: R, from_square: e8, to_square: e5, piece_name: WR1 
+Command: WR1 E5
+Original: move: f4f3, piece: p, from_square: f4, to_square: f3, piece_name: BP6 
+Command: BP6 F3
+Original: move: d1e1, piece: K, from_square: d1, to_square: e1, piece_name: WK 
+Command: WK E1
+Original: move: g5g4, piece: p, from_square: g5, to_square: g4, piece_name: BP7 
+Command: BP7 G4
+Original: move: e5g5, piece: R, from_square: e5, to_square: g5, piece_name: WR1 
+Command: WR1 G5
+Original: move: g7h6, piece: k, from_square: g7, to_square: h6, piece_name: BK 
+Command: BK H6
+Original: move: g5g4, piece: R, from_square: g5, to_square: g4, piece_name: WR1 
+Command: WR1 G4
+Original: move: f7e7, piece: r, from_square: f7, to_square: e7, piece_name: BR1 
+Command: BR1 E7
+Original: move: e1f2, piece: K, from_square: e1, to_square: f2, piece_name: WK 
+Command: WK F2
+Original: move: e7c7, piece: r, from_square: e7, to_square: c7, piece_name: BR1 
+Command: BR1 C7
+Original: move: g4h4, piece: R, from_square: g4, to_square: h4, piece_name: WR1 
+Command: WR1 H4
+Original: move: h6g6, piece: k, from_square: h6, to_square: g6, piece_name: BK 
+Command: BK G6
+Original: move: h4g4, piece: R, from_square: h4, to_square: g4, piece_name: WR1 
+Command: WR1 G4
+Original: move: g6h5, piece: k, from_square: g6, to_square: h5, piece_name: BK 
+Command: BK H5
+Original: move: g4a4, piece: R, from_square: g4, to_square: a4, piece_name: WR1 
+Command: WR1 A4
+Original: move: c7c6, piece: r, from_square: c7, to_square: c6, piece_name: BR1 
+Command: BR1 C6
+Original: move: a4a7, piece: R, from_square: a4, to_square: a7, piece_name: WR1 
+Command: WR1 A7
+Original: move: c6c2, piece: r, from_square: c6, to_square: c2, piece_name: BR1 
+Command: BR1 C2
+Original: move: f2f3, piece: K, from_square: f2, to_square: f3, piece_name: WK 
+Command: WK F3
+Original: move: c2c3, piece: r, from_square: c2, to_square: c3, piece_name: BR1 
+Command: BR1 C3
+Original: move: f3e2, piece: K, from_square: f3, to_square: e2, piece_name: WK 
+Command: WK E2
+Original: move: d5d4, piece: p, from_square: d5, to_square: d4, piece_name: BP3 
+Command: BP3 D4
+Original: move: a7d7, piece: R, from_square: a7, to_square: d7, piece_name: WR1 
+Command: WR1 D7
+Original: move: c3c4, piece: r, from_square: c3, to_square: c4, piece_name: BR1 
+Command: BR1 C4
+Original: move: e2d3, piece: K, from_square: e2, to_square: d3, piece_name: WK 
+Command: WK D3
+Original: move: c4a4, piece: r, from_square: c4, to_square: a4, piece_name: BR1 
+Command: BR1 A4
+Original: move: d7h7, piece: R, from_square: d7, to_square: h7, piece_name: WR1 
+Command: WR1 H7
+Original: move: h5g6, piece: k, from_square: h5, to_square: g6, piece_name: BK 
+Command: BK G6
+Original: move: h7h4, piece: R, from_square: h7, to_square: h4, piece_name: WR1 
+Command: WR1 H4
+Original: move: a4a2, piece: r, from_square: a4, to_square: a2, piece_name: BR1 
+Command: BR1 A2
+Original: move: h4d4, piece: R, from_square: h4, to_square: d4, piece_name: WR1 
+Command: WR1 D4
+Original: move: a2a3, piece: r, from_square: a2, to_square: a3, piece_name: BR1 
+Command: BR1 A3
+Original: move: d3e4, piece: K, from_square: d3, to_square: e4, piece_name: WK 
+Command: WK E4
+Original: move: a3a6, piece: r, from_square: a3, to_square: a6, piece_name: BR1 
+Command: BR1 A6
+Original: move: e4e5, piece: K, from_square: e4, to_square: e5, piece_name: WK 
+Command: WK E5
+Original: move: a6a5, piece: r, from_square: a6, to_square: a5, piece_name: BR1 
+Command: BR1 A5
+Original: move: e5e6, piece: K, from_square: e5, to_square: e6, piece_name: WK 
+Command: WK E6
+Original: move: a5a6, piece: r, from_square: a5, to_square: a6, piece_name: BR1 
+Command: BR1 A6
+Original: move: e6e5, piece: K, from_square: e6, to_square: e5, piece_name: WK 
+Command: WK E5
+Original: move: a6a5, piece: r, from_square: a6, to_square: a5, piece_name: BR1 
+Command: BR1 A5
+Original: move: e5e4, piece: K, from_square: e5, to_square: e4, piece_name: WK 
+Command: WK E4
+Original: move: a5a6, piece: r, from_square: a5, to_square: a6, piece_name: BR1 
+Command: BR1 A6
+Original: move: e4f4, piece: K, from_square: e4, to_square: f4, piece_name: WK 
+Command: WK F4
+Original: move: a6f6, piece: r, from_square: a6, to_square: f6, piece_name: BR1 
+Command: BR1 F6
+Original: move: f4e5, piece: K, from_square: f4, to_square: e5, piece_name: WK 
+Command: WK E5
+Original: move: f6f5, piece: r, from_square: f6, to_square: f5, piece_name: BR1 
+Command: BR1 F5
+Original: move: e5e6, piece: K, from_square: e5, to_square: e6, piece_name: WK 
+Command: WK E6
+Original: move: f5f6, piece: r, from_square: f5, to_square: f6, piece_name: BR1 
+Command: BR1 F6
+Outcome: Black won by resignation or other means

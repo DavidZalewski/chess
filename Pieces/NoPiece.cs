@@ -1,4 +1,5 @@
 ﻿using Chess.Board;
+using Chess.Globals;
 
 namespace Chess.Pieces
 {
@@ -10,6 +11,7 @@ namespace Chess.Pieces
         // Private constructor for singleton
         private NoPiece() : base(Piece.NO_PIECE, Color.WHITE, 0, null)
         {
+            StaticLogger.Trace();
             _pieceName = "No Piece";
         }
 
@@ -17,6 +19,7 @@ namespace Chess.Pieces
         {
             get
             {
+                StaticLogger.Trace();
                 if (_instance == null)
                 {
                     _instance = new NoPiece();
@@ -27,16 +30,19 @@ namespace Chess.Pieces
 
         public override ChessPiece Clone()
         {
+            StaticLogger.Trace();
             return this;
         }
 
         public override bool IsValidMove(ChessBoard board, BoardPosition position)
         {
+            StaticLogger.Trace();
             return false;
         }
 
-        protected override bool ImplementMove(ChessBoard board, BoardPosition position)
+        public override bool ImplementMove(ChessBoard board, BoardPosition position)
         {
+            StaticLogger.Trace();
             return false;
         }
     }

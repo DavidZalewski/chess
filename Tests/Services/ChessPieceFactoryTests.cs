@@ -5,7 +5,8 @@ using static Chess.Pieces.ChessPiece;
 
 namespace Tests.Services
 {
-    public class ChessPieceFactoryTests
+    [Category("CORE")]
+    public class ChessPieceFactoryTests : TestBase
     {
         [Test]
         public void BuildWhitePawns_Success()
@@ -400,7 +401,7 @@ namespace Tests.Services
         [Test]
         public void BuildPieces_Success()
         {
-            List<ChessPiece> pieces = ChessPieceFactory.CreateChessPieces();
+            List<ChessPiece> pieces = ChessPieceFactory.CreateChessPiecesClassic();
 
             Assert.That(pieces, Has.Count.EqualTo(32));
 
@@ -451,7 +452,7 @@ namespace Tests.Services
         public void CreatePieceFromInt_InvalidInput_ThrowsArgumentException()
         {
             var position = new BoardPosition(RANK.ONE, FILE.A);
-            Assert.Throws<ArgumentException>(() => ChessPieceFactory.CreatePieceFromInt(position, -1));
+            Assert.Throws<ArgumentException>(() => ChessPieceFactory.CreatePieceFromInt(position, -999));
         }
     }
 }

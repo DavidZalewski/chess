@@ -1,4 +1,5 @@
 ﻿using Chess.Board;
+using Chess.Globals;
 
 namespace Chess.Pieces
 {
@@ -7,17 +8,21 @@ namespace Chess.Pieces
     {
         public ChessPieceBishop(Color color, int id, BoardPosition startingPosition) : base(Piece.BISHOP, color, id, startingPosition)
         {
+            StaticLogger.Trace();
+            StaticLogger.LogMethod(color, id, startingPosition);
             _realValue = (int)_piece + (int)_color; // could also calculate this in base class by adding the two enums together
         }
 
         public override ChessPiece Clone()
         {
+            StaticLogger.Trace();
             ChessPieceBishop copy = new(_color, _id, _startingPosition);
             return Clone(copy);
         }
 
         public override bool IsValidMove(ChessBoard board, BoardPosition position)
         {
+            StaticLogger.Trace();
             // using algorithm deduced from project docs
             int v1 = _currentPosition.RankAsInt;
             int v2 = position.RankAsInt;
@@ -30,7 +35,8 @@ namespace Chess.Pieces
             bool isSquareAValidDiagonal = v1 + hdistance == v2 || v2 + hdistance == v1;
             // a friendly piece cannot be on the destination square
             bool isFriendlyPieceOnSquare = board.IsPieceAtPosition(position, _color);
-            if (!isSquareAValidDiagonal || isFriendlyPieceOnSquare) { return false; }
+            bool isDisabledPieceOnSquare = board.IsPieceAtPosition(position, Color.NONE); // PART OF NEW RULESETS
+            if (!isSquareAValidDiagonal || isFriendlyPieceOnSquare || isDisabledPieceOnSquare) { return false; }
 
             string operation = "";
 
@@ -65,6 +71,7 @@ namespace Chess.Pieces
 
             bool isPieceBlockingPath(int firstIndex, int secondIndex)
             {
+                StaticLogger.Trace();
                 // these casts should always succeed, given that erroneous positions that dont exist on board are passed into
                 // this function
                 RANK vVal = (RANK)firstIndex;
@@ -120,8 +127,9 @@ namespace Chess.Pieces
             return true;
         }
 
-        protected override bool ImplementMove(ChessBoard board, BoardPosition position)
+        public override bool ImplementMove(ChessBoard board, BoardPosition position)
         {
+            StaticLogger.Trace();
             // does this need to exist?
             return false;
         }

@@ -8,7 +8,8 @@ using System.Threading.Tasks;
 
 namespace Tests.Pieces
 {
-    internal class NoPieceTests
+    [Category("CORE")]
+    internal class NoPieceTests : TestBase
     {
         [Test]
         public void NoPieceIsSingleton()

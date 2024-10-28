@@ -1,5 +1,6 @@
 ﻿using Chess.Board;
 using Chess.Callbacks;
+using Chess.Globals;
 using Chess.Pieces;
 
 namespace Chess.GameState
@@ -23,9 +24,13 @@ namespace Chess.GameState
         public List<ChessPiece> ChessPieces { get; }
         public bool IsValidTurn { get; protected set; } = false;
         public string Command { get; set; }
+        public bool IsKingInCheck { get; set; }
+        public bool IsCheckMate { get; set; }
 
         public Turn(int turnNumber, ChessPiece piece, BoardPosition previousPosition, BoardPosition newPosition, ChessBoard chessBoard)
         {
+            StaticLogger.Trace();
+            StaticLogger.LogMethod(turnNumber, piece, previousPosition, newPosition, chessBoard);
             TurnNumber = turnNumber;
             ChessPiece = piece;
             PreviousPosition = previousPosition;

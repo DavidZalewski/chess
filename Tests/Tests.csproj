@@ -7,6 +7,7 @@
 
     <IsPackable>false</IsPackable>
     <IsTestProject>true</IsTestProject>
+	<DefineConstants>COMPILE_WITH_CHECK_SERVICE</DefineConstants>
   </PropertyGroup>
 
   <ItemGroup>
@@ -22,6 +23,10 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Chess.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="TestInputs\" />
   </ItemGroup>
 
 </Project>

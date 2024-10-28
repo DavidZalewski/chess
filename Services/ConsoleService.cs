@@ -1,4 +1,5 @@
-﻿using Chess.Interfaces;
+﻿using Chess.Globals;
+using Chess.Interfaces;
 
 namespace Chess.Services
 {
@@ -6,11 +7,13 @@ namespace Chess.Services
     {
         string? IConsole.ReadLine()
         {
+            StaticLogger.Trace();
             return Console.ReadLine();
         }
 
         void IConsole.WriteLine(string? message)
         {
+            StaticLogger.Trace();
             Console.WriteLine(message);
         }
     }

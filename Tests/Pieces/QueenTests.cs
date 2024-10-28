@@ -4,7 +4,8 @@ using static Chess.Pieces.ChessPiece;
 
 namespace Tests.Pieces
 {
-    public class QueenTests
+    [Category("CORE")]
+    public class QueenTests : TestBase
     {
         private ChessBoard board = new ChessBoard();
         private BoardPosition a3 = new(RANK.THREE, FILE.A);
@@ -19,8 +20,9 @@ namespace Tests.Pieces
         }
 
         [SetUp]
-        public void Setup()
+        public override void Setup()
         {
+            base.Setup();
             board = new ChessBoard();
         }
 
@@ -129,7 +131,7 @@ namespace Tests.Pieces
             };
 
             // Set Black Pawns on B2 and B4 which block Bishop from moving
-            // TODO: Implement Later
+
             board.SetBoardValue(new(RANK.TWO, FILE.B), 21);
             board.SetBoardValue(new(RANK.FOUR, FILE.B), 11);
 
@@ -155,7 +157,7 @@ namespace Tests.Pieces
             };
 
             // Set Black Pawn on B4 which block Queen
-            // TODO: Implement Later
+
             board.SetBoardValue(new(RANK.FOUR, FILE.B), 21);
 
             Assert.Multiple(() =>
@@ -174,7 +176,7 @@ namespace Tests.Pieces
             BoardPosition d6 = new(RANK.SIX, FILE.D);
 
             // Set White Pawn on D6
-            // TODO: Implement Later
+
             board.SetBoardValue(d6, 11);
 
             Assert.That(piece.IsValidMove(board, d6), Is.True);
@@ -326,7 +328,7 @@ namespace Tests.Pieces
             };
 
             // Set White Pawn on c4
-            // TODO: Implement Later
+
             board.SetBoardValue(new(RANK.FOUR, FILE.C), 11);
 
             Assert.Multiple(() =>
@@ -350,7 +352,7 @@ namespace Tests.Pieces
             };
 
             // Set White Pawn on c4
-            // TODO: Implement Later
+
             board.SetBoardValue(new(RANK.TWO, FILE.F), 11);
 
             Assert.Multiple(() =>
@@ -394,7 +396,7 @@ namespace Tests.Pieces
             ChessPiece piece = new ChessPieceQueen(Color.BLACK, 1,
                 new BoardPosition(RANK.FOUR, FILE.B));
             BoardPosition b8 = new(RANK.EIGHT, FILE.B);
-            // TODO: Implement Later
+
             board.SetBoardValue(b8, 12); // white knight on B8
             Assert.That(piece.IsValidMove(board, b8), Is.True);
         }
@@ -405,7 +407,7 @@ namespace Tests.Pieces
             ChessPiece piece = new ChessPieceQueen(Color.BLACK, 1,
                 new BoardPosition(RANK.FOUR, FILE.B));
             BoardPosition b8 = new(RANK.EIGHT, FILE.B);
-            // TODO: Implement Later
+
             board.SetBoardValue(b8, 22); // black knight on B8
             Assert.That(piece.IsValidMove(board, b8), Is.False);
         }
@@ -416,7 +418,7 @@ namespace Tests.Pieces
             ChessPiece piece = new ChessPieceQueen(Color.BLACK, 2,
                 new BoardPosition(RANK.FOUR, FILE.B));
             BoardPosition b8 = new(RANK.EIGHT, FILE.B);
-            // TODO: Implement Later
+
             board.SetBoardValue(b8, 12); // white knight on B8
             Assert.That(piece.IsValidMove(board, b8), Is.True);
         }
@@ -427,7 +429,7 @@ namespace Tests.Pieces
             ChessPiece piece = new ChessPieceQueen(Color.BLACK, 2,
                 new BoardPosition(RANK.FOUR, FILE.B));
             BoardPosition b8 = new(RANK.EIGHT, FILE.B);
-            // TODO: Implement Later
+
             board.SetBoardValue(b8, 22); // black knight on B8
             Assert.That(piece.IsValidMove(board, b8), Is.False);
         }

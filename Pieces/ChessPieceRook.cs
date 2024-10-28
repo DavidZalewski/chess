@@ -1,4 +1,5 @@
 ﻿using Chess.Board;
+using Chess.Globals;
 
 namespace Chess.Pieces
 {
@@ -7,17 +8,20 @@ namespace Chess.Pieces
     {
         public ChessPieceRook(Color color, int id, BoardPosition startingPosition) : base(Piece.ROOK, color, id, startingPosition)
         {
+            StaticLogger.Trace();
             _realValue = (int)_piece + (int)_color; // could also calculate this in base class by adding the two enums together
         }
 
         public override ChessPiece Clone()
         {
+            StaticLogger.Trace();
             ChessPieceRook copy = new(_color, _id, _startingPosition);
             return Clone(copy);
         }
 
         public override bool IsValidMove(ChessBoard board, BoardPosition position)
         {
+            StaticLogger.Trace();
             // using algorithm deduced from project docs
             int v1 = _currentPosition.RankAsInt;
             int v2 = position.RankAsInt;
@@ -30,7 +34,8 @@ namespace Chess.Pieces
             bool isSquareHorizontalOrVerticalToCurrent = vdistance != 0 && hdistance == 0 || vdistance == 0 && hdistance != 0;
             // a friendly piece cannot be on the destination square
             bool isFriendlyPieceOnSquare = board.IsPieceAtPosition(position, _color);
-            if (!isSquareHorizontalOrVerticalToCurrent || isFriendlyPieceOnSquare) { return false; }
+            bool isDisabledPieceOnSquare = board.IsPieceAtPosition(position, Color.NONE);
+            if (!isSquareHorizontalOrVerticalToCurrent || isFriendlyPieceOnSquare || isDisabledPieceOnSquare) { return false; }
 
             string operation = "";
 
@@ -111,8 +116,9 @@ namespace Chess.Pieces
             return true;
         }
 
-        protected override bool ImplementMove(ChessBoard board, BoardPosition position)
+        public override bool ImplementMove(ChessBoard board, BoardPosition position)
         {
+            StaticLogger.Trace();
             // does this need to exist?
             return false;
         }

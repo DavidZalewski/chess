@@ -1,4 +1,7 @@
-﻿using Chess.Board;
+﻿using Chess.Attributes;
+using Chess.Board;
+using Chess.GameState;
+using Chess.Globals;
 using Chess.Pieces;
 using NUnit.Framework;
 
@@ -10,9 +13,11 @@ namespace Chess.Callbacks
         public static Action<string>? GetActionFromResult;
         public static Func<string>? PawnPromotionPromptUser;
         public static bool ByPassPawnPromotionPromptUser { get; set; } = false;
+        public static PromotionTracker promotionTracker = new PromotionTracker();
 
         public static bool DoCastleMove(ChessBoard cb, BoardPosition bp, ChessPiece king)
         {
+            StaticLogger.Trace();
             string action = "";
             int hv = bp.FileAsInt;
             int vv = bp.RankAsInt;
@@ -51,7 +56,8 @@ namespace Chess.Callbacks
                 }
                 else
                 {
-                    throw new Exception("Unexpected Horizontal Distance Found when castling. Are you sure this is a valid castle?");
+                    cb.GenerateBoardID();
+                    throw new Exception("Unexpected Horizontal Distance Found when castling. Are you sure this is a valid castle? BoardID: " + cb.BoardID);
                 }
 
                 BoardPosition kingLastPosition = king.GetCurrentPosition();
@@ -61,11 +67,8 @@ namespace Chess.Callbacks
                 cb.SetBoardValue(kingLastPosition, 0);
                 cb.SetBoardValue(rookLastPosition, 0);
 
-                king.SetCurrentPosition(new(v, kh));
-                rook.SetCurrentPosition(new(v, rh));
-
-                cb.SetBoardValue(king.GetCurrentPosition(), king.GetRealValue());
-                cb.SetBoardValue(rook.GetCurrentPosition(), rook.GetRealValue());
+                cb.SetPieceAtPosition(new(v, kh), king);
+                cb.SetPieceAtPosition(new(v, rh), rook);
             }
 
             GetActionFromResult?.Invoke(action);
@@ -75,6 +78,7 @@ namespace Chess.Callbacks
 
         public static bool IsEnPassantMove(ChessBoard chessBoard, BoardPosition boardPosition, ChessPiece pawnAttemptingEnPassant)
         {
+            StaticLogger.Trace();
             RANK enPassantRow;
             ChessPiece.Color opponentColor;
             int enPassantOffSet = 0;
@@ -141,21 +145,35 @@ namespace Chess.Callbacks
             return false;
         }
 
+        [TestNeeded]
         internal static void PawnPromotion(ChessBoard board, BoardPosition position, ChessPiece piece)
         {
+            StaticLogger.Trace();
             string choice = "Q";
             if (PawnPromotionPromptUser != null && !ByPassPawnPromotionPromptUser)
                 choice = PawnPromotionPromptUser.Invoke();
 
             Func<string, ChessPiece> switchReturnPiece = (string chosenPiece) =>
             {
+                int newPieceID;
+                // This fixes the issue with KingCheckService incrementing this counter with potential future moves
+                if (ByPassPawnPromotionPromptUser)
+                {
+                    Console.WriteLine($"PawnPromotion: ByPassPawnPromotionPromptUser set - use 0 for newPieceID");
+                    newPieceID = 0;
+                }
+                else
+                {
+                    newPieceID = promotionTracker.GetNextID(piece.GetColor(), chosenPiece.ToUpper());
+                }
+                Console.WriteLine($"PawnPromotion: newPieceID = {newPieceID} , choice: {choice}");
                 return chosenPiece switch
                 {
-                    "Q" => new ChessPieceQueen(piece.GetColor(), 0, position),
-                    "R" => new ChessPieceRook(piece.GetColor(), 0, position),
-                    "K" => new ChessPieceKnight(piece.GetColor(), 0, position),
-                    "B" => new ChessPieceBishop(piece.GetColor(), 0, position),
-                    _ => new ChessPieceQueen(piece.GetColor(), 0, position),
+                    "q" => new ChessPieceQueen(piece.GetColor(), newPieceID, position),
+                    "r" => new ChessPieceRook(piece.GetColor(), newPieceID, position),
+                    "k" => new ChessPieceKnight(piece.GetColor(), newPieceID, position),
+                    "b" => new ChessPieceBishop(piece.GetColor(), newPieceID, position),
+                    _ => new ChessPieceQueen(piece.GetColor(), newPieceID, position),
                 };
             };
 

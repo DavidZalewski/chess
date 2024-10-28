@@ -1,22 +1,20 @@
-﻿using Chess;
-using Chess.Board;
+﻿using Chess.Board;
 using Chess.Controller;
 using Chess.GameState;
-using Chess.Interfaces;
-using Chess.Pieces;
 using Chess.Services;
 using Newtonsoft.Json;
-using System.Collections;
-using System.Collections.Generic;
-using System.Runtime.Serialization.Formatters.Binary;
-using Tests.Services;
+using NUnit.Framework.Internal;
+using System.Collections.Concurrent;
 
 
 namespace Tests
 {
-    internal class ChessStateExplorerTests
+    [Category("PERFORMANCE")]
+    [Parallelizable(ParallelScope.All)]
+    internal class ChessStateExplorerTests : TestBase
     {
         [Test]
+        [Parallelizable(ParallelScope.Self)]
         public void GenerateAllPossibleMoves_Depth_4_Success()
         {
             // Arrange
@@ -93,6 +91,7 @@ MethodInvoker.Invoke(Object obj, IntPtr* args, BindingFlags invokeAttr)
         }
 
         [Test]
+        [Parallelizable(ParallelScope.Self)]
         public void GenerateAllPossibleMovesTurnNode_Depth_4_Success()
         {
             // Arrange
@@ -113,8 +112,8 @@ MethodInvoker.Invoke(Object obj, IntPtr* args, BindingFlags invokeAttr)
             }
 
             ChessStateExplorer stateExplorer = new();
-
-            var generateAllPossibleMovesThread = (Turn t) => stateExplorer.GenerateAllPossibleMovesTurnNode(t, 3);
+            ulong count = 0;
+            var generateAllPossibleMovesThread = (Turn t) => stateExplorer.GenerateAllPossibleMovesTurnNode(t, 3, ref count);
 
             List<Thread> threads = new List<Thread>();
             List<TurnNode> possibleMoves = new List<TurnNode>();
@@ -140,8 +139,8 @@ MethodInvoker.Invoke(Object obj, IntPtr* args, BindingFlags invokeAttr)
             }
 
             Assert.That(possibleMoves, Is.Not.Empty);
-            Console.WriteLine($"The possible number of moves within the first 4 turns of chess is: {possibleMoves.Count}");
-            Assert.That(possibleMoves.Count, Is.GreaterThanOrEqualTo(400)); // 207398 moves
+            Console.WriteLine($"The possible number of moves within the first 4 turns of chess is: {count}");
+            Assert.That(count, Is.GreaterThanOrEqualTo(400)); // 207398 moves
 
             /*
 System.OutOfMemoryException : Exception of type 'System.OutOfMemoryException' was thrown.
@@ -166,6 +165,143 @@ MethodInvoker.Invoke(Object obj, IntPtr* args, BindingFlags invokeAttr)
                     serializer.Serialize(jsonWriter, possibleMoves);
                 }
             }
+        }
+
+        [Test]
+        [Parallelizable(ParallelScope.Self)]
+        public void GenerateAllPossibleMoves_LighterMemory_Depth_7_Success()
+        {
+            // Arrange
+            ChessBoard chessBoard = new();
+            GameController gameController = new(chessBoard);
+            gameController.StartGame();
+            List<string> startingMoves = new()
+    { "WP1 A3", "WP1 A4", "WP2 B3", "WP2 B4", "WP3 C3", "WP3 C4", "WP4 D3", "WP4 D4",
+      "WP5 E3", "WP5 E4", "WP6 F3", "WP6 F4", "WP7 G3", "WP7 G4", "WP8 H3", "WP8 H4",
+      "WK1 A3", "WK1 C3", "WK2 F3", "WK2 H3"
+    };
+            List<Turn> startingTurns = new();
+            foreach (string move in startingMoves)
+            {
+                Turn? turn = gameController.GetTurnFromCommand(move);
+                Assert.That(turn, Is.Not.Null);
+                startingTurns.Add(turn);
+            }
+
+            ChessStateExplorer stateExplorer = new();
+            ConcurrentLogger logger = new("GenerateAllPossibleMoves_LighterMemory_Depth_7_Success.txt");
+
+            var possibleMoves = startingTurns.AsParallel()
+                .Select((turn) =>
+                {
+                    int threadId = Thread.CurrentThread.ManagedThreadId;
+                    ulong count = 0;
+                    logger.Log($"Starting to process turn {turn.TurnDescription}", threadId);
+                    List<TurnNode> moves = stateExplorer.GenerateAllPossibleMovesTurnNode(turn, 4, ref count);
+                    logger.Log($"Finished processing turn {turn.TurnDescription} with {count} possible moves", threadId);
+                    return (long)count;
+                })
+                .Sum();
+
+            logger.Log($"The possible number of moves within the first 7 turns of chess is: {possibleMoves}", 0);
+            Assert.That(possibleMoves, Is.LessThanOrEqualTo(2557005815)); // 2496503021
+            // when caching with TurnID :
+            //           2,557,005,815 moves at turn 7 / 11.6s
+            //          47,702,789,199 moves at turn 8 / 23.7s
+            //       1,347,926,109,040 moves at turn 9 / 27.1s
+            //      24,375,292,174,409 moves at turn 10 / 30.5s
+            //     842,251,828,564,222 moves at turn 11 / 33.4s
+            //  13,152,484,339,525,676 moves at turn 12 / 34.4s
+            // 377,644,534,572,086,014 moves at turn 13 / 38.9s
+        }
+
+        [Test]
+        public void GenerateAllPossibleMovesTurnNode_UsesBoardIDAsCacheKey()
+        {
+            // Arrange
+            ChessBoard chessBoard = new();
+            GameController gameController = new(chessBoard);
+            gameController.StartGame();
+            List<string> startingMoves = new()
+    { 
+      "WP1 A3", "WP1 A4", "WP2 B3", "WP2 B4", "WP3 C3", "WP3 C4", "WP4 D3", "WP4 D4",
+      "WP5 E3", "WP5 E4", "WP6 F3", "WP6 F4", "WP7 G3", "WP7 G4", "WP8 H3", "WP8 H4",
+      "WK1 A3", "WK1 C3", "WK2 F3", "WK2 H3"
+    };
+            List<Turn> startingTurns = new();
+            foreach (string move in startingMoves)
+            {
+                Turn? turn = gameController.GetTurnFromCommand(move);
+                Assert.That(turn, Is.Not.Null);
+                startingTurns.Add(turn);
+            }
+
+            ChessStateExplorer explorer = new ChessStateExplorer();
+            int depth = 2;
+            ulong currentCount = 0;
+
+            // Act
+            List<TurnNode> possibleMoves = explorer.GenerateAllPossibleMovesTurnNode(startingTurns.First(), depth, ref currentCount);
+
+            // Assert
+            Assert.That(explorer.cache.TryGetValue(possibleMoves[0].BoardID, out CacheItem cacheItem));
+        }
+
+        [Test]
+        [Ignore("Cache Saving Not Implemented Yet!")]
+        public void SaveAndLoadCache_CacheIsSavedAndLoadedCorrectly()
+        {
+            // Arrange
+            ChessStateExplorer explorer = new ChessStateExplorer();
+            explorer.cache.AddOrUpdate("test_key", new(123));
+
+            // Act
+            //ChessStateExplorer.SaveCache();
+            explorer.cache = new MultiDimensionalCache<CacheItem>(8); // 8 is hardcoded var in chess state explorer
+            explorer = new ChessStateExplorer(); // Load the cache from file
+
+            // Assert
+            Assert.That(explorer.cache.TryGetValue("test_key", out CacheItem cacheItem));
+            Assert.That(cacheItem.Value, Is.EqualTo(123));
+        }
+
+        [Test]
+        public void PrintTopCacheItems_Top25_Success()
+        {
+            // Arrange
+            ChessBoard chessBoard = new();
+            GameController gameController = new(chessBoard);
+            gameController.StartGame();
+            List<string> startingMoves = new()
+    {
+      "WP1 A3", "WP1 A4", "WP2 B3", "WP2 B4", "WP3 C3", "WP3 C4", "WP4 D3", "WP4 D4",
+      "WP5 E3", "WP5 E4", "WP6 F3", "WP6 F4", "WP7 G3", "WP7 G4", "WP8 H3", "WP8 H4",
+      "WK1 A3", "WK1 C3", "WK2 F3", "WK2 H3"
+    };
+            List<Turn> startingTurns = new();
+            foreach (string move in startingMoves)
+            {
+                Turn? turn = gameController.GetTurnFromCommand(move);
+                Assert.That(turn, Is.Not.Null);
+                startingTurns.Add(turn);
+            }
+
+            ChessStateExplorer explorer = new ChessStateExplorer();
+            int depth = 4;
+            ulong currentCount = 0;
+
+            // Act
+            List<TurnNode> possibleMoves = explorer.GenerateAllPossibleMovesTurnNode(startingTurns.First(), depth, ref currentCount);
+
+
+            // Act
+            explorer.PrintTopCacheItems(250);
+
+            foreach ((String key, CacheItem cii) ci in explorer.GetTopNCachedItems(25)) 
+                Console.WriteLine($"Cache (Partition: {ci.key}, Cache Value: {ci.cii.Value}, Access Count: {ci.cii.AccessCount}");
+
+            // Assert
+            Assert.That(1 == 1);
         }
 
     }

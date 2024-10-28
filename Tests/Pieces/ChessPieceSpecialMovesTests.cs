@@ -2,21 +2,18 @@
 using Chess.Controller;
 using Chess.Pieces;
 using Chess.Services;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Tests.Pieces
 {
-    public class ChessPieceSpecialMovesTests
+    [Category("CORE")]
+    [Parallelizable(ParallelScope.All)]
+    public class ChessPieceSpecialMovesTests : TestBase
     {
 
         [Test]
         public void IsValidMove_Castling_CannotCastleAtStart()
         {
-            List<ChessPiece> chessPieces = ChessPieceFactory.CreateChessPieces();
+            List<ChessPiece> chessPieces = ChessPieceFactory.CreateChessPiecesClassic();
 
             ChessPiece whiteKing = chessPieces.First(piece => piece.GetColor().Equals(ChessPiece.Color.WHITE) &&
                                                               piece.GetPiece().Equals(ChessPiece.Piece.KING));
@@ -31,7 +28,7 @@ namespace Tests.Pieces
         [Test]
         public void IsValidMove_Castling_CannotCastle_WhiteKingMoved()
         {
-            List<ChessPiece> chessPieces = ChessPieceFactory.CreateChessPieces();
+            List<ChessPiece> chessPieces = ChessPieceFactory.CreateChessPiecesClassic();
 
             // remove bishop and knight from the board
             chessPieces = chessPieces.FindAll(p => p.GetPiece().Equals(ChessPiece.Piece.PAWN) ||
@@ -47,6 +44,7 @@ namespace Tests.Pieces
             chessBoard.PopulateBoard(chessPieces);
 
             // in the beginning King's Side Castle should be possible
+            // It's good. The King is on E square, the Queen is on D square in ChessPieceFactory methods
             Assert.That(whiteKing.IsValidMove(chessBoard, new("A1")), Is.False); // King moving to A1 is interpreted as Queen's Side Castle
             Assert.That(whiteKing.IsValidMove(chessBoard, new("H1")), Is.True); // King moving to A8 is interpreted as King's Side Castle
 
@@ -71,7 +69,7 @@ namespace Tests.Pieces
         [Test]
         public void IsValidMove_Castling_CannotCastle_WhiteKingWasChecked()
         {
-            List<ChessPiece> chessPieces = ChessPieceFactory.CreateChessPieces();
+            List<ChessPiece> chessPieces = ChessPieceFactory.CreateChessPiecesClassic();
 
             ChessPiece whiteKing = chessPieces.First(piece => piece.GetColor().Equals(ChessPiece.Color.WHITE) &&
                                                               piece.GetPiece().Equals(ChessPiece.Piece.KING));
@@ -97,7 +95,7 @@ namespace Tests.Pieces
         [Test]
         public void IsValidMove_Castling_Castle_WhiteKingSide()
         {
-            List<ChessPiece> chessPieces = ChessPieceFactory.CreateChessPieces();
+            List<ChessPiece> chessPieces = ChessPieceFactory.CreateChessPiecesClassic();
 
             // remove bishop and knight from the board
             chessPieces = chessPieces.FindAll(p => p.GetPiece().Equals(ChessPiece.Piece.PAWN) ||
@@ -119,7 +117,7 @@ namespace Tests.Pieces
         [Test]
         public void IsValidMove_Castling_Castle_WhiteQueenSide()
         {
-            List<ChessPiece> chessPieces = ChessPieceFactory.CreateChessPieces();
+            List<ChessPiece> chessPieces = ChessPieceFactory.CreateChessPiecesClassic();
 
             // remove bishop, knight, and queen from the board
             chessPieces = chessPieces.FindAll(p => p.GetPiece().Equals(ChessPiece.Piece.PAWN) ||
@@ -140,7 +138,7 @@ namespace Tests.Pieces
         [Test]
         public void Move_Castling_Castle_WhiteQueenSide()
         {
-            List<ChessPiece> chessPieces = ChessPieceFactory.CreateChessPieces();
+            List<ChessPiece> chessPieces = ChessPieceFactory.CreateChessPiecesClassic();
 
             // remove bishop, knight, and queen from the board
             chessPieces = chessPieces.FindAll(p => p.GetPiece().Equals(ChessPiece.Piece.PAWN) ||
@@ -159,14 +157,22 @@ namespace Tests.Pieces
             Assert.That(whiteKing.IsValidMove(chessBoard, new("A1")), Is.True); // King moving to A1 is interpreted as Queens Side Castle
             whiteKing.Move(chessBoard, new("A1"));
 
-            Assert.That(chessBoard.IsPieceAtPosition(new("C1"), ChessPiece.Color.WHITE, ChessPiece.Piece.KING), Is.True);
-            Assert.That(chessBoard.IsPieceAtPosition(new("D1"), ChessPiece.Color.WHITE, ChessPiece.Piece.ROOK), Is.True);
+            Square sq = chessBoard.GetSquare(new("D1"));
+            ChessPiece rook = sq.Piece;
+
+            Assert.Multiple(() =>
+            {
+                Assert.That(chessBoard.IsPieceAtPosition(new("C1"), ChessPiece.Color.WHITE, ChessPiece.Piece.KING), Is.True);
+                Assert.That(chessBoard.IsPieceAtPosition(new("D1"), ChessPiece.Color.WHITE, ChessPiece.Piece.ROOK), Is.True);
+                Assert.That(rook.GetId(), Is.EqualTo(1), "Expected WR1 to stay as WR1 and not be renamed");
+                Assert.That(rook.GetCurrentPosition(), Is.EqualTo(new BoardPosition("D1")), "Expected rook current position to Equal D1");
+            });
         }
 
         [Test]
         public void Move_Castling_Castle_WhiteKingSide()
         {
-            List<ChessPiece> chessPieces = ChessPieceFactory.CreateChessPieces();
+            List<ChessPiece> chessPieces = ChessPieceFactory.CreateChessPiecesClassic();
 
             // remove bishop, knight, and queen from the board
             chessPieces = chessPieces.FindAll(p => p.GetPiece().Equals(ChessPiece.Piece.PAWN) ||
@@ -185,14 +191,25 @@ namespace Tests.Pieces
             Assert.That(whiteKing.IsValidMove(chessBoard, new("H1")), Is.True); // King moving to H1 is interpreted as King's Side Castle
             whiteKing.Move(chessBoard, new("H1"));
 
-            Assert.That(chessBoard.IsPieceAtPosition(new("G1"), ChessPiece.Color.WHITE, ChessPiece.Piece.KING), Is.True);
-            Assert.That(chessBoard.IsPieceAtPosition(new("F1"), ChessPiece.Color.WHITE, ChessPiece.Piece.ROOK), Is.True);
+            Square sq = chessBoard.GetSquare(new("F1"));
+            ChessPiece rook = sq.Piece;
+
+            Assert.Multiple(() =>
+            {
+                Assert.That(chessBoard.IsPieceAtPosition(new("G1"), ChessPiece.Color.WHITE, ChessPiece.Piece.KING), Is.True);
+                Assert.That(chessBoard.IsPieceAtPosition(new("F1"), ChessPiece.Color.WHITE, ChessPiece.Piece.ROOK), Is.True);
+                Assert.That(rook.GetId(), Is.EqualTo(2), "Expected WR2 to stay as WR2 and not be renamed");
+                Assert.That(rook.GetCurrentPosition(), Is.EqualTo(new BoardPosition("F1")), "Expected rook current position to Equal F1");
+            });
+
+            
+
         }
 
         [Test]
         public void Move_Castling_Castle_BlackQueenSide()
         {
-            List<ChessPiece> chessPieces = ChessPieceFactory.CreateChessPieces();
+            List<ChessPiece> chessPieces = ChessPieceFactory.CreateChessPiecesClassic();
 
             // remove bishop, knight, and queen from the board
             chessPieces = chessPieces.FindAll(p => p.GetPiece().Equals(ChessPiece.Piece.PAWN) ||
@@ -211,14 +228,22 @@ namespace Tests.Pieces
             Assert.That(blackKing.IsValidMove(chessBoard, new("A8")), Is.True); // King moving to A1 is interpreted as Queens Side Castle
             blackKing.Move(chessBoard, new("A8"));
 
-            Assert.That(chessBoard.IsPieceAtPosition(new("C8"), ChessPiece.Color.BLACK, ChessPiece.Piece.KING), Is.True);
-            Assert.That(chessBoard.IsPieceAtPosition(new("D8"), ChessPiece.Color.BLACK, ChessPiece.Piece.ROOK), Is.True);
+            Square sq = chessBoard.GetSquare(new("D8"));
+            ChessPiece rook = sq.Piece;
+
+            Assert.Multiple(() =>
+            {
+                Assert.That(chessBoard.IsPieceAtPosition(new("C8"), ChessPiece.Color.BLACK, ChessPiece.Piece.KING), Is.True);
+                Assert.That(chessBoard.IsPieceAtPosition(new("D8"), ChessPiece.Color.BLACK, ChessPiece.Piece.ROOK), Is.True);
+                Assert.That(rook.GetId(), Is.EqualTo(1), "Expected BR1 to stay as BR1 and not be renamed");
+                Assert.That(rook.GetCurrentPosition(), Is.EqualTo(new BoardPosition("D8")), "Expected rook current position to Equal D8");
+            });
         }
 
         [Test]
         public void Move_Castling_Castle_BlackKingSide()
         {
-            List<ChessPiece> chessPieces = ChessPieceFactory.CreateChessPieces();
+            List<ChessPiece> chessPieces = ChessPieceFactory.CreateChessPiecesClassic();
 
             // remove bishop, knight, and queen from the board
             chessPieces = chessPieces.FindAll(p => p.GetPiece().Equals(ChessPiece.Piece.PAWN) ||
@@ -237,14 +262,23 @@ namespace Tests.Pieces
             Assert.That(blackKing.IsValidMove(chessBoard, new("H8")), Is.True); // King moving to H8 is interpreted as King's Side Castle
             blackKing.Move(chessBoard, new("H8"));
 
-            Assert.That(chessBoard.IsPieceAtPosition(new("G8"), ChessPiece.Color.BLACK, ChessPiece.Piece.KING), Is.True);
-            Assert.That(chessBoard.IsPieceAtPosition(new("F8"), ChessPiece.Color.BLACK, ChessPiece.Piece.ROOK), Is.True);
+            Square sq = chessBoard.GetSquare(new("F8"));
+            ChessPiece rook = sq.Piece;
+
+            Assert.Multiple(() =>
+            {
+                Assert.That(chessBoard.IsPieceAtPosition(new("G8"), ChessPiece.Color.BLACK, ChessPiece.Piece.KING), Is.True);
+                Assert.That(chessBoard.IsPieceAtPosition(new("F8"), ChessPiece.Color.BLACK, ChessPiece.Piece.ROOK), Is.True);
+                Assert.That(rook.GetId(), Is.EqualTo(2), "Expected BR2 to stay as BR2 and not be renamed");
+                Assert.That(rook.GetCurrentPosition(), Is.EqualTo(new BoardPosition("F8")), "Expected rook current position to Equal F8");
+
+            });
         }
 
         [Test]
         public void IsValidMove_Castling_CannotCastle_BlackKingMoved()
         {
-            List<ChessPiece> chessPieces = ChessPieceFactory.CreateChessPieces();
+            List<ChessPiece> chessPieces = ChessPieceFactory.CreateChessPiecesClassic();
 
             // remove bishop and knight from the board
             chessPieces = chessPieces.FindAll(p => p.GetPiece().Equals(ChessPiece.Piece.PAWN) ||
@@ -284,7 +318,7 @@ namespace Tests.Pieces
         [Test]
         public void IsValidMove_Castling_CannotCastle_BlackKingWasChecked()
         {
-            List<ChessPiece> chessPieces = ChessPieceFactory.CreateChessPieces();
+            List<ChessPiece> chessPieces = ChessPieceFactory.CreateChessPiecesClassic();
 
             ChessPiece blackKing = chessPieces.First(piece => piece.GetColor().Equals(ChessPiece.Color.BLACK) &&
                                                               piece.GetPiece().Equals(ChessPiece.Piece.KING));
@@ -316,7 +350,7 @@ namespace Tests.Pieces
         [Test]
         public void IsValidMove_Castling_Castle_BlackKingSide()
         {
-            List<ChessPiece> chessPieces = ChessPieceFactory.CreateChessPieces();
+            List<ChessPiece> chessPieces = ChessPieceFactory.CreateChessPiecesClassic();
 
             // remove bishop and knight from the board
             chessPieces = chessPieces.FindAll(p => p.GetPiece().Equals(ChessPiece.Piece.PAWN) ||
@@ -338,7 +372,7 @@ namespace Tests.Pieces
         [Test]
         public void IsValidMove_Castling_Castle_BlackQueenSide()
         {
-            List<ChessPiece> chessPieces = ChessPieceFactory.CreateChessPieces();
+            List<ChessPiece> chessPieces = ChessPieceFactory.CreateChessPiecesClassic();
 
             // remove bishop, knight, and queen from the board
             chessPieces = chessPieces.FindAll(p => p.GetPiece().Equals(ChessPiece.Piece.PAWN) ||

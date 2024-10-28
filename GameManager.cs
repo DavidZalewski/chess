@@ -1,8 +1,10 @@
 ﻿using Chess.Callbacks;
 using Chess.Controller;
 using Chess.GameState;
+using Chess.Globals;
 using Chess.Interfaces;
 using Chess.Pieces;
+
 
 namespace Chess
 {
@@ -16,6 +18,7 @@ namespace Chess
 
         public GameManager(IConsole console, GameController gameController)
         {
+            StaticLogger.Trace();
             _console = console;
             _gameController = gameController;
             SpecialMovesHandlers.PawnPromotionPromptUser = HandlePawnPromotion;
@@ -23,38 +26,143 @@ namespace Chess
 
         public void Start()
         {
+            StaticLogger.Trace();
             _console.WriteLine("Chess Application Starting");
 
             StartTutorial();
 
-            _console.WriteLine("Select init board state (all, pawns)?");
+            _console.WriteLine("Select RuleSet:");
+            _console.WriteLine("*Classic* -- The game we all know and love");
+            _console.WriteLine("*PawnsOnly* -- No knights, bishops, rooks, or queens. Just a king and his pawns");
+            _console.WriteLine("*NuclearHorse* -- The game where the most powerful piece is also the most destructive, can you survive the environment?");
+            _console.WriteLine("*SevenByEight* -- The board is changed to be a 7 x 8 grid instead");
+            _console.WriteLine("*KingsForce* -- A pawn connected to a king can capture in all directions; the king can disable a square");
             string? input = _console.ReadLine();
 
-            if (input == "pawns")
-            {
-                _console.WriteLine("Init Pawns Only");
-                _gameController.InitPawnsOnly();
-            }
+            _console.WriteLine($"*Adding RuleSet: {input}");
+            _gameController.AddRuleSet(input);
 
-            _console.WriteLine("Enabling AI...");
-            _AIMode = true;
+            _console.WriteLine("Applying Rule Sets");
+            _gameController.ApplyRuleSet();
+
+            _console.WriteLine("Use AI for Black? (y, n)?");
+            input = _console.ReadLine();
+
+            if (input?.ToLower() == "y")
+            {
+                _console.WriteLine("Enabling AI...");
+                _AIMode = true;
+            }
 
             _gameController.SetOnTurnHandler((Turn turn) =>
             {
-                List<TurnNode> turns = _explorer.GenerateAllPossibleMovesTurnNode(turn, 2);
-
-                // Sort by least number of moves for opponent (Children.Count), then by most number of moves for current player (turns.Count - tn.Children.Count)
-                turns = turns.OrderBy((TurnNode tn) => tn.Children.Count()).ThenByDescending((TurnNode tn) => turns.Count - tn.Children.Count).ToList();
-
-                Console.WriteLine($"The possible number of moves at this current move: {turn.TurnDescription} are: {turns.Count}");
-
-                TurnNode bestTurnToMake = turns.First(); // Select the first turn after sorting
-
-                _console.WriteLine($"*************Best turn to make here is: {bestTurnToMake.Command}");
-
+                StaticLogger.Trace();
+                if (_gameController.ContainsRuleSet("NuclearHorse"))
+                {
+                    _console.WriteLine("Applying NuclearHorse After Turn Effects");
+                    _gameController.NuclearHorseEndTurnHandler(); // apply the bishop moves again, to ensure that disabled squares cannot pop up in a bishops path
+                }
                 if (_AIMode)
                 {
-                    _AICommand = bestTurnToMake.Command;
+                    ulong _unused = 0;
+                    List<TurnNode> turns = _explorer.GenerateAllPossibleMovesTurnNode(turn, 3, ref _unused);
+
+                    //List<TurnNode> turnsLeadingToCheckMateForAI = turns.OrderByDescending(tn1 =>
+                    //{
+                    //    foreach (TurnNode tn2 in tn1.Children)
+                    //    {
+                    //        foreach (TurnNode tn3 in tn2.Children)
+                    //        {
+                    //            if (tn3.IsCheckMate && tn3.Side() == 0)
+                    //            {
+                    //                return true;
+                    //            }
+                    //        }
+                    //        if (tn2.IsCheckMate && tn2.Side() == 0)
+                    //        {
+                    //            return true;
+                    //        }
+                    //    }
+                    //    return tn1.IsCheckMate && tn1.Side() == 0;
+                    //}).ToList();
+
+                    // Sort by least number of moves for opponent (Children.Count), then by most number of moves for current player (turns.Count - tn.Children.Count)
+                    List<TurnNode> goodTurns = turns
+                    .OrderByDescending(tn1 => {
+                        foreach (TurnNode tn2 in tn1.Children)
+                        {
+                            foreach (TurnNode tn3 in tn2.Children)
+                            {
+                                if (tn3.IsCheckMate && tn3.Side() == 1)
+                                {
+                                    return true;
+                                }
+                            }
+                            if (tn2.IsCheckMate && tn2.Side() == 1)
+                            {
+                                return true;
+                            }
+                        }
+                        return tn1.IsCheckMate && tn1.Side() == 1;
+                    })
+                    .ThenBy(tn1 => {
+                        foreach (TurnNode tn2 in tn1.Children)
+                        {
+                            foreach (TurnNode tn3 in tn2.Children)
+                            {
+                                if (tn3.IsKingInCheck && tn3.Side() == 1)
+                                {
+                                    return true;
+                                }
+                            }
+                            if (tn2.IsKingInCheck && tn2.Side() == 1)
+                            {
+                                return true;
+                            }
+                        }
+                        return tn1.IsKingInCheck && tn1.Side() == 1;
+                    })
+                    .ThenBy(tn1 => {
+                        foreach (TurnNode tn2 in tn1.Children)
+                        {
+                            foreach (TurnNode tn3 in tn2.Children)
+                            {
+                                if (tn3.TurnDescription.Contains("capture") && tn3.Side() == 0)
+                                {
+                                    return true;
+                                }
+                            }
+                            if (tn2.TurnDescription.Contains("capture") && tn2.Side() == 0)
+                            {
+                                return true;
+                            }
+                        }
+                        return tn1.TurnDescription.Contains("capture") && tn1.Side() == 0;
+                    })
+                                //.ThenBy(tn => tn.Children.Count())
+                                //.ThenByDescending(tn => turns.Count - tn.Children.Count)
+                    .ToList();
+
+                    _console.WriteLine($"The possible number of moves at this current move: {turn.TurnDescription} are: {turns.Count}");
+                    Random r = new Random();
+                    TurnNode bestTurnToMake = goodTurns.First(); // Select the first turn after sorting
+                    TurnNode randomTurnToMake = goodTurns[r.Next(goodTurns.Count)]; // A random turn
+
+                    _console.WriteLine($"*************Best turn to make here is: {bestTurnToMake.Command}");
+                    _console.WriteLine($"*************Random turn to make here is: {randomTurnToMake.Command}");
+                    _console.WriteLine($"Deciding whether to pick the best move or a random move...");
+
+                    //_AICommand = randomTurnToMake.Command;
+                    if (r.NextDouble() > 0.98710717)
+                    {
+                        _console.WriteLine("I choose random!");
+                        _AICommand = randomTurnToMake.Command;
+                    }
+                    else
+                    {
+                        _console.WriteLine("I choose best move!");
+                        _AICommand = bestTurnToMake.Command;
+                    }
                 }
             });
             PlayGame();
@@ -62,6 +170,7 @@ namespace Chess
 
         private void StartTutorial()
         {
+            StaticLogger.Trace();
             _console.WriteLine("Would you like to play the tutorial? (y/n):");
             string? input = "";
 
@@ -87,6 +196,7 @@ namespace Chess
 
         private void TutorialLoop()
         {
+            StaticLogger.Trace();
             string? input = "";
 
             while (input != null)
@@ -119,12 +229,16 @@ namespace Chess
 
         private void PlayGame()
         {
+            StaticLogger.Trace();
             _gameController.StartGame();
 
             string? input = "";
 
             while (input != "quit")
             {
+                // TEMP DEBUG CODE
+                //if (_gameController.TurnNumber == 42)
+                //    System.Diagnostics.Debugger.Break();
                 _console.WriteLine(_gameController.DisplayBoard());
 
                 if (_gameController.TurnNumber % 2 == 0)
@@ -142,17 +256,50 @@ namespace Chess
 
                 try
                 {
-                    if (_gameController.TurnNumber % 2 == 0)
+                    bool aiInputSet = false;
+
+#if COMPILE_WITH_AI_FOR_BLACK
+                    if (_AIMode && _gameController.TurnNumber % 2 == 0)
                     {
-                        if (_AIMode)
-                        {
-                            input = _AICommand;
-                        }
+                        input = _AICommand;
+                        aiInputSet = true;
                     }
-                    else
+#endif
+#if COMPILE_WITH_AI_FOR_BOTH
+                    if (_AIMode)
+                    {
+                        input = _AICommand;
+                        aiInputSet = true;
+                    }
+#endif
+
+                    if (!aiInputSet)
                     {
                         input = _console.ReadLine();
+                        if (input != null && input.ToLower().Equals("resign"))
+                        {
+                            _console.WriteLine("Are you sure you wish to resign? (y = yes, n = no)");
+                            input = _console.ReadLine();
+
+                            if (input != null && input.ToLower().Equals("y"))
+                            {
+                                // Black Resigns
+                                if (_gameController.TurnNumber % 2 == 0)
+                                {
+                                    _console.WriteLine("White wins against Black by Resignation!");
+                                }
+                                else
+                                {
+                                    _console.WriteLine("Black wins against White by Resignation!");
+                                }
+                            }
+                            else
+                            {
+                                continue;
+                            }
+                        }
                     }
+
                     (string? command, string? argument) = ParseInput(input);
 
                     if (command == null || argument == null)
@@ -191,6 +338,8 @@ namespace Chess
                         continue;
                     }
 
+#if COMPILE_WITH_CHECK_SERVICE
+                    // I think the problem is here. This simulates future moves, so it must be deleting/creating disabled squares unintentionally
                     if (_gameController.IsCheckMate(turn))
                     {
                         if (turn.PlayerTurn.Equals(Turn.Color.WHITE))
@@ -207,11 +356,12 @@ namespace Chess
                         _console.WriteLine("Invalid Move. King would be in Check. Please Try Again");
                         continue;
                     }
-                    else
-                        _gameController.ApplyTurnToGameState(turn);
+#endif
+                    _gameController.ApplyTurnToGameState(turn);
                 }
                 catch (Exception ex)
                 {
+                    StaticLogger.Log($"Fatal Exception: {ex.ToString()}", LogLevel.Fatal, LogCategory.General);
                     _console.WriteLine("Exception encountered.");
                     _console.WriteLine(ex.ToString());
                     break;
@@ -223,6 +373,7 @@ namespace Chess
 
         private string HandlePawnPromotion()
         {
+            StaticLogger.Trace();
             _console.WriteLine("Pawn Promoted. Choose type: (Q - Queen, R - Rook, K - Knight, B - Bishop)");
             string? choice;
             while (true)
@@ -240,6 +391,7 @@ namespace Chess
 
         private static (string? command, string? argument) ParseInput(string? input)
         {
+            StaticLogger.Trace();
             if (String.IsNullOrWhiteSpace(input)) return (null, null);
 
             string[] parts = input.ToLower().Split(' ');

@@ -1,6 +1,7 @@
 ﻿using Chess.Board;
 using Chess.Callbacks;
 using Chess.GameState;
+using Chess.Globals;
 using Chess.Pieces;
 
 namespace Chess.Services
@@ -12,6 +13,7 @@ namespace Chess.Services
 
         public bool IsKingInCheck(ChessPiece.Color color, ChessBoard chessBoard)
         {
+            StaticLogger.Trace();
             List<ChessPiece> chessPieces = chessBoard.GetActivePieces();
             if (chessPieces.Count == 0) { return false; }
             ChessPiece chessPieceKing = chessPieces.First(p => p.GetPiece().Equals(ChessPiece.Piece.KING) && p.GetColor().Equals(color));
@@ -31,6 +33,7 @@ namespace Chess.Services
 
         public bool IsKingInCheck(Turn turnToBeMade)
         {
+            StaticLogger.Trace();
             ChessPiece chessPieceKing;
             List<ChessPiece> opponentPieces = new();
 
@@ -69,13 +72,18 @@ namespace Chess.Services
 
             // iterate over all Opponent Pieces and call IsValidMove(position) 
             // if one of these pieces returns true (this is a valid move that piece can make)
-            // then the king would be put in check if it moved to this position
+            // then the king would be put in check if it moved to this position        
             foreach (ChessPiece piece in opponentPieces)
             {
+                SimulationService.BeginSimulation();
                 if (piece.IsValidMove(turnToBeMade.ChessBoard, positionToCheck))
+                {
+                    SimulationService.EndSimulation();
                     return true; // The King is in check from something
+                }
+                SimulationService.EndSimulation();
             }
-
+            
             return false; // The king is not in check
         }
 
@@ -91,6 +99,7 @@ namespace Chess.Services
         // 8000~ iterations is not super heavy performance wise given it can be checked per turn
         public bool IsCheckMate(Turn turn)
         {
+            StaticLogger.Trace();
             List<ChessPiece> friendlyPieces = new();
             // if the turn passed in was blacks turn, then we should check if its checkmate for white king
             // otherwise if the turn passed in was whites turn, then we should check if its checkmate for black king
@@ -102,32 +111,39 @@ namespace Chess.Services
 
             List<Turn> possibleMoves = new();
 
+            
             foreach (ChessPiece piece in friendlyPieces)
             {
-                // TODO: Set the PawnPromotion callback function to just return 'Q' each time
                 // Simulated future turns assume a pawn is always promoted to queen
                 // iterate over all board positions
                 SpecialMovesHandlers.ByPassPawnPromotionPromptUser = true;
+                SimulationService.BeginSimulation();
+                // TODO: This For Loop makes debugging a nightmare
+                // Replace this later with foreach (Square sq in piece.GetPossibleSquares())
+                // Or have the ChessPiece.GetPossibleTurns() and do this logic in ChessPiece
+                // Then write unit tests for it
                 for (int i = 0; i < 8; i++)
                 {
                     for (int j = 0; j < 8; j++)
                     {
                         BoardPosition pos = new((RANK)i, (FILE)j);
+                        // TODO: A pawn doesnt need to iterate 64 squares to determine if it can make a valid move
                         Turn possibleTurn = new(turn.TurnNumber + 1, piece, piece.GetCurrentPosition(), pos, turn.ChessBoard);
                         if (possibleTurn.IsValidTurn)
                             possibleMoves.Add(possibleTurn);
                     }
                 }
                 SpecialMovesHandlers.ByPassPawnPromotionPromptUser = false;
-                // TODO: change the PawnPromotion callback function back to GameManager.HandlePawnPromotion
+                SimulationService.EndSimulation();
             }
 
             foreach (Turn possibleTurn in possibleMoves)
             {
                 if (!IsKingInCheck(possibleTurn))
-                    return false;
+                {
+                    return false;              
+                }           
             }
-
             return true; // Check Mate
         }
     }

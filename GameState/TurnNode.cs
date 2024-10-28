@@ -1,9 +1,5 @@
-﻿using Chess.Pieces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Chess.Globals;
+using Chess.Pieces;
 
 namespace Chess.GameState
 {
@@ -14,13 +10,24 @@ namespace Chess.GameState
         public int TurnNumber { get; set; }
         public TurnNode? Parent { get; set; }
         public List<TurnNode> Children { get; set; } = new List<TurnNode>();
+        public ulong Count { get; set; }
         public string Command { get; set; }
+        public string TurnID { get; }
+        public string BoardID { get; }
+        public bool IsKingInCheck { get; set; }
+        public bool IsCheckMate { get; set; }
+        public float Side()
+        {
+            StaticLogger.Trace();
+            return TurnNumber % 2 == 0 ? 0 : 1; // black is 0. white is 1;
+        }
 
         public TurnNode(Turn turn, string optionalText = "")
         {
+            StaticLogger.Trace();
             TurnDescription = turn.TurnDescription + optionalText;
             TurnNumber = turn.TurnNumber;
-            BoardState = turn.ChessBoard.DisplayBoard();
+            BoardState = turn.ChessBoard.BoardID;
             //Command = turn.Command;
 
             if (String.IsNullOrEmpty(Command))
@@ -50,6 +57,17 @@ namespace Chess.GameState
                     Command = turn.PlayerTurn.Equals(Turn.Color.WHITE) ? "W" : "B" + "K " + turn.NewPosition.StringValue;
                 }
             }
+
+            TurnID = TurnNumber + ":" 
+                    + (turn.PlayerTurn.Equals(Turn.Color.WHITE) ? "W" : "B") + ":" 
+                    + turn.ChessPiece.GetPieceName() + ":"
+                    + turn.Command + ":FROM:" 
+                    + turn.PreviousPosition.StringValue;
+
+            BoardID = turn.ChessBoard.BoardID;
+
+            IsKingInCheck = turn.IsKingInCheck;
+            IsCheckMate = turn.IsCheckMate;
         }
     }
 }
