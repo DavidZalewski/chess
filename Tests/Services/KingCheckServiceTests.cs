@@ -556,5 +556,29 @@ namespace Tests.Services
             // Assert
             Assert.That(result, Is.False);
         }
+
+        [Test]
+        public void IsWhiteKingInStalemate()
+        {
+            // Arrange
+            ChessBoard board = new();
+            List<ChessPiece> pieces = new()
+            {
+                new ChessPieceKing(ChessPiece.Color.BLACK, new("F6")),
+                new ChessPieceQueen(ChessPiece.Color.BLACK, 2, new("F4")),
+                new ChessPieceBishop(ChessPiece.Color.BLACK, 2, new("B6")),
+                new ChessPieceBlackPawn(1, new("A5")),
+                new ChessPieceKing(ChessPiece.Color.WHITE, new("H5"))
+            };
+            board.PopulateBoard(pieces);
+
+            // Act
+            bool result = new KingCheckService().IsKingInCheck(ChessPiece.Color.WHITE, board);
+            Console.WriteLine(board.DisplayBoard());
+
+            // Assert
+            Assert.That(result, Is.False);
+
+        }
     }
 }

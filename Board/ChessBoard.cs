@@ -317,7 +317,6 @@ namespace Chess.Board
             for (int f = 0; f < arraySize; f++)
             {
                 output += rankNumber;
-                rankNumber--;
                 for (int s = 0; s < arraySize; s++)
                 {
                     if (Board[f, s].Piece is not NoPiece) // Check for chess piece
@@ -365,7 +364,8 @@ namespace Chess.Board
                         output += "|   ";
                     }
                 }
-                output += "|" + arraySize + "\n";
+                output += "|" + rankNumber + "\n";
+                rankNumber--;
             }
             output += "*|*A*|*B*|*C*|*D*|*E*|*F*|*G*|*H*|*\n";
             return output;
