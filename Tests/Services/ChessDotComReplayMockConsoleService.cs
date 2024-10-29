@@ -15,6 +15,12 @@ namespace Tests.Services
         private static int _totalFiles = 0;
         private static int _successfulValidationFiles = 0;
         private static int _failedValidationFiles = 0;
+        private static int _totalWinsForWhite = 0;
+        private static int _totalWinsForBlack = 0;
+        private static int _totalResignsForWhite = 0;
+        private static int _totalResignsForBlack = 0;
+        private static int _totalStalemates = 0;
+        private static int _totalDraws = 0; // TODO: Not implemented yet
 
 
         public ChessDotComReplayMockConsoleService(Queue<string> inputs, string file, string expectedOutcome, bool showOutputOfWinningGames) : base(inputs)
@@ -48,6 +54,28 @@ namespace Tests.Services
         public bool VerifyReplayAndLogIfFailed()
         {
             _totalFiles += 1;
+
+            switch(_expectedOutcome)
+            {
+                case "White wins against Black by CheckMate!":
+                    ++_totalWinsForWhite;
+                    break;
+                case "White wins against Black by Resignation!":
+                    ++_totalResignsForBlack;
+                    break;
+                case "Black wins against White by CheckMate!":
+                    ++_totalWinsForBlack;
+                    break;
+                case "Black wins against White by Resignation!":
+                    ++_totalResignsForWhite;
+                    break;
+                case "Game Ends in Stalemate!":
+                    ++_totalStalemates;
+                    break;
+
+
+            }
+
             // FAILED TEST CASE MATCH
             if (!OutputContainsString(_expectedOutcome))
             {
@@ -75,6 +103,7 @@ namespace Tests.Services
         {
             Console.WriteLine($"Successfully verified {_successfulValidationFiles} out of {_totalFiles} replays");
             Console.WriteLine($"{_failedValidationFiles} replays failed to verify.");
+            Console.WriteLine($"Wins for White: {_totalWinsForWhite}, Wins for Black: {_totalWinsForBlack}, Resigns for White: {_totalResignsForWhite}, Resigns for Black: {_totalResignsForBlack}, Stalemates: {_totalStalemates}");
         }
     }
 }

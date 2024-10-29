@@ -485,8 +485,8 @@ namespace Tests
 
             if (!String.IsNullOrEmpty(testReport))
             {
-                Console.WriteLine(testReport);
                 ChessDotComReplayMockConsoleService.OutputTotals();
+                Console.WriteLine(testReport);
                 Assert.Fail($"One of the files failed to verify against chess engine: {testReport}");
             }
             ChessDotComReplayMockConsoleService.OutputTotals();

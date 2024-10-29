@@ -355,7 +355,7 @@ namespace Chess
                     if (_gameController.IsCheckMate(turn))
                     {
                         if (turn.PlayerTurn.Equals(Turn.Color.WHITE))
-                            _console.WriteLine("White wins against Black by CheckMate!");
+                            _console.WriteLine("White wins against Black by CheckMate!"); // TODO: Put these in a config file somewhere so both applications can read these
                         else
                             _console.WriteLine("Black wins against White by CheckMate!");
                         _console.WriteLine("Game Over.");

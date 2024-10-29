@@ -1,0 +1,49 @@
+Original: move: e2e4, piece: P, from_square: e2, to_square: e4, piece_name: WP5 
+Command: WP5 E4
+Original: move: e7e5, piece: p, from_square: e7, to_square: e5, piece_name: BP5 
+Command: BP5 E5
+Original: move: e1e2, piece: K, from_square: e1, to_square: e2, piece_name: WK 
+Command: WK E2
+Original: move: b8c6, piece: n, from_square: b8, to_square: c6, piece_name: BK1 
+Command: BK1 C6
+Original: move: g1f3, piece: N, from_square: g1, to_square: f3, piece_name: WK2 
+Command: WK2 F3
+Original: move: f8c5, piece: b, from_square: f8, to_square: c5, piece_name: BB2 
+Command: BB2 C5
+Original: move: b1c3, piece: N, from_square: b1, to_square: c3, piece_name: WK1 
+Command: WK1 C3
+Original: move: g8f6, piece: n, from_square: g8, to_square: f6, piece_name: BK2 
+Command: BK2 F6
+Original: move: a2a3, piece: P, from_square: a2, to_square: a3, piece_name: WP1 
+Command: WP1 A3
+Original: move: f6g4, piece: n, from_square: f6, to_square: g4, piece_name: BK2 
+Command: BK2 G4
+Original: move: d2d4, piece: P, from_square: d2, to_square: d4, piece_name: WP4 
+Command: WP4 D4
+Original: move: e5d4, piece: p, from_square: e5, to_square: d4, piece_name: BP5 
+Command: BP5 D4
+Original: move: c3d5, piece: N, from_square: c3, to_square: d5, piece_name: WK1 
+Command: WK1 D5
+Original: move: b7b6, piece: p, from_square: b7, to_square: b6, piece_name: BP2 
+Command: BP2 B6
+Original: move: c1g5, piece: B, from_square: c1, to_square: g5, piece_name: WB1 
+Command: WB1 G5
+Original: move: f7f6, piece: p, from_square: f7, to_square: f6, piece_name: BP6 
+Command: BP6 F6
+Original: move: b2b4, piece: P, from_square: b2, to_square: b4, piece_name: WP2 
+Command: WP2 B4
+Original: move: c8a6, piece: b, from_square: c8, to_square: a6, piece_name: BB1 
+Command: BB1 A6
+Original: move: e2d2, piece: K, from_square: e2, to_square: d2, piece_name: WK 
+Command: WK D2
+Original: move: g4f2, piece: n, from_square: g4, to_square: f2, piece_name: BK2 
+Command: BK2 F2
+Original: move: f1a6, piece: B, from_square: f1, to_square: a6, piece_name: WB2 
+Command: WB2 A6
+Original: move: f2d1, piece: n, from_square: f2, to_square: d1, piece_name: BK2 
+Command: BK2 D1
+Original: move: a1d1, piece: R, from_square: a1, to_square: d1, piece_name: WR1 
+Command: WR1 D1
+Command: resign black
+Command: y
+Outcome: White wins against Black by Resignation!

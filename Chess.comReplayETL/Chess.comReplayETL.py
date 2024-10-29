@@ -3,7 +3,7 @@ import os
 import requests
 import chess.pgn
 
-SKIP_API_CALL = True
+SKIP_API_CALL = False
 
 # Load the configuration from the JSON file
 with open("etl_config.json") as config_file:

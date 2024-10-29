@@ -1,0 +1,39 @@
+Original: move: e2e4, piece: P, from_square: e2, to_square: e4, piece_name: WP5 
+Command: WP5 E4
+Original: move: e7e5, piece: p, from_square: e7, to_square: e5, piece_name: BP5 
+Command: BP5 E5
+Original: move: d1h5, piece: Q, from_square: d1, to_square: h5, piece_name: WQ1 
+Command: WQ1 H5
+Original: move: e8e7, piece: k, from_square: e8, to_square: e7, piece_name: BK 
+Command: BK E7
+Original: move: f1c4, piece: B, from_square: f1, to_square: c4, piece_name: WB2 
+Command: WB2 C4
+Original: move: g8f6, piece: n, from_square: g8, to_square: f6, piece_name: BK2 
+Command: BK2 F6
+Original: move: h5f7, piece: Q, from_square: h5, to_square: f7, piece_name: WQ1 
+Command: WQ1 F7
+Original: move: e7d6, piece: k, from_square: e7, to_square: d6, piece_name: BK 
+Command: BK D6
+Original: move: b1c3, piece: N, from_square: b1, to_square: c3, piece_name: WK1 
+Command: WK1 C3
+Original: move: d8e7, piece: q, from_square: d8, to_square: e7, piece_name: BQ1 
+Command: BQ1 E7
+Original: move: c3b5, piece: N, from_square: c3, to_square: b5, piece_name: WK1 
+Command: WK1 B5
+Original: move: d6c5, piece: k, from_square: d6, to_square: c5, piece_name: BK 
+Command: BK C5
+Original: move: f7e7, piece: Q, from_square: f7, to_square: e7, piece_name: WQ1 
+Command: WQ1 E7
+Original: move: c5c4, piece: k, from_square: c5, to_square: c4, piece_name: BK 
+Command: BK C4
+Original: move: e7e5, piece: Q, from_square: e7, to_square: e5, piece_name: WQ1 
+Command: WQ1 E5
+Original: move: c7c5, piece: p, from_square: c7, to_square: c5, piece_name: BP3 
+Command: BP3 C5
+Original: move: b5c7, piece: N, from_square: b5, to_square: c7, piece_name: WK1 
+Command: WK1 C7
+Original: move: b8c6, piece: n, from_square: b8, to_square: c6, piece_name: BK1 
+Command: BK1 C6
+Original: move: e5c3, piece: Q, from_square: e5, to_square: c3, piece_name: WQ1 
+Command: WQ1 C3
+Outcome: White wins against Black by CheckMate!
