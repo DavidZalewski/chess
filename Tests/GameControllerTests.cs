@@ -279,5 +279,50 @@ namespace Tests
                 Assert.That(new FileInfo(testSaveFilePath).Length, Is.GreaterThan(0)); // Check that the file size is not 0
             });
         }
+
+        [Test]
+        public void ContainsRuleSet_ReturnsTrueIfRuleSetExists()
+        {
+            // Arrange
+            string ruleSetName = "nuclearhorse";
+            Action mockAction = () => { /* some action */ };
+
+            // ***I needed to rework this from the original code Model A provided***
+            ActionSequence mockActionSequence = new();
+            ChessBoard chessBoard = new ChessBoard();
+            GameController gameController = new(chessBoard);
+            //
+            
+            // ***This requires implementing a new method in ActionSequence called Setup to work***
+            //mockActionSequence.Setup(seq => seq.IsActionInSequence(mockAction)).Returns(true);
+
+            // Act
+            bool result = gameController.ContainsRuleSet(ruleSetName);
+
+            // Assert
+            Assert.That(result, Is.True);
+        }
+
+        [Test]
+        public void ContainsRuleSet_ReturnsFalseIfRuleSetDoesNotExist()
+        {
+            // Arrange
+            string ruleSetName = "unknownrule";
+
+            // ***I needed to rework this from the original code Model A provided***
+            ActionSequence mockActionSequence = new();
+            ChessBoard chessBoard = new ChessBoard();
+            GameController gameController = new(chessBoard);
+            //
+
+            // ***This requires implementing a new method in ActionSequence called Setup to work***
+            //mockActionSequence.Setup(seq => seq.IsActionInSequence(It.IsAny<Action>())).Returns(false);
+
+            // Act
+            bool result = gameController.ContainsRuleSet(ruleSetName);
+
+            // Assert
+            Assert.That(result, Is.False);
+        }
     }
 }
