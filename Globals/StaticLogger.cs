@@ -88,7 +88,6 @@ namespace Chess.Globals
         static public ConcurrentDictionary<string, string> ThreadsAndTests = new();
         static public string MetaData = "";
 
-        [TestNeeded]
         static public void Trace()
         {
             if (LoggerConfig.MinimumLogLevel < LogLevel.Debug)
@@ -133,7 +132,6 @@ namespace Chess.Globals
 
         }
 
-        [TestNeeded]
         static public void Log(string? message, LogLevel logLevel = LogLevel.Info, LogCategory logCategory = LogCategory.General)
         {
             if (LoggerConfig.MinimumLogLevel < logLevel)
@@ -183,7 +181,6 @@ namespace Chess.Globals
             });
         }
 
-        [TestNeeded]
         static public void LogMethod(params object[] parameterValues)
         {
             if (LoggerConfig.MinimumLogLevel < LogLevel.Debug)
@@ -240,7 +237,6 @@ namespace Chess.Globals
             });
         }
 
-        [TestNeeded]
         static public void DumpLog()
         {
             while(LogEntries.Count > 0)
@@ -276,7 +272,6 @@ namespace Chess.Globals
             return frame?.GetMethod();
         }
 
-        [TestNeeded]
         public static void AddTestName()
         {
             var currentTestName = TestContext.CurrentContext.Test.MethodName;
@@ -289,7 +284,6 @@ namespace Chess.Globals
             MetaData = metadata;
         }
 
-        [TestNeeded]
         public static void LogObject(object? obj, string message = "")
         {
             if (LoggerConfig.MinimumLogLevel < LogLevel.Debug)
