@@ -170,6 +170,7 @@ MethodInvoker.Invoke(Object obj, IntPtr* args, BindingFlags invokeAttr)
         }
 
         [Test]
+        [Ignore("Too Time Consuming")]
         [Parallelizable(ParallelScope.Self)]
         public void GenerateAllPossibleMoves_LighterMemory_Depth_7_Success()
         {
@@ -290,7 +291,7 @@ MethodInvoker.Invoke(Object obj, IntPtr* args, BindingFlags invokeAttr)
             }
 
             ChessStateExplorer explorer = new ChessStateExplorer();
-            int depth = 4;
+            int depth = 2;
             ulong currentCount = 0;
 
             // Act

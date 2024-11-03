@@ -9,14 +9,12 @@ namespace Chess.Services
         public Stack<Action> Actions { get; set; } = new Stack<Action>();
         public ActionSequence() { }
 
-        [TestNeeded]
         public void AddActionInSequence(Action a)
         {
             StaticLogger.Trace();
             Actions.Push(a);
         }
 
-        [TestNeeded]
         public void PlayActionSequence()
         {
             StaticLogger.Trace();
@@ -26,7 +24,6 @@ namespace Chess.Services
             }
         }
 
-        [TestNeeded]
         public bool IsActionInSequence(Action actionToFind)
         {
             StaticLogger.Trace();

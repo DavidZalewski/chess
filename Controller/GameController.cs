@@ -383,7 +383,6 @@ namespace Chess.Controller
             _chessPieces = ChessPieceFactory.CreateChessPiecesNuclearHorse();
         }
 
-        [TestNeeded]
         internal bool ContainsRuleSet(string v)
         {
             StaticLogger.Trace();
