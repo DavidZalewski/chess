@@ -45,10 +45,11 @@ namespace Tests
             // Assert
             lock (_lock)
             {
-                Assert.AreEqual(1, _logEntries.Count);
-                var logEntry = _logEntries.Peek();
-                Assert.AreEqual(LogLevel.Debug, logEntry.LogLevel);
-                Assert.AreEqual(LogCategory.Trace, logEntry.LogCategory);
+                Assert.That(_logEntries.Count, Is.EqualTo(1));
+                LogEntry logEntry;
+                _logEntries.TryPeek(out logEntry);
+                Assert.That(logEntry.LogLevel, Is.EqualTo(LogLevel.Debug));
+                Assert.That(logEntry.LogCategory, Is.EqualTo(LogCategory.Trace));
             }
         }
 
@@ -64,11 +65,12 @@ namespace Tests
             // Assert
             lock (_lock)
             {
-                Assert.AreEqual(1, _logEntries.Count);
-                var logEntry = _logEntries.Peek();
-                Assert.AreEqual(LogLevel.Info, logEntry.LogLevel);
-                Assert.AreEqual(LogCategory.General, logEntry.LogCategory);
-                Assert.AreEqual("Test Message", logEntry.Message);
+                Assert.That(_logEntries.Count, Is.EqualTo(1));
+                LogEntry logEntry;
+                _logEntries.TryPeek(out logEntry);
+                Assert.That(logEntry.LogLevel, Is.EqualTo(LogLevel.Info));
+                Assert.That(logEntry.LogCategory, Is.EqualTo(LogCategory.General));
+                Assert.That(logEntry.Message, Is.EqualTo("Test Message"));
             }
         }
 
@@ -85,12 +87,13 @@ namespace Tests
             // Assert
             lock (_lock)
             {
-                Assert.AreEqual(1, _logEntries.Count);
-                var logEntry = _logEntries.Peek();
-                Assert.AreEqual(LogLevel.Debug, logEntry.LogLevel);
-                Assert.AreEqual(LogCategory.MethodDump, logEntry.LogCategory);
-                Assert.IsTrue(logEntry.Message.Contains("param1"));
-                Assert.IsTrue(logEntry.Message.Contains("2"));
+                Assert.That(_logEntries.Count, Is.EqualTo(1));
+                LogEntry logEntry;
+                _logEntries.TryPeek(out logEntry);
+                Assert.That(logEntry.LogLevel, Is.EqualTo(LogLevel.Debug));
+                Assert.That(logEntry.LogCategory, Is.EqualTo(LogCategory.MethodDump));
+                Assert.That(logEntry.Message.Contains("param1"));
+                Assert.That(logEntry.Message.Contains("2"));
             }
         }
 
@@ -108,7 +111,7 @@ namespace Tests
             // Assert
             lock (_lock)
             {
-                Assert.AreEqual(0, _logEntries.Count);
+                Assert.That(_logEntries.Count, Is.EqualTo(0));
             }
         }
 
@@ -126,9 +129,10 @@ namespace Tests
             // Assert
             lock (_lock)
             {
-                Assert.AreEqual(1, _logEntries.Count);
-                var logEntry = _logEntries.Peek();
-                Assert.AreEqual(TestContext.CurrentContext.Test.MethodName, logEntry.TestName);
+                Assert.That(_logEntries.Count, Is.EqualTo(1));
+                LogEntry logEntry;
+                _logEntries.TryPeek(out logEntry);
+                Assert.That(logEntry.TestName, Is.EqualTo(TestContext.CurrentContext.Test.MethodName));
             }
         }
 
@@ -145,12 +149,13 @@ namespace Tests
             // Assert
             lock (_lock)
             {
-                Assert.AreEqual(1, _logEntries.Count);
-                var logEntry = _logEntries.Peek();
-                Assert.AreEqual(LogLevel.Debug, logEntry.LogLevel);
-                Assert.AreEqual(LogCategory.ObjectDump, logEntry.LogCategory);
-                Assert.IsTrue(logEntry.Message.Contains("Value1"));
-                Assert.IsTrue(logEntry.Message.Contains("2"));
+                Assert.That(_logEntries.Count, Is.EqualTo(1));
+                LogEntry logEntry;
+                _logEntries.TryPeek(out logEntry);
+                Assert.That(logEntry.LogLevel, Is.EqualTo(LogLevel.Debug));
+                Assert.That(logEntry.LogCategory, Is.EqualTo(LogCategory.ObjectDump));
+                Assert.That(logEntry.Message.Contains("Value1"));
+                Assert.That(logEntry.Message.Contains("2"));
             }
         }
     }
