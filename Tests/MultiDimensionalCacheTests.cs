@@ -92,19 +92,20 @@ namespace Tests
         [Test]
         public void AddManyItems_PartitionsCorrectly()
         {
-            // Arrange
-            var cache = new MultiDimensionalCache<int>(2);
+            // Arrange (psuedo-code)
+            var cache = new MultiDimensionalCache<int>(3);
+            const string keyPrefix = "key";
 
             // Act
             for (int i = 0; i < 100; i++)
             {
-                cache.AddOrUpdate($"key{i}", i);
+                var cacheKey = $"{keyPrefix}{i:00}"; // left-pad with a zero 
+                cache.AddOrUpdate(cacheKey, i);
             }
-
             // Assert
-            Assert.That(cache._indexCache.Keys.Count, Is.EqualTo(10));
+            Assert.That(cache._indexCache.Keys.Count, Is.EqualTo(1)); // if the lookup prefix is the first 3 chars, it should be stored as 'key' in the index
             Assert.That(cache.TryGetValue("key42", out int value));
-            Assert.That(42, Is.EqualTo(value));
+            Assert.That(42, Is.EqualTo(value)); // When try to get the value it should still be found in the main cache through the lookup index
             Assert.That(cache.IndexCacheMisses, Is.EqualTo(0));
             Assert.That(cache.MainCacheHits, Is.EqualTo(0));
         }

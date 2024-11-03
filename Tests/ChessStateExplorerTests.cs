@@ -251,7 +251,7 @@ MethodInvoker.Invoke(Object obj, IntPtr* args, BindingFlags invokeAttr)
         }
 
         [Test]
-        [Ignore("Cache Saving Not Implemented Yet!")]
+        //[Ignore("Cache Saving Not Implemented Yet!")]
         public void SaveAndLoadCache_CacheIsSavedAndLoadedCorrectly()
         {
             // Arrange
