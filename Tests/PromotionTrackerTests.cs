@@ -1,10 +1,11 @@
 ﻿using Chess.Attributes;
+using Chess.GameState;
 using Chess.Globals;
 using Chess.Pieces;
 using NUnit.Framework;
 using System.Collections.Generic;
 
-namespace Chess.GameState.Tests
+namespace Tests
 {
     public class PromotionTrackerTests
     {
@@ -17,7 +18,7 @@ namespace Chess.GameState.Tests
         }
 
         // Define a dictionary to hold expected results for each piece type and color
-        private Dictionary<(ChessPiece.Color, string), (int initial, int next)> testData = new Dictionary<(ChessPiece.Color, string), (int initial, int next)>
+        private static Dictionary<(ChessPiece.Color, string), (int initial, int next)> testData = new Dictionary<(ChessPiece.Color, string), (int initial, int next)>
         {
             { (ChessPiece.Color.WHITE, "Q"), (2, 3) },
             { (ChessPiece.Color.WHITE, "R"), (3, 4) },
@@ -30,7 +31,6 @@ namespace Chess.GameState.Tests
         };
 
         [TestCaseSource(nameof(GetTestCases))]
-        [TestNeeded]
         public void GetNextID_ReturnsCorrectIDAndIncrementsCounter((ChessPiece.Color, string) piece, int expectedInitialID, int expectedNextID)
         {
             // Arrange
@@ -42,11 +42,11 @@ namespace Chess.GameState.Tests
             int nextID = promotionTracker.GetNextID(color, pieceType);
 
             // Assert
-            Assert.AreEqual(expectedInitialID, initialID, "Initial ID is incorrect");
-            Assert.AreEqual(expectedNextID, promotionTracker.promotionCounters[key], "Next ID is incorrect");
+            Assert.That(initialID, Is.EqualTo(expectedInitialID), "Initial ID is incorrect");
+            Assert.That(nextID, Is.EqualTo(expectedNextID), "Next ID is incorrect");
         }
 
-        private IEnumerable<TestCaseData> GetTestCases()
+        private static IEnumerable<TestCaseData> GetTestCases()
         {
             foreach (var (piece, (initial, next)) in testData)
             {
