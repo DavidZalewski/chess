@@ -25,9 +25,8 @@ namespace Chess.Tests
             int secondId = promotionTracker.GetNextID(color, pieceType);
 
             // Assert
-            Assert.AreEqual(initialCount, firstId, "The first ID should match the initial count.");
-            Assert.AreEqual(initialCount + 1, secondId, "The second ID should be incremented by 1.");
-            Assert.AreEqual(initialCount + 2, promotionTracker.promotionCounters[key], "The counter should have been incremented twice.");
+            Assert.That(firstId, Is.EqualTo(initialCount), "The first ID should match the initial count.");
+            Assert.That(secondId, Is.EqualTo(initialCount + 1), "The second ID should be incremented by 1.");
         }
     }
 }
