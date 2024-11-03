@@ -1,11 +1,11 @@
-﻿using Chess.Globals;
+﻿﻿using Chess.Globals;
 using NUnit.Framework;
 using System;
 using System.Collections.Concurrent;
 using System.Diagnostics;
 using System.Linq;
 
-namespace Tests
+namespace Tests.Globals
 {
     [TestFixture]
     public class StaticLoggerTests
@@ -30,7 +30,8 @@ namespace Tests
 
             // Assert
             Assert.That(StaticLogger.LogEntries.Count, Is.EqualTo(1));
-            var logEntry = StaticLogger.LogEntries.Dequeue();
+            LogEntry logEntry;
+            Assert.That(StaticLogger.LogEntries.TryDequeue(out logEntry), Is.True);
             Assert.That(logEntry.LogCategory, Is.EqualTo(LogCategory.Trace));
             Assert.That(logEntry.LogLevel, Is.EqualTo(LogLevel.Debug));
         }
@@ -49,7 +50,8 @@ namespace Tests
 
             // Assert
             Assert.That(StaticLogger.LogEntries.Count, Is.EqualTo(1));
-            var logEntry = StaticLogger.LogEntries.Dequeue();
+            LogEntry logEntry;
+            Assert.That(StaticLogger.LogEntries.TryDequeue(out logEntry), Is.True);
             Assert.That(logEntry.Message, Is.EqualTo("Test message"));
             Assert.That(logEntry.LogLevel, Is.EqualTo(LogLevel.Info));
             Assert.That(logEntry.LogCategory, Is.EqualTo(LogCategory.General));
@@ -69,7 +71,9 @@ namespace Tests
 
             // Assert
             Assert.That(StaticLogger.LogEntries.Count, Is.EqualTo(1));
-            var logEntry = StaticLogger.LogEntries.Dequeue();
+            LogEntry logEntry;
+            Assert.That(StaticLogger.LogEntries.TryDequeue(out logEntry), Is.True);
+
             Assert.That(logEntry.LogCategory, Is.EqualTo(LogCategory.MethodDump));
             Assert.That(logEntry.LogLevel, Is.EqualTo(LogLevel.Debug));
             Assert.That(logEntry.Message, Contains.Substring("Parameters: Name = param1, Value = param1"));
@@ -87,10 +91,9 @@ namespace Tests
             StaticLogger.Log("Test message", LogLevel.Info);
 
             // Act
-            var output = StaticLogger.DumpLog();
+            StaticLogger.DumpLog();
 
             // Assert
-            Assert.That(output, Is.Not.Empty);
             Assert.That(StaticLogger.LogEntries.Count, Is.EqualTo(0));
         }
 
@@ -109,7 +112,9 @@ namespace Tests
 
             // Assert
             Assert.That(StaticLogger.LogEntries.Count, Is.EqualTo(1));
-            var logEntry = StaticLogger.LogEntries.Dequeue();
+            LogEntry logEntry;
+            Assert.That(StaticLogger.LogEntries.TryDequeue(out logEntry), Is.True);
+
             Assert.That(logEntry.LogCategory, Is.EqualTo(LogCategory.ObjectDump));
             Assert.That(logEntry.LogLevel, Is.EqualTo(LogLevel.Debug));
             Assert.That(logEntry.Message, Contains.Substring("Logging object details - Name = Test, Value = 42"));

@@ -84,9 +84,9 @@ namespace Chess.Globals
     {
         static public LoggerConfig LoggerConfig = new();
         static public IConsole Console { get; set; } = new ConsoleService();
-        static private ConcurrentQueue<LogEntry> LogEntries = new();
-        static private ConcurrentDictionary<string, string> ThreadsAndTests = new();
-        static private string MetaData = "";
+        static public ConcurrentQueue<LogEntry> LogEntries = new();
+        static public ConcurrentDictionary<string, string> ThreadsAndTests = new();
+        static public string MetaData = "";
 
         [TestNeeded]
         static public void Trace()
