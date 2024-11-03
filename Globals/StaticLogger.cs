@@ -276,6 +276,7 @@ namespace Chess.Globals
             return frame?.GetMethod();
         }
 
+        [TestNeeded]
         public static void AddTestName()
         {
             var currentTestName = TestContext.CurrentContext.Test.MethodName;

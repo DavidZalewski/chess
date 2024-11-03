@@ -284,7 +284,7 @@ namespace Tests
         public void ContainsRuleSet_ReturnsTrueIfRuleSetExists()
         {
             // Arrange
-            string ruleSetName = "nuclearhorse";
+            string ruleSetName = "NuclearHorse";
             Action mockAction = () => { /* some action */ };
 
             // ***I needed to rework this from the original code Model A provided***
@@ -292,11 +292,12 @@ namespace Tests
             ChessBoard chessBoard = new ChessBoard();
             GameController gameController = new(chessBoard);
             //
-            
+
             // ***This requires implementing a new method in ActionSequence called Setup to work***
             //mockActionSequence.Setup(seq => seq.IsActionInSequence(mockAction)).Returns(true);
 
             // Act
+            gameController.AddRuleSet(ruleSetName);
             bool result = gameController.ContainsRuleSet(ruleSetName);
 
             // Assert
