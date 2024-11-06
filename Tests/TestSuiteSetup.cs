@@ -1,9 +1,4 @@
 ﻿using Chess.Globals;
-using NUnit.Framework;
-using Chess.Board;
-using Chess.Pieces;
-using Chess.Callbacks;
-using Chess.Controller;
 
 namespace Tests
 {

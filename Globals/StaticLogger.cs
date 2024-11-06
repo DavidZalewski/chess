@@ -1,8 +1,6 @@
 ﻿using System.Collections.Concurrent;
 using System.Diagnostics;
 using System.Reflection;
-using Chess.Attributes;
-using Chess.Board;
 using Chess.Interfaces;
 using Chess.Services;
 using NUnit.Framework;

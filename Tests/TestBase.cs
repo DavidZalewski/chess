@@ -10,7 +10,7 @@ public abstract class TestBase
         IConsole mockConsole = new MockConsoleService();
         StaticLogger.Console = mockConsole;
         StaticLogger.AddTestName();
-
+        StaticLogger.SetMetaData(""); // Clear the MetaData before each test
         var currentTestName = TestContext.CurrentContext.Test.MethodName;
         Console.WriteLine($"--------------------------------------------------{currentTestName} Begin");
 

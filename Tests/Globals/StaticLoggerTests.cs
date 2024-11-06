@@ -1,24 +1,11 @@
-﻿using NUnit.Framework;
-using Chess.Globals;
+﻿using Chess.Globals;
 using System.Collections.Concurrent;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
-using Chess.Attributes;
-using Chess.Board;
-using Chess.Interfaces;
-using Chess.Services;
-using Tests.Services;
-using Chess.Board;
-using Chess.Callbacks;
-using Chess.GameState;
-using Chess.Services;
 
 namespace Tests
 {
     [TestFixture]
     [Category("LOGGER")]
-    public class StaticLoggerTests
+    public class StaticLoggerTests : TestBase
     {
         private static readonly object _lock = new object();
         private static ConcurrentQueue<LogEntry> _logEntries = new ConcurrentQueue<LogEntry>();
@@ -61,7 +48,7 @@ namespace Tests
 
             // Act
             StaticLogger.Log("Test Message");
-
+            string expectedStringValue = " - Test Message";
             // Assert
             lock (_lock)
             {
@@ -70,7 +57,7 @@ namespace Tests
                 _logEntries.TryPeek(out logEntry);
                 Assert.That(logEntry.LogLevel, Is.EqualTo(LogLevel.Info));
                 Assert.That(logEntry.LogCategory, Is.EqualTo(LogCategory.General));
-                Assert.That(logEntry.Message, Is.EqualTo("Test Message"));
+                Assert.That(logEntry.Message, Is.EqualTo(expectedStringValue));
             }
         }
 
