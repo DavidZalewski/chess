@@ -41,14 +41,15 @@ namespace Tests
         }
 
         [Test]
-        public void Log_ShouldLogCorrectly()
+        public void Log_ShouldLogCorrectlyWithMetaData()
         {
             // Arrange
             StaticLogger.LoggerConfig.MinimumLogLevel = LogLevel.Info;
+            StaticLogger.SetMetaData("Some Meta Data");
 
             // Act
             StaticLogger.Log("Test Message");
-            string expectedStringValue = " - Test Message";
+
             // Assert
             lock (_lock)
             {
@@ -57,7 +58,29 @@ namespace Tests
                 _logEntries.TryPeek(out logEntry);
                 Assert.That(logEntry.LogLevel, Is.EqualTo(LogLevel.Info));
                 Assert.That(logEntry.LogCategory, Is.EqualTo(LogCategory.General));
-                Assert.That(logEntry.Message, Is.EqualTo(expectedStringValue));
+                Assert.That(logEntry.Message, Is.EqualTo("Some Meta Data - Test Message"));
+            }
+        }
+
+        [Test]
+        public void Log_ShouldLogCorrectlyWithoutMetaData()
+        {
+            // Arrange
+            StaticLogger.LoggerConfig.MinimumLogLevel = LogLevel.Info;
+            StaticLogger.SetMetaData("");
+
+            // Act
+            StaticLogger.Log("Test Message");
+
+            // Assert
+            lock (_lock)
+            {
+                Assert.That(_logEntries.Count, Is.EqualTo(1));
+                LogEntry logEntry;
+                _logEntries.TryPeek(out logEntry);
+                Assert.That(logEntry.LogLevel, Is.EqualTo(LogLevel.Info));
+                Assert.That(logEntry.LogCategory, Is.EqualTo(LogCategory.General));
+                Assert.That(logEntry.Message, Is.EqualTo("Test Message"));
             }
         }
 

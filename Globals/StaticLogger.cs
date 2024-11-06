@@ -133,14 +133,20 @@ namespace Chess.Globals
         static public void Log(string? message, LogLevel logLevel = LogLevel.Info, LogCategory logCategory = LogCategory.General)
         {
             if (LoggerConfig.MinimumLogLevel < logLevel)
+            {
                 return;
+            }
 
             // if the Log is trying to do an Object Dump, and this setting is disabled - skip
             if (!LoggerConfig.EnableObjectDumps && logCategory == LogCategory.ObjectDump)
+            {
                 return;
+            }
 
             if (!LoggerConfig.EnableStateChanges && logCategory == LogCategory.StateChange)
+            {
                 return;
+            }
 
             // Retrieve the stack trace to get the caller information
             var method = GetStackTraceInfo();
@@ -152,7 +158,9 @@ namespace Chess.Globals
             {
                 // If the type is not found in the whitelist, skip
                 if (!LoggerConfig.WhitelistTypesToLog.Any(t => t.FullName == callerClassName))
+                {
                     return;
+                }
             }
             else
             {
@@ -166,6 +174,16 @@ namespace Chess.Globals
             string? testName;
             ThreadsAndTests.TryGetValue(Thread.CurrentThread?.Name ?? "", out testName);
 
+            string logMessage;
+            if (string.IsNullOrEmpty(MetaData))
+            {
+                logMessage = message;
+            }
+            else
+            {
+                logMessage = $"{MetaData} - {message}";
+            }
+
             LogEntries.Enqueue(new()
             {
                 DateTime = DateTime.Now,
@@ -173,7 +191,7 @@ namespace Chess.Globals
                 TestName = testName ?? "",
                 CallerClassName = callerClassName,
                 CallerMethodName = callerMethodName,
-                Message = $"{MetaData} - {message}",
+                Message = logMessage,
                 LogLevel = logLevel,
                 LogCategory = logCategory
             });
