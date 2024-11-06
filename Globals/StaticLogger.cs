@@ -205,37 +205,24 @@ namespace Chess.Globals
             if (!LoggerConfig.EnableMethodDumps)
                 return;
 
-            // Retrieve the stack trace to get the caller information
             var method = GetStackTraceInfo();
             var callerMethodName = method?.Name;
             var callerClassName = method?.DeclaringType?.FullName ?? "UnknownClass";
 
-            // If a whitelist is defined, it takes precedence over filtered types
             if (LoggerConfig.WhitelistTypesToLog.Count > 0)
             {
-                // If the type is not found in the whitelist, skip
                 if (!LoggerConfig.WhitelistTypesToLog.Any(t => t.FullName == callerClassName))
                     return;
             }
             else
             {
-                // Skip logging if the source class is in the skip list
                 if (LoggerConfig.TypesToSkipForLogging.Any(t => t.FullName == callerClassName))
                 {
                     return; // Skip this log entry
                 }
             }
 
-            var parameters = method?.GetParameters();
-
-            // Collect parameter names and values
-            List<LogParameter> args = new();
-            for (int i = 0; i < parameters.Length; i++)
-            {
-                var paramName = parameters[i].Name;
-                var paramValue = i < parameterValues.Length ? parameterValues[i] : "Unknown";
-                args.Add(new LogParameter { Name = paramName, Value = paramValue });
-            }
+            var parameters = parameterValues.Select(p => new LogParameter { Name = null, Value = p }).ToList(); // Add dummy names as it's not available from stacktrace
 
             string? testName;
             ThreadsAndTests.TryGetValue(Thread.CurrentThread?.Name ?? "", out testName);
@@ -249,7 +236,7 @@ namespace Chess.Globals
                 CallerMethodName = callerMethodName,
                 LogLevel = LogLevel.Debug,
                 LogCategory = LogCategory.MethodDump,
-                Message = $"{MetaData} - Parameters: {args?.ToDetailedString()}"
+                Message = $"{MetaData} - Parameters: {parameters.ToDetailedString()}"
             });
         }
 
