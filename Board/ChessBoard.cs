@@ -67,7 +67,7 @@ namespace Chess.Board
             StaticLogger.Trace();
             Board = new Square[8, 8];
             InitializeBoard();
-            int row = 0, file = 0;
+            int row = 0, file = 3;
             int whiteQueenID = 1;
             int blackQueenID = 1;
             int whiteRookID = 1;
@@ -75,7 +75,7 @@ namespace Chess.Board
             int whiteBishopID = 1;
             int blackBishopID = 1;
             int whiteKnightID = 1;
-            int blackKnightID = 1;
+            int blackKnightID = 7;
             int whitePawnID = 1;
             int blackPawnID = 1;
             foreach(char c in boardID)
@@ -84,7 +84,7 @@ namespace Chess.Board
                 Square square = Board[row, file];
                 switch(c)
                 {
-                    case '1':
+                    case '1a':
                         {
                             piece = new ChessPieceKing(Color.WHITE, square.Position);
 
@@ -119,7 +119,7 @@ namespace Chess.Board
                             ++blackRookID;
                             break;
                         }
-                    case '7':
+                    case '77':
                         {
                             piece = new ChessPieceBishop(Color.WHITE, whiteBishopID, square.Position);
                             ++whiteBishopID;
