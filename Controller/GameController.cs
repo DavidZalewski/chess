@@ -405,5 +405,12 @@ namespace Chess.Controller
             foreach (NuclearBishopPiece nuclearBishop in nuclearBishops)
                 nuclearBishop.Move(_chessBoard, nuclearBishop.GetCurrentPosition());
         }
+
+        [TestNeeded]
+        public string GetCurrentBoardID()
+        {
+            StaticLogger.Trace();
+            return _chessBoard.BoardID;
+        }
     }
 }

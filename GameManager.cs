@@ -293,6 +293,9 @@ namespace Chess
                         case "load":
                             _gameController.LoadGameState(argument);
                             continue;
+                        case "print":
+                            _console.WriteLine($"Current Board ID: {_gameController.GetCurrentBoardID()}");
+                            continue;
                         case "resign":
                         {
                             if (argument != "black" && argument != "white")

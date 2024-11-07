@@ -21,7 +21,6 @@ namespace Chess.GameState
         }
 
         // Get and increment the next ID for a promoted piece
-        [TestNeeded]
         public int GetNextID(ChessPiece.Color color, string pieceType)
         {
             StaticLogger.Trace();

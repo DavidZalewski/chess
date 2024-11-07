@@ -74,7 +74,7 @@ namespace Chess.Globals
 
     public struct LogParameter
     {
-        public string? Name { get; init; }
+        public string? ParamName { get; init; }
         public object? Value { get; init; }
     }
 
@@ -199,20 +199,27 @@ namespace Chess.Globals
 
         static public void LogMethod(params object[] parameterValues)
         {
-            if (LoggerConfig.MinimumLogLevel < LogLevel.Debug)
+            if (LoggerConfig.MinimumLogLevel < LogLevel.Debug || !LoggerConfig.EnableMethodDumps)
+            {
                 return;
-
-            if (!LoggerConfig.EnableMethodDumps)
-                return;
+            }
 
             var method = GetStackTraceInfo();
-            var callerMethodName = method?.Name;
-            var callerClassName = method?.DeclaringType?.FullName ?? "UnknownClass";
 
-            if (LoggerConfig.WhitelistTypesToLog.Count > 0)
+            if (method == null)
+            {
+                return; // Method not found in stack trace, return.
+            }
+
+            var callerMethodName = method.Name;
+            var callerClassName = method.DeclaringType?.FullName ?? "UnknownClass";
+
+            if (LoggerConfig.WhitelistTypesToLog.Any(t => t.FullName == callerClassName))
             {
                 if (!LoggerConfig.WhitelistTypesToLog.Any(t => t.FullName == callerClassName))
+                {
                     return;
+                }
             }
             else
             {
@@ -222,7 +229,13 @@ namespace Chess.Globals
                 }
             }
 
-            var parameters = parameterValues.Select(p => new LogParameter { Name = null, Value = p }).ToList(); // Add dummy names as it's not available from stacktrace
+            var parameters = parameterValues
+                .Select((p, index) => new LogParameter
+                {
+                    ParamName = method.GetParameters()?.Length > index ? method.GetParameters()[index].Name : "Unknown",
+                    Value = p
+                })
+                .ToList();
 
             string? testName;
             ThreadsAndTests.TryGetValue(Thread.CurrentThread?.Name ?? "", out testName);

@@ -3,6 +3,25 @@ using System.Collections.Concurrent;
 
 namespace Tests
 {
+    public class LoggingMock
+    {
+        public void MockVoidMethod(List<string> stringList, int count, Dictionary<string, object> logParamsDictionary)
+        {
+            StaticLogger.LogMethod(stringList, count, logParamsDictionary);
+        }
+
+        public int MockReturnMethod(int arg1, int arg2, string arg3)
+        {
+            StaticLogger.LogMethod(arg1, arg2, arg3);
+            return 0;
+        }
+
+        public static void MockStaticVoidMethod(string arg1, int arg2)
+        {
+            StaticLogger.LogMethod(arg1, arg2);
+        }
+    }
+
     [TestFixture]
     [Category("LOGGER")]
     public class StaticLoggerTests : TestBase
@@ -85,14 +104,19 @@ namespace Tests
         }
 
         [Test]
-        public void LogMethod_ShouldLogCorrectly()
+        public void LogMethod_ShouldLogCorrectly_MockVoidMethod()
         {
             // Arrange
             StaticLogger.LoggerConfig.MinimumLogLevel = LogLevel.Debug;
             StaticLogger.LoggerConfig.EnableMethodDumps = true;
 
+            var logParamsDictionary = new Dictionary<string, object> { { "key", "value" } };
+            var stringList = new List<string> { "item1", "item2" };
+
+            LoggingMock loggingMock = new LoggingMock();
+
             // Act
-            StaticLogger.LogMethod(new object[] { "param1", 2 });
+            loggingMock.MockVoidMethod(stringList, 42, logParamsDictionary);
 
             // Assert
             lock (_lock)
@@ -102,11 +126,14 @@ namespace Tests
                 _logEntries.TryPeek(out logEntry);
                 Assert.That(logEntry.LogLevel, Is.EqualTo(LogLevel.Debug));
                 Assert.That(logEntry.LogCategory, Is.EqualTo(LogCategory.MethodDump));
-                Assert.That(logEntry.Message.Contains("param1"));
-                Assert.That(logEntry.Message.Contains("2"));
+                Assert.That(logEntry.Message.Contains("stringList"));
+                Assert.That(logEntry.Message.Contains("logParamsDictionary"));
+                Assert.That(logEntry.Message.Contains("count"));
+                Assert.That(logEntry.Message.Contains("value"));
+                Assert.That(logEntry.Message.Contains("42"));
+                Assert.That(logEntry.Message.Contains("key"));
             }
         }
-
         [Test]
         public void DumpLog_ShouldDumpAllLogs()
         {
