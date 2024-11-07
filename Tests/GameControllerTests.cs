@@ -414,6 +414,7 @@ namespace Tests
                 Assert.That(gameController.GetCurrentBoardID(), Is.Not.Null);
                 Assert.That(String.IsNullOrWhiteSpace(gameController.GetCurrentBoardID()), Is.False);
                 Assert.That(gameControllerBoardIDTurn1, Is.Not.EqualTo(gameControllerBoardIDTurn0), "The two board IDs should be different");
+                Assert.That(gameControllerBoardIDTurn1, Is.EqualTo(turn1BoardID), "The two board IDs should be equal");
             });
         }
 
