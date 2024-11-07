@@ -1,0 +1,54 @@
+Commit 1 - Dec 27, 2023 - Initial: https://github.com/DavidZalewski/chess/commit/9abf993c49d6c82c64521f424603c4c55c0f32fe
+
+Commit 14 - Dec 31, 2023 - First Huge Refactor: https://github.com/DavidZalewski/chess/commit/af5ab951ba9a961a563ed1c23567a072608fd0ca
+
+Commit 16 - Jan 2, 2024 - Pawn Promotion, Factory Methods Added, Initial King Code: https://github.com/DavidZalewski/chess/commit/39ea04cb6e72b2d561af83a941d35a7e7293139a
+
+Commit 19 - Jan 3, 2024 - Large Refactoring + KingCheckService: https://github.com/DavidZalewski/chess/commit/ac87cbc3d44039c88a557d8320330b58d3db9a94
+
+Commit 20 - Jan 3, 2024 - Reorganized files into folders: https://github.com/DavidZalewski/chess/commit/3616fbc95e72ade4063b14b1c6d7349f7b2e0864
+
+Commit 21 - Jan 3, 2024 - Good Progress!!!: https://github.com/DavidZalewski/chess/commit/afb5d914406a24687988e6ec1ce35ad08e4225aa
+
+Commit 32 - Mar 6, 2024 - Refactored Board Position: https://github.com/DavidZalewski/chess/commit/f97591988f616e279f3ae2ca61dfb07e676d5c0d
+
+Commit 33 - Mar 6, 2024 - More BoardPosition Refactorings: https://github.com/DavidZalewski/chess/commit/2bd6e4f7b8fa0fe0cb96366808da11a5b38a90e9
+
+Commit 34 - Mar 8, 2024 - Redesign of ChessBoard: https://github.com/DavidZalewski/chess/commit/032fe4132bc6dc85e380be004bae4e49c57dc284
+
+Commit 41 - Mar 11, 2024 - More Refactorings: https://github.com/DavidZalewski/chess/commit/6ff6bad4adf5cb5c69152a1f08b2ff82a7abbd78 
+
+Commit 47 - Mar 14, 2024 - More Refactoring: https://github.com/DavidZalewski/chess/commit/54364a8b8568709371a44192452b649314e18119
+
+Commit 49 - Mar 14, 2024 - More Refactorings: https://github.com/DavidZalewski/chess/commit/fc7d10f9f2e477101c005f57e2e2d24aefce158f
+
+Commit 50 - Mar 14, 2024 - 98% Functional game!: https://github.com/DavidZalewski/chess/commit/aac1136fa6921157d67de5348ac018d95ff05c55
+
+Commit 53 - Mar 15, 2024 - Fully Functional Game!: https://github.com/DavidZalewski/chess/commit/b379eab0018ce26e6dc5ac543c4581e511ff7806
+
+Commit 60 - Jun 6, 2024 - Ultrafast Count of depth7 possible moves: https://github.com/DavidZalewski/chess/commit/ec9cf924896f1a2906d4032d96ed2262aa878704
+
+Commit 71 - Jul 8, 2024 - NuclearHorse initial code: https://github.com/DavidZalewski/chess/commit/8f4756f890951c0da29a4a766499911eebff84a5
+
+Commit 73 - Jul 10, 2024 - 98% Functional RuleSet!: https://github.com/DavidZalewski/chess/commit/18ce8c92270a404a4e7dc2eba2b918b195135c51
+
+Commit 76 - Oct 6, 2024 - Custom Build Test Tool: https://github.com/DavidZalewski/chess/commit/b489b70a153d7c9c071aae500731569ec62c9f21
+
+Commit 77 - Oct 6, 2024 - More Detailed Test Output Logging: https://github.com/DavidZalewski/chess/commit/cecb21b317c0fbd6a31cd3e4e403c7c1dbca9c69
+
+Commit 78 - Oct 7, 2024 - Solved Caesars Mate Test Failing: https://github.com/DavidZalewski/chess/commit/02989440183d88b7d9e40ae1fbe5c0a2bb6a2124
+
+Commit 79 - Oct 8, 2024 - ETL For Automating Test Cases: https://github.com/DavidZalewski/chess/commit/2818d274ac62dfcb4d4e5044d1f1aa18b5649b92
+
+Commit 86 - Oct 20, 2024 - Big Logging Changes: https://github.com/DavidZalewski/chess/commit/33c0c875206db09426f09a02520461fc5cebb0cf
+
+Commit 88 - Oct 21, 2024 - Finally Fixed En Passant Double Capture Bug!: https://github.com/DavidZalewski/chess/commit/c50a99f9795aa17cfa8c60b81608ac542a201da0
+
+Commit 89 - Oct 25, 2024 - All Chess Replay Files Verified: https://github.com/DavidZalewski/chess/commit/901bdd96b5c976138f268641e407a554257f6eed
+
+Commit 97 - Oct 28, 2024 - Stalemate + Resignation Handling: https://github.com/DavidZalewski/chess/commit/c5a40370b9160442d88ce138b86021589642f122
+
+Commit 111 - Nov 3, 2024 - Merge pull request #17 from DavidZalewski/modelB-nov-3-2024-3
+: https://github.com/DavidZalewski/chess/commit/64dfba0e300cac02ca75bccd2d3ed24f656c27ba
+
+Commit 120 - Nov 7, 2024 - Update GameControllerTests: https://github.com/DavidZalewski/chess/commit/666cc30c9ab928e8c3e88b5627be4e4a3abf798e
