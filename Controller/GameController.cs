@@ -410,6 +410,7 @@ namespace Chess.Controller
         public string GetCurrentBoardID()
         {
             StaticLogger.Trace();
+            _chessBoard.GenerateBoardID();
             return _chessBoard.BoardID;
         }
     }

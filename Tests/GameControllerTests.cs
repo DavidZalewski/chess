@@ -325,5 +325,45 @@ namespace Tests
             // Assert
             Assert.That(result, Is.False);
         }
+
+        [Test]
+        public void LoadGameState_Success()
+        {
+            // Arrange
+            const string testSaveFileName = "test_save.bin";
+            string workingDirectory = Directory.GetCurrentDirectory();
+            string testSaveFilePath = Path.Combine(workingDirectory, testSaveFileName);
+
+            // Ensure the test file doesn't exist initially
+            if (File.Exists(testSaveFilePath))
+            {
+                File.Delete(testSaveFilePath);
+            }
+
+            var chessBoard = new ChessBoard();
+            var gameController = new GameController(chessBoard);
+
+            // Create a game state to save (you might want to simulate some game progress here)
+            gameController.StartGame();
+            // Assuming SaveGameState method exists, save the current state
+            gameController.SaveGameState(testSaveFileName);
+
+            // Act
+            bool loadSuccessful = gameController.LoadGameState(testSaveFileName);
+
+            // Assert
+            Assert.Multiple(() =>
+            {
+                Assert.That(loadSuccessful, Is.True, "Load should be successful");
+                Assert.That(File.Exists(testSaveFilePath), Is.True, "Save file should still exist after loading");
+
+                // Here you might want to check if game state properties match with what's been saved
+                // For example:
+                // Assert.That(gameController.TurnNumber, Is.EqualTo(initialTurnNumberBeforeSave));
+                // or check if specific pieces are in expected positions
+            });
+        }
+
+
     }
 }

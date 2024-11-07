@@ -493,6 +493,56 @@ namespace Tests
 
             Assert.That(true, Is.True);
         }
+
+        [Test]
+        public void SaveAndLoadGameState_PartialGame()
+        {
+            // Arrange
+            const string saveFileName = "partial_game_save.bin";
+            var consoleInputs = new Queue<string>();
+            consoleInputs.Enqueue("n"); // no to tutorial
+            consoleInputs.Enqueue("Classic"); // init game with all pieces
+            consoleInputs.Enqueue("n"); // no to AI
+
+            // Simulate some moves
+            consoleInputs.Enqueue("WP5 E4");
+            consoleInputs.Enqueue("BP5 E5");
+            consoleInputs.Enqueue("print"); // Assuming 'print' command outputs the BoardID or some state identifier ----
+
+            // ***********************************CR: WHERE IS THE print command? I needed it to be here based on Instructions F1
+            consoleInputs.Enqueue("save " + saveFileName);
+            consoleInputs.Enqueue("quit");
+
+            IConsole consoleService = new MockConsoleService(consoleInputs);
+            GameController gameController = GetGameController(consoleService);
+            GameManager game = new GameManager(consoleService, gameController);
+
+            // Act: Run the game to save state
+            game.Start();
+
+            // Assert for save
+            Assert.That(File.Exists(saveFileName), Is.True, "File should be saved");
+
+            // Now load the saved game
+            var newConsoleInputs = new Queue<string>();
+            newConsoleInputs.Enqueue("n"); // no to tutorial
+            newConsoleInputs.Enqueue("load " + saveFileName);
+            newConsoleInputs.Enqueue("print"); // Assuming 'print' command outputs the BoardID or some state identifier ----
+            newConsoleInputs.Enqueue("quit");
+
+            var loadConsole = new MockConsoleService(newConsoleInputs);
+            var loadGameController = new GameController(new ChessBoard());
+            var loadGame = new GameManager(loadConsole, loadGameController);
+
+            // Act: Load the game
+            loadGame.Start();
+
+            // Assert for load
+            string expectedBoardID = "608428A6CC0CCCCC00C0000000A0000000B0000000000000BB3BBBBB59701795"; // Replace with actual expected ID after running the save test
+            Assert.That(((MockConsoleService)loadConsole).OutputContainsString(expectedBoardID), Is.True, "Board state should match after loading"); 
+            // CR: doing it this way means we need to assert for the same expected board ID being printed twice in the output.
+            // Yet here we only assert for one.
+        }
     }
 
 
