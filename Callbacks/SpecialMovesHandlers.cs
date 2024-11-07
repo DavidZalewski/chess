@@ -145,7 +145,6 @@ namespace Chess.Callbacks
             return false;
         }
 
-        [TestNeeded]
         internal static void PawnPromotion(ChessBoard board, BoardPosition position, ChessPiece piece)
         {
             StaticLogger.Trace();

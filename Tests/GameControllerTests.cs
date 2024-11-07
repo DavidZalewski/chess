@@ -1,6 +1,7 @@
 ﻿using Chess.Board;
 using Chess.Controller;
 using Chess.GameState;
+using Chess.Globals;
 using Chess.Pieces;
 using Chess.Services;
 
@@ -364,6 +365,57 @@ namespace Tests
             });
         }
 
+        [TestCase("WK1 C3")]
+        [TestCase("WK1 A3")]
+        [TestCase("WK2 F3")]
+        [TestCase("WK2 H3")]
+        [TestCase("WP1 A3")]
+        [TestCase("WP1 A4")]
+        [TestCase("WP2 B3")]
+        [TestCase("WP2 B4")]
+        [TestCase("WP3 C3")]
+        [TestCase("WP3 C4")]
+        [TestCase("WP4 D3")]
+        [TestCase("WP4 D4")]
+        [TestCase("WP5 E3")]
+        [TestCase("WP5 E4")]
+        [TestCase("WP6 F3")]
+        [TestCase("WP6 F4")]
+        [TestCase("WP7 G3")]
+        [TestCase("WP7 G4")]
+        [TestCase("WP8 H3")]
+        [TestCase("WP8 H4")]
+        public void GetCurrentBoardID_Success(String input)
+        {
+            List<ChessPiece> chessPieces = ChessPieceFactory.CreateChessPiecesClassic();
+            ChessBoard chessBoard = new();
+            chessBoard.PopulateBoard(chessPieces);
+            GameController gameController = new(chessBoard);
+
+            Turn? turn = gameController.GetTurnFromCommand(input);
+            Assert.That(turn, Is.Not.Null);
+
+            string? turn1BoardID = turn?.ChessBoard?.BoardID;
+            Assert.That(turn1BoardID, Is.Not.Null);
+            StaticLogger.Log($"turn1BoardID (turn?.ChessBoard?.BoardID): {turn1BoardID}");
+
+            string gameControllerBoardIDTurn0 = gameController.GetCurrentBoardID();
+            StaticLogger.Log($"gameControllerBoardIDTurn0 (gameController.GetCurrentBoardID()): {gameControllerBoardIDTurn0}");
+
+            // Act
+            gameController.ApplyTurnToGameState(turn);
+            StaticLogger.Log("gameController.ApplyTurnToGameState(turn) called");
+
+            string gameControllerBoardIDTurn1 = gameController.GetCurrentBoardID();
+            StaticLogger.Log($"gameControllerBoardIDTurn1 (gameController.GetCurrentBoardID()): {gameControllerBoardIDTurn1}");
+
+            Assert.Multiple(() =>
+            {
+                Assert.That(gameController.GetCurrentBoardID(), Is.Not.Null);
+                Assert.That(String.IsNullOrWhiteSpace(gameController.GetCurrentBoardID()), Is.False);
+                Assert.That(gameControllerBoardIDTurn1, Is.Not.EqualTo(gameControllerBoardIDTurn0), "The two board IDs should be different");
+            });
+        }
 
     }
 }

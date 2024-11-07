@@ -2,7 +2,7 @@
 using Chess.GameState;
 using Chess.Pieces;
 
-namespace Chess.Tests
+namespace Tests
 {
     public class PromotionTrackerTests
     {

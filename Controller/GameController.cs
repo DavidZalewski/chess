@@ -246,7 +246,6 @@ namespace Chess.Controller
             }
         }
 
-        [TestNeeded]
         public bool LoadGameState(string saveFileName)
         {
             StaticLogger.Trace();
@@ -406,7 +405,6 @@ namespace Chess.Controller
                 nuclearBishop.Move(_chessBoard, nuclearBishop.GetCurrentPosition());
         }
 
-        [TestNeeded]
         public string GetCurrentBoardID()
         {
             StaticLogger.Trace();
