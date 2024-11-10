@@ -45,5 +45,10 @@ namespace Chess.Pieces
             StaticLogger.Trace();
             return false;
         }
+
+        public override List<Square> GetValidSquares(ChessBoard chessBoard)
+        {
+            return new List<Square>();
+        }
     }
 }

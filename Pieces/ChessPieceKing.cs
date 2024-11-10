@@ -116,5 +116,46 @@ namespace Chess.Pieces
         }
 
         internal void SetWasInCheck() { StaticLogger.Trace(); _wasInCheck = true; }
+
+        public override List<Square> GetValidSquares(ChessBoard chessBoard)
+        {
+            List<Square> validSquares = new();
+
+            BoardPosition? upRight = _currentPosition.Up()?.Right();
+            BoardPosition? downRight = _currentPosition.Down()?.Right();
+            BoardPosition? upLeft = _currentPosition.Up()?.Left();
+            BoardPosition? downLeft = _currentPosition.Down()?.Left();
+            BoardPosition? up = _currentPosition.Up();
+            BoardPosition? down = _currentPosition.Down();
+            BoardPosition? left = _currentPosition.Left();
+            BoardPosition? right = _currentPosition.Right();
+
+            if (upRight != null)
+                validSquares.Add(new Square(upRight, this));
+
+            if (downRight != null)
+                validSquares.Add(new Square(downRight, this));
+
+            if (upLeft != null)
+                validSquares.Add(new Square(upLeft, this));
+
+            if (downLeft != null)
+                validSquares.Add(new Square(downLeft, this));
+
+            if (up != null)
+                validSquares.Add(new Square(up, this));
+
+            if (down != null)
+                validSquares.Add(new Square(down, this));
+
+            if (left != null)
+                validSquares.Add(new Square(left, this));
+
+            if (right != null)
+                validSquares.Add(new Square(right, this));
+
+            return validSquares;
+        }
+
     }
 }

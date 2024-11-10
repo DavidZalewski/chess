@@ -44,5 +44,12 @@ namespace Chess.Pieces
             // does this need to exist?
             return false;
         }
+
+        public override List<Square> GetValidSquares(ChessBoard chessBoard)
+        {
+            List<Square> squares = _chessPieceBishop.GetValidSquares(chessBoard);
+            squares.AddRange(_chessPieceRook.GetValidSquares(chessBoard));
+            return squares;
+        }
     }
 }

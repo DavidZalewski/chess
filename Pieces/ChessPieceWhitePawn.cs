@@ -103,5 +103,26 @@ namespace Chess.Pieces
             // does this need to exist?
             return false;
         }
+
+        public override List<Square> GetValidSquares(ChessBoard chessBoard)
+        {
+            List<Square> validSquares = new();
+
+            BoardPosition? forward = _currentPosition.Up();
+            BoardPosition? forwardLeft = forward?.Left();
+            BoardPosition? forwardRight = forward?.Right();
+
+            if (forward != null)
+                validSquares.Add(new Square(forward, this));
+
+            if (forwardLeft != null)
+                validSquares.Add(new Square(forwardLeft, this));
+
+            if (forwardRight != null)
+                validSquares.Add(new Square(forwardRight, this));
+
+            return validSquares;
+        }
+
     }
 }

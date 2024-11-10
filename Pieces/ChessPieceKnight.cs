@@ -67,5 +67,29 @@ namespace Chess.Pieces
             // does this need to exist?
             return false;
         }
+
+        public override List<Square> GetValidSquares(ChessBoard chessBoard)
+        {
+            List<Square> validSquares = new();
+            int[] rowOffsets = { 2, 2, 1, 1, -1, -1, -2, -2 };
+            int[] colOffsets = { 1, -1, 2, -2, 2, -2, 1, -1 };
+
+            for (int i = 0; i < rowOffsets.Length; i++)
+            {
+                int newRow = _currentPosition.RankAsInt + rowOffsets[i];
+                int newCol = _currentPosition.FileAsInt + colOffsets[i];
+
+                if (newRow >= 0 && newRow < 8 && newCol >= 0 && newCol < 8)
+                {
+                    BoardPosition newPosition = new((RANK)newRow, (FILE)newCol);
+                    if (IsValidMove(chessBoard, newPosition))
+                    {
+                        validSquares.Add(new Square(newPosition, this));
+                    }
+                }
+            }
+
+            return validSquares;
+        }
     }
 }
