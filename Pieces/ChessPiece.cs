@@ -1,4 +1,5 @@
-﻿using Chess.Board;
+﻿using Chess.Attributes;
+using Chess.Board;
 using Chess.Callbacks;
 using Chess.Globals;
 
@@ -190,11 +191,11 @@ namespace Chess.Pieces
             _IsEnPassantCallBackFunction = callback;
         }
 
-        // TODO: Define abstract method GetPossibleSquares() for each ChessPiece
-        // Each piece will be responsible for returning squares it can possibly land on
-        // Use this to replace the brute force for loop in KingCheckService
-
-        // used by tests to setup the state of King Piece for certain unit tests
+        [ToDo($@"
+Define abstract method GetPossibleSquares() for each ChessPiece
+Each piece will be responsible for returning squares it can possibly land on
+Use this to replace the brute force for loop in KingCheckService")]
+        // used by tests to setup the state of King Piece for certain unit tests"
         internal void SetHasMoved() { StaticLogger.Trace(); _hasMoved = true; }
 
         public bool Equals(ChessPiece other)

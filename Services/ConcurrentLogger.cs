@@ -1,8 +1,9 @@
-﻿using Chess.Globals;
+﻿using Chess.Attributes;
+using Chess.Globals;
 
 namespace Chess.Services
 {
-    // TODO: Move this out of Services namespace/folder and put into Logger namespace/folder
+    [ToDo("Move this out of Services namespace/folder and put into Logger namespace/folder")]
     public class ConcurrentLogger
     {
         private static int _counter = 0;

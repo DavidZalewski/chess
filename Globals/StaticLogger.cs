@@ -1,13 +1,14 @@
 ﻿using System.Collections.Concurrent;
 using System.Diagnostics;
 using System.Reflection;
+using Chess.Attributes;
 using Chess.Interfaces;
 using Chess.Services;
 using NUnit.Framework;
 
 namespace Chess.Globals
 {
-    // TODO: Separate these classes into separate files. group them under folder Logger
+    [ToDo("Separate these classes into separate files. group them under folder Logger")]
     public enum LogLevel
     {
         Fatal,

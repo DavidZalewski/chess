@@ -1,4 +1,5 @@
-﻿using Microsoft.VisualStudio.TestPlatform.Utilities;
+﻿using Chess.Attributes;
+using Microsoft.VisualStudio.TestPlatform.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,7 +21,7 @@ namespace Tests.Services
         private static int _totalResignsForWhite = 0;
         private static int _totalResignsForBlack = 0;
         private static int _totalStalemates = 0;
-        private static int _totalDraws = 0; // TODO: Not implemented yet
+        private static int _totalDraws = 0; 
 
 
         public ChessDotComReplayMockConsoleService(Queue<string> inputs, string file, string expectedOutcome, bool showOutputOfWinningGames) : base(inputs)
@@ -55,7 +56,8 @@ namespace Tests.Services
         {
             _totalFiles += 1;
 
-            switch(_expectedOutcome)
+            ToDoAttribute.Add("Draws Not implemented yet");
+            switch (_expectedOutcome)
             {
                 case "White wins against Black by CheckMate!":
                     ++_totalWinsForWhite;

@@ -1,4 +1,5 @@
-﻿using Chess.Callbacks;
+﻿using Chess.Attributes;
+using Chess.Callbacks;
 using Chess.Controller;
 using Chess.GameState;
 using Chess.Globals;
@@ -331,9 +332,9 @@ namespace Chess
                                 }
                             }
                         }
-                    }    
+                    }
 
-                    // TODO: Move this logic into GetTurnFromCommand?
+                    ToDoAttribute.Add("Move this logic into GetTurnFromCommand?");
                     if (!command.StartsWith('w') && !command.StartsWith('b'))
                     {
                         _console.WriteLine("Invalid Color Specified. Use B or W when starting command.");
@@ -345,7 +346,7 @@ namespace Chess
                         continue;
                     }
 
-                    // Todo: resolve duplicate input parsing logic here and above
+                    ToDoAttribute.Add("resolve duplicate input parsing logic here and above");
                     Turn? turn = _gameController.GetTurnFromCommand(input);
                     if (turn == null)
                     {
@@ -354,11 +355,12 @@ namespace Chess
                     }
 
 #if COMPILE_WITH_CHECK_SERVICE
-                    // I think the problem is here. This simulates future moves, so it must be deleting/creating disabled squares unintentionally
+                    ToDoAttribute.Add("I think the problem is here. This simulates future moves, so it must be deleting/creating disabled squares unintentionally");
                     if (_gameController.IsCheckMate(turn))
                     {
+                        ToDoAttribute.Add("Put these in a config file somewhere so both applications can read these");
                         if (turn.PlayerTurn.Equals(Turn.Color.WHITE))
-                            _console.WriteLine("White wins against Black by CheckMate!"); // TODO: Put these in a config file somewhere so both applications can read these
+                            _console.WriteLine("White wins against Black by CheckMate!"); 
                         else
                             _console.WriteLine("Black wins against White by CheckMate!");
                         _console.WriteLine("Game Over.");

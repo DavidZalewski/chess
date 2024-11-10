@@ -1,4 +1,5 @@
-﻿using Chess.Board;
+﻿using Chess.Attributes;
+using Chess.Board;
 using Chess.Callbacks;
 using Chess.Globals;
 using Chess.Pieces;
@@ -40,7 +41,8 @@ namespace Chess.GameState
             SpecialMovesHandlers.GetActionFromResult = (action) => Action = " " + action + " ";
             ChessBoard = new ChessBoard(chessBoard); // copy state of board
             ChessPieces = ChessBoard.GetActivePieces();
-            ChessPiece = ChessPieces.First(p => p.Equals(piece)); // TODO: this should just be an assert
+            ToDoAttribute.Add("this should just be an assert");
+            ChessPiece = ChessPieces.First(p => p.Equals(piece));
             if (!ChessPiece.IsValidMove(ChessBoard, NewPosition))
             {
                 IsValidTurn = false;

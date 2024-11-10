@@ -1,4 +1,5 @@
-﻿using Chess.Globals;
+﻿using Chess.Attributes;
+using Chess.Globals;
 using Chess.Interfaces;
 using Chess.Services;
 using System;
@@ -32,6 +33,7 @@ namespace Tests.Services
                 }
                 string readOut = Inputs.Dequeue();
                 Console.WriteLine(readOut); // so we can see what the input is supposed to be at this point
+                ToDoAttribute.Add("Figure out what we are doing here");
                 //StaticLogger.Log(readOut); // TODO: Figure out what we are doing here
                 return readOut;
             }

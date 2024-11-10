@@ -1,4 +1,5 @@
-﻿using Chess.Board;
+﻿using Chess.Attributes;
+using Chess.Board;
 using Chess.Callbacks;
 using Chess.GameState;
 using Chess.Globals;
@@ -118,16 +119,17 @@ namespace Chess.Services
                 // iterate over all board positions
                 SpecialMovesHandlers.ByPassPawnPromotionPromptUser = true;
                 SimulationService.BeginSimulation();
-                // TODO: This For Loop makes debugging a nightmare
-                // Replace this later with foreach (Square sq in piece.GetPossibleSquares())
-                // Or have the ChessPiece.GetPossibleTurns() and do this logic in ChessPiece
-                // Then write unit tests for it
+                ToDoAttribute.Add($@"
+This For Loop makes debugging a nightmare
+Replace this later with foreach (Square sq in piece.GetPossibleSquares())
+Or have the ChessPiece.GetPossibleTurns() and do this logic in ChessPiece
+Then write unit tests for it");
                 for (int i = 0; i < 8; i++)
                 {
                     for (int j = 0; j < 8; j++)
                     {
                         BoardPosition pos = new((RANK)i, (FILE)j);
-                        // TODO: A pawn doesnt need to iterate 64 squares to determine if it can make a valid move
+                        ToDoAttribute.Add("A pawn doesnt need to iterate 64 squares to determine if it can make a valid move");
                         Turn possibleTurn = new(turn.TurnNumber + 1, piece, piece.GetCurrentPosition(), pos, turn.ChessBoard);
                         if (possibleTurn.IsValidTurn)
                             possibleMoves.Add(possibleTurn);
@@ -147,7 +149,7 @@ namespace Chess.Services
             }
 
             // If the king cannot make any moves (would be in check) but is not in check currently, we consider this a stalemate
-            // TODO: Refactor the duplicate COLOR enums into a single enum
+            ToDoAttribute.Add("Refactor the duplicate COLOR enums into a single enum");
             ChessPiece.Color colorToCheck = turn.PlayerTurn.Equals(Turn.Color.WHITE)? ChessPiece.Color.BLACK : ChessPiece.Color.WHITE;
             if (!IsKingInCheck(colorToCheck, turn.ChessBoard))
             {

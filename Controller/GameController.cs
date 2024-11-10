@@ -56,7 +56,7 @@ namespace Chess.Controller
             //_turnNumber = 1;
         }
 
-        // TODO: Encapsulate all string to piece, and piece to string translations in another class
+        [ToDo("Encapsulate all string to piece, and piece to string translations in another class")]
         internal ChessPiece? FindChessPieceFromString(string input)
         {
             StaticLogger.Trace();

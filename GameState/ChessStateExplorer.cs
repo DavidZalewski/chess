@@ -1,4 +1,5 @@
-﻿using Chess.Board;
+﻿using Chess.Attributes;
+using Chess.Board;
 using Chess.Callbacks;
 using Chess.Globals;
 using Chess.Pieces;
@@ -6,7 +7,7 @@ using Chess.Services;
 
 namespace Chess.GameState
 {
-    // TODO: Write your own unit test runner that supports multi process better
+    [ToDo("Write your own unit test runner that supports multi process better")]
     internal class ChessStateExplorer
     {
         private static string cacheFilePath = "chess_cache.bin";
@@ -121,7 +122,8 @@ namespace Chess.GameState
             bool isStaleMate = false;
             if (kingCheckService.IsCheckMate(turn, out isStaleMate))
             {
-                turn.IsCheckMate = true; // TODO: Do we need this?
+                ToDoAttribute.Add("Do we need this?");
+                turn.IsCheckMate = true;
                 logger.Log($"ChessStateExplorer - END: BoardID {turn.ChessBoard.BoardID} at depth {depth} has reached CHECKMATE, count: {possibleMoves.Count} ", threadId);
                 return possibleMoves;
             }

@@ -1,4 +1,5 @@
-﻿using Chess.Board;
+﻿using Chess.Attributes;
+using Chess.Board;
 using Chess.Controller;
 using Chess.GameState;
 using Chess.Globals;
@@ -10,12 +11,13 @@ using Tests.Services;
 namespace Tests.Globals
 {
     [Category("CORE")]
-    // TODO: The Parellizable attribute breaks the logger
-    // Because the tests are running on independent threads, there is a race condition on the StaticLogger
-    // So we need to make sure the StaticLogger is also thread safe, so that the output makes sense and is readable
-    // This is where a collection of sub loggers would be useful. because then that way each thread has its own logger
-    // the Logger can collect all the log lines, and print them out in a nice order at the end, reducing the difficulty of trying to read 
-    // a log file with multiple threads interweaving together
+    [ToDo($@"
+The Parellizable attribute breaks the logger
+Because the tests are running on independent threads, there is a race condition on the StaticLogger
+So we need to make sure the StaticLogger is also thread safe, so that the output makes sense and is readable
+This is where a collection of sub loggers would be useful. because then that way each thread has its own logger
+the Logger can collect all the log lines, and print them out in a nice order at the end, reducing the difficulty of trying to read 
+a log file with multiple threads interweaving together")]
     [Parallelizable(ParallelScope.All)]
     public class TestStaticLogger : TestBase
     {

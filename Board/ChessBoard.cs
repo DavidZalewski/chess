@@ -1,4 +1,5 @@
-﻿using Chess.Globals;
+﻿using Chess.Attributes;
+using Chess.Globals;
 using Chess.Pieces;
 using Chess.Services;
 using NUnit.Framework;
@@ -172,7 +173,7 @@ namespace Chess.Board
             }
         }
 
-        // TODO: Change this back to private later
+        [ToDo("Change this back to private later")]
         public void GenerateBoardID()
         {
             StaticLogger.Trace();
