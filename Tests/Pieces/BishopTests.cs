@@ -279,13 +279,13 @@ namespace Tests.Pieces
             ChessBoard chessBoard = new();
             chessBoard.AddPiece(piece);
 
-            List<Square> squares = piece.GetValidSquares(chessBoard);
-            foreach(Square square in squares)
+            List<BoardPosition> possiblePositions = piece.GetPossiblePositions(chessBoard);
+            foreach(BoardPosition possiblePosition in possiblePositions)
             {
-                Console.WriteLine($"{square.Position.StringValue}");
+                Console.WriteLine($"{possiblePosition.StringValue}");
             }
 
-            Assert.That(squares.Count, Is.EqualTo(9));
+            Assert.That(possiblePositions.Count, Is.EqualTo(9));
         }
 
         [TestCase("A1")]
@@ -299,13 +299,13 @@ namespace Tests.Pieces
             ChessBoard chessBoard = new();
             chessBoard.AddPiece(piece);
 
-            List<Square> squares = piece.GetValidSquares(chessBoard);
-            foreach (Square square in squares)
+            List<BoardPosition> possiblePositions = piece.GetPossiblePositions(chessBoard);
+            foreach (BoardPosition possiblePosition in possiblePositions)
             {
-                Console.WriteLine($"{square.Position.StringValue}");
+                Console.WriteLine($"{possiblePosition.StringValue}");
             }
 
-            Assert.That(squares.Count, Is.EqualTo(7));
+            Assert.That(possiblePositions.Count, Is.EqualTo(7));
         }
 
         [TestCase("D4")]
@@ -319,13 +319,13 @@ namespace Tests.Pieces
             ChessBoard chessBoard = new();
             chessBoard.AddPiece(piece);
 
-            List<Square> squares = piece.GetValidSquares(chessBoard);
-            foreach (Square square in squares)
+            List<BoardPosition> possiblePositions = piece.GetPossiblePositions(chessBoard);
+            foreach (BoardPosition possiblePosition in possiblePositions)
             {
-                Console.WriteLine($"{square.Position.StringValue}");
+                Console.WriteLine($"{possiblePosition.StringValue}");
             }
 
-            Assert.That(squares.Count, Is.EqualTo(13));
+            Assert.That(possiblePositions.Count, Is.EqualTo(13));
         }
 
     }

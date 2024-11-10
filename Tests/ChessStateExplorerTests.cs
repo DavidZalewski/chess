@@ -14,7 +14,6 @@ namespace Tests
     internal class ChessStateExplorerTests : TestBase
     {
         [Test]
-        [Ignore("Too Time Consuming")]
         [Parallelizable(ParallelScope.Self)]
         public void GenerateAllPossibleMoves_Depth_4_Success()
         {
@@ -92,7 +91,6 @@ MethodInvoker.Invoke(Object obj, IntPtr* args, BindingFlags invokeAttr)
         }
 
         [Test]
-        [Ignore("Too Time Consuming")]
         [Parallelizable(ParallelScope.Self)]
         public void GenerateAllPossibleMovesTurnNode_Depth_4_Success()
         {

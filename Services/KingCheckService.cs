@@ -111,9 +111,9 @@ namespace Chess.Services
             {
                 SpecialMovesHandlers.ByPassPawnPromotionPromptUser = true;
                 SimulationService.BeginSimulation();
-                foreach (Square sq in piece.GetValidSquares(turn.ChessBoard))
+                foreach (BoardPosition pos in piece.GetPossiblePositions(turn.ChessBoard))
                 {
-                    Turn possibleTurn = new(turn.TurnNumber + 1, piece, piece.GetCurrentPosition(), sq.Position, turn.ChessBoard);
+                    Turn possibleTurn = new(turn.TurnNumber + 1, piece, piece.GetCurrentPosition(), pos, turn.ChessBoard);
                     if (possibleTurn.IsValidTurn)
                         possibleMoves.Add(possibleTurn);
                 }

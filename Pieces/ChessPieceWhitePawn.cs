@@ -104,9 +104,9 @@ namespace Chess.Pieces
             return false;
         }
 
-        public override List<Square> GetValidSquares(ChessBoard chessBoard)
+        public override List<BoardPosition> GetPossiblePositions(ChessBoard chessBoard)
         {
-            List<Square> validSquares = new();
+            List<BoardPosition> possiblePositions = new();
 
             BoardPosition? forward = _currentPosition.Up();
             BoardPosition? forwardLeft = forward?.Left();
@@ -114,18 +114,18 @@ namespace Chess.Pieces
             BoardPosition? doubleForward = forward?.Up();
 
             if (forward != null)
-                validSquares.Add(new Square(forward, this));
+                possiblePositions.Add(forward);
 
             if (forwardLeft != null)
-                validSquares.Add(new Square(forwardLeft, this));
+                possiblePositions.Add(forwardLeft);
 
             if (forwardRight != null)
-                validSquares.Add(new Square(forwardRight, this));
+                possiblePositions.Add(forwardRight);
 
             if (doubleForward != null)
-                validSquares.Add(new Square(doubleForward, this));
+                possiblePositions.Add(doubleForward);
 
-            return validSquares;
+            return possiblePositions;
         }
 
     }

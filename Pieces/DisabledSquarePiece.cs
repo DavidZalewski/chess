@@ -31,9 +31,9 @@ namespace Chess.Pieces
             return false;
         }
 
-        public override List<Square> GetValidSquares(ChessBoard chessBoard)
+        public override List<BoardPosition> GetPossiblePositions(ChessBoard chessBoard)
         {
-            return new List<Square>();  
+            return new List<BoardPosition>();  
         }
     }
 

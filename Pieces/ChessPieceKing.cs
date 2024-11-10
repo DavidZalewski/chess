@@ -117,9 +117,9 @@ namespace Chess.Pieces
 
         internal void SetWasInCheck() { StaticLogger.Trace(); _wasInCheck = true; }
 
-        public override List<Square> GetValidSquares(ChessBoard chessBoard)
+        public override List<BoardPosition> GetPossiblePositions(ChessBoard chessBoard)
         {
-            List<Square> validSquares = new();
+            List<BoardPosition> possiblePositions = new();
 
             BoardPosition? upRight = _currentPosition.Up()?.Right();
             BoardPosition? downRight = _currentPosition.Down()?.Right();
@@ -131,30 +131,30 @@ namespace Chess.Pieces
             BoardPosition? right = _currentPosition.Right();
 
             if (upRight != null)
-                validSquares.Add(new Square(upRight, this));
+                possiblePositions.Add(upRight);
 
             if (downRight != null)
-                validSquares.Add(new Square(downRight, this));
+                possiblePositions.Add(downRight);
 
             if (upLeft != null)
-                validSquares.Add(new Square(upLeft, this));
+                possiblePositions.Add(upLeft);
 
             if (downLeft != null)
-                validSquares.Add(new Square(downLeft, this));
+                possiblePositions.Add(downLeft);
 
             if (up != null)
-                validSquares.Add(new Square(up, this));
+                possiblePositions.Add(up);
 
             if (down != null)
-                validSquares.Add(new Square(down, this));
+                possiblePositions.Add(down);
 
             if (left != null)
-                validSquares.Add(new Square(left, this));
+                possiblePositions.Add(left);
 
             if (right != null)
-                validSquares.Add(new Square(right, this));
+                possiblePositions.Add(right);
 
-            return validSquares;
+            return possiblePositions;
         }
 
     }

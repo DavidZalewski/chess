@@ -68,9 +68,9 @@ namespace Chess.Pieces
             return false;
         }
 
-        public override List<Square> GetValidSquares(ChessBoard chessBoard)
+        public override List<BoardPosition> GetPossiblePositions(ChessBoard chessBoard)
         {
-            List<Square> validSquares = new();
+            List<BoardPosition> possiblePositions = new();
             int[] rowOffsets = { 2, 2, 1, 1, -1, -1, -2, -2 };
             int[] colOffsets = { 1, -1, 2, -2, 2, -2, 1, -1 };
 
@@ -84,12 +84,12 @@ namespace Chess.Pieces
                     BoardPosition newPosition = new((RANK)newRow, (FILE)newCol);
                     if (IsValidMove(chessBoard, newPosition))
                     {
-                        validSquares.Add(new Square(newPosition, this));
+                        possiblePositions.Add(newPosition);
                     }
                 }
             }
 
-            return validSquares;
+            return possiblePositions;
         }
     }
 }

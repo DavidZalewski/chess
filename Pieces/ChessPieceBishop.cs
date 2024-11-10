@@ -134,9 +134,9 @@ namespace Chess.Pieces
             return false;
         }
 
-        public override List<Square> GetValidSquares(ChessBoard chessBoard)
+        public override List<BoardPosition> GetPossiblePositions(ChessBoard chessBoard)
         {
-            List<Square> validSquares = new();
+            List<BoardPosition> possiblePositions = new();
             BoardPosition boardPosition = _currentPosition;
 
             BoardPosition? position = boardPosition;
@@ -145,7 +145,7 @@ namespace Chess.Pieces
                 position = boardPosition.Up()?.Right();
                 if (position != null)
                 {
-                    validSquares.Add(new Square(position, this));
+                    possiblePositions.Add(position);
                     boardPosition = position;
                 }
                 else
@@ -160,7 +160,7 @@ namespace Chess.Pieces
                 position = boardPosition.Down()?.Right();
                 if (position != null)
                 {
-                    validSquares.Add(new Square(position, this));
+                    possiblePositions.Add(position);
                     boardPosition = position;
                 }
                 else
@@ -175,7 +175,7 @@ namespace Chess.Pieces
                 position = boardPosition.Up()?.Left();
                 if (position != null)
                 {
-                    validSquares.Add(new Square(position, this));
+                    possiblePositions.Add(position);
                     boardPosition = position;
                 }
                 else
@@ -190,7 +190,7 @@ namespace Chess.Pieces
                 position = boardPosition.Down()?.Left();
                 if (position != null)
                 {
-                    validSquares.Add(new Square(position, this));
+                    possiblePositions.Add(position);
                     boardPosition = position;
                 }
                 else
@@ -199,7 +199,7 @@ namespace Chess.Pieces
                 }
             }
 
-            return validSquares;
+            return possiblePositions;
         }
     }
 }

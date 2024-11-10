@@ -356,9 +356,9 @@ namespace Tests.Pieces
             ChessBoard chessBoard = new();
             chessBoard.AddPiece(piece);
 
-            List<Square> squares = piece.GetValidSquares(chessBoard);
+            List<BoardPosition> results = piece.GetPossiblePositions(chessBoard);
 
-            Assert.That(squares.Count, Is.EqualTo(8));
+            Assert.That(results.Count, Is.EqualTo(8));
         }
 
         [TestCase("B3")]
@@ -384,9 +384,9 @@ namespace Tests.Pieces
             ChessBoard chessBoard = new();
             chessBoard.AddPiece(piece);
 
-            List<Square> squares = piece.GetValidSquares(chessBoard);
+            List<BoardPosition> results = piece.GetPossiblePositions(chessBoard);
 
-            Assert.That(squares.Count, Is.EqualTo(6));
+            Assert.That(results.Count, Is.EqualTo(6));
         }
 
         [TestCase("B2")]
@@ -400,9 +400,9 @@ namespace Tests.Pieces
             ChessBoard chessBoard = new();
             chessBoard.AddPiece(piece);
 
-            List<Square> squares = piece.GetValidSquares(chessBoard);
+            List<BoardPosition> results = piece.GetPossiblePositions(chessBoard);
 
-            Assert.That(squares.Count, Is.EqualTo(4));
+            Assert.That(results.Count, Is.EqualTo(4));
         }
 
     }

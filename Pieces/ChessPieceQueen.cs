@@ -45,11 +45,11 @@ namespace Chess.Pieces
             return false;
         }
 
-        public override List<Square> GetValidSquares(ChessBoard chessBoard)
+        public override List<BoardPosition> GetPossiblePositions(ChessBoard chessBoard)
         {
-            List<Square> squares = _chessPieceBishop.GetValidSquares(chessBoard);
-            squares.AddRange(_chessPieceRook.GetValidSquares(chessBoard));
-            return squares;
+            List<BoardPosition> possiblePositions = _chessPieceBishop.GetPossiblePositions(chessBoard);
+            possiblePositions.AddRange(_chessPieceRook.GetPossiblePositions(chessBoard));
+            return possiblePositions;
         }
     }
 }

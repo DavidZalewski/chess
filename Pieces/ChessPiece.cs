@@ -108,7 +108,7 @@ namespace Chess.Pieces
 
         public abstract bool IsValidMove(ChessBoard board, BoardPosition position);
         public abstract bool ImplementMove(ChessBoard board, BoardPosition position);
-        public abstract List<Square> GetValidSquares(ChessBoard chessBoard);
+        public abstract List<BoardPosition> GetPossiblePositions(ChessBoard chessBoard);
 
         public void Move(ChessBoard board, BoardPosition position)
         {

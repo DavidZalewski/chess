@@ -123,9 +123,9 @@ namespace Chess.Pieces
             return false;
         }
 
-        public override List<Square> GetValidSquares(ChessBoard chessBoard)
+        public override List<BoardPosition> GetPossiblePositions(ChessBoard chessBoard)
         {
-            List<Square> validSquares = new();
+            List<BoardPosition> possiblePositions = new();
 
             // Directions for a rook: up, down, left, right
             int[] rankDirections = { -1, 1, 0, 0 };
@@ -155,7 +155,7 @@ namespace Chess.Pieces
                         break;
                     }
 
-                    validSquares.Add(new Square(newPosition, this));
+                    possiblePositions.Add(newPosition);
 
                     // Check if the new position is occupied by an enemy piece
                     if (chessBoard.IsPieceAtPosition(newPosition))
@@ -165,7 +165,7 @@ namespace Chess.Pieces
                 }
             }
 
-            return validSquares;
+            return possiblePositions;
         }
     }
 }
