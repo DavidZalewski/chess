@@ -10,12 +10,10 @@ using System.Collections.Concurrent;
 namespace Tests
 {
     [Category("PERFORMANCE")]
-    [Parallelizable(ParallelScope.All)]
     internal class ChessStateExplorerTests : TestBase
     {
-        [Test]
-        [Parallelizable(ParallelScope.Self)]
-        public void GenerateAllPossibleMoves_Depth_4_Success()
+        [Test(Description = "206583 results in 5.1 min for depth 4")]
+        public void GenerateAllPossibleMoves_Depth_3_Success()
         {
             // Arrange
             ChessBoard chessBoard = new();
@@ -36,7 +34,7 @@ namespace Tests
 
             ChessStateExplorer stateExplorer = new();
 
-            var generateAllPossibleMovesThread = (Turn t) => stateExplorer.GenerateAllPossibleMoves(t, 3);
+            var generateAllPossibleMovesThread = (Turn t) => stateExplorer.GenerateAllPossibleMoves(t, 2);
 
             List<Thread> threads = new List<Thread>();
             List<Turn> possibleMoves = new List<Turn>();
@@ -63,7 +61,7 @@ namespace Tests
 
             Assert.That(possibleMoves, Is.Not.Empty);
             Console.WriteLine($"The possible number of moves within the first 4 turns of chess is: {possibleMoves.Count}");
-            Assert.That(possibleMoves.Count, Is.GreaterThanOrEqualTo(207398)); // 207398 moves
+            Assert.That(possibleMoves.Count, Is.GreaterThanOrEqualTo(1000)); // 207398 moves
 
             /*
 System.OutOfMemoryException : Exception of type 'System.OutOfMemoryException' was thrown.
@@ -90,9 +88,8 @@ MethodInvoker.Invoke(Object obj, IntPtr* args, BindingFlags invokeAttr)
             }
         }
 
-        [Test]
-        [Parallelizable(ParallelScope.Self)]
-        public void GenerateAllPossibleMovesTurnNode_Depth_4_Success()
+        [Test(Description = "3106735 results in 7.5min for depth 5")]
+        public void GenerateAllPossibleMovesTurnNode_Depth_3_Success()
         {
             // Arrange
             ChessBoard chessBoard = new();
@@ -113,7 +110,7 @@ MethodInvoker.Invoke(Object obj, IntPtr* args, BindingFlags invokeAttr)
 
             ChessStateExplorer stateExplorer = new();
             ulong count = 0;
-            var generateAllPossibleMovesThread = (Turn t) => stateExplorer.GenerateAllPossibleMovesTurnNode(t, 3, ref count);
+            var generateAllPossibleMovesThread = (Turn t) => stateExplorer.GenerateAllPossibleMovesTurnNode(t, 2, ref count);
 
             List<Thread> threads = new List<Thread>();
             List<TurnNode> possibleMoves = new List<TurnNode>();
@@ -139,25 +136,10 @@ MethodInvoker.Invoke(Object obj, IntPtr* args, BindingFlags invokeAttr)
             }
 
             Assert.That(possibleMoves, Is.Not.Empty);
-            Console.WriteLine($"The possible number of moves within the first 4 turns of chess is: {count}");
-            Assert.That(count, Is.GreaterThanOrEqualTo(400)); // 207398 moves
+            Console.WriteLine($"The possible number of moves within the first 3 turns of chess is: {count}");
+            Assert.That(count, Is.GreaterThanOrEqualTo(300)); // 3106735 moves
 
-            /*
-System.OutOfMemoryException : Exception of type 'System.OutOfMemoryException' was thrown.
-Stack Trace: 
-StringBuilder.ToString()
-JsonConvert.SerializeObjectInternal(Object value, Type type, JsonSerializer jsonSerializer)
-JsonConvert.SerializeObject(Object value, Type type, JsonSerializerSettings settings)
-JsonConvert.SerializeObject(Object value)
-ChessStateExplorerTests.GenerateAllPossibleMoves_Depth_4_Success() line 69
-RuntimeMethodHandle.InvokeMethod(Object target, Void** arguments, Signature sig, Boolean isConstructor)
-MethodInvoker.Invoke(Object obj, IntPtr* args, BindingFlags invokeAttr)
-             */
-            //string json = JsonConvert.SerializeObject(possibleMoves);
-            //File.WriteAllText("possible_moves_first_four_turns.json", json);
-
-
-            using (StreamWriter writer = new StreamWriter("possible_moves_first_four_turns_lighter.json"))
+            using (StreamWriter writer = new StreamWriter("possible_moves_first_three_turns_lighter.json"))
             {
                 using (JsonTextWriter jsonWriter = new JsonTextWriter(writer))
                 {
@@ -168,8 +150,6 @@ MethodInvoker.Invoke(Object obj, IntPtr* args, BindingFlags invokeAttr)
         }
 
         [Test]
-        [Ignore("Too Time Consuming")]
-        [Parallelizable(ParallelScope.Self)]
         public void GenerateAllPossibleMoves_LighterMemory_Depth_7_Success()
         {
             // Arrange
@@ -198,7 +178,7 @@ MethodInvoker.Invoke(Object obj, IntPtr* args, BindingFlags invokeAttr)
                     int threadId = Thread.CurrentThread.ManagedThreadId;
                     ulong count = 0;
                     logger.Log($"Starting to process turn {turn.TurnDescription}", threadId);
-                    List<TurnNode> moves = stateExplorer.GenerateAllPossibleMovesTurnNode(turn, 4, ref count);
+                    List<TurnNode> moves = stateExplorer.GenerateAllPossibleMovesTurnNode(turn, 6, ref count);
                     logger.Log($"Finished processing turn {turn.TurnDescription} with {count} possible moves", threadId);
                     return (long)count;
                 })

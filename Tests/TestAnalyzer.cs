@@ -35,7 +35,6 @@ namespace Tests
             return strings;
         }
 
-        [TestNeeded]
         private static List<string> FindToDos()
         {
             Dictionary<string, int> dic = new Dictionary<string, int>();
