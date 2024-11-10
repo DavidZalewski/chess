@@ -280,6 +280,10 @@ namespace Tests.Pieces
             chessBoard.AddPiece(piece);
 
             List<Square> squares = piece.GetValidSquares(chessBoard);
+            foreach(Square square in squares)
+            {
+                Console.WriteLine($"{square.Position.StringValue}");
+            }
 
             Assert.That(squares.Count, Is.EqualTo(9));
         }
@@ -296,8 +300,12 @@ namespace Tests.Pieces
             chessBoard.AddPiece(piece);
 
             List<Square> squares = piece.GetValidSquares(chessBoard);
+            foreach (Square square in squares)
+            {
+                Console.WriteLine($"{square.Position.StringValue}");
+            }
 
-            Assert.That(squares.Count, Is.EqualTo(9));
+            Assert.That(squares.Count, Is.EqualTo(7));
         }
 
         [TestCase("D4")]
@@ -312,6 +320,10 @@ namespace Tests.Pieces
             chessBoard.AddPiece(piece);
 
             List<Square> squares = piece.GetValidSquares(chessBoard);
+            foreach (Square square in squares)
+            {
+                Console.WriteLine($"{square.Position.StringValue}");
+            }
 
             Assert.That(squares.Count, Is.EqualTo(13));
         }

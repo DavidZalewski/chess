@@ -138,28 +138,68 @@ namespace Chess.Pieces
         {
             List<Square> validSquares = new();
             BoardPosition boardPosition = _currentPosition;
-            for (int i = 0; i < 8; i++)
+
+            BoardPosition? position = boardPosition;
+            for (int i = 1; i <= 8; i++)
             {
-                BoardPosition? upRight = boardPosition.Up()?.Right();
-                BoardPosition? downRight = boardPosition.Down()?.Right();
-                BoardPosition? upLeft = boardPosition.Up()?.Left();
-                BoardPosition? downLeft = boardPosition.Down()?.Left();
+                position = boardPosition.Up()?.Right();
+                if (position != null)
+                {
+                    validSquares.Add(new Square(position, this));
+                    boardPosition = position;
+                }
+                else
+                {
+                    break;
+                }
+            }
 
-                if (upRight != null)        
-                    validSquares.Add(new Square(upRight, this));
+            boardPosition = _currentPosition;
+            for (int i = 1; i <= 8; i++)
+            {
+                position = boardPosition.Down()?.Right();
+                if (position != null)
+                {
+                    validSquares.Add(new Square(position, this));
+                    boardPosition = position;
+                }
+                else
+                {
+                    break;
+                }
+            }
 
-                if (downRight != null)
-                    validSquares.Add(new Square(downRight, this));
+            boardPosition = _currentPosition;
+            for (int i = 1; i <= 8; i++)
+            {
+                position = boardPosition.Up()?.Left();
+                if (position != null)
+                {
+                    validSquares.Add(new Square(position, this));
+                    boardPosition = position;
+                }
+                else
+                {
+                    break;
+                }
+            }
 
-                if (upLeft != null)
-                    validSquares.Add(new Square(upLeft, this));
-
-                if (downLeft != null)
-                    validSquares.Add(new Square(downLeft, this));
+            boardPosition = _currentPosition;
+            for (int i = 1; i <= 8; i++)
+            {
+                position = boardPosition.Down()?.Left();
+                if (position != null)
+                {
+                    validSquares.Add(new Square(position, this));
+                    boardPosition = position;
+                }
+                else
+                {
+                    break;
+                }
             }
 
             return validSquares;
         }
-
     }
 }

@@ -127,28 +127,45 @@ namespace Chess.Pieces
         {
             List<Square> validSquares = new();
 
-            for (int i = 0; i < 8; i++)
+            // Directions for a rook: up, down, left, right
+            int[] rankDirections = { -1, 1, 0, 0 };
+            int[] fileDirections = { 0, 0, -1, 1 };
+
+            for (int direction = 0; direction < 4; direction++)
             {
-                BoardPosition? up = _currentPosition.Up();
-                BoardPosition? down = _currentPosition.Down();
-                BoardPosition? left = _currentPosition.Left();
-                BoardPosition? right = _currentPosition.Right();
+                int rank = _currentPosition.RankAsInt;
+                int file = _currentPosition.FileAsInt;
 
-                if (up != null)
-                    validSquares.Add(new Square(up, this));
+                while (true)
+                {
+                    rank += rankDirections[direction];
+                    file += fileDirections[direction];
 
-                if (down != null)
-                    validSquares.Add(new Square(down, this));
+                    // Check if the new position is within the board boundaries
+                    if (rank < 0 || rank > 7 || file < 0 || file > 7)
+                    {
+                        break;
+                    }
 
-                if (left != null)
-                    validSquares.Add(new Square(left, this));
+                    BoardPosition newPosition = new BoardPosition((RANK)rank, (FILE)file);
 
-                if (right != null)
-                    validSquares.Add(new Square(right, this));
+                    // Check if the new position is occupied by a friendly piece
+                    if (chessBoard.IsPieceAtPosition(newPosition, _color))
+                    {
+                        break;
+                    }
+
+                    validSquares.Add(new Square(newPosition, this));
+
+                    // Check if the new position is occupied by an enemy piece
+                    if (chessBoard.IsPieceAtPosition(newPosition))
+                    {
+                        break;
+                    }
+                }
             }
 
             return validSquares;
         }
-
     }
 }

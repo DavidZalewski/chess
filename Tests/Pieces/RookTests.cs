@@ -296,7 +296,7 @@ namespace Tests.Pieces
         public void Rook_GetValidSquares_AlwaysReturns14_FromThesePositions(string startPos)
         {
             BoardPosition startingPosition = new(startPos);
-            ChessPiece piece = new ChessPieceQueen(ChessPiece.Color.WHITE, 1, startingPosition);
+            ChessPiece piece = new ChessPieceRook(ChessPiece.Color.WHITE, 1, startingPosition);
             ChessBoard chessBoard = new();
             chessBoard.AddPiece(piece);
 
