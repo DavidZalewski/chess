@@ -214,5 +214,35 @@ namespace Tests.Pieces
             BoardPosition badPosition = new BoardPosition(RANK.FIVE, FILE.C);
             Assert.That(piece.IsValidMove(board, badPosition), Is.False);
         }
+
+        [TestCase("B7")]
+        [TestCase("B6")]
+        [TestCase("G7")]
+        [TestCase("G6")]
+        public void BlackPawn_GetValidSquares_AlwaysReturns4_FromThesePositions(string startPos)
+        {
+            BoardPosition startingPosition = new(startPos);
+            ChessPiece piece = new ChessPieceBlackPawn(1, startingPosition);
+            ChessBoard chessBoard = new();
+            chessBoard.AddPiece(piece);
+
+            List<Square> squares = piece.GetValidSquares(chessBoard);
+
+            Assert.That(squares.Count, Is.EqualTo(4));
+        }
+
+        [TestCase("A2")]
+        [TestCase("H2")]
+        public void BlackPawn_GetValidSquares_AlwaysReturns2_FromThesePositions(string startPos)
+        {
+            BoardPosition startingPosition = new(startPos);
+            ChessPiece piece = new ChessPieceBlackPawn(1, startingPosition);
+            ChessBoard chessBoard = new();
+            chessBoard.AddPiece(piece);
+
+            List<Square> squares = piece.GetValidSquares(chessBoard);
+
+            Assert.That(squares.Count, Is.EqualTo(2));
+        }
     }
 }

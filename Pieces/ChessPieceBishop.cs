@@ -137,13 +137,13 @@ namespace Chess.Pieces
         public override List<Square> GetValidSquares(ChessBoard chessBoard)
         {
             List<Square> validSquares = new();
-
+            BoardPosition boardPosition = _currentPosition;
             for (int i = 0; i < 8; i++)
             {
-                BoardPosition? upRight = _currentPosition.Up()?.Right();
-                BoardPosition? downRight = _currentPosition.Down()?.Right();
-                BoardPosition? upLeft = _currentPosition.Up()?.Left();
-                BoardPosition? downLeft = _currentPosition.Down()?.Left();
+                BoardPosition? upRight = boardPosition.Up()?.Right();
+                BoardPosition? downRight = boardPosition.Down()?.Right();
+                BoardPosition? upLeft = boardPosition.Up()?.Left();
+                BoardPosition? downLeft = boardPosition.Down()?.Left();
 
                 if (upRight != null)        
                     validSquares.Add(new Square(upRight, this));

@@ -434,5 +434,21 @@ namespace Tests.Pieces
             Assert.That(piece.IsValidMove(board, b8), Is.False);
         }
 
+        [TestCase("B2")]
+        [TestCase("B7")]
+        [TestCase("G2")]
+        [TestCase("G7")]
+        public void Queen_GetValidSquares_AlwaysReturns23_FromThesePositions(string startPos)
+        {
+            BoardPosition startingPosition = new(startPos);
+            ChessPiece piece = new ChessPieceQueen(ChessPiece.Color.WHITE, 1, startingPosition);
+            ChessBoard chessBoard = new();
+            chessBoard.AddPiece(piece);
+
+            List<Square> squares = piece.GetValidSquares(chessBoard);
+
+            Assert.That(squares.Count, Is.EqualTo(23));
+        }
+
     }
 }

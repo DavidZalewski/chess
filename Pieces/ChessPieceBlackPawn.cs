@@ -111,6 +111,7 @@ namespace Chess.Pieces
             BoardPosition? forward = _currentPosition.Down();
             BoardPosition? forwardLeft = forward?.Left();
             BoardPosition? forwardRight = forward?.Right();
+            BoardPosition? doubleForward = forward?.Down();
 
             if (forward != null)
                 validSquares.Add(new Square(forward, this));
@@ -120,6 +121,9 @@ namespace Chess.Pieces
 
             if (forwardRight != null)
                 validSquares.Add(new Square(forwardRight, this));
+
+            if (doubleForward != null)
+                validSquares.Add(new Square(doubleForward, this));
 
             return validSquares;
         }
