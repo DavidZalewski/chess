@@ -1,5 +1,6 @@
 ﻿using Chess.Board;
 using Chess.Controller;
+using Chess.GameState;
 using Chess.Globals;
 using Chess.Interfaces;
 using Chess.Services;

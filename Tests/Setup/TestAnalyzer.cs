@@ -1,7 +1,7 @@
 ﻿using Chess.Attributes;
 using System.Reflection;
 
-namespace Tests
+namespace Tests.Setup
 {
     public class TestAnalyzer : TestBase
     {
@@ -54,7 +54,7 @@ namespace Tests
                             Assert.That(o is ToDoAttribute);
                             strings.Add($"Class {type.FullName} has ToDo [{((ToDoAttribute)o).GetValue()}]");
                         }
-                    
+
                         var methods = type.GetMethods(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Static)
                                           .Where(m => m.GetCustomAttribute(typeof(ToDoAttribute), false) is not null)
                                           .ToList();
@@ -64,7 +64,7 @@ namespace Tests
                             if (!dic.ContainsKey(key))
                             {
                                 strings.Add($"Method {method.DeclaringType?.FullName}.{method.Name} has ToDo [{((ToDoAttribute)method.GetCustomAttribute(typeof(ToDoAttribute))).GetValue()}]");
-                                dic.Add(key, 1 );
+                                dic.Add(key, 1);
                             }
                         }
 
@@ -83,10 +83,10 @@ namespace Tests
 
 
         [Test]
-        public void MethodsNeedingTestShouldBeLessThan3() 
+        public void MethodsNeedingTestShouldBeLessThan3()
         {
             List<string> strings = FindMethodsNeedingTests();
-            foreach(string method in strings)
+            foreach (string method in strings)
             {
                 Console.WriteLine(method);
             }

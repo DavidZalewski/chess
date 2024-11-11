@@ -8,7 +8,7 @@ using NUnit.Framework.Internal;
 using System.Collections.Concurrent;
 
 
-namespace Tests
+namespace Tests.Globals
 {
     [Category("CORE")]
     internal class ToStringTraitTests

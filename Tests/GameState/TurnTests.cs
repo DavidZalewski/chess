@@ -6,7 +6,7 @@ using Chess.Services;
 using System.Collections;
 using System.Collections.Generic;
 
-namespace Tests
+namespace Tests.GameState
 {
     [Category("CORE")]
     [Parallelizable(ParallelScope.All)]
@@ -15,9 +15,9 @@ namespace Tests
 
         private List<ChessPiece> GetDifferenceBetweenLists(List<ChessPiece> chessPiecesList1, List<ChessPiece> chessPiecesList2)
         {
-            List<ChessPiece> removedChessPieces = chessPiecesList1.Where((ChessPiece cp1) =>
+            List<ChessPiece> removedChessPieces = chessPiecesList1.Where((cp1) =>
             {
-                return !chessPiecesList2.Any((ChessPiece cp2) =>
+                return !chessPiecesList2.Any((cp2) =>
                 {
                     return cp1.GetColor() == cp2.GetColor() &&
                                   cp1.GetId() == cp2.GetId() &&
@@ -102,7 +102,7 @@ namespace Tests
             // find black pawn 2
             ChessPiece blackPawn2 = chessPieces.First(pieces => pieces.GetColor() == ChessPiece.Color.BLACK &&
                                          pieces.GetPiece() == ChessPiece.Piece.PAWN && pieces.GetId() == 2);
-   
+
             GameController gc = new(board, chessPieces);
             gc.StartGame();
 

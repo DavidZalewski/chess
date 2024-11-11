@@ -1,6 +1,6 @@
 ﻿using Chess.Globals;
 
-namespace Tests
+namespace Tests.Setup
 {
     [SetUpFixture]
     public class TestSuiteSetup

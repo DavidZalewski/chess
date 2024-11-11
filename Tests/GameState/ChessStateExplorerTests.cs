@@ -7,7 +7,7 @@ using NUnit.Framework.Internal;
 using System.Collections.Concurrent;
 
 
-namespace Tests
+namespace Tests.GameState
 {
     [Category("PERFORMANCE")]
     internal class ChessStateExplorerTests : TestBase
@@ -205,7 +205,7 @@ MethodInvoker.Invoke(Object obj, IntPtr* args, BindingFlags invokeAttr)
             GameController gameController = new(chessBoard);
             gameController.StartGame();
             List<string> startingMoves = new()
-    { 
+    {
       "WP1 A3", "WP1 A4", "WP2 B3", "WP2 B4", "WP3 C3", "WP3 C4", "WP4 D3", "WP4 D4",
       "WP5 E3", "WP5 E4", "WP6 F3", "WP6 F4", "WP7 G3", "WP7 G4", "WP8 H3", "WP8 H4",
       "WK1 A3", "WK1 C3", "WK2 F3", "WK2 H3"
@@ -279,7 +279,7 @@ MethodInvoker.Invoke(Object obj, IntPtr* args, BindingFlags invokeAttr)
             // Act
             explorer.PrintTopCacheItems(250);
 
-            foreach ((String key, CacheItem cii) ci in explorer.GetTopNCachedItems(25)) 
+            foreach ((string key, CacheItem cii) ci in explorer.GetTopNCachedItems(25))
                 Console.WriteLine($"Cache (Partition: {ci.key}, Cache Value: {ci.cii.Value}, Access Count: {ci.cii.AccessCount}");
 
             // Assert

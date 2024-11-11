@@ -1,7 +1,7 @@
 ﻿using Chess.Globals;
 using System.Collections.Concurrent;
 
-namespace Tests
+namespace Tests.Globals
 {
     public class LoggingMock
     {
