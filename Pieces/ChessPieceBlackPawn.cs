@@ -103,5 +103,31 @@ namespace Chess.Pieces
             StaticLogger.Trace();
             return false;
         }
+
+        public override List<BoardPosition> GetPossiblePositions(ChessBoard chessBoard)
+        {
+            List<BoardPosition> possiblePositions = new();
+
+            BoardPosition? forward = _currentPosition.Down();
+            BoardPosition? forwardLeft = forward?.Left();
+            BoardPosition? forwardRight = forward?.Right();
+            BoardPosition? doubleForward = forward?.Down();
+
+            if (forward != null)
+                possiblePositions.Add(forward);
+                
+            if (forwardLeft != null)
+                possiblePositions.Add(forwardLeft);
+
+            if (forwardRight != null)
+                possiblePositions.Add(forwardRight);
+
+            if (doubleForward != null)
+                possiblePositions.Add(doubleForward);
+
+            return possiblePositions;
+        }
+
+
     }
 }

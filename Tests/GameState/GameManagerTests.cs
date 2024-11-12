@@ -1,6 +1,5 @@
 ﻿using Chess.Controller;
 using Chess.Interfaces;
-using Chess;
 using Tests.Services;
 using Chess.Board;
 using Chess.Callbacks;
@@ -9,7 +8,7 @@ using System.Data;
 using Chess.Services;
 using Chess.Globals;
 
-namespace Tests
+namespace Tests.GameState
 {
     // CANNOT BE RUN ASYNC OR IN PARALLEL
     [Category("CORE")]
@@ -21,7 +20,7 @@ namespace Tests
             ChessBoard chessBoard = new();
             GameController gameController = new(chessBoard);
             ChessStateExplorer explorer = new();
-            gameController.SetOnTurnHandler((Turn turn) =>
+            gameController.SetOnTurnHandler((turn) =>
             {
                 ulong _unused = 0;
                 List<TurnNode> turns = explorer.GenerateAllPossibleMovesTurnNode(turn, 2, ref _unused);
@@ -40,11 +39,11 @@ namespace Tests
 
                 if (NumberOfMoves > 100)
                 {
-                    ((MockConsoleService)(console)).Inputs.Enqueue("quit");
+                    ((MockConsoleService)console).Inputs.Enqueue("quit");
                 }
                 else
                 {
-                    ((MockConsoleService)(console)).Inputs.Enqueue(bestTurnToMake.Command);
+                    ((MockConsoleService)console).Inputs.Enqueue(bestTurnToMake.Command);
                 }
 
                 NumberOfMoves++;
@@ -251,7 +250,7 @@ namespace Tests
 
 
 
-        [Test(Author ="Hadrian", Description ="This is the mate Hadrian played against me on Chess.com")]
+        [Test(Author = "Hadrian", Description = "This is the mate Hadrian played against me on Chess.com")]
         public void HadriansMate()
         {
             // Arrange
@@ -260,10 +259,10 @@ namespace Tests
             consoleInputs.Enqueue("Classic"); // init game with all pieces
             consoleInputs.Enqueue("n"); // no to ai
             consoleInputs.Enqueue("WP5 E4");
-            consoleInputs.Enqueue("BP5 E5"); 
+            consoleInputs.Enqueue("BP5 E5");
             consoleInputs.Enqueue("WK E2");
-            consoleInputs.Enqueue("BQ1 H4"); 
-            consoleInputs.Enqueue("WK2 F3"); 
+            consoleInputs.Enqueue("BQ1 H4");
+            consoleInputs.Enqueue("WK2 F3");
             consoleInputs.Enqueue("BQ1 E4");
 
             IConsole consoleService = new MockConsoleService(consoleInputs);
@@ -469,8 +468,8 @@ namespace Tests
                 // Set up the mock console service and game controller
                 IConsole consoleService = new ChessDotComReplayMockConsoleService(consoleInputs, file, expectedOutcome, SHOW_OUTPUT_OF_WINNING_GAMES);
                 StaticLogger.SetMetaData(file);
-                GameController gameController = GetGameController(consoleService);  
-                GameManager game = new GameManager(consoleService, gameController); 
+                GameController gameController = GetGameController(consoleService);
+                GameManager game = new GameManager(consoleService, gameController);
 
                 //if (file.Contains("6302"))
                 //    System.Diagnostics.Debugger.Break();
@@ -478,12 +477,13 @@ namespace Tests
                 game.Start();  // Start the game which will play through all the moves
 
                 // Assert
-                if (!((ChessDotComReplayMockConsoleService)consoleService).VerifyReplayAndLogIfFailed()) {
-                    testReport += ("The game outcome did not match the expected checkmate. (Expected Outcome: " + expectedOutcome + ", File: " + file + ")\n");
+                if (!((ChessDotComReplayMockConsoleService)consoleService).VerifyReplayAndLogIfFailed())
+                {
+                    testReport += "The game outcome did not match the expected checkmate. (Expected Outcome: " + expectedOutcome + ", File: " + file + ")\n";
                 }
             }
 
-            if (!String.IsNullOrEmpty(testReport))
+            if (!string.IsNullOrEmpty(testReport))
             {
                 ChessDotComReplayMockConsoleService.OutputTotals();
                 Console.WriteLine(testReport);
@@ -541,7 +541,7 @@ namespace Tests
 
             // Assert for load
             string expectedBoardID = "6A8428A6CCCC0CCC000000000000C0000000B00000000000BBBB0BBB59731795"; // Replace with actual expected ID after running the save test
-            Assert.That(((MockConsoleService)loadConsole).OutputContainsString(expectedBoardID), Is.True, "Board state should match after loading"); 
+            Assert.That(loadConsole.OutputContainsString(expectedBoardID), Is.True, "Board state should match after loading");
             // CR: doing it this way means we need to assert for the same expected board ID being printed twice in the output.
             // Yet here we only assert for one.
         }

@@ -268,5 +268,65 @@ namespace Tests.Pieces
             Assert.That(whiteBishop1.IsValidMove(board, new("C3")), Is.False);
         }
 
+        [TestCase("B2")]
+        [TestCase("B7")]
+        [TestCase("G2")]
+        [TestCase("G7")]
+        public void Bishop_GetValidSquares_AlwaysReturns9_FromThesePositions(string startPos)
+        {
+            BoardPosition startingPosition = new(startPos);
+            ChessPiece piece = new ChessPieceBishop(ChessPiece.Color.BLACK, 1, startingPosition);
+            ChessBoard chessBoard = new();
+            chessBoard.AddPiece(piece);
+
+            List<BoardPosition> possiblePositions = piece.GetPossiblePositions(chessBoard);
+            foreach(BoardPosition possiblePosition in possiblePositions)
+            {
+                Console.WriteLine($"{possiblePosition.StringValue}");
+            }
+
+            Assert.That(possiblePositions.Count, Is.EqualTo(9));
+        }
+
+        [TestCase("A1")]
+        [TestCase("A8")]
+        [TestCase("H1")]
+        [TestCase("H8")]
+        public void Bishop_GetValidSquares_AlwaysReturns7_FromThesePositions(string startPos)
+        {
+            BoardPosition startingPosition = new(startPos);
+            ChessPiece piece = new ChessPieceBishop(ChessPiece.Color.BLACK, 1, startingPosition);
+            ChessBoard chessBoard = new();
+            chessBoard.AddPiece(piece);
+
+            List<BoardPosition> possiblePositions = piece.GetPossiblePositions(chessBoard);
+            foreach (BoardPosition possiblePosition in possiblePositions)
+            {
+                Console.WriteLine($"{possiblePosition.StringValue}");
+            }
+
+            Assert.That(possiblePositions.Count, Is.EqualTo(7));
+        }
+
+        [TestCase("D4")]
+        [TestCase("D5")]
+        [TestCase("E4")]
+        [TestCase("E5")]
+        public void Bishop_GetValidSquares_AlwaysReturns13_FromThesePositions(string startPos)
+        {
+            BoardPosition startingPosition = new(startPos);
+            ChessPiece piece = new ChessPieceBishop(ChessPiece.Color.BLACK, 1, startingPosition);
+            ChessBoard chessBoard = new();
+            chessBoard.AddPiece(piece);
+
+            List<BoardPosition> possiblePositions = piece.GetPossiblePositions(chessBoard);
+            foreach (BoardPosition possiblePosition in possiblePositions)
+            {
+                Console.WriteLine($"{possiblePosition.StringValue}");
+            }
+
+            Assert.That(possiblePositions.Count, Is.EqualTo(13));
+        }
+
     }
 }

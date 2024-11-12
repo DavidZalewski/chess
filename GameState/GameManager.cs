@@ -1,13 +1,12 @@
 ﻿using Chess.Attributes;
 using Chess.Callbacks;
 using Chess.Controller;
-using Chess.GameState;
 using Chess.Globals;
 using Chess.Interfaces;
 using Chess.Pieces;
 
 
-namespace Chess
+namespace Chess.GameState
 {
     internal class GameManager
     {
@@ -55,7 +54,7 @@ namespace Chess
                 _AIMode = true;
             }
 
-            _gameController.SetOnTurnHandler((Turn turn) =>
+            _gameController.SetOnTurnHandler((turn) =>
             {
                 StaticLogger.Trace();
                 if (_gameController.ContainsRuleSet("NuclearHorse"))
@@ -89,7 +88,8 @@ namespace Chess
 
                     // Sort by least number of moves for opponent (Children.Count), then by most number of moves for current player (turns.Count - tn.Children.Count)
                     List<TurnNode> goodTurns = turns
-                    .OrderByDescending(tn1 => {
+                    .OrderByDescending(tn1 =>
+                    {
                         foreach (TurnNode tn2 in tn1.Children)
                         {
                             foreach (TurnNode tn3 in tn2.Children)
@@ -106,7 +106,8 @@ namespace Chess
                         }
                         return tn1.IsCheckMate && tn1.Side() == 1;
                     })
-                    .ThenBy(tn1 => {
+                    .ThenBy(tn1 =>
+                    {
                         foreach (TurnNode tn2 in tn1.Children)
                         {
                             foreach (TurnNode tn3 in tn2.Children)
@@ -123,7 +124,8 @@ namespace Chess
                         }
                         return tn1.IsKingInCheck && tn1.Side() == 1;
                     })
-                    .ThenBy(tn1 => {
+                    .ThenBy(tn1 =>
+                    {
                         foreach (TurnNode tn2 in tn1.Children)
                         {
                             foreach (TurnNode tn3 in tn2.Children)
@@ -140,8 +142,8 @@ namespace Chess
                         }
                         return tn1.TurnDescription.Contains("capture") && tn1.Side() == 0;
                     })
-                                //.ThenBy(tn => tn.Children.Count())
-                                //.ThenByDescending(tn => turns.Count - tn.Children.Count)
+                    //.ThenBy(tn => tn.Children.Count())
+                    //.ThenByDescending(tn => turns.Count - tn.Children.Count)
                     .ToList();
 
                     _console.WriteLine($"The possible number of moves at this current move: {turn.TurnDescription} are: {turns.Count}");
@@ -298,40 +300,40 @@ namespace Chess
                             _console.WriteLine($"Current Board ID: {_gameController.GetCurrentBoardID()}");
                             continue;
                         case "resign":
-                        {
-                            if (argument != "black" && argument != "white")
                             {
-                                _console.WriteLine("Invalid command. Please enter a command.");
-                                continue;
-                            }
-                            else
-                            {
-                                _console.WriteLine("Are you sure you wish to resign? (y = yes, n = no)");
-                                input = _console.ReadLine();
-
-                                if (input != null && input.ToLower().Equals("y"))
+                                if (argument != "black" && argument != "white")
                                 {
-                                    // Black Resigns
-                                    if (argument == "black")
-                                    {
-                                        _console.WriteLine("White wins against Black by Resignation!");
-                                        input = "quit";
-                                        break;
-                                    }
-                                    else
-                                    {
-                                        _console.WriteLine("Black wins against White by Resignation!");
-                                        input = "quit";
-                                        break;
-                                    }
+                                    _console.WriteLine("Invalid command. Please enter a command.");
+                                    continue;
                                 }
                                 else
                                 {
-                                    // If they do not confirm resignation... ignore and try to read input again
-                                    continue;
+                                    _console.WriteLine("Are you sure you wish to resign? (y = yes, n = no)");
+                                    input = _console.ReadLine();
+
+                                    if (input != null && input.ToLower().Equals("y"))
+                                    {
+                                        // Black Resigns
+                                        if (argument == "black")
+                                        {
+                                            _console.WriteLine("White wins against Black by Resignation!");
+                                            input = "quit";
+                                            break;
+                                        }
+                                        else
+                                        {
+                                            _console.WriteLine("Black wins against White by Resignation!");
+                                            input = "quit";
+                                            break;
+                                        }
+                                    }
+                                    else
+                                    {
+                                        // If they do not confirm resignation... ignore and try to read input again
+                                        continue;
+                                    }
                                 }
                             }
-                        }
                     }
 
                     ToDoAttribute.Add("Move this logic into GetTurnFromCommand?");
@@ -340,7 +342,7 @@ namespace Chess
                         _console.WriteLine("Invalid Color Specified. Use B or W when starting command.");
                         continue;
                     }
-                    if ((command.StartsWith('w') && _gameController.TurnNumber % 2 == 0) || (command.StartsWith('b') && _gameController.TurnNumber % 2 != 0))
+                    if (command.StartsWith('w') && _gameController.TurnNumber % 2 == 0 || command.StartsWith('b') && _gameController.TurnNumber % 2 != 0)
                     {
                         _console.WriteLine("Wrong Color Selected. It is not that sides turn yet. Please Try Again");
                         continue;
@@ -360,7 +362,7 @@ namespace Chess
                     {
                         ToDoAttribute.Add("Put these in a config file somewhere so both applications can read these");
                         if (turn.PlayerTurn.Equals(Turn.Color.WHITE))
-                            _console.WriteLine("White wins against Black by CheckMate!"); 
+                            _console.WriteLine("White wins against Black by CheckMate!");
                         else
                             _console.WriteLine("Black wins against White by CheckMate!");
                         _console.WriteLine("Game Over.");
@@ -383,6 +385,13 @@ namespace Chess
                     }
 #endif
                     _gameController.ApplyTurnToGameState(turn);
+                    if (_gameController.IsDrawByRepetition)
+                    {
+                        _console.WriteLine("Game ended in a draw");
+                        _console.WriteLine("Game Over.");
+                        _console.WriteLine(_gameController.DisplayBoard());
+                        break; // break out of game loop
+                    }
                 }
                 catch (Exception ex)
                 {
@@ -417,7 +426,7 @@ namespace Chess
         private static (string? command, string? argument) ParseInput(string? input)
         {
             StaticLogger.Trace();
-            if (String.IsNullOrWhiteSpace(input)) return (null, null);
+            if (string.IsNullOrWhiteSpace(input)) return (null, null);
 
             string[] parts = input.ToLower().Split(' ');
             return (parts[0], parts.Length > 1 ? parts[1] : null);

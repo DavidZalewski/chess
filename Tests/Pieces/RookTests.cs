@@ -285,5 +285,26 @@ namespace Tests.Pieces
             Assert.That(piece.IsValidMove(board, b8), Is.False);
         }
 
+        [TestCase("B2")]
+        [TestCase("B7")]
+        [TestCase("G2")]
+        [TestCase("G7")]
+        [TestCase("A1")]
+        [TestCase("A8")]
+        [TestCase("F1")]
+        [TestCase("E5")]
+        public void Rook_GetValidSquares_AlwaysReturns14_FromThesePositions(string startPos)
+        {
+            BoardPosition startingPosition = new(startPos);
+            ChessPiece piece = new ChessPieceRook(ChessPiece.Color.WHITE, 1, startingPosition);
+            ChessBoard chessBoard = new();
+            chessBoard.AddPiece(piece);
+
+            List<BoardPosition> results = piece.GetPossiblePositions(chessBoard);
+
+            Assert.That(results.Count, Is.EqualTo(14));
+        }
+
+
     }
 }

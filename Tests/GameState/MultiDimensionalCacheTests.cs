@@ -2,7 +2,7 @@
 using NUnit.Framework;
 using System.Diagnostics;
 
-namespace Tests
+namespace Tests.GameState
 {
     [TestFixture]
     [Category("PERFORMANCE")]

@@ -30,6 +30,11 @@ namespace Chess.Pieces
             StaticLogger.Trace();
             return false;
         }
+
+        public override List<BoardPosition> GetPossiblePositions(ChessBoard chessBoard)
+        {
+            return new List<BoardPosition>();  
+        }
     }
 
 }

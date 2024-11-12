@@ -133,5 +133,73 @@ namespace Chess.Pieces
             // does this need to exist?
             return false;
         }
+
+        public override List<BoardPosition> GetPossiblePositions(ChessBoard chessBoard)
+        {
+            List<BoardPosition> possiblePositions = new();
+            BoardPosition boardPosition = _currentPosition;
+
+            BoardPosition? position = boardPosition;
+            for (int i = 1; i <= 8; i++)
+            {
+                position = boardPosition.Up()?.Right();
+                if (position != null)
+                {
+                    possiblePositions.Add(position);
+                    boardPosition = position;
+                }
+                else
+                {
+                    break;
+                }
+            }
+
+            boardPosition = _currentPosition;
+            for (int i = 1; i <= 8; i++)
+            {
+                position = boardPosition.Down()?.Right();
+                if (position != null)
+                {
+                    possiblePositions.Add(position);
+                    boardPosition = position;
+                }
+                else
+                {
+                    break;
+                }
+            }
+
+            boardPosition = _currentPosition;
+            for (int i = 1; i <= 8; i++)
+            {
+                position = boardPosition.Up()?.Left();
+                if (position != null)
+                {
+                    possiblePositions.Add(position);
+                    boardPosition = position;
+                }
+                else
+                {
+                    break;
+                }
+            }
+
+            boardPosition = _currentPosition;
+            for (int i = 1; i <= 8; i++)
+            {
+                position = boardPosition.Down()?.Left();
+                if (position != null)
+                {
+                    possiblePositions.Add(position);
+                    boardPosition = position;
+                }
+                else
+                {
+                    break;
+                }
+            }
+
+            return possiblePositions;
+        }
     }
 }

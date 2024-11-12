@@ -339,5 +339,71 @@ namespace Tests.Pieces
             });
 
         }
+
+        // Tests a knight in various positions on the board returns 8 possible squares each time
+        [TestCase("C3")]
+        [TestCase("D3")]
+        [TestCase("E3")]
+        [TestCase("F3")]
+        [TestCase("C6")]
+        [TestCase("D6")]
+        [TestCase("E6")]
+        [TestCase("F6")]
+        public void Knight_GetValidSquares_AlwaysReturns8_FromThesePositions(string startPos)
+        {
+            BoardPosition startingPosition = new(startPos);
+            ChessPiece piece = new ChessPieceKnight(ChessPiece.Color.BLACK, 1, startingPosition);
+            ChessBoard chessBoard = new();
+            chessBoard.AddPiece(piece);
+
+            List<BoardPosition> results = piece.GetPossiblePositions(chessBoard);
+
+            Assert.That(results.Count, Is.EqualTo(8));
+        }
+
+        [TestCase("B3")]
+        [TestCase("B4")]
+        [TestCase("B5")]
+        [TestCase("B6")]
+        [TestCase("C2")]
+        [TestCase("D2")]
+        [TestCase("E2")]
+        [TestCase("F2")]
+        [TestCase("G3")]
+        [TestCase("G4")]
+        [TestCase("G5")]
+        [TestCase("G6")]
+        [TestCase("C7")]
+        [TestCase("D7")]
+        [TestCase("E7")]
+        [TestCase("F7")]
+        public void Knight_GetValidSquares_AlwaysReturns6_FromThesePositions(string startPos)
+        {
+            BoardPosition startingPosition = new(startPos);
+            ChessPiece piece = new ChessPieceKnight(ChessPiece.Color.BLACK, 1, startingPosition);
+            ChessBoard chessBoard = new();
+            chessBoard.AddPiece(piece);
+
+            List<BoardPosition> results = piece.GetPossiblePositions(chessBoard);
+
+            Assert.That(results.Count, Is.EqualTo(6));
+        }
+
+        [TestCase("B2")]
+        [TestCase("B7")]
+        [TestCase("G2")]
+        [TestCase("G7")]
+        public void Knight_GetValidSquares_AlwaysReturns4_FromThesePositions(string startPos)
+        {
+            BoardPosition startingPosition = new(startPos);
+            ChessPiece piece = new ChessPieceKnight(ChessPiece.Color.BLACK, 1, startingPosition);
+            ChessBoard chessBoard = new();
+            chessBoard.AddPiece(piece);
+
+            List<BoardPosition> results = piece.GetPossiblePositions(chessBoard);
+
+            Assert.That(results.Count, Is.EqualTo(4));
+        }
+
     }
 }

@@ -123,5 +123,49 @@ namespace Chess.Pieces
             return false;
         }
 
+        public override List<BoardPosition> GetPossiblePositions(ChessBoard chessBoard)
+        {
+            List<BoardPosition> possiblePositions = new();
+
+            // Directions for a rook: up, down, left, right
+            int[] rankDirections = { -1, 1, 0, 0 };
+            int[] fileDirections = { 0, 0, -1, 1 };
+
+            for (int direction = 0; direction < 4; direction++)
+            {
+                int rank = _currentPosition.RankAsInt;
+                int file = _currentPosition.FileAsInt;
+
+                while (true)
+                {
+                    rank += rankDirections[direction];
+                    file += fileDirections[direction];
+
+                    // Check if the new position is within the board boundaries
+                    if (rank < 0 || rank > 7 || file < 0 || file > 7)
+                    {
+                        break;
+                    }
+
+                    BoardPosition newPosition = new BoardPosition((RANK)rank, (FILE)file);
+
+                    // Check if the new position is occupied by a friendly piece
+                    if (chessBoard.IsPieceAtPosition(newPosition, _color))
+                    {
+                        break;
+                    }
+
+                    possiblePositions.Add(newPosition);
+
+                    // Check if the new position is occupied by an enemy piece
+                    if (chessBoard.IsPieceAtPosition(newPosition))
+                    {
+                        break;
+                    }
+                }
+            }
+
+            return possiblePositions;
+        }
     }
 }

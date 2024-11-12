@@ -101,39 +101,21 @@ namespace Chess.Services
         public bool IsCheckMate(Turn turn, out bool isStaleMate)
         {
             StaticLogger.Trace();
-            List<ChessPiece> friendlyPieces = new();
-            // if the turn passed in was blacks turn, then we should check if its checkmate for white king
-            // otherwise if the turn passed in was whites turn, then we should check if its checkmate for black king
-
-            if (turn.PlayerTurn.Equals(Turn.Color.WHITE))
-                friendlyPieces = turn.ChessPieces.FindAll(piece => piece.GetColor().Equals(ChessPiece.Color.BLACK));
-            else
-                friendlyPieces = turn.ChessPieces.FindAll(piece => piece.GetColor().Equals(ChessPiece.Color.WHITE));
+            List<ChessPiece> friendlyPieces = turn.PlayerTurn.Equals(Turn.Color.WHITE)
+                ? turn.ChessPieces.FindAll(piece => piece.GetColor().Equals(ChessPiece.Color.BLACK))
+                : turn.ChessPieces.FindAll(piece => piece.GetColor().Equals(ChessPiece.Color.WHITE));
 
             List<Turn> possibleMoves = new();
 
-            
             foreach (ChessPiece piece in friendlyPieces)
             {
-                // Simulated future turns assume a pawn is always promoted to queen
-                // iterate over all board positions
                 SpecialMovesHandlers.ByPassPawnPromotionPromptUser = true;
                 SimulationService.BeginSimulation();
-                ToDoAttribute.Add($@"
-This For Loop makes debugging a nightmare
-Replace this later with foreach (Square sq in piece.GetPossibleSquares())
-Or have the ChessPiece.GetPossibleTurns() and do this logic in ChessPiece
-Then write unit tests for it");
-                for (int i = 0; i < 8; i++)
+                foreach (BoardPosition pos in piece.GetPossiblePositions(turn.ChessBoard))
                 {
-                    for (int j = 0; j < 8; j++)
-                    {
-                        BoardPosition pos = new((RANK)i, (FILE)j);
-                        ToDoAttribute.Add("A pawn doesnt need to iterate 64 squares to determine if it can make a valid move");
-                        Turn possibleTurn = new(turn.TurnNumber + 1, piece, piece.GetCurrentPosition(), pos, turn.ChessBoard);
-                        if (possibleTurn.IsValidTurn)
-                            possibleMoves.Add(possibleTurn);
-                    }
+                    Turn possibleTurn = new(turn.TurnNumber + 1, piece, piece.GetCurrentPosition(), pos, turn.ChessBoard);
+                    if (possibleTurn.IsValidTurn)
+                        possibleMoves.Add(possibleTurn);
                 }
                 SpecialMovesHandlers.ByPassPawnPromotionPromptUser = false;
                 SimulationService.EndSimulation();
@@ -144,16 +126,13 @@ Then write unit tests for it");
                 if (!IsKingInCheck(possibleTurn))
                 {
                     isStaleMate = false;
-                    return false;              
-                }           
+                    return false;
+                }
             }
 
-            // If the king cannot make any moves (would be in check) but is not in check currently, we consider this a stalemate
-            ToDoAttribute.Add("Refactor the duplicate COLOR enums into a single enum");
-            ChessPiece.Color colorToCheck = turn.PlayerTurn.Equals(Turn.Color.WHITE)? ChessPiece.Color.BLACK : ChessPiece.Color.WHITE;
+            ChessPiece.Color colorToCheck = turn.PlayerTurn.Equals(Turn.Color.WHITE) ? ChessPiece.Color.BLACK : ChessPiece.Color.WHITE;
             if (!IsKingInCheck(colorToCheck, turn.ChessBoard))
             {
-                //Console.WriteLine("Its not in check??\n" + turn.ChessBoard.DisplayBoard());
                 isStaleMate = true;
                 return false;
             }

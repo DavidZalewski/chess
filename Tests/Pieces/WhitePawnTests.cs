@@ -313,5 +313,36 @@ namespace Tests.Pieces
 
             Assert.That(whitePawn3Piece.IsValidMove(board, new("E5")), Is.True);
         }
+
+        [TestCase("B2")]
+        [TestCase("B3")]
+        [TestCase("G2")]
+        [TestCase("G3")]
+        public void WhitePawn_GetValidSquares_AlwaysReturns4_FromThesePositions(string startPos)
+        {
+            BoardPosition startingPosition = new(startPos);
+            ChessPiece piece = new ChessPieceWhitePawn(1, startingPosition);
+            ChessBoard chessBoard = new();
+            chessBoard.AddPiece(piece);
+
+            List<BoardPosition> results = piece.GetPossiblePositions(chessBoard);
+
+            Assert.That(results.Count, Is.EqualTo(4));
+        }
+
+        [TestCase("A7")]
+        [TestCase("H7")]
+        public void WhitePawn_GetValidSquares_AlwaysReturns2_FromThesePositions(string startPos)
+        {
+            BoardPosition startingPosition = new(startPos);
+            ChessPiece piece = new ChessPieceWhitePawn(1, startingPosition);
+            ChessBoard chessBoard = new();
+            chessBoard.AddPiece(piece);
+
+            List<BoardPosition> results = piece.GetPossiblePositions(chessBoard);
+
+            Assert.That(results.Count, Is.EqualTo(2));
+        }
+
     }
 }

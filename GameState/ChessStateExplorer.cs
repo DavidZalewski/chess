@@ -77,22 +77,19 @@ namespace Chess.GameState
             SpecialMovesHandlers.ByPassPawnPromotionPromptUser = true;
             foreach (ChessPiece piece in currentSidePieces)
             {
-                for (int i = 0; i < 8; i++)
+                List<BoardPosition> positions = piece.GetPossiblePositions(turn.ChessBoard);
+                foreach(BoardPosition position in positions)
                 {
-                    for (int j = 0; j < 8; j++)
+                    Turn possibleTurn = new(turn.TurnNumber + 1, piece, piece.GetCurrentPosition(), position, turn.ChessBoard);
+                    if (possibleTurn.IsValidTurn && !kingCheckService.IsKingInCheck(possibleTurn))
                     {
-                        BoardPosition pos = new((RANK)i, (FILE)j);
-                        Turn possibleTurn = new(turn.TurnNumber + 1, piece, piece.GetCurrentPosition(), pos, turn.ChessBoard);
-                        if (possibleTurn.IsValidTurn && !kingCheckService.IsKingInCheck(possibleTurn))
-                        {
-                            logger.Log($"ChessStateExplorer - MID: Possible Move Found: {possibleTurn.TurnDescription}, Depth: {depth}, From: {turn.TurnDescription}", threadId);
-                            possibleMoves.Add(possibleTurn);
-                            // Recursively generate all possible moves from this new turn
-                            List<Turn> subMoves = GenerateAllPossibleMoves(possibleTurn, depth - 1);
-                            logger.Log($"ChessStateExplorer - MID: Turn: {possibleTurn.TurnDescription}, Depth: {depth}, From: {turn.TurnDescription}, SubCount: {subMoves.Count},", threadId);
-                            possibleMoves.AddRange(subMoves);
-                            logger.Log($"ChessStateExplorer - MID: Turn: {possibleTurn.TurnDescription}, Depth: {depth}, From: {turn.TurnDescription}, MainCount: {possibleMoves.Count},", threadId);
-                        }
+                        logger.Log($"ChessStateExplorer - MID: Possible Move Found: {possibleTurn.TurnDescription}, Depth: {depth}, From: {turn.TurnDescription}", threadId);
+                        possibleMoves.Add(possibleTurn);
+                        // Recursively generate all possible moves from this new turn
+                        List<Turn> subMoves = GenerateAllPossibleMoves(possibleTurn, depth - 1);
+                        logger.Log($"ChessStateExplorer - MID: Turn: {possibleTurn.TurnDescription}, Depth: {depth}, From: {turn.TurnDescription}, SubCount: {subMoves.Count},", threadId);
+                        possibleMoves.AddRange(subMoves);
+                        logger.Log($"ChessStateExplorer - MID: Turn: {possibleTurn.TurnDescription}, Depth: {depth}, From: {turn.TurnDescription}, MainCount: {possibleMoves.Count},", threadId);
                     }
                 }
             }
@@ -140,46 +137,44 @@ namespace Chess.GameState
             SpecialMovesHandlers.ByPassPawnPromotionPromptUser = true;
             foreach (ChessPiece piece in currentSidePieces)
             {
-                for (int i = 0; i < 8; i++)
+                List<BoardPosition> positions = piece.GetPossiblePositions(turn.ChessBoard);
+                foreach (BoardPosition position in positions) 
                 {
-                    for (int j = 0; j < 8; j++)
+                    Turn possibleTurn = new(turn.TurnNumber + 1, piece, piece.GetCurrentPosition(), position, turn.ChessBoard);
+                    bool isKingInCheck = kingCheckService.IsKingInCheck(possibleTurn);
+                    possibleTurn.IsKingInCheck = isKingInCheck;
+
+                    if (possibleTurn.IsValidTurn && !isKingInCheck)
                     {
-                        BoardPosition pos = new((RANK)i, (FILE)j);
-                        Turn possibleTurn = new(turn.TurnNumber + 1, piece, piece.GetCurrentPosition(), pos, turn.ChessBoard);
-                        bool isKingInCheck = kingCheckService.IsKingInCheck(possibleTurn);
-                        possibleTurn.IsKingInCheck = isKingInCheck;
+                        TurnNode turnNode = new(possibleTurn);
 
-                        if (possibleTurn.IsValidTurn && !isKingInCheck)
+                        ++currentCount;
+                        //logger.Log($"ChessStateExplorer - MID: Possible Move Found: {possibleTurn.TurnDescription}, Depth: {depth}, From: {turn.TurnDescription}", threadId);
+
+                        if (cache.TryGetValue(turnNode.BoardID, out CacheItem cacheItem))
                         {
-                            TurnNode turnNode = new(possibleTurn);
-                            
-                            ++currentCount;
-                            //logger.Log($"ChessStateExplorer - MID: Possible Move Found: {possibleTurn.TurnDescription}, Depth: {depth}, From: {turn.TurnDescription}", threadId);
-
-                            if (cache.TryGetValue(turnNode.BoardID, out CacheItem cacheItem))
-                            {
-                                cacheItem.InterlockedIncrement();
-                                ulong innerCount = cacheItem.Value;
-                                turnNode.Children = new List<TurnNode>();
-                                turnNode.Count = innerCount;
-                                possibleMoves.Add(turnNode);
-                                currentCount += innerCount;
-                                logger.Log($"ChessStateExplorer - MID: Hitting Cache for BoardID: {turnNode.BoardID}, Depth: {depth}, From: {turn.ChessBoard.BoardID}, ChildrenCount: {innerCount}, MainCount: {currentCount}", threadId);
-                            }
-                            else
-                            {
-                                ulong innerCount = 0;
-                                turnNode.Children = GenerateAllPossibleMovesTurnNode(possibleTurn, depth - 1, ref innerCount);
-                                turnNode.Count = innerCount;
-                                possibleMoves.Add(turnNode);
-                                cache.AddOrUpdate(turnNode.BoardID, new CacheItem(turnNode.Count));
-                                currentCount += innerCount;
-                                logger.Log($"ChessStateExplorer - MID: BoardID: {turnNode.BoardID}, Depth: {depth}, From: {turn.ChessBoard.BoardID}, ChildrenCount: {innerCount}, MainCount: {currentCount} - Added to cache", threadId);
-                            }
+                            cacheItem.InterlockedIncrement();
+                            ulong innerCount = cacheItem.Value;
+                            turnNode.Children = new List<TurnNode>();
+                            turnNode.Count = innerCount;
+                            possibleMoves.Add(turnNode);
+                            currentCount += innerCount;
+                            logger.Log($"ChessStateExplorer - MID: Hitting Cache for BoardID: {turnNode.BoardID}, Depth: {depth}, From: {turn.ChessBoard.BoardID}, ChildrenCount: {innerCount}, MainCount: {currentCount}", threadId);
+                        }
+                        else
+                        {
+                            ulong innerCount = 0;
+                            turnNode.Children = GenerateAllPossibleMovesTurnNode(possibleTurn, depth - 1, ref innerCount);
+                            turnNode.Count = innerCount;
+                            possibleMoves.Add(turnNode);
+                            cache.AddOrUpdate(turnNode.BoardID, new CacheItem(turnNode.Count));
+                            currentCount += innerCount;
+                            logger.Log($"ChessStateExplorer - MID: BoardID: {turnNode.BoardID}, Depth: {depth}, From: {turn.ChessBoard.BoardID}, ChildrenCount: {innerCount}, MainCount: {currentCount} - Added to cache", threadId);
                         }
                     }
                 }
             }
+
             SpecialMovesHandlers.ByPassPawnPromotionPromptUser = false;
 
             logger.Log($"ChessStateExplorer - END: BoardID: {turn.ChessBoard.BoardID}, Depth: {depth}, From: {turn.ChessBoard.BoardID}, Count: {currentCount}", threadId);

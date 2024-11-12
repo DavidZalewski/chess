@@ -208,7 +208,45 @@ namespace Tests.Pieces
             });
         }
 
+        [TestCase("B2")]
+        [TestCase("B3")]
+        [TestCase("B4")]
+        [TestCase("B5")]
+        [TestCase("B6")]
+        [TestCase("B7")]
+        [TestCase("G2")]
+        [TestCase("G3")]
+        [TestCase("G4")]
+        [TestCase("G5")]
+        [TestCase("G6")]
+        [TestCase("G7")]
+        public void King_GetValidSquares_AlwaysReturns8_FromThesePositions(string startPos)
+        {
+            BoardPosition startingPosition = new(startPos);
+            ChessPiece piece = new ChessPieceKing(ChessPiece.Color.WHITE, startingPosition);
+            ChessBoard chessBoard = new();
+            chessBoard.AddPiece(piece);
 
+            List<BoardPosition> results = piece.GetPossiblePositions(chessBoard);
+
+            Assert.That(results.Count, Is.EqualTo(8));
+        }
+
+        [TestCase("A1")]
+        [TestCase("A8")]
+        [TestCase("H1")]
+        [TestCase("H8")]
+        public void King_GetValidSquares_AlwaysReturns3_FromThesePositions(string startPos)
+        {
+            BoardPosition startingPosition = new(startPos);
+            ChessPiece piece = new ChessPieceKing(ChessPiece.Color.WHITE, startingPosition);
+            ChessBoard chessBoard = new();
+            chessBoard.AddPiece(piece);
+
+            List<BoardPosition> results = piece.GetPossiblePositions(chessBoard);
+
+            Assert.That(results.Count, Is.EqualTo(3));
+        }
 
 
 

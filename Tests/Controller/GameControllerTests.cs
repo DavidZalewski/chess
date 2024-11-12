@@ -5,7 +5,7 @@ using Chess.Globals;
 using Chess.Pieces;
 using Chess.Services;
 
-namespace Tests
+namespace Tests.Controller
 {
     [Category("CORE")]
     //[Parallelizable(ParallelScope.All)] // YOU CANNOT RUN THESE ASYNC ANYMORE
@@ -23,10 +23,11 @@ namespace Tests
         [Test]
         public void FindChessPieceFromString_WhiteKnight1_Success()
         {
-            String piece = "WK1";
+            string piece = "WK1";
             List<ChessPiece> chessPieces = ChessPieceFactory.CreateChessPiecesClassic();
 
-            ChessPiece whiteKnight1 = chessPieces.First(pieces => {
+            ChessPiece whiteKnight1 = chessPieces.First(pieces =>
+            {
                 return pieces.GetPiece().Equals(ChessPiece.Piece.KNIGHT) &&
                        pieces.GetColor().Equals(ChessPiece.Color.WHITE) &&
                        pieces.GetId().Equals(1);
@@ -43,10 +44,11 @@ namespace Tests
         [Test]
         public void FindChessPieceFromString_BlackBishop2_Success()
         {
-            String piece = "BB2";
+            string piece = "BB2";
             List<ChessPiece> chessPieces = ChessPieceFactory.CreateChessPiecesClassic();
 
-            ChessPiece blackBishop2 = chessPieces.First(pieces => {
+            ChessPiece blackBishop2 = chessPieces.First(pieces =>
+            {
                 return pieces.GetPiece().Equals(ChessPiece.Piece.BISHOP) &&
                        pieces.GetColor().Equals(ChessPiece.Color.BLACK) &&
                        pieces.GetId().Equals(2);
@@ -63,10 +65,11 @@ namespace Tests
         [Test]
         public void FindChessPieceFromString_BlackPawn7_Success()
         {
-            String piece = "BP7";
+            string piece = "BP7";
             List<ChessPiece> chessPieces = ChessPieceFactory.CreateChessPiecesClassic();
 
-            ChessPiece blackPawn7 = chessPieces.First(pieces => {
+            ChessPiece blackPawn7 = chessPieces.First(pieces =>
+            {
                 return pieces.GetPiece().Equals(ChessPiece.Piece.PAWN) &&
                        pieces.GetColor().Equals(ChessPiece.Color.BLACK) &&
                        pieces.GetId().Equals(7);
@@ -83,10 +86,11 @@ namespace Tests
         [Test]
         public void FindChessPieceFromString_WhiteRook2_Success()
         {
-            String piece = "WR2";
+            string piece = "WR2";
             List<ChessPiece> chessPieces = ChessPieceFactory.CreateChessPiecesClassic();
 
-            ChessPiece blackPawn7 = chessPieces.First(pieces => {
+            ChessPiece blackPawn7 = chessPieces.First(pieces =>
+            {
                 return pieces.GetPiece().Equals(ChessPiece.Piece.ROOK) &&
                        pieces.GetColor().Equals(ChessPiece.Color.WHITE) &&
                        pieces.GetId().Equals(2);
@@ -103,10 +107,11 @@ namespace Tests
         [Test]
         public void FindChessPieceFromString_WhiteQueen_Success()
         {
-            String piece = "WQ1";
+            string piece = "WQ1";
             List<ChessPiece> chessPieces = ChessPieceFactory.CreateChessPiecesClassic();
 
-            ChessPiece whiteQueen1 = chessPieces.First(pieces => {
+            ChessPiece whiteQueen1 = chessPieces.First(pieces =>
+            {
                 return pieces.GetPiece().Equals(ChessPiece.Piece.QUEEN) &&
                        pieces.GetColor().Equals(ChessPiece.Color.WHITE) &&
                        pieces.GetId().Equals(1);
@@ -123,10 +128,11 @@ namespace Tests
         [Test]
         public void FindChessPieceFromString_BlackKing_Success()
         {
-            String piece = "BK";
+            string piece = "BK";
             List<ChessPiece> chessPieces = ChessPieceFactory.CreateChessPiecesClassic();
 
-            ChessPiece blackKing = chessPieces.First(pieces => {
+            ChessPiece blackKing = chessPieces.First(pieces =>
+            {
                 return pieces.GetPiece().Equals(ChessPiece.Piece.KING) &&
                        pieces.GetColor().Equals(ChessPiece.Color.BLACK) &&
                        pieces.GetId().Equals(1);
@@ -148,7 +154,7 @@ namespace Tests
         [TestCase("A@4")]
         [TestCase("")]
         [TestCase("sriojgwi 4whiu hwu4h woweng")]
-        public void FindChessPieceFromString_InvalidInput_ReturnsNull(String input)
+        public void FindChessPieceFromString_InvalidInput_ReturnsNull(string input)
         {
             List<ChessPiece> chessPieces = ChessPieceFactory.CreateChessPiecesClassic();
 
@@ -178,7 +184,7 @@ namespace Tests
         [TestCase("WP7 G4")]
         [TestCase("WP8 H3")]
         [TestCase("WP8 H4")]
-        public void GetMoveFromCommand_WhiteTurn1(String input)
+        public void GetMoveFromCommand_WhiteTurn1(string input)
         {
             List<ChessPiece> chessPieces = ChessPieceFactory.CreateChessPiecesClassic();
             ChessBoard chessBoard = new();
@@ -189,7 +195,7 @@ namespace Tests
 
             Assert.That(turn, Is.Not.Null);
 
-            String[] inputs = input.Split(new char[] { ' ' });
+            string[] inputs = input.Split(new char[] { ' ' });
             BoardPosition boardPosition = new(inputs[1]);
 
             Assert.That(boardPosition, Is.Not.Null);
@@ -223,7 +229,7 @@ namespace Tests
         [TestCase("BP7 G5")]
         [TestCase("BP8 H6")]
         [TestCase("BP8 H5")]
-        public void GetMoveFromCommand_BlackTurn2(String input)
+        public void GetMoveFromCommand_BlackTurn2(string input)
         {
             List<ChessPiece> chessPieces = ChessPieceFactory.CreateChessPiecesClassic();
             ChessBoard chessBoard = new();
@@ -234,7 +240,7 @@ namespace Tests
 
             Assert.That(turn, Is.Not.Null);
 
-            String[] inputs = input.Split(new char[] { ' ' });
+            string[] inputs = input.Split(new char[] { ' ' });
             BoardPosition boardPosition = new(inputs[1]);
 
             Assert.That(boardPosition, Is.Not.Null);
@@ -385,7 +391,7 @@ namespace Tests
         [TestCase("WP7 G4")]
         [TestCase("WP8 H3")]
         [TestCase("WP8 H4")]
-        public void GetCurrentBoardID_Success(String input)
+        public void GetCurrentBoardID_Success(string input)
         {
             List<ChessPiece> chessPieces = ChessPieceFactory.CreateChessPiecesClassic();
             ChessBoard chessBoard = new();
@@ -412,7 +418,7 @@ namespace Tests
             Assert.Multiple(() =>
             {
                 Assert.That(gameController.GetCurrentBoardID(), Is.Not.Null);
-                Assert.That(String.IsNullOrWhiteSpace(gameController.GetCurrentBoardID()), Is.False);
+                Assert.That(string.IsNullOrWhiteSpace(gameController.GetCurrentBoardID()), Is.False);
                 Assert.That(gameControllerBoardIDTurn1, Is.Not.EqualTo(gameControllerBoardIDTurn0), "The two board IDs should be different");
                 Assert.That(gameControllerBoardIDTurn1, Is.EqualTo(turn1BoardID), "The two board IDs should be equal");
             });

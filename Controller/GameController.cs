@@ -20,9 +20,11 @@ namespace Chess.Controller
         private int _turnNumber = 1;
         private Action<Turn>? OnTurnHandler;
         private ActionSequence _sequence = new();
+        private Dictionary<string, int> boardStateCounter = new();
 
         public int TurnNumber { get => _turnNumber; set => _turnNumber = value; }
         public bool IsStaleMate { get; private set; } = false;
+        public bool IsDrawByRepetition { get; private set; } = false;
         public bool IsCheckMateForWhite { get; private set; } = false;
         public bool IsCheckMateForBlack { get; private set; } = false;
 
@@ -206,6 +208,21 @@ namespace Chess.Controller
             StaticLogger.Log($"Applying Turn To Game State (TurnNumber: {_turnNumber})", LogLevel.Debug);
             OnTurnHandler?.Invoke(turn);
             LambdaQueue.Drain(this); // Used for EnPassant to expire the window where this move can still be made
+
+            // Handles draws by repetition
+            if (boardStateCounter.ContainsKey(turn.ChessBoard.BoardID))
+            {
+                boardStateCounter[turn.ChessBoard.BoardID] += 1;
+                StaticLogger.Log($"BoardID {turn.ChessBoard.BoardID} at TurnNumber {turn.TurnNumber} has been seen before. Incrementing counter", LogLevel.Debug);
+
+                if (boardStateCounter[turn.ChessBoard.BoardID] >= 3)
+                {
+                    IsDrawByRepetition = true;
+                    StaticLogger.Log($"BoardID {turn.ChessBoard.BoardID} at TurnNumber {turn.TurnNumber} has been seen 3 times. Setting property IsDrawByRepetition to true", LogLevel.Debug);
+                }
+            }
+            else
+                boardStateCounter[turn.ChessBoard.BoardID] = 1;
         }
 
         public ChessBoard GetChessBoard() 

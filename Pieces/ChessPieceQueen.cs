@@ -44,5 +44,12 @@ namespace Chess.Pieces
             // does this need to exist?
             return false;
         }
+
+        public override List<BoardPosition> GetPossiblePositions(ChessBoard chessBoard)
+        {
+            List<BoardPosition> possiblePositions = _chessPieceBishop.GetPossiblePositions(chessBoard);
+            possiblePositions.AddRange(_chessPieceRook.GetPossiblePositions(chessBoard));
+            return possiblePositions;
+        }
     }
 }

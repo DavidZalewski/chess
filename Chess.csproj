@@ -12,12 +12,15 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="AWSTerraform\**" />
     <Compile Remove="Chess.comReplayETL\**" />
     <Compile Remove="Prototypes\**" />
     <Compile Remove="Tests\**" />
+    <EmbeddedResource Remove="AWSTerraform\**" />
     <EmbeddedResource Remove="Chess.comReplayETL\**" />
     <EmbeddedResource Remove="Prototypes\**" />
     <EmbeddedResource Remove="Tests\**" />
+    <None Remove="AWSTerraform\**" />
     <None Remove="Chess.comReplayETL\**" />
     <None Remove="Prototypes\**" />
     <None Remove="Tests\**" />

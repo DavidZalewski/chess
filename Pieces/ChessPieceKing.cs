@@ -116,5 +116,46 @@ namespace Chess.Pieces
         }
 
         internal void SetWasInCheck() { StaticLogger.Trace(); _wasInCheck = true; }
+
+        public override List<BoardPosition> GetPossiblePositions(ChessBoard chessBoard)
+        {
+            List<BoardPosition> possiblePositions = new();
+
+            BoardPosition? upRight = _currentPosition.Up()?.Right();
+            BoardPosition? downRight = _currentPosition.Down()?.Right();
+            BoardPosition? upLeft = _currentPosition.Up()?.Left();
+            BoardPosition? downLeft = _currentPosition.Down()?.Left();
+            BoardPosition? up = _currentPosition.Up();
+            BoardPosition? down = _currentPosition.Down();
+            BoardPosition? left = _currentPosition.Left();
+            BoardPosition? right = _currentPosition.Right();
+
+            if (upRight != null)
+                possiblePositions.Add(upRight);
+
+            if (downRight != null)
+                possiblePositions.Add(downRight);
+
+            if (upLeft != null)
+                possiblePositions.Add(upLeft);
+
+            if (downLeft != null)
+                possiblePositions.Add(downLeft);
+
+            if (up != null)
+                possiblePositions.Add(up);
+
+            if (down != null)
+                possiblePositions.Add(down);
+
+            if (left != null)
+                possiblePositions.Add(left);
+
+            if (right != null)
+                possiblePositions.Add(right);
+
+            return possiblePositions;
+        }
+
     }
 }
