@@ -149,7 +149,7 @@ MethodInvoker.Invoke(Object obj, IntPtr* args, BindingFlags invokeAttr)
             }
         }
 
-        [Test]
+        [Test(Description = "[TPL-Managed: 14.2min], [WithDegreeOfParallelism(20): 18.2min]")]
         public void GenerateAllPossibleMoves_LighterMemory_Depth_7_Success()
         {
             // Arrange
@@ -173,6 +173,7 @@ MethodInvoker.Invoke(Object obj, IntPtr* args, BindingFlags invokeAttr)
             ConcurrentLogger logger = new("GenerateAllPossibleMoves_LighterMemory_Depth_7_Success.txt");
 
             var possibleMoves = startingTurns.AsParallel()
+                //.WithDegreeOfParallelism(20) // Limit the degree of parallelism to 20
                 .Select((turn) =>
                 {
                     int threadId = Thread.CurrentThread.ManagedThreadId;

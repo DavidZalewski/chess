@@ -385,6 +385,13 @@ namespace Chess.GameState
                     }
 #endif
                     _gameController.ApplyTurnToGameState(turn);
+                    if (_gameController.IsDrawByRepetition)
+                    {
+                        _console.WriteLine("Game ended in a draw");
+                        _console.WriteLine("Game Over.");
+                        _console.WriteLine(_gameController.DisplayBoard());
+                        break; // break out of game loop
+                    }
                 }
                 catch (Exception ex)
                 {
