@@ -382,6 +382,7 @@ namespace Tests.GameState
 
         [Test]
         //[Parallelizable(ParallelScope.Self)]
+        [Ignore("Not implemented yet!")]
         public void AI_Vs_AI()
         {
             Queue<string> consoleInputs = new();

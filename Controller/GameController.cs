@@ -18,6 +18,7 @@ namespace Chess.Controller
         private List<ChessPiece> _chessPieces = new();
         private List<Turn> _turns = new();
         private int _turnNumber = 1;
+        [NonSerialized]
         private Action<Turn>? OnTurnHandler;
         private ActionSequence _sequence = new();
         private Dictionary<string, int> boardStateCounter = new();
