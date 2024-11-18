@@ -1,5 +1,6 @@
 using Chess.Board;
 using Chess.Pieces;
+using static Chess.Pieces.ChessPiece;
 
 namespace Tests.Pieces
 {
@@ -405,5 +406,38 @@ namespace Tests.Pieces
             Assert.That(results.Count, Is.EqualTo(4));
         }
 
+        [Test]
+        public void Knight_GetAttackedPieces_Returns_Fork()
+        {
+            ChessPiece blackKing = new ChessPieceKing(Color.BLACK, new("D4"));
+            ChessPiece blackRook1 = new ChessPieceRook(Color.BLACK, 1, new("E3"));
+            ChessPiece blackRook2 = new ChessPieceRook(Color.BLACK, 2, new("A3"));
+            ChessPiece blackQueen = new ChessPieceQueen(Color.BLACK, 1, new("B4"));
+            ChessPiece whiteKnight = new ChessPieceKnight(ChessPiece.Color.WHITE, 1, new("E1"));
+            ChessBoard chessBoard = new();
+            chessBoard.AddPiece(blackKing);
+            chessBoard.AddPiece(blackRook1);
+            chessBoard.AddPiece(blackRook2);
+            chessBoard.AddPiece(blackQueen);
+            chessBoard.AddPiece(whiteKnight);
+
+            whiteKnight.Move(chessBoard, new("C2"));
+
+            List<ChessPiece> knightAttacking = whiteKnight.GetAttackedPieces(chessBoard);
+            List<ChessPiece> blackAttacking = blackRook1.GetAttackedPieces(chessBoard);
+            blackAttacking.AddRange(blackRook2.GetAttackedPieces(chessBoard));
+            blackAttacking.AddRange(blackQueen.GetAttackedPieces(chessBoard));
+            blackAttacking.AddRange(blackKing.GetAttackedPieces(chessBoard));
+
+            Assert.Multiple(() =>
+            {
+                Assert.That(knightAttacking.Count == 4, "Expected White Knight to fork all Black Pieces");
+                Assert.That(blackAttacking.Count == 0, "None of Black Pieces can attack this knight");
+                Assert.That(knightAttacking[3] is ChessPieceRook, "Expected the Rook to be 4th element");
+                Assert.That(knightAttacking[2] is ChessPieceRook, "Expected the Rook to be 3rd element");
+                Assert.That(knightAttacking[1] is ChessPieceQueen, "Expected the Queen to be 2nd element");
+                Assert.That(knightAttacking[0] is ChessPieceKing, "Expected the King to be 1st element");
+            });
+        }
     }
 }

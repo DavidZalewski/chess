@@ -1,6 +1,7 @@
 ﻿using Chess.Attributes;
 using Chess.Board;
 using Chess.Callbacks;
+using Chess.Collections;
 using Chess.Globals;
 
 namespace Chess.Pieces
@@ -109,8 +110,6 @@ namespace Chess.Pieces
         public abstract bool IsValidMove(ChessBoard board, BoardPosition position);
         public abstract bool ImplementMove(ChessBoard board, BoardPosition position);
         public abstract List<BoardPosition> GetPossiblePositions(ChessBoard chessBoard);
-        public abstract SortedDictionary<int, ChessPiece> GetAttackedPieces();
-
 
         public void Move(ChessBoard board, BoardPosition position)
         {
@@ -134,6 +133,24 @@ namespace Chess.Pieces
             }
 
         }
+
+        // another way of doing CheckMate calculations - use this method to see if any contain a King in any of the opponent pieces.
+        public List<ChessPiece> GetAttackedPieces(ChessBoard chessBoard)
+        {
+            StaticLogger.Trace();
+            SortedTupleBag<ChessPiece.Piece, ChessPiece> results = new();
+            foreach (var pos in GetPossiblePositions(chessBoard))
+            {
+                ChessPiece piece = chessBoard.GetSquare(pos).Piece;
+                if (piece is not NoPiece && this.IsValidMove(chessBoard, pos))
+                {
+                    results.Add(piece.GetPiece(), piece);
+                }
+            }
+
+            return results.OrderByDescending(x => x.Item1).Select(x => x.Item2).ToList();
+        }
+
 
         public Piece GetPiece() { StaticLogger.Trace(); return _piece; }
         public Color GetColor() { StaticLogger.Trace(); return _color; }
@@ -217,5 +234,6 @@ Use this to replace the brute force for loop in KingCheckService")]
             StaticLogger.Trace();
             return GetHashCode();
         }
+
     }
 }

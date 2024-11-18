@@ -95,9 +95,5 @@ namespace Chess.Pieces
             return possiblePositions;
         }
 
-        public override SortedDictionary<int, ChessPiece> GetAttackedPieces()
-        {
-            foreach(var pos in GetPossiblePositions(new ChessBoard()))
-        }
     }
 }

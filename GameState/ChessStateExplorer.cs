@@ -1,6 +1,7 @@
 ﻿using Chess.Attributes;
 using Chess.Board;
 using Chess.Callbacks;
+using Chess.Collections;
 using Chess.Globals;
 using Chess.Pieces;
 using Chess.Services;
@@ -130,6 +131,8 @@ namespace Chess.GameState
                 return possibleMoves;
             }
 
+            ToDoAttribute.Add("There's no handling of draw by repetition here!");
+
             List<ChessPiece> currentSidePieces = turn.ChessPieces.FindAll(piece => !piece.GetColor().Equals((ChessPiece.Color)turn.PlayerTurn));
 
             // Simulated future turns assume a pawn is always promoted to queen
@@ -151,26 +154,26 @@ namespace Chess.GameState
                         ++currentCount;
                         //logger.Log($"ChessStateExplorer - MID: Possible Move Found: {possibleTurn.TurnDescription}, Depth: {depth}, From: {turn.TurnDescription}", threadId);
 
-                        if (cache.TryGetValue(turnNode.BoardID, out CacheItem cacheItem))
-                        {
-                            cacheItem.InterlockedIncrement();
-                            ulong innerCount = cacheItem.Value;
-                            turnNode.Children = new List<TurnNode>();
-                            turnNode.Count = innerCount;
-                            possibleMoves.Add(turnNode);
-                            currentCount += innerCount;
-                            logger.Log($"ChessStateExplorer - MID: Hitting Cache for BoardID: {turnNode.BoardID}, Depth: {depth}, From: {turn.ChessBoard.BoardID}, ChildrenCount: {innerCount}, MainCount: {currentCount}", threadId);
-                        }
-                        else
-                        {
+                        //if (cache.TryGetValue(turnNode.BoardID, out CacheItem cacheItem))
+                        //{
+                        //    cacheItem.InterlockedIncrement();
+                        //    ulong innerCount = cacheItem.Value;
+                        //    turnNode.Children = new List<TurnNode>();
+                        //    turnNode.Count = innerCount;
+                        //    possibleMoves.Add(turnNode);
+                        //    currentCount += innerCount;
+                        //    logger.Log($"ChessStateExplorer - MID: Hitting Cache for BoardID: {turnNode.BoardID}, Depth: {depth}, From: {turn.ChessBoard.BoardID}, ChildrenCount: {innerCount}, MainCount: {currentCount}", threadId);
+                        //}
+                        //else
+                        //{
                             ulong innerCount = 0;
                             turnNode.Children = GenerateAllPossibleMovesTurnNode(possibleTurn, depth - 1, ref innerCount);
                             turnNode.Count = innerCount;
                             possibleMoves.Add(turnNode);
-                            cache.AddOrUpdate(turnNode.BoardID, new CacheItem(turnNode.Count));
+                            //cache.AddOrUpdate(turnNode.BoardID, new CacheItem(turnNode.Count));
                             currentCount += innerCount;
                             logger.Log($"ChessStateExplorer - MID: BoardID: {turnNode.BoardID}, Depth: {depth}, From: {turn.ChessBoard.BoardID}, ChildrenCount: {innerCount}, MainCount: {currentCount} - Added to cache", threadId);
-                        }
+                        //}
                     }
                 }
             }
@@ -294,6 +297,107 @@ namespace Chess.GameState
             }
 
             return possibleMoves;
+        }
+
+        public SortedTupleBag<string, List<ChessPiece>> GetAllAttacks(ChessBoard chessBoard)
+        {
+            SortedTupleBag<string, List<ChessPiece>> results = new();
+
+            foreach (var piece in chessBoard.GetActivePieces())
+            {
+                List<ChessPiece> attackedList = piece.GetAttackedPieces(chessBoard);
+                if (attackedList.Count != 0)
+                    results.Add(piece.GetPieceName(), attackedList);
+            }
+
+            return results;
+        }
+
+        public void GetAllAttacksForAllPossibleMovesForDepth(Turn turn, int depth)
+        {
+            Console.WriteLine($"Turn: {turn.TurnNumber}, {turn.TurnDescription}");
+
+            SortedTupleBag<string, List<ChessPiece>> currentTurnResults = new();
+
+            foreach (var piece in turn.ChessBoard.GetActivePieces())
+            {
+                List<ChessPiece> attackedList = piece.GetAttackedPieces(turn.ChessBoard);
+                if (attackedList.Count != 0)
+                    currentTurnResults.Add(piece.GetPieceName(), attackedList);
+            }
+
+            foreach (var attacked in currentTurnResults)
+            {
+                string threatsList = "[";
+                foreach (ChessPiece threatenedPiece in attacked.Item2)
+                {
+                    threatsList += threatenedPiece.GetPieceName();
+                    threatsList += ",";
+                }
+                threatsList += "]";
+                Console.WriteLine($"Piece: {attacked.Item1}, Threatens: {threatsList}");
+            }
+
+            ulong count = 0;
+            List<TurnNode> turnNodes = GenerateAllPossibleMovesTurnNode(turn, depth, ref count);
+
+            foreach (var t in turnNodes)
+            {
+                {
+                    Console.WriteLine($"Turn: {t.TurnNumber}, {t.TurnDescription}, From: {turn.TurnDescription}");
+
+                    SortedTupleBag<string, List<ChessPiece>> innerResults = new();
+                    ChessBoard cb = new(t.BoardID);
+
+                    foreach (var piece in cb.GetActivePieces())
+                    {
+                        List<ChessPiece> attackedList = piece.GetAttackedPieces(cb);
+                        if (attackedList.Count != 0)
+                            innerResults.Add(piece.GetPieceName(), attackedList);
+                    }
+
+                    foreach (var attacked in innerResults)
+                    {
+                        string threatsList = "[";
+                        foreach (ChessPiece threatenedPiece in attacked.Item2)
+                        {
+                            threatsList += threatenedPiece.GetPieceName();
+                            threatsList += ",";
+                        }
+                        threatsList += "]";
+                        Console.WriteLine($"Piece: {attacked.Item1}, Threatens: {threatsList}");
+
+                    }
+                }
+
+                foreach (var tt in t.Children)
+                {
+                    Console.WriteLine($"Turn: {tt.TurnNumber}, {tt.TurnDescription}, From: {t.TurnDescription}");
+
+                    SortedTupleBag<string, List<ChessPiece>> innerInnerResults = new();
+                    ChessBoard ccbb = new ChessBoard(tt.BoardID);
+                    foreach (var piece in ccbb.GetActivePieces())
+                    {
+                        List<ChessPiece> attackedList = piece.GetAttackedPieces(ccbb);
+                        if (attackedList.Count != 0)
+                            innerInnerResults.Add(piece.GetPieceName(), attackedList);
+                    }
+
+                    foreach (var attacked in innerInnerResults)
+                    {
+                        string threatsList = "[";
+                        foreach (ChessPiece threatenedPiece in attacked.Item2)
+                        {
+                            threatsList += threatenedPiece.GetPieceName();
+                            threatsList += ",";
+                        }
+                        threatsList += "]";
+                        Console.WriteLine($"Piece: {attacked.Item1}, Threatens: {threatsList}");
+
+                    }
+
+                }
+            }
         }
     }
 }
