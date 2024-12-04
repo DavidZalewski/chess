@@ -6,6 +6,7 @@ using Chess.Pieces;
 using Chess.Services;
 using Newtonsoft.Json;
 using NUnit.Framework.Internal;
+using NUnit.Framework.Legacy;
 using System.Collections.Concurrent;
 using System.Security;
 
@@ -152,7 +153,7 @@ MethodInvoker.Invoke(Object obj, IntPtr* args, BindingFlags invokeAttr)
             }
         }
 
-        [Test(Description = "[TPL-Managed: 14.2min], [WithDegreeOfParallelism(20): 18.2min]")]
+        [Test(Description = "[TPL-Managed: 14.2min], [WithDegreeOfParallelism(20): 18.2min], [Caching-Removed: 25.4min")]
         public void GenerateAllPossibleMoves_LighterMemory_Depth_7_Success()
         {
             // Arrange
@@ -350,16 +351,27 @@ MethodInvoker.Invoke(Object obj, IntPtr* args, BindingFlags invokeAttr)
 
             Console.WriteLine(chessBoard.DisplayBoard());
 
-            foreach(Tuple<string, List<ChessPiece>> keyValuePair in results)
+            var expectedResults = new Dictionary<string, List<string>>
             {
+                { "Black Knight 2", new List<string> { "White Pawn 5", "White Pawn 2" } },
+                { "White Knight 2", new List<string> { "Black Pawn 7" } }
+            };
+
+            foreach (var keyValuePair in results)
+            {
+                var pieceName = keyValuePair.Item1;
+                var threatenedPieces = keyValuePair.Item2.Select(p => p.GetPieceName()).ToList();
+
                 string threatsList = "[";
-                foreach(ChessPiece threatenedPiece in keyValuePair.Item2)
+                foreach (string threatenedPiece in threatenedPieces)
                 {
-                    threatsList += threatenedPiece.GetPieceName();
+                    threatsList += threatenedPiece;
                     threatsList += ",";
                 }
                 threatsList += "]";
                 Console.WriteLine($"Piece: {keyValuePair.Item1}, Threatens: {threatsList}");
+                Assert.That(expectedResults.ContainsKey(pieceName), $"Unexpected piece: {pieceName}");
+                CollectionAssert.AreEquivalent(expectedResults[pieceName], threatenedPieces, $"Threats for {pieceName} do not match expected results.");
             }
         }
 

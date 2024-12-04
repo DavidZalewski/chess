@@ -411,6 +411,7 @@ namespace Tests.GameState
             consoleInputs.Enqueue("Classic");
             consoleInputs.Enqueue("n"); // no to ai
             consoleInputs.Enqueue("BR1 E7");
+            consoleInputs.Enqueue("quit");
 
             IConsole consoleService = new MockConsoleService(consoleInputs);
             string BoardID = "0A00200060000CCC00080A00C0C00000000C000B9B0B00B0B7B00B7050000010";
