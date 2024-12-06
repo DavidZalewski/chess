@@ -87,7 +87,7 @@ namespace Tests.Board
         public void SquareConstructorWithNullOtherSquare_Success()
         {
             // Act
-            var square = new Square(null);
+            var square = new Square((Square?)null);
 
             // Assert
             Assert.Multiple(() =>
