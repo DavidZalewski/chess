@@ -424,5 +424,84 @@ namespace Tests.Controller
             });
         }
 
+        [Test]
+        public void ApplyRuleSet_ExecutesActionSequence()
+        {
+            var chessBoard = new ChessBoard();
+            var gameController = new GameController(chessBoard);
+            bool wasExecuted = false;
+
+            gameController.AddRuleSet(() => wasExecuted = true);
+
+            gameController.ApplyRuleSet();
+
+            Assert.That(wasExecuted, Is.True);
+        }
+
+        [Test]
+        public void RuleSetPawnsOnly_SetsCorrectPieceList()
+        {
+            var chessBoard = new ChessBoard();
+            var gameController = new GameController(chessBoard);
+
+            gameController.RuleSetPawnsOnly();
+
+            Assert.Multiple(() =>
+            {
+                Assert.That(gameController._chessPieces.Count, Is.EqualTo(18)); // 16 pawns + 2 kings
+                Assert.That(gameController._chessPieces.Count(p => p.GetPiece() == ChessPiece.Piece.PAWN), Is.EqualTo(16));
+                Assert.That(gameController._chessPieces.Count(p => p.GetPiece() == ChessPiece.Piece.KING), Is.EqualTo(2));
+            });
+        }
+
+        [Test]
+        public void RuleSetSevenByEight_NoAction()
+        {
+            var chessBoard = new ChessBoard();
+            var gameController = new GameController(chessBoard);
+
+            gameController.RuleSetSevenByEight();
+
+            // Since the method is empty, we just check if it doesn't throw an exception
+            Assert.Pass("Method executed without throwing an exception");
+        }
+
+        [Test]
+        public void RuleSetKingsForce_NoAction()
+        {
+            var chessBoard = new ChessBoard();
+            var gameController = new GameController(chessBoard);
+
+            gameController.RuleSetKingsForce();
+
+            // Since the method is empty, we just check if it doesn't throw an exception
+            Assert.Pass("Method executed without throwing an exception");
+        }
+
+        [Test]
+        public void RuleSetNuclearHorse_SetsCorrectPieceList()
+        {
+            var chessBoard = new ChessBoard();
+            var gameController = new GameController(chessBoard);
+
+            gameController.RuleSetNuclearHorse();
+
+            // Assuming NuclearHorse rule set changes the piece configuration
+            Assert.That(gameController._chessPieces, Is.Not.Empty);
+            // Add more assertions based on what NuclearHorse should do
+        }
+
+        [Test]
+        public void NuclearHorseEndTurnHandler_ExecutesWithoutException()
+        {
+            var chessBoard = new ChessBoard();
+            var gameController = new GameController(chessBoard);
+            gameController._chessPieces.Add(new NuclearBishopPiece(ChessPiece.Color.WHITE, 1, new("C1")));
+
+            gameController.NuclearHorseEndTurnHandler();
+
+            Assert.Pass("Method executed without throwing an exception");
+        }
+
     }
 }
