@@ -437,7 +437,16 @@ MethodInvoker.Invoke(Object obj, IntPtr* args, BindingFlags invokeAttr)
 
             Console.WriteLine(chessBoard.DisplayBoard());
 
-            chessStateExplorer.GetAllAttacksForAllPossibleMovesForDepth(turn, 3);         
+            ChessAnalysisResult chessAnalysisResult = chessStateExplorer.GetAllAttacksForAllPossibleMovesForDepth(turn, 2);
+
+            foreach (var attackInfo in chessAnalysisResult.Attacks)
+            {
+                Console.WriteLine($"Attacking Piece: {attackInfo.Attacker.GetPieceName()}");
+                foreach(var attacked in attackInfo.Targets)
+                {
+                    Console.WriteLine($"Attacks: {attacked.GetPieceName()}");
+                }
+            }
         }
 
     }

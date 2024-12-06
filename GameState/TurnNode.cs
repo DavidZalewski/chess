@@ -1,4 +1,5 @@
-﻿using Chess.Globals;
+﻿using Chess.Board;
+using Chess.Globals;
 using Chess.Pieces;
 
 namespace Chess.GameState
@@ -11,7 +12,7 @@ namespace Chess.GameState
         public TurnNode? Parent { get; set; }
         public List<TurnNode> Children { get; set; } = new List<TurnNode>();
         public ulong Count { get; set; }
-        public string Command { get; set; }
+        public string Command { get; set; } = "";
         public string TurnID { get; }
         public string BoardID { get; }
         public bool IsKingInCheck { get; set; }
@@ -21,6 +22,9 @@ namespace Chess.GameState
             StaticLogger.Trace();
             return TurnNumber % 2 == 0 ? 0 : 1; // black is 0. white is 1;
         }
+        public ChessPiece Piece { get; set; }
+        public BoardPosition From {  get; set; }
+        public BoardPosition To { get; set; }
 
         public TurnNode(Turn turn, string optionalText = "")
         {
@@ -28,6 +32,9 @@ namespace Chess.GameState
             TurnDescription = turn.TurnDescription + optionalText;
             TurnNumber = turn.TurnNumber;
             BoardState = turn.ChessBoard.BoardID;
+            Piece = turn.ChessPiece;
+            From = turn.PreviousPosition;
+            To = turn.NewPosition;
             //Command = turn.Command;
 
             if (String.IsNullOrEmpty(Command))
