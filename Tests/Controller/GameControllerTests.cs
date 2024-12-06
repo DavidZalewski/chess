@@ -424,5 +424,104 @@ namespace Tests.Controller
             });
         }
 
+        [Test]
+        public void ApplyRuleSet_PlaysActionSequence()
+        {
+            // Arrange
+            var chessBoard = new ChessBoard();
+            var gameController = new GameController(chessBoard);
+            gameController.AddRuleSet("PawnsOnly");
+
+            // Act
+            gameController.ApplyRuleSet();
+
+            // Assert
+            // Since we don't have a direct way to check if the sequence was played, we'll check if the pieces were updated
+            var pieces = gameController.GetChessBoard().GetActivePieces();
+            Assert.That(pieces.Count(p => p.GetPiece() == ChessPiece.Piece.PAWN), Is.EqualTo(16));
+            Assert.That(pieces.Count(p => p.GetPiece() == ChessPiece.Piece.KING), Is.EqualTo(2));
+        }
+
+        [Test]
+        public void RuleSetPawnsOnly_SetsPawnsAndKingsOnly()
+        {
+            // Arrange
+            var chessBoard = new ChessBoard();
+            var gameController = new GameController(chessBoard);
+
+            // Act
+            gameController.RuleSetPawnsOnly();
+
+            // Assert
+            var pieces = gameController.GetChessBoard().GetActivePieces();
+            Assert.That(pieces.Count(p => p.GetPiece() == ChessPiece.Piece.PAWN), Is.EqualTo(16));
+            Assert.That(pieces.Count(p => p.GetPiece() == ChessPiece.Piece.KING), Is.EqualTo(2));
+        }
+
+        [Test]
+        public void RuleSetSevenByEight_DoesNothing()
+        {
+            // Arrange
+            var chessBoard = new ChessBoard();
+            var gameController = new GameController(chessBoard);
+
+            // Act
+            gameController.RuleSetSevenByEight();
+
+            // Assert
+            // Since this method does nothing, we'll just check that the board state remains unchanged
+            var pieces = gameController.GetChessBoard().GetActivePieces();
+            Assert.That(pieces.Count, Is.EqualTo(32)); // Assuming classic setup
+        }
+
+        [Test]
+        public void RuleSetKingsForce_DoesNothing()
+        {
+            // Arrange
+            var chessBoard = new ChessBoard();
+            var gameController = new GameController(chessBoard);
+
+            // Act
+            gameController.RuleSetKingsForce();
+
+            // Assert
+            // Since this method does nothing, we'll just check that the board state remains unchanged
+            var pieces = gameController.GetChessBoard().GetActivePieces();
+            Assert.That(pieces.Count, Is.EqualTo(32)); // Assuming classic setup
+        }
+
+        [Test]
+        public void RuleSetNuclearHorse_SetsNuclearHorsePieces()
+        {
+            // Arrange
+            var chessBoard = new ChessBoard();
+            var gameController = new GameController(chessBoard);
+
+            // Act
+            gameController.RuleSetNuclearHorse();
+
+            // Assert
+            var pieces = gameController.GetChessBoard().GetActivePieces();
+            Assert.That(pieces.Any(p => p is NuclearBishopPiece), Is.True);
+        }
+
+        [Test]
+        public void NuclearHorseEndTurnHandler_MovesNuclearBishops()
+        {
+            // Arrange
+            var chessBoard = new ChessBoard();
+            var gameController = new GameController(chessBoard);
+            gameController.RuleSetNuclearHorse(); // Set up NuclearHorse pieces
+            var nuclearBishops = gameController.GetChessBoard().GetActivePieces().OfType<NuclearBishopPiece>().ToList();
+            var originalPositions = nuclearBishops.Select(b => b.GetCurrentPosition()).ToList();
+
+            // Act
+            gameController.NuclearHorseEndTurnHandler();
+
+            // Assert
+            var newPositions = gameController.GetChessBoard().GetActivePieces().OfType<NuclearBishopPiece>().Select(b => b.GetCurrentPosition()).ToList();
+            Assert.That(newPositions, Is.Not.EquivalentTo(originalPositions)); // At least one bishop should have moved
+        }
+
     }
 }

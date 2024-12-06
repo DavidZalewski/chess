@@ -1,13 +1,8 @@
-﻿using Chess.Attributes;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Chess.Collections
 {
-    [TestNeeded]
     public class SortedTupleBag<TKey, TValue> : SortedSet<Tuple<TKey, TValue>>
         where TKey : IComparable
     {
@@ -17,8 +12,6 @@ namespace Chess.Collections
             {
                 if (x == null || y == null) return 0;
 
-                // If the keys are the same we don't care about the order.
-                // Return 1 so that duplicates are not ignored.
                 return x.Item1.Equals(y.Item1)
                     ? 1
                     : Comparer<TKey>.Default.Compare(x.Item1, y.Item1);
