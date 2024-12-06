@@ -27,7 +27,7 @@ namespace Tests.Board
         public void SquareConstructorWithPositionAndPiece_Success()
         {
             var position = new BoardPosition(RANK.FOUR, FILE.F);
-            var piece = new ChessPiecePawn(ChessPiece.Color.WHITE, 1, position);
+            var piece = new ChessPieceWhitePawn(1, position);
 
             var square = new Square(position, piece);
 
@@ -42,7 +42,7 @@ namespace Tests.Board
         public void SquareConstructorWithPiece_Success()
         {
             var position = new BoardPosition(RANK.FOUR, FILE.F);
-            var piece = new ChessPiecePawn(ChessPiece.Color.WHITE, 1, position);
+            var piece = new ChessPieceWhitePawn(1, position);
 
             var square = new Square(piece);
 
@@ -57,7 +57,7 @@ namespace Tests.Board
         public void SquareConstructorWithOtherSquare_Success()
         {
             var position = new BoardPosition(RANK.FOUR, FILE.F);
-            var piece = new ChessPiecePawn(ChessPiece.Color.WHITE, 1, position);
+            var piece = new ChessPieceWhitePawn(1, position);
             var originalSquare = new Square(position, piece);
 
             var copiedSquare = new Square(originalSquare);

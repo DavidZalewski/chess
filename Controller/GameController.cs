@@ -15,7 +15,7 @@ namespace Chess.Controller
     {
         private ChessBoard _chessBoard;
         private KingCheckService _kingCheckService;
-        private List<ChessPiece> _chessPieces = new();
+        internal List<ChessPiece> _chessPieces = new();
         private List<Turn> _turns = new();
         private int _turnNumber = 1;
         [NonSerialized]
