@@ -18,6 +18,7 @@ namespace Chess.Board
             Piece = NoPiece.Instance;
         }
 
+        [TestNeeded]
         public Square(BoardPosition position, ChessPiece piece)
         {
             StaticLogger.Trace();
@@ -33,6 +34,7 @@ namespace Chess.Board
             Piece = piece;
         }
 
+        [TestNeeded]
         public Square(Square? other)
         {
             StaticLogger.Trace();

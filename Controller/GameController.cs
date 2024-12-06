@@ -367,12 +367,14 @@ namespace Chess.Controller
             }
         }
 
+        [TestNeeded]
         public void ApplyRuleSet()
         {
             StaticLogger.Trace();
             _sequence.PlayActionSequence();
         }
 
+        [TestNeeded]
         internal void RuleSetPawnsOnly()
         {
             StaticLogger.Trace();
@@ -383,11 +385,13 @@ namespace Chess.Controller
             _chessPieces = pieces;
         }
 
+        [TestNeeded]
         internal void RuleSetSevenByEight()
         {
             StaticLogger.Trace();
         }
 
+        [TestNeeded]
         internal void RuleSetKingsForce()
         {
             StaticLogger.Trace();
