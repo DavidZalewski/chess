@@ -317,86 +317,46 @@ namespace Chess.GameState
         {
             Console.WriteLine($"Turn: {turn.TurnNumber}, {turn.TurnDescription}");
 
-            SortedTupleBag<string, List<ChessPiece>> currentTurnResults = new();
+            var currentAnalysis = new ChessAnalysis(turn.ChessBoard);
+            PrintAttacks(currentAnalysis);
 
-            foreach (var piece in turn.ChessBoard.GetActivePieces())
+            if (depth > 0)
             {
-                List<ChessPiece> attackedList = piece.GetAttackedPieces(turn.ChessBoard);
-                if (attackedList.Count != 0)
-                    currentTurnResults.Add(piece.GetPieceName(), attackedList);
+                ulong count = 0;
+                var turnNodes = GenerateAllPossibleMovesTurnNode(turn, depth, ref count);
+
+                foreach (var node in turnNodes)
+                {
+                    Console.WriteLine($"Turn: {node.TurnNumber}, {node.TurnDescription}, From: {turn.TurnDescription}");
+                    var innerAnalysis = new ChessAnalysis(new ChessBoard(node.BoardID));
+                    PrintAttacks(innerAnalysis);
+
+                    ExploreChildren(node, depth - 1);
+                }
             }
+        }
 
-            foreach (var attacked in currentTurnResults)
+        private void ExploreChildren(TurnNode node, int remainingDepth)
+        {
+            if (remainingDepth > 0)
             {
-                string threatsList = "[";
-                foreach (ChessPiece threatenedPiece in attacked.Item2)
+                foreach (var child in node.Children)
                 {
-                    threatsList += threatenedPiece.GetPieceName();
-                    threatsList += ",";
+                    Console.WriteLine($"Turn: {child.TurnNumber}, {child.TurnDescription}, From: {node.TurnDescription}");
+                    var childAnalysis = new ChessAnalysis(new ChessBoard(child.BoardID));
+                    PrintAttacks(childAnalysis);
+
+                    ExploreChildren(child, remainingDepth - 1);
                 }
-                threatsList += "]";
-                Console.WriteLine($"Piece: {attacked.Item1}, Threatens: {threatsList}");
             }
+        }
 
-            ulong count = 0;
-            List<TurnNode> turnNodes = GenerateAllPossibleMovesTurnNode(turn, depth, ref count);
-
-            foreach (var t in turnNodes)
+        private void PrintAttacks(ChessAnalysis analysis)
+        {
+            foreach (var (attacker, targets) in analysis.GetAllAttacks())
             {
-                {
-                    Console.WriteLine($"Turn: {t.TurnNumber}, {t.TurnDescription}, From: {turn.TurnDescription}");
-
-                    SortedTupleBag<string, List<ChessPiece>> innerResults = new();
-                    ChessBoard cb = new(t.BoardID);
-
-                    foreach (var piece in cb.GetActivePieces())
-                    {
-                        List<ChessPiece> attackedList = piece.GetAttackedPieces(cb);
-                        if (attackedList.Count != 0)
-                            innerResults.Add(piece.GetPieceName(), attackedList);
-                    }
-
-                    foreach (var attacked in innerResults)
-                    {
-                        string threatsList = "[";
-                        foreach (ChessPiece threatenedPiece in attacked.Item2)
-                        {
-                            threatsList += threatenedPiece.GetPieceName();
-                            threatsList += ",";
-                        }
-                        threatsList += "]";
-                        Console.WriteLine($"Piece: {attacked.Item1}, Threatens: {threatsList}");
-
-                    }
-                }
-
-                foreach (var tt in t.Children)
-                {
-                    Console.WriteLine($"Turn: {tt.TurnNumber}, {tt.TurnDescription}, From: {t.TurnDescription}");
-
-                    SortedTupleBag<string, List<ChessPiece>> innerInnerResults = new();
-                    ChessBoard ccbb = new ChessBoard(tt.BoardID);
-                    foreach (var piece in ccbb.GetActivePieces())
-                    {
-                        List<ChessPiece> attackedList = piece.GetAttackedPieces(ccbb);
-                        if (attackedList.Count != 0)
-                            innerInnerResults.Add(piece.GetPieceName(), attackedList);
-                    }
-
-                    foreach (var attacked in innerInnerResults)
-                    {
-                        string threatsList = "[";
-                        foreach (ChessPiece threatenedPiece in attacked.Item2)
-                        {
-                            threatsList += threatenedPiece.GetPieceName();
-                            threatsList += ",";
-                        }
-                        threatsList += "]";
-                        Console.WriteLine($"Piece: {attacked.Item1}, Threatens: {threatsList}");
-
-                    }
-
-                }
+                string threatsList = string.Join(", ", targets.Select(t => t.GetPieceName()));
+                Console.WriteLine($"Piece: {attacker.GetPieceName()}, Threatens: [{threatsList}]");
             }
         }
     }
