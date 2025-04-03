@@ -110,6 +110,11 @@ namespace Chess.Controller
                             return null;
                         break;
                     }
+                case 'N':
+                    {
+                        piece = ChessPiece.Piece.KNIGHT;
+                        break;
+                    }
                 case 'B':
                     {
                         piece = ChessPiece.Piece.BISHOP;

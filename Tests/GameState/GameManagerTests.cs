@@ -147,6 +147,59 @@ namespace Tests.GameState
         }
 
         [Test]
+        public void WN2_To_F3_Should_Work()
+        {
+            // Arrange
+            Queue<string> consoleInputs = new();
+            consoleInputs.Enqueue("n"); // no to tutorial
+            consoleInputs.Enqueue("Classic"); // init game with all pieces
+            consoleInputs.Enqueue("n"); // no to ai
+            consoleInputs.Enqueue("WP4 D4");
+            consoleInputs.Enqueue("BP5 E5");
+            consoleInputs.Enqueue("WP3 C3");
+            consoleInputs.Enqueue("BP6 F6");
+            consoleInputs.Enqueue("WP4 BP5");
+            consoleInputs.Enqueue("BP6 E5");
+            consoleInputs.Enqueue("WN2 F3");
+
+            IConsole consoleService = new MockConsoleService(consoleInputs);
+            GameController gameController = GetGameController(consoleService);
+            GameManager game = new(consoleService, gameController);
+
+            // Act
+            game.Start();
+
+
+            // Assert
+            Assert.That(!((MockConsoleService)consoleService).OutputContainsString("Invalid Move. Please Try Again."), Is.True);
+        }
+
+        [Test]
+        public void BN1_To_B6_Should_Work()
+        {
+            // Arrange
+            Queue<string> consoleInputs = new();
+            consoleInputs.Enqueue("n"); // no to tutorial
+            consoleInputs.Enqueue("Classic"); // init game with all pieces
+            consoleInputs.Enqueue("n"); // no to ai
+            consoleInputs.Enqueue("WP4 D4");
+            consoleInputs.Enqueue("BN1 B6");
+
+            IConsole consoleService = new MockConsoleService(consoleInputs);
+            GameController gameController = GetGameController(consoleService);
+            GameManager game = new(consoleService, gameController);
+
+            // Act
+            game.Start();
+
+
+            // Assert
+            Assert.That(!((MockConsoleService)consoleService).OutputContainsString("Invalid Move. Please Try Again."), Is.True);
+        }
+
+
+
+        [Test]
         public void BlackResignTest()
         {
             // Arrange
