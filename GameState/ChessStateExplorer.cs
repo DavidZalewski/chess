@@ -1,6 +1,7 @@
 ﻿using Chess.Attributes;
 using Chess.Board;
 using Chess.Callbacks;
+using Chess.Collections;
 using Chess.Globals;
 using Chess.Pieces;
 using Chess.Services;
@@ -130,6 +131,8 @@ namespace Chess.GameState
                 return possibleMoves;
             }
 
+            ToDoAttribute.Add("There's no handling of draw by repetition here!");
+
             List<ChessPiece> currentSidePieces = turn.ChessPieces.FindAll(piece => !piece.GetColor().Equals((ChessPiece.Color)turn.PlayerTurn));
 
             // Simulated future turns assume a pawn is always promoted to queen
@@ -151,26 +154,26 @@ namespace Chess.GameState
                         ++currentCount;
                         //logger.Log($"ChessStateExplorer - MID: Possible Move Found: {possibleTurn.TurnDescription}, Depth: {depth}, From: {turn.TurnDescription}", threadId);
 
-                        if (cache.TryGetValue(turnNode.BoardID, out CacheItem cacheItem))
-                        {
-                            cacheItem.InterlockedIncrement();
-                            ulong innerCount = cacheItem.Value;
-                            turnNode.Children = new List<TurnNode>();
-                            turnNode.Count = innerCount;
-                            possibleMoves.Add(turnNode);
-                            currentCount += innerCount;
-                            logger.Log($"ChessStateExplorer - MID: Hitting Cache for BoardID: {turnNode.BoardID}, Depth: {depth}, From: {turn.ChessBoard.BoardID}, ChildrenCount: {innerCount}, MainCount: {currentCount}", threadId);
-                        }
-                        else
-                        {
+                        //if (cache.TryGetValue(turnNode.BoardID, out CacheItem cacheItem))
+                        //{
+                        //    cacheItem.InterlockedIncrement();
+                        //    ulong innerCount = cacheItem.Value;
+                        //    turnNode.Children = new List<TurnNode>();
+                        //    turnNode.Count = innerCount;
+                        //    possibleMoves.Add(turnNode);
+                        //    currentCount += innerCount;
+                        //    logger.Log($"ChessStateExplorer - MID: Hitting Cache for BoardID: {turnNode.BoardID}, Depth: {depth}, From: {turn.ChessBoard.BoardID}, ChildrenCount: {innerCount}, MainCount: {currentCount}", threadId);
+                        //}
+                        //else
+                        //{
                             ulong innerCount = 0;
                             turnNode.Children = GenerateAllPossibleMovesTurnNode(possibleTurn, depth - 1, ref innerCount);
                             turnNode.Count = innerCount;
                             possibleMoves.Add(turnNode);
-                            cache.AddOrUpdate(turnNode.BoardID, new CacheItem(turnNode.Count));
+                            //cache.AddOrUpdate(turnNode.BoardID, new CacheItem(turnNode.Count));
                             currentCount += innerCount;
                             logger.Log($"ChessStateExplorer - MID: BoardID: {turnNode.BoardID}, Depth: {depth}, From: {turn.ChessBoard.BoardID}, ChildrenCount: {innerCount}, MainCount: {currentCount} - Added to cache", threadId);
-                        }
+                        //}
                     }
                 }
             }
@@ -294,6 +297,73 @@ namespace Chess.GameState
             }
 
             return possibleMoves;
+        }
+
+        public SortedTupleBag<string, List<ChessPiece>> GetAllAttacks(ChessBoard chessBoard)
+        {
+            SortedTupleBag<string, List<ChessPiece>> results = new();
+
+            foreach (var piece in chessBoard.GetActivePieces())
+            {
+                List<ChessPiece> attackedList = piece.GetAttackedPieces(chessBoard);
+                if (attackedList.Count != 0)
+                    results.Add(piece.GetPieceName(), attackedList);
+            }
+
+            return results;
+        }
+
+        public ChessAnalysisResult GetAllAttacksForAllPossibleMovesForDepth(Turn turn, int depth)
+        {
+            var result = new ChessAnalysisResult();
+            result.Attacks = AnalyzeAttacks(turn.ChessBoard);
+
+            // Generate moves and analyze each one
+            ulong count = 0;
+            List<TurnNode> turnNodes = GenerateAllPossibleMovesTurnNode(turn, depth, ref count);
+
+            foreach (var node in turnNodes)
+            {
+                AnalyzeNode(node, result);
+            }
+
+            return result;
+        }
+
+        private void AnalyzeNode(TurnNode node, ChessAnalysisResult result)
+        {
+            ChessBoard board = new(node.BoardID);
+            result.Attacks.AddRange(AnalyzeAttacks(board));
+            result.PossibleMoves.Add(new MoveInfo
+            {
+                MovingPiece = node.Piece,
+                From = node.From,
+                To = node.To,
+                IsCheck = node.IsKingInCheck,
+                IsCapture = !board.GetSquare(node.To).Piece.Equals(NoPiece.Instance)
+            });
+
+            // Here you would check for forks, pins, and coverage but for simplicity:
+            // result.Forks = ... 
+            // result.Pins = ...
+            // result.Coverages = ...
+
+            foreach (var child in node.Children)
+            {
+                AnalyzeNode(child, result); // Recursive call to analyze deeper moves
+            }
+        }
+
+        private List<AttackInfo> AnalyzeAttacks(ChessBoard chessBoard)
+        {
+            var attacks = new List<AttackInfo>();
+            foreach (var piece in chessBoard.GetActivePieces())
+            {
+                var attackedList = piece.GetAttackedPieces(chessBoard);
+                if (attackedList.Any())
+                    attacks.Add(new AttackInfo { Attacker = piece, Targets = attackedList });
+            }
+            return attacks;
         }
     }
 }

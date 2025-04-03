@@ -110,6 +110,11 @@ namespace Chess.Controller
                             return null;
                         break;
                     }
+                case 'N':
+                    {
+                        piece = ChessPiece.Piece.KNIGHT;
+                        break;
+                    }
                 case 'B':
                     {
                         piece = ChessPiece.Piece.BISHOP;
@@ -393,7 +398,6 @@ namespace Chess.Controller
             StaticLogger.Trace();
         }
 
-        [TestNeeded]
         internal void RuleSetNuclearHorse()
         {
             StaticLogger.Trace();
@@ -413,7 +417,6 @@ namespace Chess.Controller
             };
         }
 
-        [TestNeeded]
         internal void NuclearHorseEndTurnHandler()
         {
             StaticLogger.Trace();

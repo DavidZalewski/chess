@@ -1,0 +1,1446 @@
+Chess Application Starting
+Would you like to play the tutorial? (y/n):
+n
+Select RuleSet:
+*Classic* -- The game we all know and love
+*PawnsOnly* -- No knights, bishops, rooks, or queens. Just a king and his pawns
+*NuclearHorse* -- The game where the most powerful piece is also the most destructive, can you survive the environment?
+*SevenByEight* -- The board is changed to be a 7 x 8 grid instead
+*KingsForce* -- A pawn connected to a king can capture in all directions; the king can disable a square
+Classic
+*Adding RuleSet: Classic
+Applying Rule Sets
+Use AI for Black? (y, n)?
+n
+*|*A*|*B*|*C*|*D*|*E*|*F*|*G*|*H*|*
+8|BR1|BN1|BB1|BQ1|BK |BB2|BN2|BR2|8
+7|BP1|BP2|BP3|BP4|BP5|BP6|BP7|BP8|7
+6|   |   |   |   |   |   |   |   |6
+5|   |   |   |   |   |   |   |   |5
+4|   |   |   |   |   |   |   |   |4
+3|   |   |   |   |   |   |   |   |3
+2|WP1|WP2|WP3|WP4|WP5|WP6|WP7|WP8|2
+1|WR1|WN1|WB1|WQ1|WK |WB2|WN2|WR2|1
+*|*A*|*B*|*C*|*D*|*E*|*F*|*G*|*H*|*
+
+Turn 1 - White to move. Please enter a command (piece name + position : ie. 'WK1 C3')
+WP4 D4
+*|*A*|*B*|*C*|*D*|*E*|*F*|*G*|*H*|*
+8|BR1|BN1|BB1|BQ1|BK |BB2|BN2|BR2|8
+7|BP1|BP2|BP3|BP4|BP5|BP6|BP7|BP8|7
+6|   |   |   |   |   |   |   |   |6
+5|   |   |   |   |   |   |   |   |5
+4|   |   |   |WP4|   |   |   |   |4
+3|   |   |   |   |   |   |   |   |3
+2|WP1|WP2|WP3|   |WP5|WP6|WP7|WP8|2
+1|WR1|WN1|WB1|WQ1|WK |WB2|WN2|WR2|1
+*|*A*|*B*|*C*|*D*|*E*|*F*|*G*|*H*|*
+
+Turn 2 - Black to move. Please enter a command (piece name + position : ie. 'BP4 D5')
+BP5 E5
+*|*A*|*B*|*C*|*D*|*E*|*F*|*G*|*H*|*
+8|BR1|BN1|BB1|BQ1|BK |BB2|BN2|BR2|8
+7|BP1|BP2|BP3|BP4|   |BP6|BP7|BP8|7
+6|   |   |   |   |   |   |   |   |6
+5|   |   |   |   |BP5|   |   |   |5
+4|   |   |   |WP4|   |   |   |   |4
+3|   |   |   |   |   |   |   |   |3
+2|WP1|WP2|WP3|   |WP5|WP6|WP7|WP8|2
+1|WR1|WN1|WB1|WQ1|WK |WB2|WN2|WR2|1
+*|*A*|*B*|*C*|*D*|*E*|*F*|*G*|*H*|*
+
+Turn 3 - White to move. Please enter a command (piece name + position : ie. 'WK1 C3')
+WP3 C3
+*|*A*|*B*|*C*|*D*|*E*|*F*|*G*|*H*|*
+8|BR1|BN1|BB1|BQ1|BK |BB2|BN2|BR2|8
+7|BP1|BP2|BP3|BP4|   |BP6|BP7|BP8|7
+6|   |   |   |   |   |   |   |   |6
+5|   |   |   |   |BP5|   |   |   |5
+4|   |   |   |WP4|   |   |   |   |4
+3|   |   |WP3|   |   |   |   |   |3
+2|WP1|WP2|   |   |WP5|WP6|WP7|WP8|2
+1|WR1|WN1|WB1|WQ1|WK |WB2|WN2|WR2|1
+*|*A*|*B*|*C*|*D*|*E*|*F*|*G*|*H*|*
+
+Turn 4 - Black to move. Please enter a command (piece name + position : ie. 'BP4 D5')
+BP6 F6
+*|*A*|*B*|*C*|*D*|*E*|*F*|*G*|*H*|*
+8|BR1|BN1|BB1|BQ1|BK |BB2|BN2|BR2|8
+7|BP1|BP2|BP3|BP4|   |   |BP7|BP8|7
+6|   |   |   |   |   |BP6|   |   |6
+5|   |   |   |   |BP5|   |   |   |5
+4|   |   |   |WP4|   |   |   |   |4
+3|   |   |WP3|   |   |   |   |   |3
+2|WP1|WP2|   |   |WP5|WP6|WP7|WP8|2
+1|WR1|WN1|WB1|WQ1|WK |WB2|WN2|WR2|1
+*|*A*|*B*|*C*|*D*|*E*|*F*|*G*|*H*|*
+
+Turn 5 - White to move. Please enter a command (piece name + position : ie. 'WK1 C3')
+WP4 E5
+*|*A*|*B*|*C*|*D*|*E*|*F*|*G*|*H*|*
+8|BR1|BN1|BB1|BQ1|BK |BB2|BN2|BR2|8
+7|BP1|BP2|BP3|BP4|   |   |BP7|BP8|7
+6|   |   |   |   |   |BP6|   |   |6
+5|   |   |   |   |WP4|   |   |   |5
+4|   |   |   |   |   |   |   |   |4
+3|   |   |WP3|   |   |   |   |   |3
+2|WP1|WP2|   |   |WP5|WP6|WP7|WP8|2
+1|WR1|WN1|WB1|WQ1|WK |WB2|WN2|WR2|1
+*|*A*|*B*|*C*|*D*|*E*|*F*|*G*|*H*|*
+
+Turn 6 - Black to move. Please enter a command (piece name + position : ie. 'BP4 D5')
+BP6 WP4
+*|*A*|*B*|*C*|*D*|*E*|*F*|*G*|*H*|*
+8|BR1|BN1|BB1|BQ1|BK |BB2|BN2|BR2|8
+7|BP1|BP2|BP3|BP4|   |   |BP7|BP8|7
+6|   |   |   |   |   |   |   |   |6
+5|   |   |   |   |BP6|   |   |   |5
+4|   |   |   |   |   |   |   |   |4
+3|   |   |WP3|   |   |   |   |   |3
+2|WP1|WP2|   |   |WP5|WP6|WP7|WP8|2
+1|WR1|WN1|WB1|WQ1|WK |WB2|WN2|WR2|1
+*|*A*|*B*|*C*|*D*|*E*|*F*|*G*|*H*|*
+
+Turn 7 - White to move. Please enter a command (piece name + position : ie. 'WK1 C3')
+WN2 F3
+*|*A*|*B*|*C*|*D*|*E*|*F*|*G*|*H*|*
+8|BR1|BN1|BB1|BQ1|BK |BB2|BN2|BR2|8
+7|BP1|BP2|BP3|BP4|   |   |BP7|BP8|7
+6|   |   |   |   |   |   |   |   |6
+5|   |   |   |   |BP6|   |   |   |5
+4|   |   |   |   |   |   |   |   |4
+3|   |   |WP3|   |   |WN2|   |   |3
+2|WP1|WP2|   |   |WP5|WP6|WP7|WP8|2
+1|WR1|WN1|WB1|WQ1|WK |WB2|   |WR2|1
+*|*A*|*B*|*C*|*D*|*E*|*F*|*G*|*H*|*
+
+Turn 8 - Black to move. Please enter a command (piece name + position : ie. 'BP4 D5')
+BP6 E4
+*|*A*|*B*|*C*|*D*|*E*|*F*|*G*|*H*|*
+8|BR1|BN1|BB1|BQ1|BK |BB2|BN2|BR2|8
+7|BP1|BP2|BP3|BP4|   |   |BP7|BP8|7
+6|   |   |   |   |   |   |   |   |6
+5|   |   |   |   |   |   |   |   |5
+4|   |   |   |   |BP6|   |   |   |4
+3|   |   |WP3|   |   |WN2|   |   |3
+2|WP1|WP2|   |   |WP5|WP6|WP7|WP8|2
+1|WR1|WN1|WB1|WQ1|WK |WB2|   |WR2|1
+*|*A*|*B*|*C*|*D*|*E*|*F*|*G*|*H*|*
+
+Turn 9 - White to move. Please enter a command (piece name + position : ie. 'WK1 C3')
+WN2 E5
+*|*A*|*B*|*C*|*D*|*E*|*F*|*G*|*H*|*
+8|BR1|BN1|BB1|BQ1|BK |BB2|BN2|BR2|8
+7|BP1|BP2|BP3|BP4|   |   |BP7|BP8|7
+6|   |   |   |   |   |   |   |   |6
+5|   |   |   |   |WN2|   |   |   |5
+4|   |   |   |   |BP6|   |   |   |4
+3|   |   |WP3|   |   |   |   |   |3
+2|WP1|WP2|   |   |WP5|WP6|WP7|WP8|2
+1|WR1|WN1|WB1|WQ1|WK |WB2|   |WR2|1
+*|*A*|*B*|*C*|*D*|*E*|*F*|*G*|*H*|*
+
+Turn 10 - Black to move. Please enter a command (piece name + position : ie. 'BP4 D5')
+BP4 D6
+*|*A*|*B*|*C*|*D*|*E*|*F*|*G*|*H*|*
+8|BR1|BN1|BB1|BQ1|BK |BB2|BN2|BR2|8
+7|BP1|BP2|BP3|   |   |   |BP7|BP8|7
+6|   |   |   |BP4|   |   |   |   |6
+5|   |   |   |   |WN2|   |   |   |5
+4|   |   |   |   |BP6|   |   |   |4
+3|   |   |WP3|   |   |   |   |   |3
+2|WP1|WP2|   |   |WP5|WP6|WP7|WP8|2
+1|WR1|WN1|WB1|WQ1|WK |WB2|   |WR2|1
+*|*A*|*B*|*C*|*D*|*E*|*F*|*G*|*H*|*
+
+Turn 11 - White to move. Please enter a command (piece name + position : ie. 'WK1 C3')
+WN2 C4
+*|*A*|*B*|*C*|*D*|*E*|*F*|*G*|*H*|*
+8|BR1|BN1|BB1|BQ1|BK |BB2|BN2|BR2|8
+7|BP1|BP2|BP3|   |   |   |BP7|BP8|7
+6|   |   |   |BP4|   |   |   |   |6
+5|   |   |   |   |   |   |   |   |5
+4|   |   |WN2|   |BP6|   |   |   |4
+3|   |   |WP3|   |   |   |   |   |3
+2|WP1|WP2|   |   |WP5|WP6|WP7|WP8|2
+1|WR1|WN1|WB1|WQ1|WK |WB2|   |WR2|1
+*|*A*|*B*|*C*|*D*|*E*|*F*|*G*|*H*|*
+
+Turn 12 - Black to move. Please enter a command (piece name + position : ie. 'BP4 D5')
+BP4 D5
+*|*A*|*B*|*C*|*D*|*E*|*F*|*G*|*H*|*
+8|BR1|BN1|BB1|BQ1|BK |BB2|BN2|BR2|8
+7|BP1|BP2|BP3|   |   |   |BP7|BP8|7
+6|   |   |   |   |   |   |   |   |6
+5|   |   |   |BP4|   |   |   |   |5
+4|   |   |WN2|   |BP6|   |   |   |4
+3|   |   |WP3|   |   |   |   |   |3
+2|WP1|WP2|   |   |WP5|WP6|WP7|WP8|2
+1|WR1|WN1|WB1|WQ1|WK |WB2|   |WR2|1
+*|*A*|*B*|*C*|*D*|*E*|*F*|*G*|*H*|*
+
+Turn 13 - White to move. Please enter a command (piece name + position : ie. 'WK1 C3')
+WN2 E5
+*|*A*|*B*|*C*|*D*|*E*|*F*|*G*|*H*|*
+8|BR1|BN1|BB1|BQ1|BK |BB2|BN2|BR2|8
+7|BP1|BP2|BP3|   |   |   |BP7|BP8|7
+6|   |   |   |   |   |   |   |   |6
+5|   |   |   |BP4|WN2|   |   |   |5
+4|   |   |   |   |BP6|   |   |   |4
+3|   |   |WP3|   |   |   |   |   |3
+2|WP1|WP2|   |   |WP5|WP6|WP7|WP8|2
+1|WR1|WN1|WB1|WQ1|WK |WB2|   |WR2|1
+*|*A*|*B*|*C*|*D*|*E*|*F*|*G*|*H*|*
+
+Turn 14 - Black to move. Please enter a command (piece name + position : ie. 'BP4 D5')
+BP3 C5
+*|*A*|*B*|*C*|*D*|*E*|*F*|*G*|*H*|*
+8|BR1|BN1|BB1|BQ1|BK |BB2|BN2|BR2|8
+7|BP1|BP2|   |   |   |   |BP7|BP8|7
+6|   |   |   |   |   |   |   |   |6
+5|   |   |BP3|BP4|WN2|   |   |   |5
+4|   |   |   |   |BP6|   |   |   |4
+3|   |   |WP3|   |   |   |   |   |3
+2|WP1|WP2|   |   |WP5|WP6|WP7|WP8|2
+1|WR1|WN1|WB1|WQ1|WK |WB2|   |WR2|1
+*|*A*|*B*|*C*|*D*|*E*|*F*|*G*|*H*|*
+
+Turn 15 - White to move. Please enter a command (piece name + position : ie. 'WK1 C3')
+WP2 B4
+*|*A*|*B*|*C*|*D*|*E*|*F*|*G*|*H*|*
+8|BR1|BN1|BB1|BQ1|BK |BB2|BN2|BR2|8
+7|BP1|BP2|   |   |   |   |BP7|BP8|7
+6|   |   |   |   |   |   |   |   |6
+5|   |   |BP3|BP4|WN2|   |   |   |5
+4|   |WP2|   |   |BP6|   |   |   |4
+3|   |   |WP3|   |   |   |   |   |3
+2|WP1|   |   |   |WP5|WP6|WP7|WP8|2
+1|WR1|WN1|WB1|WQ1|WK |WB2|   |WR2|1
+*|*A*|*B*|*C*|*D*|*E*|*F*|*G*|*H*|*
+
+Turn 16 - Black to move. Please enter a command (piece name + position : ie. 'BP4 D5')
+BP3 C4
+*|*A*|*B*|*C*|*D*|*E*|*F*|*G*|*H*|*
+8|BR1|BN1|BB1|BQ1|BK |BB2|BN2|BR2|8
+7|BP1|BP2|   |   |   |   |BP7|BP8|7
+6|   |   |   |   |   |   |   |   |6
+5|   |   |   |BP4|WN2|   |   |   |5
+4|   |WP2|BP3|   |BP6|   |   |   |4
+3|   |   |WP3|   |   |   |   |   |3
+2|WP1|   |   |   |WP5|WP6|WP7|WP8|2
+1|WR1|WN1|WB1|WQ1|WK |WB2|   |WR2|1
+*|*A*|*B*|*C*|*D*|*E*|*F*|*G*|*H*|*
+
+Turn 17 - White to move. Please enter a command (piece name + position : ie. 'WK1 C3')
+WN1 B3
+Invalid Move. Please Try Again.
+*|*A*|*B*|*C*|*D*|*E*|*F*|*G*|*H*|*
+8|BR1|BN1|BB1|BQ1|BK |BB2|BN2|BR2|8
+7|BP1|BP2|   |   |   |   |BP7|BP8|7
+6|   |   |   |   |   |   |   |   |6
+5|   |   |   |BP4|WN2|   |   |   |5
+4|   |WP2|BP3|   |BP6|   |   |   |4
+3|   |   |WP3|   |   |   |   |   |3
+2|WP1|   |   |   |WP5|WP6|WP7|WP8|2
+1|WR1|WN1|WB1|WQ1|WK |WB2|   |WR2|1
+*|*A*|*B*|*C*|*D*|*E*|*F*|*G*|*H*|*
+
+Turn 17 - White to move. Please enter a command (piece name + position : ie. 'WK1 C3')
+WN1 A3
+*|*A*|*B*|*C*|*D*|*E*|*F*|*G*|*H*|*
+8|BR1|BN1|BB1|BQ1|BK |BB2|BN2|BR2|8
+7|BP1|BP2|   |   |   |   |BP7|BP8|7
+6|   |   |   |   |   |   |   |   |6
+5|   |   |   |BP4|WN2|   |   |   |5
+4|   |WP2|BP3|   |BP6|   |   |   |4
+3|WN1|   |WP3|   |   |   |   |   |3
+2|WP1|   |   |   |WP5|WP6|WP7|WP8|2
+1|WR1|   |WB1|WQ1|WK |WB2|   |WR2|1
+*|*A*|*B*|*C*|*D*|*E*|*F*|*G*|*H*|*
+
+Turn 18 - Black to move. Please enter a command (piece name + position : ie. 'BP4 D5')
+BN1 C6
+*|*A*|*B*|*C*|*D*|*E*|*F*|*G*|*H*|*
+8|BR1|   |BB1|BQ1|BK |BB2|BN2|BR2|8
+7|BP1|BP2|   |   |   |   |BP7|BP8|7
+6|   |   |BN1|   |   |   |   |   |6
+5|   |   |   |BP4|WN2|   |   |   |5
+4|   |WP2|BP3|   |BP6|   |   |   |4
+3|WN1|   |WP3|   |   |   |   |   |3
+2|WP1|   |   |   |WP5|WP6|WP7|WP8|2
+1|WR1|   |WB1|WQ1|WK |WB2|   |WR2|1
+*|*A*|*B*|*C*|*D*|*E*|*F*|*G*|*H*|*
+
+Turn 19 - White to move. Please enter a command (piece name + position : ie. 'WK1 C3')
+WP2 B5
+*|*A*|*B*|*C*|*D*|*E*|*F*|*G*|*H*|*
+8|BR1|   |BB1|BQ1|BK |BB2|BN2|BR2|8
+7|BP1|BP2|   |   |   |   |BP7|BP8|7
+6|   |   |BN1|   |   |   |   |   |6
+5|   |WP2|   |BP4|WN2|   |   |   |5
+4|   |   |BP3|   |BP6|   |   |   |4
+3|WN1|   |WP3|   |   |   |   |   |3
+2|WP1|   |   |   |WP5|WP6|WP7|WP8|2
+1|WR1|   |WB1|WQ1|WK |WB2|   |WR2|1
+*|*A*|*B*|*C*|*D*|*E*|*F*|*G*|*H*|*
+
+Turn 20 - Black to move. Please enter a command (piece name + position : ie. 'BP4 D5')
+BN1 A5
+*|*A*|*B*|*C*|*D*|*E*|*F*|*G*|*H*|*
+8|BR1|   |BB1|BQ1|BK |BB2|BN2|BR2|8
+7|BP1|BP2|   |   |   |   |BP7|BP8|7
+6|   |   |   |   |   |   |   |   |6
+5|BN1|WP2|   |BP4|WN2|   |   |   |5
+4|   |   |BP3|   |BP6|   |   |   |4
+3|WN1|   |WP3|   |   |   |   |   |3
+2|WP1|   |   |   |WP5|WP6|WP7|WP8|2
+1|WR1|   |WB1|WQ1|WK |WB2|   |WR2|1
+*|*A*|*B*|*C*|*D*|*E*|*F*|*G*|*H*|*
+
+Turn 21 - White to move. Please enter a command (piece name + position : ie. 'WK1 C3')
+WQ1 A4
+*|*A*|*B*|*C*|*D*|*E*|*F*|*G*|*H*|*
+8|BR1|   |BB1|BQ1|BK |BB2|BN2|BR2|8
+7|BP1|BP2|   |   |   |   |BP7|BP8|7
+6|   |   |   |   |   |   |   |   |6
+5|BN1|WP2|   |BP4|WN2|   |   |   |5
+4|WQ1|   |BP3|   |BP6|   |   |   |4
+3|WN1|   |WP3|   |   |   |   |   |3
+2|WP1|   |   |   |WP5|WP6|WP7|WP8|2
+1|WR1|   |WB1|   |WK |WB2|   |WR2|1
+*|*A*|*B*|*C*|*D*|*E*|*F*|*G*|*H*|*
+
+Turn 22 - Black to move. Please enter a command (piece name + position : ie. 'BP4 D5')
+BP2 B6
+*|*A*|*B*|*C*|*D*|*E*|*F*|*G*|*H*|*
+8|BR1|   |BB1|BQ1|BK |BB2|BN2|BR2|8
+7|BP1|   |   |   |   |   |BP7|BP8|7
+6|   |BP2|   |   |   |   |   |   |6
+5|BN1|WP2|   |BP4|WN2|   |   |   |5
+4|WQ1|   |BP3|   |BP6|   |   |   |4
+3|WN1|   |WP3|   |   |   |   |   |3
+2|WP1|   |   |   |WP5|WP6|WP7|WP8|2
+1|WR1|   |WB1|   |WK |WB2|   |WR2|1
+*|*A*|*B*|*C*|*D*|*E*|*F*|*G*|*H*|*
+
+Turn 23 - White to move. Please enter a command (piece name + position : ie. 'WK1 C3')
+WB1 F4
+*|*A*|*B*|*C*|*D*|*E*|*F*|*G*|*H*|*
+8|BR1|   |BB1|BQ1|BK |BB2|BN2|BR2|8
+7|BP1|   |   |   |   |   |BP7|BP8|7
+6|   |BP2|   |   |   |   |   |   |6
+5|BN1|WP2|   |BP4|WN2|   |   |   |5
+4|WQ1|   |BP3|   |BP6|WB1|   |   |4
+3|WN1|   |WP3|   |   |   |   |   |3
+2|WP1|   |   |   |WP5|WP6|WP7|WP8|2
+1|WR1|   |   |   |WK |WB2|   |WR2|1
+*|*A*|*B*|*C*|*D*|*E*|*F*|*G*|*H*|*
+
+Turn 24 - Black to move. Please enter a command (piece name + position : ie. 'BP4 D5')
+BB2 C5
+*|*A*|*B*|*C*|*D*|*E*|*F*|*G*|*H*|*
+8|BR1|   |BB1|BQ1|BK |   |BN2|BR2|8
+7|BP1|   |   |   |   |   |BP7|BP8|7
+6|   |BP2|   |   |   |   |   |   |6
+5|BN1|WP2|BB2|BP4|WN2|   |   |   |5
+4|WQ1|   |BP3|   |BP6|WB1|   |   |4
+3|WN1|   |WP3|   |   |   |   |   |3
+2|WP1|   |   |   |WP5|WP6|WP7|WP8|2
+1|WR1|   |   |   |WK |WB2|   |WR2|1
+*|*A*|*B*|*C*|*D*|*E*|*F*|*G*|*H*|*
+
+Turn 25 - White to move. Please enter a command (piece name + position : ie. 'WK1 C3')
+WR1 D1
+*|*A*|*B*|*C*|*D*|*E*|*F*|*G*|*H*|*
+8|BR1|   |BB1|BQ1|BK |   |BN2|BR2|8
+7|BP1|   |   |   |   |   |BP7|BP8|7
+6|   |BP2|   |   |   |   |   |   |6
+5|BN1|WP2|BB2|BP4|WN2|   |   |   |5
+4|WQ1|   |BP3|   |BP6|WB1|   |   |4
+3|WN1|   |WP3|   |   |   |   |   |3
+2|WP1|   |   |   |WP5|WP6|WP7|WP8|2
+1|   |   |   |WR1|WK |WB2|   |WR2|1
+*|*A*|*B*|*C*|*D*|*E*|*F*|*G*|*H*|*
+
+Turn 26 - Black to move. Please enter a command (piece name + position : ie. 'BP4 D5')
+BB1 F5
+*|*A*|*B*|*C*|*D*|*E*|*F*|*G*|*H*|*
+8|BR1|   |   |BQ1|BK |   |BN2|BR2|8
+7|BP1|   |   |   |   |   |BP7|BP8|7
+6|   |BP2|   |   |   |   |   |   |6
+5|BN1|WP2|BB2|BP4|WN2|BB1|   |   |5
+4|WQ1|   |BP3|   |BP6|WB1|   |   |4
+3|WN1|   |WP3|   |   |   |   |   |3
+2|WP1|   |   |   |WP5|WP6|WP7|WP8|2
+1|   |   |   |WR1|WK |WB2|   |WR2|1
+*|*A*|*B*|*C*|*D*|*E*|*F*|*G*|*H*|*
+
+Turn 27 - White to move. Please enter a command (piece name + position : ie. 'WK1 C3')
+WP7 G4
+*|*A*|*B*|*C*|*D*|*E*|*F*|*G*|*H*|*
+8|BR1|   |   |BQ1|BK |   |BN2|BR2|8
+7|BP1|   |   |   |   |   |BP7|BP8|7
+6|   |BP2|   |   |   |   |   |   |6
+5|BN1|WP2|BB2|BP4|WN2|BB1|   |   |5
+4|WQ1|   |BP3|   |BP6|WB1|WP7|   |4
+3|WN1|   |WP3|   |   |   |   |   |3
+2|WP1|   |   |   |WP5|WP6|   |WP8|2
+1|   |   |   |WR1|WK |WB2|   |WR2|1
+*|*A*|*B*|*C*|*D*|*E*|*F*|*G*|*H*|*
+
+Turn 28 - Black to move. Please enter a command (piece name + position : ie. 'BP4 D5')
+BB1 G4
+*|*A*|*B*|*C*|*D*|*E*|*F*|*G*|*H*|*
+8|BR1|   |   |BQ1|BK |   |BN2|BR2|8
+7|BP1|   |   |   |   |   |BP7|BP8|7
+6|   |BP2|   |   |   |   |   |   |6
+5|BN1|WP2|BB2|BP4|WN2|   |   |   |5
+4|WQ1|   |BP3|   |BP6|WB1|BB1|   |4
+3|WN1|   |WP3|   |   |   |   |   |3
+2|WP1|   |   |   |WP5|WP6|   |WP8|2
+1|   |   |   |WR1|WK |WB2|   |WR2|1
+*|*A*|*B*|*C*|*D*|*E*|*F*|*G*|*H*|*
+
+Turn 29 - White to move. Please enter a command (piece name + position : ie. 'WK1 C3')
+WP8 H3
+*|*A*|*B*|*C*|*D*|*E*|*F*|*G*|*H*|*
+8|BR1|   |   |BQ1|BK |   |BN2|BR2|8
+7|BP1|   |   |   |   |   |BP7|BP8|7
+6|   |BP2|   |   |   |   |   |   |6
+5|BN1|WP2|BB2|BP4|WN2|   |   |   |5
+4|WQ1|   |BP3|   |BP6|WB1|BB1|   |4
+3|WN1|   |WP3|   |   |   |   |WP8|3
+2|WP1|   |   |   |WP5|WP6|   |   |2
+1|   |   |   |WR1|WK |WB2|   |WR2|1
+*|*A*|*B*|*C*|*D*|*E*|*F*|*G*|*H*|*
+
+Turn 30 - Black to move. Please enter a command (piece name + position : ie. 'BP4 D5')
+BB1 F5
+*|*A*|*B*|*C*|*D*|*E*|*F*|*G*|*H*|*
+8|BR1|   |   |BQ1|BK |   |BN2|BR2|8
+7|BP1|   |   |   |   |   |BP7|BP8|7
+6|   |BP2|   |   |   |   |   |   |6
+5|BN1|WP2|BB2|BP4|WN2|BB1|   |   |5
+4|WQ1|   |BP3|   |BP6|WB1|   |   |4
+3|WN1|   |WP3|   |   |   |   |WP8|3
+2|WP1|   |   |   |WP5|WP6|   |   |2
+1|   |   |   |WR1|WK |WB2|   |WR2|1
+*|*A*|*B*|*C*|*D*|*E*|*F*|*G*|*H*|*
+
+Turn 31 - White to move. Please enter a command (piece name + position : ie. 'WK1 C3')
+WB1 G5
+*|*A*|*B*|*C*|*D*|*E*|*F*|*G*|*H*|*
+8|BR1|   |   |BQ1|BK |   |BN2|BR2|8
+7|BP1|   |   |   |   |   |BP7|BP8|7
+6|   |BP2|   |   |   |   |   |   |6
+5|BN1|WP2|BB2|BP4|WN2|BB1|WB1|   |5
+4|WQ1|   |BP3|   |BP6|   |   |   |4
+3|WN1|   |WP3|   |   |   |   |WP8|3
+2|WP1|   |   |   |WP5|WP6|   |   |2
+1|   |   |   |WR1|WK |WB2|   |WR2|1
+*|*A*|*B*|*C*|*D*|*E*|*F*|*G*|*H*|*
+
+Turn 32 - Black to move. Please enter a command (piece name + position : ie. 'BP4 D5')
+BQ1 WB1
+*|*A*|*B*|*C*|*D*|*E*|*F*|*G*|*H*|*
+8|BR1|   |   |   |BK |   |BN2|BR2|8
+7|BP1|   |   |   |   |   |BP7|BP8|7
+6|   |BP2|   |   |   |   |   |   |6
+5|BN1|WP2|BB2|BP4|WN2|BB1|BQ1|   |5
+4|WQ1|   |BP3|   |BP6|   |   |   |4
+3|WN1|   |WP3|   |   |   |   |WP8|3
+2|WP1|   |   |   |WP5|WP6|   |   |2
+1|   |   |   |WR1|WK |WB2|   |WR2|1
+*|*A*|*B*|*C*|*D*|*E*|*F*|*G*|*H*|*
+
+Turn 33 - White to move. Please enter a command (piece name + position : ie. 'WK1 C3')
+WR1 D5
+*|*A*|*B*|*C*|*D*|*E*|*F*|*G*|*H*|*
+8|BR1|   |   |   |BK |   |BN2|BR2|8
+7|BP1|   |   |   |   |   |BP7|BP8|7
+6|   |BP2|   |   |   |   |   |   |6
+5|BN1|WP2|BB2|WR1|WN2|BB1|BQ1|   |5
+4|WQ1|   |BP3|   |BP6|   |   |   |4
+3|WN1|   |WP3|   |   |   |   |WP8|3
+2|WP1|   |   |   |WP5|WP6|   |   |2
+1|   |   |   |   |WK |WB2|   |WR2|1
+*|*A*|*B*|*C*|*D*|*E*|*F*|*G*|*H*|*
+
+Turn 34 - Black to move. Please enter a command (piece name + position : ie. 'BP4 D5')
+BQ1 C1
+*|*A*|*B*|*C*|*D*|*E*|*F*|*G*|*H*|*
+8|BR1|   |   |   |BK |   |BN2|BR2|8
+7|BP1|   |   |   |   |   |BP7|BP8|7
+6|   |BP2|   |   |   |   |   |   |6
+5|BN1|WP2|BB2|WR1|WN2|BB1|   |   |5
+4|WQ1|   |BP3|   |BP6|   |   |   |4
+3|WN1|   |WP3|   |   |   |   |WP8|3
+2|WP1|   |   |   |WP5|WP6|   |   |2
+1|   |   |BQ1|   |WK |WB2|   |WR2|1
+*|*A*|*B*|*C*|*D*|*E*|*F*|*G*|*H*|*
+
+Turn 35 - White to move. Please enter a command (piece name + position : ie. 'WK1 C3')
+White King is currently in check
+WQ1 D1
+*|*A*|*B*|*C*|*D*|*E*|*F*|*G*|*H*|*
+8|BR1|   |   |   |BK |   |BN2|BR2|8
+7|BP1|   |   |   |   |   |BP7|BP8|7
+6|   |BP2|   |   |   |   |   |   |6
+5|BN1|WP2|BB2|WR1|WN2|BB1|   |   |5
+4|   |   |BP3|   |BP6|   |   |   |4
+3|WN1|   |WP3|   |   |   |   |WP8|3
+2|WP1|   |   |   |WP5|WP6|   |   |2
+1|   |   |BQ1|WQ1|WK |WB2|   |WR2|1
+*|*A*|*B*|*C*|*D*|*E*|*F*|*G*|*H*|*
+
+Turn 36 - Black to move. Please enter a command (piece name + position : ie. 'BP4 D5')
+BQ1 C3
+*|*A*|*B*|*C*|*D*|*E*|*F*|*G*|*H*|*
+8|BR1|   |   |   |BK |   |BN2|BR2|8
+7|BP1|   |   |   |   |   |BP7|BP8|7
+6|   |BP2|   |   |   |   |   |   |6
+5|BN1|WP2|BB2|WR1|WN2|BB1|   |   |5
+4|   |   |BP3|   |BP6|   |   |   |4
+3|WN1|   |BQ1|   |   |   |   |WP8|3
+2|WP1|   |   |   |WP5|WP6|   |   |2
+1|   |   |   |WQ1|WK |WB2|   |WR2|1
+*|*A*|*B*|*C*|*D*|*E*|*F*|*G*|*H*|*
+
+Turn 37 - White to move. Please enter a command (piece name + position : ie. 'WK1 C3')
+White King is currently in check
+WN1 C2
+Invalid Move. King would be in Check. Please Try Again
+*|*A*|*B*|*C*|*D*|*E*|*F*|*G*|*H*|*
+8|BR1|   |   |   |BK |   |BN2|BR2|8
+7|BP1|   |   |   |   |   |BP7|BP8|7
+6|   |BP2|   |   |   |   |   |   |6
+5|BN1|WP2|BB2|WR1|WN2|BB1|   |   |5
+4|   |   |BP3|   |BP6|   |   |   |4
+3|WN1|   |BQ1|   |   |   |   |WP8|3
+2|WP1|   |   |   |WP5|WP6|   |   |2
+1|   |   |   |WQ1|WK |WB2|   |WR2|1
+*|*A*|*B*|*C*|*D*|*E*|*F*|*G*|*H*|*
+
+Turn 37 - White to move. Please enter a command (piece name + position : ie. 'WK1 C3')
+White King is currently in check
+WK D2
+Invalid Move. King would be in Check. Please Try Again
+*|*A*|*B*|*C*|*D*|*E*|*F*|*G*|*H*|*
+8|BR1|   |   |   |BK |   |BN2|BR2|8
+7|BP1|   |   |   |   |   |BP7|BP8|7
+6|   |BP2|   |   |   |   |   |   |6
+5|BN1|WP2|BB2|WR1|WN2|BB1|   |   |5
+4|   |   |BP3|   |BP6|   |   |   |4
+3|WN1|   |BQ1|   |   |   |   |WP8|3
+2|WP1|   |   |   |WP5|WP6|   |   |2
+1|   |   |   |WQ1|WK |WB2|   |WR2|1
+*|*A*|*B*|*C*|*D*|*E*|*F*|*G*|*H*|*
+
+Turn 37 - White to move. Please enter a command (piece name + position : ie. 'WK1 C3')
+White King is currently in check
+WQ1 D2
+*|*A*|*B*|*C*|*D*|*E*|*F*|*G*|*H*|*
+8|BR1|   |   |   |BK |   |BN2|BR2|8
+7|BP1|   |   |   |   |   |BP7|BP8|7
+6|   |BP2|   |   |   |   |   |   |6
+5|BN1|WP2|BB2|WR1|WN2|BB1|   |   |5
+4|   |   |BP3|   |BP6|   |   |   |4
+3|WN1|   |BQ1|   |   |   |   |WP8|3
+2|WP1|   |   |WQ1|WP5|WP6|   |   |2
+1|   |   |   |   |WK |WB2|   |WR2|1
+*|*A*|*B*|*C*|*D*|*E*|*F*|*G*|*H*|*
+
+Turn 38 - Black to move. Please enter a command (piece name + position : ie. 'BP4 D5')
+BQ1 WN1
+*|*A*|*B*|*C*|*D*|*E*|*F*|*G*|*H*|*
+8|BR1|   |   |   |BK |   |BN2|BR2|8
+7|BP1|   |   |   |   |   |BP7|BP8|7
+6|   |BP2|   |   |   |   |   |   |6
+5|BN1|WP2|BB2|WR1|WN2|BB1|   |   |5
+4|   |   |BP3|   |BP6|   |   |   |4
+3|BQ1|   |   |   |   |   |   |WP8|3
+2|WP1|   |   |WQ1|WP5|WP6|   |   |2
+1|   |   |   |   |WK |WB2|   |WR2|1
+*|*A*|*B*|*C*|*D*|*E*|*F*|*G*|*H*|*
+
+Turn 39 - White to move. Please enter a command (piece name + position : ie. 'WK1 C3')
+WR1 D7
+*|*A*|*B*|*C*|*D*|*E*|*F*|*G*|*H*|*
+8|BR1|   |   |   |BK |   |BN2|BR2|8
+7|BP1|   |   |WR1|   |   |BP7|BP8|7
+6|   |BP2|   |   |   |   |   |   |6
+5|BN1|WP2|BB2|   |WN2|BB1|   |   |5
+4|   |   |BP3|   |BP6|   |   |   |4
+3|BQ1|   |   |   |   |   |   |WP8|3
+2|WP1|   |   |WQ1|WP5|WP6|   |   |2
+1|   |   |   |   |WK |WB2|   |WR2|1
+*|*A*|*B*|*C*|*D*|*E*|*F*|*G*|*H*|*
+
+Turn 40 - Black to move. Please enter a command (piece name + position : ie. 'BP4 D5')
+BN1 B3
+*|*A*|*B*|*C*|*D*|*E*|*F*|*G*|*H*|*
+8|BR1|   |   |   |BK |   |BN2|BR2|8
+7|BP1|   |   |WR1|   |   |BP7|BP8|7
+6|   |BP2|   |   |   |   |   |   |6
+5|   |WP2|BB2|   |WN2|BB1|   |   |5
+4|   |   |BP3|   |BP6|   |   |   |4
+3|BQ1|BN1|   |   |   |   |   |WP8|3
+2|WP1|   |   |WQ1|WP5|WP6|   |   |2
+1|   |   |   |   |WK |WB2|   |WR2|1
+*|*A*|*B*|*C*|*D*|*E*|*F*|*G*|*H*|*
+
+Turn 41 - White to move. Please enter a command (piece name + position : ie. 'WK1 C3')
+WN2 F7
+*|*A*|*B*|*C*|*D*|*E*|*F*|*G*|*H*|*
+8|BR1|   |   |   |BK |   |BN2|BR2|8
+7|BP1|   |   |WR1|   |WN2|BP7|BP8|7
+6|   |BP2|   |   |   |   |   |   |6
+5|   |WP2|BB2|   |   |BB1|   |   |5
+4|   |   |BP3|   |BP6|   |   |   |4
+3|BQ1|BN1|   |   |   |   |   |WP8|3
+2|WP1|   |   |WQ1|WP5|WP6|   |   |2
+1|   |   |   |   |WK |WB2|   |WR2|1
+*|*A*|*B*|*C*|*D*|*E*|*F*|*G*|*H*|*
+
+Turn 42 - Black to move. Please enter a command (piece name + position : ie. 'BP4 D5')
+BN1 WQ1
+*|*A*|*B*|*C*|*D*|*E*|*F*|*G*|*H*|*
+8|BR1|   |   |   |BK |   |BN2|BR2|8
+7|BP1|   |   |WR1|   |WN2|BP7|BP8|7
+6|   |BP2|   |   |   |   |   |   |6
+5|   |WP2|BB2|   |   |BB1|   |   |5
+4|   |   |BP3|   |BP6|   |   |   |4
+3|BQ1|   |   |   |   |   |   |WP8|3
+2|WP1|   |   |BN1|WP5|WP6|   |   |2
+1|   |   |   |   |WK |WB2|   |WR2|1
+*|*A*|*B*|*C*|*D*|*E*|*F*|*G*|*H*|*
+
+Turn 43 - White to move. Please enter a command (piece name + position : ie. 'WK1 C3')
+WN2 H8
+*|*A*|*B*|*C*|*D*|*E*|*F*|*G*|*H*|*
+8|BR1|   |   |   |BK |   |BN2|WN2|8
+7|BP1|   |   |WR1|   |   |BP7|BP8|7
+6|   |BP2|   |   |   |   |   |   |6
+5|   |WP2|BB2|   |   |BB1|   |   |5
+4|   |   |BP3|   |BP6|   |   |   |4
+3|BQ1|   |   |   |   |   |   |WP8|3
+2|WP1|   |   |BN1|WP5|WP6|   |   |2
+1|   |   |   |   |WK |WB2|   |WR2|1
+*|*A*|*B*|*C*|*D*|*E*|*F*|*G*|*H*|*
+
+Turn 44 - Black to move. Please enter a command (piece name + position : ie. 'BP4 D5')
+BK WR1
+*|*A*|*B*|*C*|*D*|*E*|*F*|*G*|*H*|*
+8|BR1|   |   |   |   |   |BN2|WN2|8
+7|BP1|   |   |BK |   |   |BP7|BP8|7
+6|   |BP2|   |   |   |   |   |   |6
+5|   |WP2|BB2|   |   |BB1|   |   |5
+4|   |   |BP3|   |BP6|   |   |   |4
+3|BQ1|   |   |   |   |   |   |WP8|3
+2|WP1|   |   |BN1|WP5|WP6|   |   |2
+1|   |   |   |   |WK |WB2|   |WR2|1
+*|*A*|*B*|*C*|*D*|*E*|*F*|*G*|*H*|*
+
+Turn 45 - White to move. Please enter a command (piece name + position : ie. 'WK1 C3')
+WK BN1
+*|*A*|*B*|*C*|*D*|*E*|*F*|*G*|*H*|*
+8|BR1|   |   |   |   |   |BN2|WN2|8
+7|BP1|   |   |BK |   |   |BP7|BP8|7
+6|   |BP2|   |   |   |   |   |   |6
+5|   |WP2|BB2|   |   |BB1|   |   |5
+4|   |   |BP3|   |BP6|   |   |   |4
+3|BQ1|   |   |   |   |   |   |WP8|3
+2|WP1|   |   |WK |WP5|WP6|   |   |2
+1|   |   |   |   |   |WB2|   |WR2|1
+*|*A*|*B*|*C*|*D*|*E*|*F*|*G*|*H*|*
+
+Turn 46 - Black to move. Please enter a command (piece name + position : ie. 'BP4 D5')
+BQ1 WP1
+*|*A*|*B*|*C*|*D*|*E*|*F*|*G*|*H*|*
+8|BR1|   |   |   |   |   |BN2|WN2|8
+7|BP1|   |   |BK |   |   |BP7|BP8|7
+6|   |BP2|   |   |   |   |   |   |6
+5|   |WP2|BB2|   |   |BB1|   |   |5
+4|   |   |BP3|   |BP6|   |   |   |4
+3|   |   |   |   |   |   |   |WP8|3
+2|BQ1|   |   |WK |WP5|WP6|   |   |2
+1|   |   |   |   |   |WB2|   |WR2|1
+*|*A*|*B*|*C*|*D*|*E*|*F*|*G*|*H*|*
+
+Turn 47 - White to move. Please enter a command (piece name + position : ie. 'WK1 C3')
+White King is currently in check
+WK C3
+*|*A*|*B*|*C*|*D*|*E*|*F*|*G*|*H*|*
+8|BR1|   |   |   |   |   |BN2|WN2|8
+7|BP1|   |   |BK |   |   |BP7|BP8|7
+6|   |BP2|   |   |   |   |   |   |6
+5|   |WP2|BB2|   |   |BB1|   |   |5
+4|   |   |BP3|   |BP6|   |   |   |4
+3|   |   |WK |   |   |   |   |WP8|3
+2|BQ1|   |   |   |WP5|WP6|   |   |2
+1|   |   |   |   |   |WB2|   |WR2|1
+*|*A*|*B*|*C*|*D*|*E*|*F*|*G*|*H*|*
+
+Turn 48 - Black to move. Please enter a command (piece name + position : ie. 'BP4 D5')
+BQ1 A3
+*|*A*|*B*|*C*|*D*|*E*|*F*|*G*|*H*|*
+8|BR1|   |   |   |   |   |BN2|WN2|8
+7|BP1|   |   |BK |   |   |BP7|BP8|7
+6|   |BP2|   |   |   |   |   |   |6
+5|   |WP2|BB2|   |   |BB1|   |   |5
+4|   |   |BP3|   |BP6|   |   |   |4
+3|BQ1|   |WK |   |   |   |   |WP8|3
+2|   |   |   |   |WP5|WP6|   |   |2
+1|   |   |   |   |   |WB2|   |WR2|1
+*|*A*|*B*|*C*|*D*|*E*|*F*|*G*|*H*|*
+
+Turn 49 - White to move. Please enter a command (piece name + position : ie. 'WK1 C3')
+White King is currently in check
+WK C2
+*|*A*|*B*|*C*|*D*|*E*|*F*|*G*|*H*|*
+8|BR1|   |   |   |   |   |BN2|WN2|8
+7|BP1|   |   |BK |   |   |BP7|BP8|7
+6|   |BP2|   |   |   |   |   |   |6
+5|   |WP2|BB2|   |   |BB1|   |   |5
+4|   |   |BP3|   |BP6|   |   |   |4
+3|BQ1|   |   |   |   |   |   |WP8|3
+2|   |   |WK |   |WP5|WP6|   |   |2
+1|   |   |   |   |   |WB2|   |WR2|1
+*|*A*|*B*|*C*|*D*|*E*|*F*|*G*|*H*|*
+
+Turn 50 - Black to move. Please enter a command (piece name + position : ie. 'BP4 D5')
+BQ1 D3
+*|*A*|*B*|*C*|*D*|*E*|*F*|*G*|*H*|*
+8|BR1|   |   |   |   |   |BN2|WN2|8
+7|BP1|   |   |BK |   |   |BP7|BP8|7
+6|   |BP2|   |   |   |   |   |   |6
+5|   |WP2|BB2|   |   |BB1|   |   |5
+4|   |   |BP3|   |BP6|   |   |   |4
+3|   |   |   |BQ1|   |   |   |WP8|3
+2|   |   |WK |   |WP5|WP6|   |   |2
+1|   |   |   |   |   |WB2|   |WR2|1
+*|*A*|*B*|*C*|*D*|*E*|*F*|*G*|*H*|*
+
+Turn 51 - White to move. Please enter a command (piece name + position : ie. 'WK1 C3')
+White King is currently in check
+WK C1
+*|*A*|*B*|*C*|*D*|*E*|*F*|*G*|*H*|*
+8|BR1|   |   |   |   |   |BN2|WN2|8
+7|BP1|   |   |BK |   |   |BP7|BP8|7
+6|   |BP2|   |   |   |   |   |   |6
+5|   |WP2|BB2|   |   |BB1|   |   |5
+4|   |   |BP3|   |BP6|   |   |   |4
+3|   |   |   |BQ1|   |   |   |WP8|3
+2|   |   |   |   |WP5|WP6|   |   |2
+1|   |   |WK |   |   |WB2|   |WR2|1
+*|*A*|*B*|*C*|*D*|*E*|*F*|*G*|*H*|*
+
+Turn 52 - Black to move. Please enter a command (piece name + position : ie. 'BP4 D5')
+BQ1 E2
+*|*A*|*B*|*C*|*D*|*E*|*F*|*G*|*H*|*
+8|BR1|   |   |   |   |   |BN2|WN2|8
+7|BP1|   |   |BK |   |   |BP7|BP8|7
+6|   |BP2|   |   |   |   |   |   |6
+5|   |WP2|BB2|   |   |BB1|   |   |5
+4|   |   |BP3|   |BP6|   |   |   |4
+3|   |   |   |   |   |   |   |WP8|3
+2|   |   |   |   |BQ1|WP6|   |   |2
+1|   |   |WK |   |   |WB2|   |WR2|1
+*|*A*|*B*|*C*|*D*|*E*|*F*|*G*|*H*|*
+
+Turn 53 - White to move. Please enter a command (piece name + position : ie. 'WK1 C3')
+WB2 E2
+*|*A*|*B*|*C*|*D*|*E*|*F*|*G*|*H*|*
+8|BR1|   |   |   |   |   |BN2|WN2|8
+7|BP1|   |   |BK |   |   |BP7|BP8|7
+6|   |BP2|   |   |   |   |   |   |6
+5|   |WP2|BB2|   |   |BB1|   |   |5
+4|   |   |BP3|   |BP6|   |   |   |4
+3|   |   |   |   |   |   |   |WP8|3
+2|   |   |   |   |WB2|WP6|   |   |2
+1|   |   |WK |   |   |   |   |WR2|1
+*|*A*|*B*|*C*|*D*|*E*|*F*|*G*|*H*|*
+
+Turn 54 - Black to move. Please enter a command (piece name + position : ie. 'BP4 D5')
+BN2 F5
+Invalid Move. Please Try Again.
+*|*A*|*B*|*C*|*D*|*E*|*F*|*G*|*H*|*
+8|BR1|   |   |   |   |   |BN2|WN2|8
+7|BP1|   |   |BK |   |   |BP7|BP8|7
+6|   |BP2|   |   |   |   |   |   |6
+5|   |WP2|BB2|   |   |BB1|   |   |5
+4|   |   |BP3|   |BP6|   |   |   |4
+3|   |   |   |   |   |   |   |WP8|3
+2|   |   |   |   |WB2|WP6|   |   |2
+1|   |   |WK |   |   |   |   |WR2|1
+*|*A*|*B*|*C*|*D*|*E*|*F*|*G*|*H*|*
+
+Turn 54 - Black to move. Please enter a command (piece name + position : ie. 'BP4 D5')
+BN2 F6
+*|*A*|*B*|*C*|*D*|*E*|*F*|*G*|*H*|*
+8|BR1|   |   |   |   |   |   |WN2|8
+7|BP1|   |   |BK |   |   |BP7|BP8|7
+6|   |BP2|   |   |   |BN2|   |   |6
+5|   |WP2|BB2|   |   |BB1|   |   |5
+4|   |   |BP3|   |BP6|   |   |   |4
+3|   |   |   |   |   |   |   |WP8|3
+2|   |   |   |   |WB2|WP6|   |   |2
+1|   |   |WK |   |   |   |   |WR2|1
+*|*A*|*B*|*C*|*D*|*E*|*F*|*G*|*H*|*
+
+Turn 55 - White to move. Please enter a command (piece name + position : ie. 'WK1 C3')
+WP6 F3
+*|*A*|*B*|*C*|*D*|*E*|*F*|*G*|*H*|*
+8|BR1|   |   |   |   |   |   |WN2|8
+7|BP1|   |   |BK |   |   |BP7|BP8|7
+6|   |BP2|   |   |   |BN2|   |   |6
+5|   |WP2|BB2|   |   |BB1|   |   |5
+4|   |   |BP3|   |BP6|   |   |   |4
+3|   |   |   |   |   |WP6|   |WP8|3
+2|   |   |   |   |WB2|   |   |   |2
+1|   |   |WK |   |   |   |   |WR2|1
+*|*A*|*B*|*C*|*D*|*E*|*F*|*G*|*H*|*
+
+Turn 56 - Black to move. Please enter a command (piece name + position : ie. 'BP4 D5')
+BP6 F3
+*|*A*|*B*|*C*|*D*|*E*|*F*|*G*|*H*|*
+8|BR1|   |   |   |   |   |   |WN2|8
+7|BP1|   |   |BK |   |   |BP7|BP8|7
+6|   |BP2|   |   |   |BN2|   |   |6
+5|   |WP2|BB2|   |   |BB1|   |   |5
+4|   |   |BP3|   |   |   |   |   |4
+3|   |   |   |   |   |BP6|   |WP8|3
+2|   |   |   |   |WB2|   |   |   |2
+1|   |   |WK |   |   |   |   |WR2|1
+*|*A*|*B*|*C*|*D*|*E*|*F*|*G*|*H*|*
+
+Turn 57 - White to move. Please enter a command (piece name + position : ie. 'WK1 C3')
+WB2 F3
+*|*A*|*B*|*C*|*D*|*E*|*F*|*G*|*H*|*
+8|BR1|   |   |   |   |   |   |WN2|8
+7|BP1|   |   |BK |   |   |BP7|BP8|7
+6|   |BP2|   |   |   |BN2|   |   |6
+5|   |WP2|BB2|   |   |BB1|   |   |5
+4|   |   |BP3|   |   |   |   |   |4
+3|   |   |   |   |   |WB2|   |WP8|3
+2|   |   |   |   |   |   |   |   |2
+1|   |   |WK |   |   |   |   |WR2|1
+*|*A*|*B*|*C*|*D*|*E*|*F*|*G*|*H*|*
+
+Turn 58 - Black to move. Please enter a command (piece name + position : ie. 'BP4 D5')
+BR1 H8
+*|*A*|*B*|*C*|*D*|*E*|*F*|*G*|*H*|*
+8|   |   |   |   |   |   |   |BR1|8
+7|BP1|   |   |BK |   |   |BP7|BP8|7
+6|   |BP2|   |   |   |BN2|   |   |6
+5|   |WP2|BB2|   |   |BB1|   |   |5
+4|   |   |BP3|   |   |   |   |   |4
+3|   |   |   |   |   |WB2|   |WP8|3
+2|   |   |   |   |   |   |   |   |2
+1|   |   |WK |   |   |   |   |WR2|1
+*|*A*|*B*|*C*|*D*|*E*|*F*|*G*|*H*|*
+
+Turn 59 - White to move. Please enter a command (piece name + position : ie. 'WK1 C3')
+WR2 D1
+*|*A*|*B*|*C*|*D*|*E*|*F*|*G*|*H*|*
+8|   |   |   |   |   |   |   |BR1|8
+7|BP1|   |   |BK |   |   |BP7|BP8|7
+6|   |BP2|   |   |   |BN2|   |   |6
+5|   |WP2|BB2|   |   |BB1|   |   |5
+4|   |   |BP3|   |   |   |   |   |4
+3|   |   |   |   |   |WB2|   |WP8|3
+2|   |   |   |   |   |   |   |   |2
+1|   |   |WK |WR2|   |   |   |   |1
+*|*A*|*B*|*C*|*D*|*E*|*F*|*G*|*H*|*
+
+Turn 60 - Black to move. Please enter a command (piece name + position : ie. 'BP4 D5')
+Black King is currently in check
+BK C7
+*|*A*|*B*|*C*|*D*|*E*|*F*|*G*|*H*|*
+8|   |   |   |   |   |   |   |BR1|8
+7|BP1|   |BK |   |   |   |BP7|BP8|7
+6|   |BP2|   |   |   |BN2|   |   |6
+5|   |WP2|BB2|   |   |BB1|   |   |5
+4|   |   |BP3|   |   |   |   |   |4
+3|   |   |   |   |   |WB2|   |WP8|3
+2|   |   |   |   |   |   |   |   |2
+1|   |   |WK |WR2|   |   |   |   |1
+*|*A*|*B*|*C*|*D*|*E*|*F*|*G*|*H*|*
+
+Turn 61 - White to move. Please enter a command (piece name + position : ie. 'WK1 C3')
+WB2 C6
+*|*A*|*B*|*C*|*D*|*E*|*F*|*G*|*H*|*
+8|   |   |   |   |   |   |   |BR1|8
+7|BP1|   |BK |   |   |   |BP7|BP8|7
+6|   |BP2|WB2|   |   |BN2|   |   |6
+5|   |WP2|BB2|   |   |BB1|   |   |5
+4|   |   |BP3|   |   |   |   |   |4
+3|   |   |   |   |   |   |   |WP8|3
+2|   |   |   |   |   |   |   |   |2
+1|   |   |WK |WR2|   |   |   |   |1
+*|*A*|*B*|*C*|*D*|*E*|*F*|*G*|*H*|*
+
+Turn 62 - Black to move. Please enter a command (piece name + position : ie. 'BP4 D5')
+BK WB2
+Invalid Move. King would be in Check. Please Try Again
+*|*A*|*B*|*C*|*D*|*E*|*F*|*G*|*H*|*
+8|   |   |   |   |   |   |   |BR1|8
+7|BP1|   |BK |   |   |   |BP7|BP8|7
+6|   |BP2|WB2|   |   |BN2|   |   |6
+5|   |WP2|BB2|   |   |BB1|   |   |5
+4|   |   |BP3|   |   |   |   |   |4
+3|   |   |   |   |   |   |   |WP8|3
+2|   |   |   |   |   |   |   |   |2
+1|   |   |WK |WR2|   |   |   |   |1
+*|*A*|*B*|*C*|*D*|*E*|*F*|*G*|*H*|*
+
+Turn 62 - Black to move. Please enter a command (piece name + position : ie. 'BP4 D5')
+BR1 D8
+*|*A*|*B*|*C*|*D*|*E*|*F*|*G*|*H*|*
+8|   |   |   |BR1|   |   |   |   |8
+7|BP1|   |BK |   |   |   |BP7|BP8|7
+6|   |BP2|WB2|   |   |BN2|   |   |6
+5|   |WP2|BB2|   |   |BB1|   |   |5
+4|   |   |BP3|   |   |   |   |   |4
+3|   |   |   |   |   |   |   |WP8|3
+2|   |   |   |   |   |   |   |   |2
+1|   |   |WK |WR2|   |   |   |   |1
+*|*A*|*B*|*C*|*D*|*E*|*F*|*G*|*H*|*
+
+Turn 63 - White to move. Please enter a command (piece name + position : ie. 'WK1 C3')
+WR2 D8
+*|*A*|*B*|*C*|*D*|*E*|*F*|*G*|*H*|*
+8|   |   |   |WR2|   |   |   |   |8
+7|BP1|   |BK |   |   |   |BP7|BP8|7
+6|   |BP2|WB2|   |   |BN2|   |   |6
+5|   |WP2|BB2|   |   |BB1|   |   |5
+4|   |   |BP3|   |   |   |   |   |4
+3|   |   |   |   |   |   |   |WP8|3
+2|   |   |   |   |   |   |   |   |2
+1|   |   |WK |   |   |   |   |   |1
+*|*A*|*B*|*C*|*D*|*E*|*F*|*G*|*H*|*
+
+Turn 64 - Black to move. Please enter a command (piece name + position : ie. 'BP4 D5')
+BK D8
+*|*A*|*B*|*C*|*D*|*E*|*F*|*G*|*H*|*
+8|   |   |   |BK |   |   |   |   |8
+7|BP1|   |   |   |   |   |BP7|BP8|7
+6|   |BP2|WB2|   |   |BN2|   |   |6
+5|   |WP2|BB2|   |   |BB1|   |   |5
+4|   |   |BP3|   |   |   |   |   |4
+3|   |   |   |   |   |   |   |WP8|3
+2|   |   |   |   |   |   |   |   |2
+1|   |   |WK |   |   |   |   |   |1
+*|*A*|*B*|*C*|*D*|*E*|*F*|*G*|*H*|*
+
+Turn 65 - White to move. Please enter a command (piece name + position : ie. 'WK1 C3')
+WP8 H4
+*|*A*|*B*|*C*|*D*|*E*|*F*|*G*|*H*|*
+8|   |   |   |BK |   |   |   |   |8
+7|BP1|   |   |   |   |   |BP7|BP8|7
+6|   |BP2|WB2|   |   |BN2|   |   |6
+5|   |WP2|BB2|   |   |BB1|   |   |5
+4|   |   |BP3|   |   |   |   |WP8|4
+3|   |   |   |   |   |   |   |   |3
+2|   |   |   |   |   |   |   |   |2
+1|   |   |WK |   |   |   |   |   |1
+*|*A*|*B*|*C*|*D*|*E*|*F*|*G*|*H*|*
+
+Turn 66 - Black to move. Please enter a command (piece name + position : ie. 'BP4 D5')
+BP8 H5
+*|*A*|*B*|*C*|*D*|*E*|*F*|*G*|*H*|*
+8|   |   |   |BK |   |   |   |   |8
+7|BP1|   |   |   |   |   |BP7|   |7
+6|   |BP2|WB2|   |   |BN2|   |   |6
+5|   |WP2|BB2|   |   |BB1|   |BP8|5
+4|   |   |BP3|   |   |   |   |WP8|4
+3|   |   |   |   |   |   |   |   |3
+2|   |   |   |   |   |   |   |   |2
+1|   |   |WK |   |   |   |   |   |1
+*|*A*|*B*|*C*|*D*|*E*|*F*|*G*|*H*|*
+
+Turn 67 - White to move. Please enter a command (piece name + position : ie. 'WK1 C3')
+WK C2
+Invalid Move. King would be in Check. Please Try Again
+*|*A*|*B*|*C*|*D*|*E*|*F*|*G*|*H*|*
+8|   |   |   |BK |   |   |   |   |8
+7|BP1|   |   |   |   |   |BP7|   |7
+6|   |BP2|WB2|   |   |BN2|   |   |6
+5|   |WP2|BB2|   |   |BB1|   |BP8|5
+4|   |   |BP3|   |   |   |   |WP8|4
+3|   |   |   |   |   |   |   |   |3
+2|   |   |   |   |   |   |   |   |2
+1|   |   |WK |   |   |   |   |   |1
+*|*A*|*B*|*C*|*D*|*E*|*F*|*G*|*H*|*
+
+Turn 67 - White to move. Please enter a command (piece name + position : ie. 'WK1 C3')
+WK D1
+*|*A*|*B*|*C*|*D*|*E*|*F*|*G*|*H*|*
+8|   |   |   |BK |   |   |   |   |8
+7|BP1|   |   |   |   |   |BP7|   |7
+6|   |BP2|WB2|   |   |BN2|   |   |6
+5|   |WP2|BB2|   |   |BB1|   |BP8|5
+4|   |   |BP3|   |   |   |   |WP8|4
+3|   |   |   |   |   |   |   |   |3
+2|   |   |   |   |   |   |   |   |2
+1|   |   |   |WK |   |   |   |   |1
+*|*A*|*B*|*C*|*D*|*E*|*F*|*G*|*H*|*
+
+Turn 68 - Black to move. Please enter a command (piece name + position : ie. 'BP4 D5')
+BK E7
+*|*A*|*B*|*C*|*D*|*E*|*F*|*G*|*H*|*
+8|   |   |   |   |   |   |   |   |8
+7|BP1|   |   |   |BK |   |BP7|   |7
+6|   |BP2|WB2|   |   |BN2|   |   |6
+5|   |WP2|BB2|   |   |BB1|   |BP8|5
+4|   |   |BP3|   |   |   |   |WP8|4
+3|   |   |   |   |   |   |   |   |3
+2|   |   |   |   |   |   |   |   |2
+1|   |   |   |WK |   |   |   |   |1
+*|*A*|*B*|*C*|*D*|*E*|*F*|*G*|*H*|*
+
+Turn 69 - White to move. Please enter a command (piece name + position : ie. 'WK1 C3')
+WK E1
+*|*A*|*B*|*C*|*D*|*E*|*F*|*G*|*H*|*
+8|   |   |   |   |   |   |   |   |8
+7|BP1|   |   |   |BK |   |BP7|   |7
+6|   |BP2|WB2|   |   |BN2|   |   |6
+5|   |WP2|BB2|   |   |BB1|   |BP8|5
+4|   |   |BP3|   |   |   |   |WP8|4
+3|   |   |   |   |   |   |   |   |3
+2|   |   |   |   |   |   |   |   |2
+1|   |   |   |   |WK |   |   |   |1
+*|*A*|*B*|*C*|*D*|*E*|*F*|*G*|*H*|*
+
+Turn 70 - Black to move. Please enter a command (piece name + position : ie. 'BP4 D5')
+BK E6
+*|*A*|*B*|*C*|*D*|*E*|*F*|*G*|*H*|*
+8|   |   |   |   |   |   |   |   |8
+7|BP1|   |   |   |   |   |BP7|   |7
+6|   |BP2|WB2|   |BK |BN2|   |   |6
+5|   |WP2|BB2|   |   |BB1|   |BP8|5
+4|   |   |BP3|   |   |   |   |WP8|4
+3|   |   |   |   |   |   |   |   |3
+2|   |   |   |   |   |   |   |   |2
+1|   |   |   |   |WK |   |   |   |1
+*|*A*|*B*|*C*|*D*|*E*|*F*|*G*|*H*|*
+
+Turn 71 - White to move. Please enter a command (piece name + position : ie. 'WK1 C3')
+WK E2
+*|*A*|*B*|*C*|*D*|*E*|*F*|*G*|*H*|*
+8|   |   |   |   |   |   |   |   |8
+7|BP1|   |   |   |   |   |BP7|   |7
+6|   |BP2|WB2|   |BK |BN2|   |   |6
+5|   |WP2|BB2|   |   |BB1|   |BP8|5
+4|   |   |BP3|   |   |   |   |WP8|4
+3|   |   |   |   |   |   |   |   |3
+2|   |   |   |   |WK |   |   |   |2
+1|   |   |   |   |   |   |   |   |1
+*|*A*|*B*|*C*|*D*|*E*|*F*|*G*|*H*|*
+
+Turn 72 - Black to move. Please enter a command (piece name + position : ie. 'BP4 D5')
+BP3 C3
+*|*A*|*B*|*C*|*D*|*E*|*F*|*G*|*H*|*
+8|   |   |   |   |   |   |   |   |8
+7|BP1|   |   |   |   |   |BP7|   |7
+6|   |BP2|WB2|   |BK |BN2|   |   |6
+5|   |WP2|BB2|   |   |BB1|   |BP8|5
+4|   |   |   |   |   |   |   |WP8|4
+3|   |   |BP3|   |   |   |   |   |3
+2|   |   |   |   |WK |   |   |   |2
+1|   |   |   |   |   |   |   |   |1
+*|*A*|*B*|*C*|*D*|*E*|*F*|*G*|*H*|*
+
+Turn 73 - White to move. Please enter a command (piece name + position : ie. 'WK1 C3')
+WK D3
+Invalid Move. King would be in Check. Please Try Again
+*|*A*|*B*|*C*|*D*|*E*|*F*|*G*|*H*|*
+8|   |   |   |   |   |   |   |   |8
+7|BP1|   |   |   |   |   |BP7|   |7
+6|   |BP2|WB2|   |BK |BN2|   |   |6
+5|   |WP2|BB2|   |   |BB1|   |BP8|5
+4|   |   |   |   |   |   |   |WP8|4
+3|   |   |BP3|   |   |   |   |   |3
+2|   |   |   |   |WK |   |   |   |2
+1|   |   |   |   |   |   |   |   |1
+*|*A*|*B*|*C*|*D*|*E*|*F*|*G*|*H*|*
+
+Turn 73 - White to move. Please enter a command (piece name + position : ie. 'WK1 C3')
+WK D2
+Invalid Move. King would be in Check. Please Try Again
+*|*A*|*B*|*C*|*D*|*E*|*F*|*G*|*H*|*
+8|   |   |   |   |   |   |   |   |8
+7|BP1|   |   |   |   |   |BP7|   |7
+6|   |BP2|WB2|   |BK |BN2|   |   |6
+5|   |WP2|BB2|   |   |BB1|   |BP8|5
+4|   |   |   |   |   |   |   |WP8|4
+3|   |   |BP3|   |   |   |   |   |3
+2|   |   |   |   |WK |   |   |   |2
+1|   |   |   |   |   |   |   |   |1
+*|*A*|*B*|*C*|*D*|*E*|*F*|*G*|*H*|*
+
+Turn 73 - White to move. Please enter a command (piece name + position : ie. 'WK1 C3')
+WK D1
+*|*A*|*B*|*C*|*D*|*E*|*F*|*G*|*H*|*
+8|   |   |   |   |   |   |   |   |8
+7|BP1|   |   |   |   |   |BP7|   |7
+6|   |BP2|WB2|   |BK |BN2|   |   |6
+5|   |WP2|BB2|   |   |BB1|   |BP8|5
+4|   |   |   |   |   |   |   |WP8|4
+3|   |   |BP3|   |   |   |   |   |3
+2|   |   |   |   |   |   |   |   |2
+1|   |   |   |WK |   |   |   |   |1
+*|*A*|*B*|*C*|*D*|*E*|*F*|*G*|*H*|*
+
+Turn 74 - Black to move. Please enter a command (piece name + position : ie. 'BP4 D5')
+BP3 C2
+*|*A*|*B*|*C*|*D*|*E*|*F*|*G*|*H*|*
+8|   |   |   |   |   |   |   |   |8
+7|BP1|   |   |   |   |   |BP7|   |7
+6|   |BP2|WB2|   |BK |BN2|   |   |6
+5|   |WP2|BB2|   |   |BB1|   |BP8|5
+4|   |   |   |   |   |   |   |WP8|4
+3|   |   |   |   |   |   |   |   |3
+2|   |   |BP3|   |   |   |   |   |2
+1|   |   |   |WK |   |   |   |   |1
+*|*A*|*B*|*C*|*D*|*E*|*F*|*G*|*H*|*
+
+Turn 75 - White to move. Please enter a command (piece name + position : ie. 'WK1 C3')
+White King is currently in check
+WK BP3
+Invalid Move. King would be in Check. Please Try Again
+*|*A*|*B*|*C*|*D*|*E*|*F*|*G*|*H*|*
+8|   |   |   |   |   |   |   |   |8
+7|BP1|   |   |   |   |   |BP7|   |7
+6|   |BP2|WB2|   |BK |BN2|   |   |6
+5|   |WP2|BB2|   |   |BB1|   |BP8|5
+4|   |   |   |   |   |   |   |WP8|4
+3|   |   |   |   |   |   |   |   |3
+2|   |   |BP3|   |   |   |   |   |2
+1|   |   |   |WK |   |   |   |   |1
+*|*A*|*B*|*C*|*D*|*E*|*F*|*G*|*H*|*
+
+Turn 75 - White to move. Please enter a command (piece name + position : ie. 'WK1 C3')
+White King is currently in check
+WK C1
+*|*A*|*B*|*C*|*D*|*E*|*F*|*G*|*H*|*
+8|   |   |   |   |   |   |   |   |8
+7|BP1|   |   |   |   |   |BP7|   |7
+6|   |BP2|WB2|   |BK |BN2|   |   |6
+5|   |WP2|BB2|   |   |BB1|   |BP8|5
+4|   |   |   |   |   |   |   |WP8|4
+3|   |   |   |   |   |   |   |   |3
+2|   |   |BP3|   |   |   |   |   |2
+1|   |   |WK |   |   |   |   |   |1
+*|*A*|*B*|*C*|*D*|*E*|*F*|*G*|*H*|*
+
+Turn 76 - Black to move. Please enter a command (piece name + position : ie. 'BP4 D5')
+BB2 E4
+Invalid Move. Please Try Again.
+*|*A*|*B*|*C*|*D*|*E*|*F*|*G*|*H*|*
+8|   |   |   |   |   |   |   |   |8
+7|BP1|   |   |   |   |   |BP7|   |7
+6|   |BP2|WB2|   |BK |BN2|   |   |6
+5|   |WP2|BB2|   |   |BB1|   |BP8|5
+4|   |   |   |   |   |   |   |WP8|4
+3|   |   |   |   |   |   |   |   |3
+2|   |   |BP3|   |   |   |   |   |2
+1|   |   |WK |   |   |   |   |   |1
+*|*A*|*B*|*C*|*D*|*E*|*F*|*G*|*H*|*
+
+Turn 76 - Black to move. Please enter a command (piece name + position : ie. 'BP4 D5')
+BB2 E3
+*|*A*|*B*|*C*|*D*|*E*|*F*|*G*|*H*|*
+8|   |   |   |   |   |   |   |   |8
+7|BP1|   |   |   |   |   |BP7|   |7
+6|   |BP2|WB2|   |BK |BN2|   |   |6
+5|   |WP2|   |   |   |BB1|   |BP8|5
+4|   |   |   |   |   |   |   |WP8|4
+3|   |   |   |   |BB2|   |   |   |3
+2|   |   |BP3|   |   |   |   |   |2
+1|   |   |WK |   |   |   |   |   |1
+*|*A*|*B*|*C*|*D*|*E*|*F*|*G*|*H*|*
+
+Turn 77 - White to move. Please enter a command (piece name + position : ie. 'WK1 C3')
+White King is currently in check
+WK B2
+PawnPromotion: ByPassPawnPromotionPromptUser set - use 0 for newPieceID
+PawnPromotion: newPieceID = 0 , choice: Q
+*|*A*|*B*|*C*|*D*|*E*|*F*|*G*|*H*|*
+8|   |   |   |   |   |   |   |   |8
+7|BP1|   |   |   |   |   |BP7|   |7
+6|   |BP2|WB2|   |BK |BN2|   |   |6
+5|   |WP2|   |   |   |BB1|   |BP8|5
+4|   |   |   |   |   |   |   |WP8|4
+3|   |   |   |   |BB2|   |   |   |3
+2|   |WK |BP3|   |   |   |   |   |2
+1|   |   |   |   |   |   |   |   |1
+*|*A*|*B*|*C*|*D*|*E*|*F*|*G*|*H*|*
+
+Turn 78 - Black to move. Please enter a command (piece name + position : ie. 'BP4 D5')
+BP3 C1
+Pawn Promoted. Choose type: (Q - Queen, R - Rook, K - Knight, B - Bishop)
+Q
+PawnPromotion: newPieceID = 2 , choice: q
+*|*A*|*B*|*C*|*D*|*E*|*F*|*G*|*H*|*
+8|   |   |   |   |   |   |   |   |8
+7|BP1|   |   |   |   |   |BP7|   |7
+6|   |BP2|WB2|   |BK |BN2|   |   |6
+5|   |WP2|   |   |   |BB1|   |BP8|5
+4|   |   |   |   |   |   |   |WP8|4
+3|   |   |   |   |BB2|   |   |   |3
+2|   |WK |   |   |   |   |   |   |2
+1|   |   |BQ2|   |   |   |   |   |1
+*|*A*|*B*|*C*|*D*|*E*|*F*|*G*|*H*|*
+
+Turn 79 - White to move. Please enter a command (piece name + position : ie. 'WK1 C3')
+White King is currently in check
+WK BQ2
+Invalid Move. King would be in Check. Please Try Again
+*|*A*|*B*|*C*|*D*|*E*|*F*|*G*|*H*|*
+8|   |   |   |   |   |   |   |   |8
+7|BP1|   |   |   |   |   |BP7|   |7
+6|   |BP2|WB2|   |BK |BN2|   |   |6
+5|   |WP2|   |   |   |BB1|   |BP8|5
+4|   |   |   |   |   |   |   |WP8|4
+3|   |   |   |   |BB2|   |   |   |3
+2|   |WK |   |   |   |   |   |   |2
+1|   |   |BQ2|   |   |   |   |   |1
+*|*A*|*B*|*C*|*D*|*E*|*F*|*G*|*H*|*
+
+Turn 79 - White to move. Please enter a command (piece name + position : ie. 'WK1 C3')
+White King is currently in check
+WK B3
+*|*A*|*B*|*C*|*D*|*E*|*F*|*G*|*H*|*
+8|   |   |   |   |   |   |   |   |8
+7|BP1|   |   |   |   |   |BP7|   |7
+6|   |BP2|WB2|   |BK |BN2|   |   |6
+5|   |WP2|   |   |   |BB1|   |BP8|5
+4|   |   |   |   |   |   |   |WP8|4
+3|   |WK |   |   |BB2|   |   |   |3
+2|   |   |   |   |   |   |   |   |2
+1|   |   |BQ2|   |   |   |   |   |1
+*|*A*|*B*|*C*|*D*|*E*|*F*|*G*|*H*|*
+
+Turn 80 - Black to move. Please enter a command (piece name + position : ie. 'BP4 D5')
+BB1 C2
+*|*A*|*B*|*C*|*D*|*E*|*F*|*G*|*H*|*
+8|   |   |   |   |   |   |   |   |8
+7|BP1|   |   |   |   |   |BP7|   |7
+6|   |BP2|WB2|   |BK |BN2|   |   |6
+5|   |WP2|   |   |   |   |   |BP8|5
+4|   |   |   |   |   |   |   |WP8|4
+3|   |WK |   |   |BB2|   |   |   |3
+2|   |   |BB1|   |   |   |   |   |2
+1|   |   |BQ2|   |   |   |   |   |1
+*|*A*|*B*|*C*|*D*|*E*|*F*|*G*|*H*|*
+
+Turn 81 - White to move. Please enter a command (piece name + position : ie. 'WK1 C3')
+White King is currently in check
+WK C4
+*|*A*|*B*|*C*|*D*|*E*|*F*|*G*|*H*|*
+8|   |   |   |   |   |   |   |   |8
+7|BP1|   |   |   |   |   |BP7|   |7
+6|   |BP2|WB2|   |BK |BN2|   |   |6
+5|   |WP2|   |   |   |   |   |BP8|5
+4|   |   |WK |   |   |   |   |WP8|4
+3|   |   |   |   |BB2|   |   |   |3
+2|   |   |BB1|   |   |   |   |   |2
+1|   |   |BQ2|   |   |   |   |   |1
+*|*A*|*B*|*C*|*D*|*E*|*F*|*G*|*H*|*
+
+Turn 82 - Black to move. Please enter a command (piece name + position : ie. 'BP4 D5')
+BQ2 A4
+Invalid Move. Please Try Again.
+*|*A*|*B*|*C*|*D*|*E*|*F*|*G*|*H*|*
+8|   |   |   |   |   |   |   |   |8
+7|BP1|   |   |   |   |   |BP7|   |7
+6|   |BP2|WB2|   |BK |BN2|   |   |6
+5|   |WP2|   |   |   |   |   |BP8|5
+4|   |   |WK |   |   |   |   |WP8|4
+3|   |   |   |   |BB2|   |   |   |3
+2|   |   |BB1|   |   |   |   |   |2
+1|   |   |BQ2|   |   |   |   |   |1
+*|*A*|*B*|*C*|*D*|*E*|*F*|*G*|*H*|*
+
+Turn 82 - Black to move. Please enter a command (piece name + position : ie. 'BP4 D5')
+BB1 A4
+*|*A*|*B*|*C*|*D*|*E*|*F*|*G*|*H*|*
+8|   |   |   |   |   |   |   |   |8
+7|BP1|   |   |   |   |   |BP7|   |7
+6|   |BP2|WB2|   |BK |BN2|   |   |6
+5|   |WP2|   |   |   |   |   |BP8|5
+4|BB1|   |WK |   |   |   |   |WP8|4
+3|   |   |   |   |BB2|   |   |   |3
+2|   |   |   |   |   |   |   |   |2
+1|   |   |BQ2|   |   |   |   |   |1
+*|*A*|*B*|*C*|*D*|*E*|*F*|*G*|*H*|*
+
+Turn 83 - White to move. Please enter a command (piece name + position : ie. 'WK1 C3')
+White King is currently in check
+WK B4
+*|*A*|*B*|*C*|*D*|*E*|*F*|*G*|*H*|*
+8|   |   |   |   |   |   |   |   |8
+7|BP1|   |   |   |   |   |BP7|   |7
+6|   |BP2|WB2|   |BK |BN2|   |   |6
+5|   |WP2|   |   |   |   |   |BP8|5
+4|BB1|WK |   |   |   |   |   |WP8|4
+3|   |   |   |   |BB2|   |   |   |3
+2|   |   |   |   |   |   |   |   |2
+1|   |   |BQ2|   |   |   |   |   |1
+*|*A*|*B*|*C*|*D*|*E*|*F*|*G*|*H*|*
+
+Turn 84 - Black to move. Please enter a command (piece name + position : ie. 'BP4 D5')
+BQ2 C2
+*|*A*|*B*|*C*|*D*|*E*|*F*|*G*|*H*|*
+8|   |   |   |   |   |   |   |   |8
+7|BP1|   |   |   |   |   |BP7|   |7
+6|   |BP2|WB2|   |BK |BN2|   |   |6
+5|   |WP2|   |   |   |   |   |BP8|5
+4|BB1|WK |   |   |   |   |   |WP8|4
+3|   |   |   |   |BB2|   |   |   |3
+2|   |   |BQ2|   |   |   |   |   |2
+1|   |   |   |   |   |   |   |   |1
+*|*A*|*B*|*C*|*D*|*E*|*F*|*G*|*H*|*
+
+Turn 85 - White to move. Please enter a command (piece name + position : ie. 'WK1 C3')
+WK BB1
+Invalid Move. King would be in Check. Please Try Again
+*|*A*|*B*|*C*|*D*|*E*|*F*|*G*|*H*|*
+8|   |   |   |   |   |   |   |   |8
+7|BP1|   |   |   |   |   |BP7|   |7
+6|   |BP2|WB2|   |BK |BN2|   |   |6
+5|   |WP2|   |   |   |   |   |BP8|5
+4|BB1|WK |   |   |   |   |   |WP8|4
+3|   |   |   |   |BB2|   |   |   |3
+2|   |   |BQ2|   |   |   |   |   |2
+1|   |   |   |   |   |   |   |   |1
+*|*A*|*B*|*C*|*D*|*E*|*F*|*G*|*H*|*
+
+Turn 85 - White to move. Please enter a command (piece name + position : ie. 'WK1 C3')
+WB2 F3
+*|*A*|*B*|*C*|*D*|*E*|*F*|*G*|*H*|*
+8|   |   |   |   |   |   |   |   |8
+7|BP1|   |   |   |   |   |BP7|   |7
+6|   |BP2|   |   |BK |BN2|   |   |6
+5|   |WP2|   |   |   |   |   |BP8|5
+4|BB1|WK |   |   |   |   |   |WP8|4
+3|   |   |   |   |BB2|WB2|   |   |3
+2|   |   |BQ2|   |   |   |   |   |2
+1|   |   |   |   |   |   |   |   |1
+*|*A*|*B*|*C*|*D*|*E*|*F*|*G*|*H*|*
+
+Turn 86 - Black to move. Please enter a command (piece name + position : ie. 'BP4 D5')
+BK D6
+*|*A*|*B*|*C*|*D*|*E*|*F*|*G*|*H*|*
+8|   |   |   |   |   |   |   |   |8
+7|BP1|   |   |   |   |   |BP7|   |7
+6|   |BP2|   |BK |   |BN2|   |   |6
+5|   |WP2|   |   |   |   |   |BP8|5
+4|BB1|WK |   |   |   |   |   |WP8|4
+3|   |   |   |   |BB2|WB2|   |   |3
+2|   |   |BQ2|   |   |   |   |   |2
+1|   |   |   |   |   |   |   |   |1
+*|*A*|*B*|*C*|*D*|*E*|*F*|*G*|*H*|*
+
+Turn 87 - White to move. Please enter a command (piece name + position : ie. 'WK1 C3')
+WK A5
+Invalid Move. King would be in Check. Please Try Again
+*|*A*|*B*|*C*|*D*|*E*|*F*|*G*|*H*|*
+8|   |   |   |   |   |   |   |   |8
+7|BP1|   |   |   |   |   |BP7|   |7
+6|   |BP2|   |BK |   |BN2|   |   |6
+5|   |WP2|   |   |   |   |   |BP8|5
+4|BB1|WK |   |   |   |   |   |WP8|4
+3|   |   |   |   |BB2|WB2|   |   |3
+2|   |   |BQ2|   |   |   |   |   |2
+1|   |   |   |   |   |   |   |   |1
+*|*A*|*B*|*C*|*D*|*E*|*F*|*G*|*H*|*
+
+Turn 87 - White to move. Please enter a command (piece name + position : ie. 'WK1 C3')
+WB2 H5
+*|*A*|*B*|*C*|*D*|*E*|*F*|*G*|*H*|*
+8|   |   |   |   |   |   |   |   |8
+7|BP1|   |   |   |   |   |BP7|   |7
+6|   |BP2|   |BK |   |BN2|   |   |6
+5|   |WP2|   |   |   |   |   |WB2|5
+4|BB1|WK |   |   |   |   |   |WP8|4
+3|   |   |   |   |BB2|   |   |   |3
+2|   |   |BQ2|   |   |   |   |   |2
+1|   |   |   |   |   |   |   |   |1
+*|*A*|*B*|*C*|*D*|*E*|*F*|*G*|*H*|*
+
+Turn 88 - Black to move. Please enter a command (piece name + position : ie. 'BP4 D5')
+BN2 H5
+*|*A*|*B*|*C*|*D*|*E*|*F*|*G*|*H*|*
+8|   |   |   |   |   |   |   |   |8
+7|BP1|   |   |   |   |   |BP7|   |7
+6|   |BP2|   |BK |   |   |   |   |6
+5|   |WP2|   |   |   |   |   |BN2|5
+4|BB1|WK |   |   |   |   |   |WP8|4
+3|   |   |   |   |BB2|   |   |   |3
+2|   |   |BQ2|   |   |   |   |   |2
+1|   |   |   |   |   |   |   |   |1
+*|*A*|*B*|*C*|*D*|*E*|*F*|*G*|*H*|*
+
+Turn 89 - White to move. Please enter a command (piece name + position : ie. 'WK1 C3')
+WK A4
+Invalid Move. King would be in Check. Please Try Again
+*|*A*|*B*|*C*|*D*|*E*|*F*|*G*|*H*|*
+8|   |   |   |   |   |   |   |   |8
+7|BP1|   |   |   |   |   |BP7|   |7
+6|   |BP2|   |BK |   |   |   |   |6
+5|   |WP2|   |   |   |   |   |BN2|5
+4|BB1|WK |   |   |   |   |   |WP8|4
+3|   |   |   |   |BB2|   |   |   |3
+2|   |   |BQ2|   |   |   |   |   |2
+1|   |   |   |   |   |   |   |   |1
+*|*A*|*B*|*C*|*D*|*E*|*F*|*G*|*H*|*
+
+Turn 89 - White to move. Please enter a command (piece name + position : ie. 'WK1 C3')
+WK A5
+Invalid Move. King would be in Check. Please Try Again
+*|*A*|*B*|*C*|*D*|*E*|*F*|*G*|*H*|*
+8|   |   |   |   |   |   |   |   |8
+7|BP1|   |   |   |   |   |BP7|   |7
+6|   |BP2|   |BK |   |   |   |   |6
+5|   |WP2|   |   |   |   |   |BN2|5
+4|BB1|WK |   |   |   |   |   |WP8|4
+3|   |   |   |   |BB2|   |   |   |3
+2|   |   |BQ2|   |   |   |   |   |2
+1|   |   |   |   |   |   |   |   |1
+*|*A*|*B*|*C*|*D*|*E*|*F*|*G*|*H*|*
+
+Turn 89 - White to move. Please enter a command (piece name + position : ie. 'WK1 C3')
+WK A3
+*|*A*|*B*|*C*|*D*|*E*|*F*|*G*|*H*|*
+8|   |   |   |   |   |   |   |   |8
+7|BP1|   |   |   |   |   |BP7|   |7
+6|   |BP2|   |BK |   |   |   |   |6
+5|   |WP2|   |   |   |   |   |BN2|5
+4|BB1|   |   |   |   |   |   |WP8|4
+3|WK |   |   |   |BB2|   |   |   |3
+2|   |   |BQ2|   |   |   |   |   |2
+1|   |   |   |   |   |   |   |   |1
+*|*A*|*B*|*C*|*D*|*E*|*F*|*G*|*H*|*
+
+Turn 90 - Black to move. Please enter a command (piece name + position : ie. 'BP4 D5')
+BQ2 B3
+Black wins against White by CheckMate!
+Game Over.
+*|*A*|*B*|*C*|*D*|*E*|*F*|*G*|*H*|*
+8|   |   |   |   |   |   |   |   |8
+7|BP1|   |   |   |   |   |BP7|   |7
+6|   |BP2|   |BK |   |   |   |   |6
+5|   |WP2|   |   |   |   |   |BN2|5
+4|BB1|   |   |   |   |   |   |WP8|4
+3|WK |BQ2|   |   |BB2|   |   |   |3
+2|   |   |   |   |   |   |   |   |2
+1|   |   |   |   |   |   |   |   |1
+*|*A*|*B*|*C*|*D*|*E*|*F*|*G*|*H*|*
+
+GameManager: Ending Game
+Program Terminated Successfully
+
+C:\Users\david\OneDrive\Documents\GitHub\chess\bin\Debug\net7.0\Chess.exe (process 74912) exited with code 0.
+Press any key to close this window . . .

@@ -1,3 +1,4 @@
+using Chess.Attributes;
 using Chess.Board;
 using Chess.Pieces;
 using static Chess.Pieces.ChessPiece;
@@ -448,6 +449,34 @@ namespace Tests.Pieces
             List<BoardPosition> results = piece.GetPossiblePositions(chessBoard);
 
             Assert.That(results.Count, Is.EqualTo(23));
+        }
+
+        [Test]
+        public void Queen_GetAttackedPieces_Returns_Fork()
+        {
+            ChessPiece whiteRook1 = new ChessPieceRook(Color.WHITE, 1, new("D2"));
+            ChessPiece whiteRook2 = new ChessPieceRook(Color.WHITE, 1, new("H3"));
+            ChessPiece blackQueen = new ChessPieceQueen(Color.BLACK, 1, new("D7"));
+            ChessPiece blackKing = new ChessPieceKing(Color.BLACK, new("D8"));
+            ChessBoard chessBoard = new();
+            chessBoard.AddPiece(whiteRook1);
+            chessBoard.AddPiece(whiteRook2);
+            chessBoard.AddPiece(blackQueen);
+            chessBoard.AddPiece(blackKing);
+
+            whiteRook1.Move(chessBoard, new("D3"));
+
+            List<ChessPiece> blackQueenAttacking = blackQueen.GetAttackedPieces(chessBoard);
+            List<ChessPiece> whiteAttacking = whiteRook1.GetAttackedPieces(chessBoard);
+            whiteAttacking.AddRange(whiteRook2.GetAttackedPieces(chessBoard));
+
+            Assert.Multiple(() =>
+            {
+                Assert.That(blackQueenAttacking.Count == 2, "Expected Black Queen to fork all White Pieces");
+                Assert.That(whiteAttacking.Count == 1, "White Rook Threatens Black Queen");
+                Assert.That(blackQueenAttacking[1] is ChessPieceRook, "Expected the Rook to be 2nd element");
+                Assert.That(blackQueenAttacking[0] is ChessPieceRook, "Expected the Rook to be 1st element");
+            });
         }
 
     }

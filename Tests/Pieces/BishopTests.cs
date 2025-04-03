@@ -1,6 +1,7 @@
 using Chess.Board;
 using Chess.Pieces;
 using Chess.Services;
+using static Chess.Pieces.ChessPiece;
 
 namespace Tests.Pieces
 {
@@ -326,6 +327,34 @@ namespace Tests.Pieces
             }
 
             Assert.That(possiblePositions.Count, Is.EqualTo(13));
+        }
+
+        [Test]
+        public void Bishop_GetAttackedPieces_Returns_Fork()
+        {
+            ChessPiece whiteBishop = new ChessPieceBishop(Color.WHITE, 1, new("D2"));
+            ChessPiece blackRook = new ChessPieceRook(Color.BLACK, 1, new("A5"));
+            ChessPiece blackQueen = new ChessPieceQueen(Color.BLACK, 1, new("F6"));
+            ChessPiece blackKing = new ChessPieceKing(Color.BLACK, new("H8"));
+            ChessBoard chessBoard = new();
+            chessBoard.AddPiece(whiteBishop);
+            chessBoard.AddPiece(blackRook);
+            chessBoard.AddPiece(blackQueen);
+            chessBoard.AddPiece(blackKing);
+
+            whiteBishop.Move(chessBoard, new("C3"));
+
+            List<ChessPiece> whiteBishopAttacking = whiteBishop.GetAttackedPieces(chessBoard);
+            List<ChessPiece> blackAttacking = blackRook.GetAttackedPieces(chessBoard);
+            blackAttacking.AddRange(blackQueen.GetAttackedPieces(chessBoard));
+
+            Assert.Multiple(() =>
+            {
+                Assert.That(whiteBishopAttacking.Count == 2, "Expected White Bishop to fork 2 Black Pieces");
+                Assert.That(blackAttacking.Count == 1, "Black Queen Threatens White Bishop");
+                Assert.That(whiteBishopAttacking[1] is ChessPieceRook, "Expected the Rook to be 2nd element");
+                Assert.That(whiteBishopAttacking[0] is ChessPieceQueen, "Expected the Queen to be 1st element");
+            });
         }
 
     }

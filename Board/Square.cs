@@ -1,11 +1,8 @@
-﻿using Chess.Attributes;
-using Chess.Globals;
+﻿using Chess.Globals;
 using Chess.Pieces;
 
 namespace Chess.Board
 {
-    // this technically doesnt need to exist, we can just do this inside ChessBoard. Why define another abstraction of Board?
-    // One abstraction per entity as rule of thumb
     [Serializable]
     public class Square
     {
@@ -25,7 +22,6 @@ namespace Chess.Board
             Piece = piece;
         }
 
-        [TestNeeded]
         public Square(ChessPiece piece)
         {
             StaticLogger.Trace();
@@ -40,7 +36,7 @@ namespace Chess.Board
             {
                 this.Position = other.Position;
                 this.Piece = other.Piece.Clone();
-            };
+            }
         }
     }
 }

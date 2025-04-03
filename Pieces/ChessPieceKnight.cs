@@ -81,15 +81,19 @@ namespace Chess.Pieces
 
                 if (newRow >= 0 && newRow < 8 && newCol >= 0 && newCol < 8)
                 {
-                    BoardPosition newPosition = new((RANK)newRow, (FILE)newCol);
-                    if (IsValidMove(chessBoard, newPosition))
+                    try
                     {
-                        possiblePositions.Add(newPosition);
+                        possiblePositions.Add(new((RANK)newRow, (FILE)newCol));
+                    }
+                    catch (ArgumentException e)
+                    {
+                        StaticLogger.Log("Bad Position Constructed, ignoring because its safe in this method to do so");
                     }
                 }
             }
 
             return possiblePositions;
         }
+
     }
 }

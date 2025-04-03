@@ -1,6 +1,7 @@
 ﻿using Chess.Attributes;
 using Chess.Board;
 using Chess.Callbacks;
+using Chess.Collections;
 using Chess.Globals;
 
 namespace Chess.Pieces
@@ -133,6 +134,24 @@ namespace Chess.Pieces
 
         }
 
+        // another way of doing CheckMate calculations - use this method to see if any contain a King in any of the opponent pieces.
+        public List<ChessPiece> GetAttackedPieces(ChessBoard chessBoard)
+        {
+            StaticLogger.Trace();
+            SortedTupleBag<ChessPiece.Piece, ChessPiece> results = new();
+            foreach (var pos in GetPossiblePositions(chessBoard))
+            {
+                ChessPiece piece = chessBoard.GetSquare(pos).Piece;
+                if (piece is not NoPiece && this.IsValidMove(chessBoard, pos))
+                {
+                    results.Add(piece.GetPiece(), piece);
+                }
+            }
+
+            return results.OrderByDescending(x => x.Item1).Select(x => x.Item2).ToList();
+        }
+
+
         public Piece GetPiece() { StaticLogger.Trace(); return _piece; }
         public Color GetColor() { StaticLogger.Trace(); return _color; }
         public int GetId() { StaticLogger.Trace(); return _id; }
@@ -192,10 +211,6 @@ namespace Chess.Pieces
             _IsEnPassantCallBackFunction = callback;
         }
 
-        [ToDo($@"
-Define abstract method GetPossibleSquares() for each ChessPiece
-Each piece will be responsible for returning squares it can possibly land on
-Use this to replace the brute force for loop in KingCheckService")]
         // used by tests to setup the state of King Piece for certain unit tests"
         internal void SetHasMoved() { StaticLogger.Trace(); _hasMoved = true; }
 
@@ -215,5 +230,6 @@ Use this to replace the brute force for loop in KingCheckService")]
             StaticLogger.Trace();
             return GetHashCode();
         }
+
     }
 }

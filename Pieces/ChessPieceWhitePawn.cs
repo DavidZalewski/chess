@@ -127,6 +127,5 @@ namespace Chess.Pieces
 
             return possiblePositions;
         }
-
     }
 }

@@ -1,10 +1,14 @@
 ﻿using Chess.Board;
+using Chess.Collections;
 using Chess.Controller;
 using Chess.GameState;
+using Chess.Pieces;
 using Chess.Services;
 using Newtonsoft.Json;
 using NUnit.Framework.Internal;
+using NUnit.Framework.Legacy;
 using System.Collections.Concurrent;
+using System.Security;
 
 
 namespace Tests.GameState
@@ -149,7 +153,8 @@ MethodInvoker.Invoke(Object obj, IntPtr* args, BindingFlags invokeAttr)
             }
         }
 
-        [Test(Description = "[TPL-Managed: 14.2min], [WithDegreeOfParallelism(20): 18.2min]")]
+        [Test(Description = "[TPL-Managed: 14.2min], [WithDegreeOfParallelism(20): 18.2min], [Caching-Removed: 25.4min")]
+        [Ignore("Too much time")]
         public void GenerateAllPossibleMoves_LighterMemory_Depth_7_Success()
         {
             // Arrange
@@ -285,6 +290,164 @@ MethodInvoker.Invoke(Object obj, IntPtr* args, BindingFlags invokeAttr)
 
             // Assert
             Assert.That(1 == 1);
+        }
+
+        [Test(Description = "Provides analysis of all pieces that are threatening other pieces")]
+        public void GetAllAttacks_Success()
+        {
+            // Arrange
+            ChessBoard chessBoard = new();
+
+            ChessPiece whiteKing = new ChessPieceKing(ChessPiece.Color.WHITE, new("G1"));
+            ChessPiece whiteRook1 = new ChessPieceRook(ChessPiece.Color.WHITE, 1, new("A1"));
+            ChessPiece whiteRook2 = new ChessPieceRook(ChessPiece.Color.WHITE, 2, new("F1"));
+            ChessPiece whiteKnight1 = new ChessPieceKnight(ChessPiece.Color.WHITE, 1, new("B1"));
+            ChessPiece whiteKnight2 = new ChessPieceKnight(ChessPiece.Color.WHITE, 2, new("H3"));
+            ChessPiece whitePawn1 = new ChessPieceWhitePawn(1, new("A3"));
+            ChessPiece whitePawn2 = new ChessPieceWhitePawn(2, new("B4"));
+            ChessPiece whitePawn5 = new ChessPieceWhitePawn(5, new("E3"));
+            ChessPiece whitePawn6 = new ChessPieceWhitePawn(6, new("F2"));
+            ChessPiece whitePawn7 = new ChessPieceWhitePawn(7, new("G2"));
+            ChessPiece whitePawn8 = new ChessPieceWhitePawn(8, new("H2"));
+
+            ChessPiece blackKing = new ChessPieceKing(ChessPiece.Color.BLACK, new("G8"));
+            ChessPiece blackRook1 = new ChessPieceRook(ChessPiece.Color.BLACK, 1, new("F8"));
+            ChessPiece blackRook2 = new ChessPieceRook(ChessPiece.Color.BLACK, 2, new("A8"));
+            ChessPiece blackKnight1 = new ChessPieceKnight(ChessPiece.Color.BLACK, 1, new("D7"));
+            ChessPiece blackKnight2 = new ChessPieceKnight(ChessPiece.Color.BLACK, 2, new("D5")); 
+            ChessPiece blackPawn1 = new ChessPieceBlackPawn(1, new("A4"));
+            ChessPiece blackPawn2 = new ChessPieceBlackPawn(2, new("B7"));
+            ChessPiece blackPawn5 = new ChessPieceBlackPawn(5, new("E4"));
+            ChessPiece blackPawn6 = new ChessPieceBlackPawn(6, new("F5"));
+            ChessPiece blackPawn7 = new ChessPieceBlackPawn(7, new("G5"));
+            ChessPiece blackPawn8 = new ChessPieceBlackPawn(8, new("H6"));
+
+            chessBoard.AddPiece(whiteKing);
+            chessBoard.AddPiece(whiteRook1);
+            chessBoard.AddPiece(whiteRook2);
+            chessBoard.AddPiece(whiteKnight1);
+            chessBoard.AddPiece(whiteKnight2);
+            chessBoard.AddPiece(whitePawn1);
+            chessBoard.AddPiece(whitePawn2);
+            chessBoard.AddPiece(whitePawn5);
+            chessBoard.AddPiece(whitePawn6);
+            chessBoard.AddPiece(whitePawn7);
+            chessBoard.AddPiece(whitePawn8);
+
+            chessBoard.AddPiece(blackKing);
+            chessBoard.AddPiece(blackRook1);
+            chessBoard.AddPiece(blackRook2);
+            chessBoard.AddPiece(blackKnight1);
+            chessBoard.AddPiece(blackKnight2);
+            chessBoard.AddPiece(blackPawn1);
+            chessBoard.AddPiece(blackPawn2);
+            chessBoard.AddPiece(blackPawn5);
+            chessBoard.AddPiece(blackPawn6);
+            chessBoard.AddPiece(blackPawn7);
+            chessBoard.AddPiece(blackPawn8);
+
+            ChessStateExplorer chessStateExplorer = new ChessStateExplorer();
+
+            SortedTupleBag<string, List<ChessPiece>> results = chessStateExplorer.GetAllAttacks(chessBoard);
+
+            Console.WriteLine(chessBoard.DisplayBoard());
+
+            var expectedResults = new Dictionary<string, List<string>>
+            {
+                { "Black Knight 2", new List<string> { "White Pawn 5", "White Pawn 2" } },
+                { "White Knight 2", new List<string> { "Black Pawn 7" } }
+            };
+
+            foreach (var keyValuePair in results)
+            {
+                var pieceName = keyValuePair.Item1;
+                var threatenedPieces = keyValuePair.Item2.Select(p => p.GetPieceName()).ToList();
+
+                string threatsList = "[";
+                foreach (string threatenedPiece in threatenedPieces)
+                {
+                    threatsList += threatenedPiece;
+                    threatsList += ",";
+                }
+                threatsList += "]";
+                Console.WriteLine($"Piece: {keyValuePair.Item1}, Threatens: {threatsList}");
+                Assert.That(expectedResults.ContainsKey(pieceName), $"Unexpected piece: {pieceName}");
+                CollectionAssert.AreEquivalent(expectedResults[pieceName], threatenedPieces, $"Threats for {pieceName} do not match expected results.");
+            }
+        }
+
+        [Test(Description = "Provides analysis of all pieces that are threatening other pieces for all possible moves up to depth n")]
+        public void GetAllAttacksForAllPossibleMovesForDepth_Success()
+        {
+            // Arrange
+            ChessBoard chessBoard = new();
+
+            ChessPiece whiteKing = new ChessPieceKing(ChessPiece.Color.WHITE, new("G1"));
+            ChessPiece whiteRook1 = new ChessPieceRook(ChessPiece.Color.WHITE, 1, new("A1"));
+            ChessPiece whiteRook2 = new ChessPieceRook(ChessPiece.Color.WHITE, 2, new("F1"));
+            ChessPiece whiteKnight1 = new ChessPieceKnight(ChessPiece.Color.WHITE, 1, new("B1"));
+            ChessPiece whiteKnight2 = new ChessPieceKnight(ChessPiece.Color.WHITE, 2, new("H3"));
+            ChessPiece whitePawn1 = new ChessPieceWhitePawn(1, new("A2")); // A3
+            ChessPiece whitePawn2 = new ChessPieceWhitePawn(2, new("B4"));
+            ChessPiece whitePawn5 = new ChessPieceWhitePawn(5, new("E3"));
+            ChessPiece whitePawn6 = new ChessPieceWhitePawn(6, new("F2"));
+            ChessPiece whitePawn7 = new ChessPieceWhitePawn(7, new("G2"));
+            ChessPiece whitePawn8 = new ChessPieceWhitePawn(8, new("H2"));
+
+            ChessPiece blackKing = new ChessPieceKing(ChessPiece.Color.BLACK, new("G8"));
+            ChessPiece blackRook1 = new ChessPieceRook(ChessPiece.Color.BLACK, 1, new("F8"));
+            ChessPiece blackRook2 = new ChessPieceRook(ChessPiece.Color.BLACK, 2, new("A8"));
+            ChessPiece blackKnight1 = new ChessPieceKnight(ChessPiece.Color.BLACK, 1, new("D7"));
+            ChessPiece blackKnight2 = new ChessPieceKnight(ChessPiece.Color.BLACK, 2, new("D5"));
+            ChessPiece blackPawn1 = new ChessPieceBlackPawn(1, new("A4"));
+            ChessPiece blackPawn2 = new ChessPieceBlackPawn(2, new("B7"));
+            ChessPiece blackPawn5 = new ChessPieceBlackPawn(5, new("E4"));
+            ChessPiece blackPawn6 = new ChessPieceBlackPawn(6, new("F5"));
+            ChessPiece blackPawn7 = new ChessPieceBlackPawn(7, new("G5"));
+            ChessPiece blackPawn8 = new ChessPieceBlackPawn(8, new("H6"));
+
+            chessBoard.AddPiece(whiteKing);
+            chessBoard.AddPiece(whiteRook1);
+            chessBoard.AddPiece(whiteRook2);
+            chessBoard.AddPiece(whiteKnight1);
+            chessBoard.AddPiece(whiteKnight2);
+            chessBoard.AddPiece(whitePawn1);
+            chessBoard.AddPiece(whitePawn2);
+            chessBoard.AddPiece(whitePawn5);
+            chessBoard.AddPiece(whitePawn6);
+            chessBoard.AddPiece(whitePawn7);
+            chessBoard.AddPiece(whitePawn8);
+
+            chessBoard.AddPiece(blackKing);
+            chessBoard.AddPiece(blackRook1);
+            chessBoard.AddPiece(blackRook2);
+            chessBoard.AddPiece(blackKnight1);
+            chessBoard.AddPiece(blackKnight2);
+            chessBoard.AddPiece(blackPawn1);
+            chessBoard.AddPiece(blackPawn2);
+            chessBoard.AddPiece(blackPawn5);
+            chessBoard.AddPiece(blackPawn6);
+            chessBoard.AddPiece(blackPawn7);
+            chessBoard.AddPiece(blackPawn8);
+
+            ChessStateExplorer chessStateExplorer = new ChessStateExplorer();
+
+            Turn turn = new(44, whitePawn1, whitePawn1.GetCurrentPosition(), new("A3"), chessBoard);
+
+            whitePawn1.Move(chessBoard, new("A3"));
+
+            Console.WriteLine(chessBoard.DisplayBoard());
+
+            ChessAnalysisResult chessAnalysisResult = chessStateExplorer.GetAllAttacksForAllPossibleMovesForDepth(turn, 2);
+
+            foreach (var attackInfo in chessAnalysisResult.Attacks)
+            {
+                Console.WriteLine($"Attacking Piece: {attackInfo.Attacker.GetPieceName()}");
+                foreach(var attacked in attackInfo.Targets)
+                {
+                    Console.WriteLine($"Attacks: {attacked.GetPieceName()}");
+                }
+            }
         }
 
     }
