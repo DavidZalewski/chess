@@ -1,0 +1,39 @@
+@startuml
+Square
+ChessBoard -> Square
+@enduml
+
+*GameController
+Contains a ChessBoard and KingCheckService
+
+Contains a List of ChessPiece and a List of Turn
+*
+
+*ChessBoard
+ChessBoard contains a 2-dimensional array of Square
+*
+
+*Square
+Square contains a BoardPosition and a ChessPiece
+*
+
+*BoardPosition
+A data structure containing two properties: rank and file. This data structure is responsible for converting chess board notation into array index values.
+*
+
+*ChessPiece 
+An abstract class with the following child classes:
+
+ChessPieceBishop
+ChessPieceBlackPawn
+ChessPieceKing
+ChessPieceKnight
+ChessPiecePawn
+ChessPieceQueen
+ChessPieceRook
+ChessPieceWhitePawn
+DisabledSquarePiece
+NoPiece
+NuclearBishopPiece
+NuclearHorsePiece
+*

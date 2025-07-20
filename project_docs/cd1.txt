@@ -1,0 +1,58 @@
+@startuml
+abstract        ChessPiece 
+abstract		ChessPiecePawn
+class			ChessPieceBishop
+class			ChessPieceBlackPawn
+class			ChessPieceKing
+class			ChessPieceKnight
+class			ChessPieceQueen
+class			ChessPieceRook
+class			ChessPieceWhitePawn
+class			DisabledSquarePiece
+class			NoPiece
+class			NuclearBishopPiece
+class			NuclearHorsePiece
+class			Square
+class			ChessBoard
+class			GameController
+class			GameManager
+class			KingCheckService
+class			BoardPosition
+class			Turn
+class			ChessPieceFactory
+interface		IConsole
+class			ConsoleService
+class			MockConsoleService
+
+ChessPiece <|-- ChessPiecePawn
+ChessPiecePawn <|-- ChessPieceBlackPawn
+ChessPiecePawn <|-- ChessPieceWhitePawn 
+ChessPiece <|-- ChessPieceBishop
+ChessPiece <|-- ChessPieceKing
+ChessPiece <|-- ChessPieceKnight
+ChessPiece <|-- ChessPieceQueen
+ChessPiece <|-- ChessPieceRook
+ChessPiece <|-- NoPiece
+ChessPiece <|-- DisabledSquarePiece
+ChessPiece <|-- NuclearBishopPiece
+ChessPiece <|-- NuclearHorsePiece
+ChessPieceQueen --> ChessPieceBishop
+ChessPieceQueen --> ChessPieceRook 
+
+Square --> BoardPosition
+Square --> ChessPiece
+
+ChessBoard --> Square 
+GameController --> ChessBoard
+GameController --> KingCheckService 
+GameController --> ChessPieceFactory
+GameManager --> GameController
+Turn --> ChessPiece 
+Turn --> BoardPosition
+Turn --> ChessBoard
+KingCheckService --> Turn
+KingCheckService --> ChessBoard
+IConsole <|.. ConsoleService
+IConsole <|.. MockConsoleService
+
+@enduml
