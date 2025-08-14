@@ -457,6 +457,35 @@ namespace Tests.GameState
         }
 
         [Test]
+        //[Parallelizable(ParallelScope.Self)]
+        public void CannotCastleWhenChecked()
+        {
+            Queue<string> consoleInputs = new();
+            consoleInputs.Enqueue("n"); // no to tutorial
+            consoleInputs.Enqueue("Classic");
+            consoleInputs.Enqueue("n");
+            consoleInputs.Enqueue("WN2 H3");
+            consoleInputs.Enqueue("BP3 C6");
+            consoleInputs.Enqueue("WP7 G3");
+            consoleInputs.Enqueue("BQ1 B6");
+            consoleInputs.Enqueue("WP6 F4");
+            consoleInputs.Enqueue("BP1 A6");
+            consoleInputs.Enqueue("WB2 G2");
+            consoleInputs.Enqueue("BP4 D6");
+            consoleInputs.Enqueue("WK H1"); // this isn't allowed as black queen checks the castling squares
+
+            IConsole consoleService = new MockConsoleService(consoleInputs);
+            GameController gameController = GetGameController(consoleService);
+            GameManager game = new(consoleService, gameController);
+
+            // Act
+            game.Start();
+
+            Assert.That(((MockConsoleService)consoleService).Inputs.Contains("Cannot Castle"), "Expected castle to be an invalid move");
+        }
+
+
+        [Test]
         public void DebugBadCastleException()
         {
             Queue<string> consoleInputs = new();

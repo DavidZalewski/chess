@@ -24,6 +24,8 @@ namespace Chess.GameState
             SpecialMovesHandlers.PawnPromotionPromptUser = HandlePawnPromotion;
         }
 
+        public GameController GameController { get { return _gameController; } }
+
         public void Start()
         {
             StaticLogger.Trace();
