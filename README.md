@@ -1,3 +1,7 @@
+# NOTE
+
+This project uses stockfish for learning purposes. The source code and original license is distributed with this project. If the developers of stockfish have an issue with the way their code has been distributed, please feel free to reach out to me here on GitHub, and I will change it.
+
 # Chess DOS Project
 
 A simple, command-line chess game built for DOS environments. 
