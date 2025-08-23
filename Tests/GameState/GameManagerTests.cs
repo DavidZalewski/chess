@@ -175,7 +175,7 @@ namespace Tests.GameState
         }
 
         [Test]
-        public void BN1_To_B6_Should_Work()
+        public void BN1_To_C6_Should_Work()
         {
             // Arrange
             Queue<string> consoleInputs = new();
@@ -183,7 +183,8 @@ namespace Tests.GameState
             consoleInputs.Enqueue("Classic"); // init game with all pieces
             consoleInputs.Enqueue("n"); // no to ai
             consoleInputs.Enqueue("WP4 D4");
-            consoleInputs.Enqueue("BN1 B6");
+            consoleInputs.Enqueue("BN1 C6");
+            consoleInputs.Enqueue("quit");
 
             IConsole consoleService = new MockConsoleService(consoleInputs);
             GameController gameController = GetGameController(consoleService);
@@ -473,6 +474,7 @@ namespace Tests.GameState
             consoleInputs.Enqueue("WB2 G2");
             consoleInputs.Enqueue("BP4 D6");
             consoleInputs.Enqueue("WK H1"); // this isn't allowed as black queen checks the castling squares
+            consoleInputs.Enqueue("quit");
 
             IConsole consoleService = new MockConsoleService(consoleInputs);
             GameController gameController = GetGameController(consoleService);
@@ -481,7 +483,7 @@ namespace Tests.GameState
             // Act
             game.Start();
 
-            Assert.That(((MockConsoleService)consoleService).Inputs.Contains("Cannot Castle"), "Expected castle to be an invalid move");
+            Assert.That(((MockConsoleService)consoleService).OutputContainsString("Invalid Move. Please Try Again."), Is.True);
         }
 
 

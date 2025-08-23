@@ -54,12 +54,13 @@ namespace Chess.Pieces
                 BoardPosition A8 = new("A8");
                 BoardPosition H1 = new("H1");
                 BoardPosition H8 = new("H8");
-                if (!(_currentPosition.Equals(new("E1")) || _currentPosition.Equals(new("E8"))))
+
+                // if the king is not in its starting position, it can no longer castle
+                if (_currentPosition != _startingPosition)
                     return false;
 
                 if (_color.Equals(Color.WHITE))
                 {
-
                     // White King's Queen's Side Castle
                     if (position == A1)
                     {
@@ -93,15 +94,23 @@ namespace Chess.Pieces
 
                 if (positionsLeadingToCastle.Count > 0 && isFriendlyRookOnSquare && !_wasInCheck)
                 {
-                    bool isSquareOpen = true;
+                    List<ChessPiece> opponentPieces = board.GetActivePieces().FindAll(p => !p.GetColor().Equals(_color));
                     foreach (BoardPosition boardPosition in positionsLeadingToCastle)
                     {
                         if (board.IsPieceAtPosition(boardPosition))
                         {
-                            isSquareOpen = false;
+                            return false;
+                        }
+
+                        foreach (ChessPiece opponentPiece in opponentPieces)
+                        {
+                            if (opponentPiece.IsValidMove(board, boardPosition)) 
+                            { 
+                                return false; 
+                            }
                         }
                     }
-                    return isSquareOpen;
+                    return true;
                 }
             }
 

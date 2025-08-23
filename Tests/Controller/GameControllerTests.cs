@@ -434,6 +434,7 @@ namespace Tests.Controller
 
             // Act
             gameController.ApplyRuleSet();
+            gameController.StartGame();
 
             // Assert
             // Since we don't have a direct way to check if the sequence was played, we'll check if the pieces were updated
@@ -451,6 +452,7 @@ namespace Tests.Controller
 
             // Act
             gameController.RuleSetPawnsOnly();
+            gameController.StartGame();
 
             // Assert
             var pieces = gameController.GetChessBoard().GetActivePieces();
@@ -467,6 +469,7 @@ namespace Tests.Controller
 
             // Act
             gameController.RuleSetSevenByEight();
+            gameController.StartGame();
 
             // Assert
             // Since this method does nothing, we'll just check that the board state remains unchanged
@@ -483,6 +486,7 @@ namespace Tests.Controller
 
             // Act
             gameController.RuleSetKingsForce();
+            gameController.StartGame();
 
             // Assert
             // Since this method does nothing, we'll just check that the board state remains unchanged
@@ -499,6 +503,7 @@ namespace Tests.Controller
 
             // Act
             gameController.RuleSetNuclearHorse();
+            gameController.StartGame();
 
             // Assert
             var pieces = gameController.GetChessBoard().GetActivePieces();

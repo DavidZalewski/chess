@@ -93,6 +93,78 @@ namespace Tests.Pieces
         }
 
         [Test]
+        public void IsValidMove_Castling_WhiteCannotCastle_CastleSquaresChecked()
+        {
+            List<ChessPiece> chessPieces = ChessPieceFactory.CreateChessPiecesClassic();
+
+            ChessPiece whiteKing = chessPieces.First(piece => piece.GetColor().Equals(ChessPiece.Color.WHITE) &&
+                                                              piece.GetPiece().Equals(ChessPiece.Piece.KING));
+
+            ChessPiece whiteQueen = chessPieces.First(piece => piece.GetColor().Equals(ChessPiece.Color.WHITE) &&
+                                                              piece.GetPiece().Equals(ChessPiece.Piece.QUEEN));
+
+            ChessPiece blackQueen = chessPieces.First(piece => piece.GetColor().Equals(ChessPiece.Color.BLACK) &&
+                                                              piece.GetPiece().Equals(ChessPiece.Piece.QUEEN));
+
+            // remove bishop and knight from the board
+            chessPieces = chessPieces.FindAll(p => p.GetPiece().Equals(ChessPiece.Piece.ROOK) ||
+                                                   p.GetPiece().Equals(ChessPiece.Piece.KING) ||
+                                                   p.GetPiece().Equals(ChessPiece.Piece.QUEEN)
+            );
+
+            Assert.That(chessPieces.Remove(whiteQueen), Is.True);
+
+            ChessBoard chessBoard = new();
+
+            chessBoard.PopulateBoard(chessPieces);
+
+            blackQueen.Move(chessBoard, new("B6")); // black queen threatens king side and queen side castle squares
+
+            Assert.That(whiteKing is ChessPieceKing, Is.True);
+            Assert.That(blackQueen is ChessPieceQueen, Is.True);
+
+            Assert.That(whiteKing.IsValidMove(chessBoard, new("A1")), Is.False); // King moving to A1 is interpreted as Castle
+            Assert.That(whiteKing.IsValidMove(chessBoard, new("H1")), Is.False); // King moving to H1 is interpreted as Castle
+        }
+
+        [Test]
+        public void IsValidMove_Castling_BlackCannotCastle_CastleSquaresChecked()
+        {
+            List<ChessPiece> chessPieces = ChessPieceFactory.CreateChessPiecesClassic();
+
+            ChessPiece blackKing = chessPieces.First(piece => piece.GetColor().Equals(ChessPiece.Color.BLACK) &&
+                                                              piece.GetPiece().Equals(ChessPiece.Piece.KING));
+
+            ChessPiece whiteQueen = chessPieces.First(piece => piece.GetColor().Equals(ChessPiece.Color.WHITE) &&
+                                                              piece.GetPiece().Equals(ChessPiece.Piece.QUEEN));
+
+            ChessPiece blackQueen = chessPieces.First(piece => piece.GetColor().Equals(ChessPiece.Color.BLACK) &&
+                                                              piece.GetPiece().Equals(ChessPiece.Piece.QUEEN));
+
+            // remove bishop and knight from the board
+            chessPieces = chessPieces.FindAll(p => p.GetPiece().Equals(ChessPiece.Piece.ROOK) ||
+                                                   p.GetPiece().Equals(ChessPiece.Piece.KING) ||
+                                                   p.GetPiece().Equals(ChessPiece.Piece.QUEEN)
+            );
+
+            Assert.That(chessPieces.Remove(blackQueen), Is.True);
+
+            ChessBoard chessBoard = new();
+
+            chessBoard.PopulateBoard(chessPieces);
+
+            whiteQueen.Move(chessBoard, new("G3")); // white queen threatens king side and queen side castle squares
+
+            Assert.That(blackKing is ChessPieceKing, Is.True);
+            Assert.That(whiteQueen is ChessPieceQueen, Is.True);
+
+            Assert.That(blackKing.IsValidMove(chessBoard, new("A8")), Is.False); // King moving to A8 is interpreted as Castle
+            Assert.That(blackKing.IsValidMove(chessBoard, new("H8")), Is.False); // King moving to H8 is interpreted as Castle
+        }
+
+
+
+        [Test]
         public void IsValidMove_Castling_Castle_WhiteKingSide()
         {
             List<ChessPiece> chessPieces = ChessPieceFactory.CreateChessPiecesClassic();

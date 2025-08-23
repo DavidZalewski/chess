@@ -93,7 +93,7 @@ namespace Tests.Board
             Assert.Multiple(() =>
             {
                 Assert.That(square.Position, Is.Null);
-                Assert.That(square.Piece, Is.EqualTo(NoPiece.Instance));
+                Assert.That(square.Piece, Is.Null);
             });
         }
     }
