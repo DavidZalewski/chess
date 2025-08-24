@@ -1,4 +1,5 @@
-﻿using Chess.Board;
+﻿using Chess.Attributes;
+using Chess.Board;
 using Chess.Globals;
 
 namespace Chess.Pieces
@@ -125,7 +126,7 @@ namespace Chess.Pieces
         }
 
         internal void SetWasInCheck() { StaticLogger.Trace(); _wasInCheck = true; }
-
+        [ToDo("Add Castle Positions As Well")]
         public override List<BoardPosition> GetPossiblePositions(ChessBoard chessBoard)
         {
             List<BoardPosition> possiblePositions = new();
@@ -138,6 +139,8 @@ namespace Chess.Pieces
             BoardPosition? down = _currentPosition.Down();
             BoardPosition? left = _currentPosition.Left();
             BoardPosition? right = _currentPosition.Right();
+
+            
 
             if (upRight != null)
                 possiblePositions.Add(upRight);

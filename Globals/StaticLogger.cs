@@ -31,11 +31,11 @@ namespace Chess.Globals
     // Set the config up once in a single place, and dont touch it in tests
     public class LoggerConfig
     {
-        public bool EnableObjectDumps { get; set; } = true;
-        public bool EnableMethodDumps { get; set; } = true;
-        public bool EnableStateChanges { get; set; } = true;
-        public bool EnableTrace { get; set; } = true;
-        public LogLevel MinimumLogLevel { get; set; } = LogLevel.Info;
+        public bool EnableObjectDumps { get; set; } = false;
+        public bool EnableMethodDumps { get; set; } = false;
+        public bool EnableStateChanges { get; set; } = false;
+        public bool EnableTrace { get; set; } = false;
+        public LogLevel MinimumLogLevel { get; set; } = LogLevel.Error;
         public List<Type> TypesToSkipForLogging { get; } = new();
 
         public List<Type> WhitelistTypesToLog { get; } = new();

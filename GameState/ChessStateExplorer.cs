@@ -12,7 +12,7 @@ namespace Chess.GameState
     internal class ChessStateExplorer
     {
         private static string cacheFilePath = "chess_cache.bin";
-        ConcurrentLogger logger = new ConcurrentLogger("ChessStateExplorer_TurnNode");
+        ConcurrentLogger logger = new NoOpConcurrentLogger("ChessStateExplorer_TurnNode");
         private const int REPARTITION_THRESHOLD = 1000; // adjust this value as needed
         private const int PARTITION_SIZE = 8; // adjust this value as needed
         public MultiDimensionalCache<CacheItem> cache = new MultiDimensionalCache<CacheItem>(PARTITION_SIZE);

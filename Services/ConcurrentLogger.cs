@@ -17,7 +17,7 @@ namespace Chess.Services
             ++_counter;
         }
 
-        public void Log(string message, int threadId)
+        public virtual void Log(string message, int threadId)
         {
             StaticLogger.Trace();
             lock (_lock)
@@ -28,6 +28,18 @@ namespace Chess.Services
                     writer.Flush();
                 }
             }
+        }
+    }
+
+    public class NoOpConcurrentLogger : ConcurrentLogger
+    {
+        public NoOpConcurrentLogger(string filePath) : base(filePath)
+        {
+        }
+
+        public override void Log(string message, int threadId)
+        {
+
         }
     }
 }

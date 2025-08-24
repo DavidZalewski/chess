@@ -154,7 +154,7 @@ MethodInvoker.Invoke(Object obj, IntPtr* args, BindingFlags invokeAttr)
         }
 
         [Test(Description = "[TPL-Managed: 14.2min], [WithDegreeOfParallelism(20): 18.2min], [Caching-Removed: 25.4min")]
-        [Ignore("Too much time")]
+       // [Ignore("Too much time")]
         public void GenerateAllPossibleMoves_LighterMemory_Depth_7_Success()
         {
             // Arrange
